@@ -1,0 +1,150 @@
+import { Color } from "cesium";
+import { indicators, type Indicator } from "../data/demo";
+import type { Region } from "../types/region";
+
+const TEXTURE_SIZE = 384;
+const BASELINE_YEAR = 2020;
+const textureCache = new Map<string, HTMLCanvasElement>();
+const MAX_CACHED_TEXTURES = 24;
+
+function gaussian(
+  x: number,
+  y: number,
+  centerX: number,
+  centerY: number,
+  width: number,
+  height: number,
+) {
+  return Math.exp(
+    -(((x - centerX) / width) ** 2 + ((y - centerY) / height) ** 2) * 2,
+  );
+}
+
+/** Continuous synthetic fields: no rectangular cells or measured feature boundaries. */
+function surfaceSignal(
+  x: number,
+  y: number,
+  indicator: Indicator,
+  year: number,
+  seed: number,
+) {
+  const age = year - BASELINE_YEAR;
+  const warpX = x + 0.1 * Math.sin(y * 13 + seed);
+  const warpY = y + 0.08 * Math.sin(x * 11 - seed);
+  const detail =
+    0.5 + 0.5 * Math.sin(x * 43 + Math.sin(y * 29)) * Math.cos(y * 37 + seed);
+  if (indicator === "land") {
+    const subsidence = gaussian(
+      warpX,
+      warpY,
+      -0.25 + age * 0.018,
+      0.12,
+      0.48 + age * 0.02,
+      0.68,
+    );
+    const uplift = gaussian(warpX, warpY, 0.36, -0.22 - age * 0.015, 0.4, 0.55);
+    return (
+      (uplift - subsidence) * age * 0.15 + ((detail - 0.5) * 0.07 * age) / 6
+    );
+  }
+  if (indicator === "water") {
+    const river = 0.2 * Math.sin(y * 6 + seed) + 0.08 * Math.sin(y * 15);
+    const distance = Math.abs(warpX - river);
+    const originalChannel = Math.exp(-((distance / 0.075) ** 2));
+    const seasonalChannel = Math.exp(
+      -((distance / (0.075 + age * 0.014)) ** 2),
+    );
+    const wetland = gaussian(
+      warpX,
+      warpY,
+      0.22,
+      -0.42,
+      0.45 + age * 0.025,
+      0.25,
+    );
+    const drying = gaussian(warpX, warpY, -0.38, 0.42, 0.25, 0.3);
+    return (
+      (seasonalChannel - originalChannel) * 0.8 +
+      wetland * age * 0.075 -
+      drying * age * 0.09
+    );
+  }
+  const firstScar = gaussian(warpX, warpY, -0.3, 0.25, 0.3 + age * 0.025, 0.38);
+  const secondScar = gaussian(
+    warpX,
+    warpY,
+    0.3,
+    -0.3,
+    0.32,
+    0.38 + age * 0.015,
+  );
+  const recovery = Math.max(0.18, 1 - Math.max(0, age - 3) * 0.15);
+  return (
+    Math.min(
+      1,
+      firstScar * Math.min(age / 3, 1) * recovery +
+        secondScar * Math.max(0, age - 2) * 0.22,
+    ) *
+    (0.82 + detail * 0.18)
+  );
+}
+
+function interpolateColor(palette: Color[], value: number) {
+  const position = Math.max(0, Math.min(1, value)) * (palette.length - 1);
+  const index = Math.min(Math.floor(position), palette.length - 2);
+  return Color.lerp(
+    palette[index],
+    palette[index + 1],
+    position - index,
+    new Color(),
+  );
+}
+
+export function createSurfaceTexture(
+  region: Region,
+  indicator: Indicator,
+  year: number,
+): HTMLCanvasElement {
+  const cacheKey = `${region.id}/${indicator}/${year}`;
+  const cachedTexture = textureCache.get(cacheKey);
+  if (cachedTexture) return cachedTexture;
+
+  const canvas = document.createElement("canvas");
+  canvas.width = canvas.height = TEXTURE_SIZE;
+  const context = canvas.getContext("2d");
+  if (!context) throw new Error("Surface overlay needs a 2D canvas context.");
+  const pixels = context.createImageData(TEXTURE_SIZE, TEXTURE_SIZE);
+  const palette = indicators[indicator].colors.map((color) =>
+    Color.fromCssColorString(color),
+  );
+  const seed = region.longitude * 0.13 + region.latitude * 0.07;
+
+  for (let row = 0; row < TEXTURE_SIZE; row++) {
+    for (let column = 0; column < TEXTURE_SIZE; column++) {
+      const x = (column / (TEXTURE_SIZE - 1)) * 2 - 1;
+      const y = 1 - (row / (TEXTURE_SIZE - 1)) * 2;
+      const signal = surfaceSignal(x, y, indicator, year, seed);
+      const magnitude = Math.abs(signal);
+      const edgeFade = Math.max(
+        0,
+        Math.min(1, (1 - Math.max(Math.abs(x), Math.abs(y))) / 0.22),
+      );
+      const visibility = Math.min(1, Math.max(0, (magnitude - 0.035) * 3.5));
+      const palettePosition =
+        indicator === "fire" ? signal : 0.5 + signal * 0.5;
+      const color = interpolateColor(palette, palettePosition);
+      const offset = (row * TEXTURE_SIZE + column) * 4;
+      pixels.data[offset] = Math.round(color.red * 255);
+      pixels.data[offset + 1] = Math.round(color.green * 255);
+      pixels.data[offset + 2] = Math.round(color.blue * 255);
+      pixels.data[offset + 3] = Math.round(255 * visibility * edgeFade);
+    }
+  }
+  context.putImageData(pixels, 0, 0);
+  if (textureCache.size >= MAX_CACHED_TEXTURES) {
+    const oldestKey = textureCache.keys().next().value;
+    if (oldestKey) textureCache.delete(oldestKey);
+  }
+  textureCache.set(cacheKey, canvas);
+  return canvas;
+}

@@ -1,6 +1,8 @@
+import { LAST_IMAGERY_YEAR } from "../data/imagery";
 import type { IndicatorDefinition, RegionalReading } from "../data/demo";
 
 interface RegionalSnapshotProps {
+  observationYear: number;
   layer: IndicatorDefinition;
   reading: RegionalReading | null;
 }
@@ -10,6 +12,7 @@ const CHART_HEIGHT = 80;
 const TREND_POINT_SPACING = 24;
 
 export default function RegionalSnapshot({
+  observationYear,
   layer,
   reading,
 }: RegionalSnapshotProps) {
@@ -25,7 +28,7 @@ export default function RegionalSnapshot({
   return (
     <div className="reading">
       <div className="section-label">
-        REGIONAL SNAPSHOT <span>MOCK</span>
+        REGIONAL SNAPSHOT / {observationYear} <span>MOCK</span>
       </div>
       <div className="reading-value">
         {reading?.value ?? "—"} <span>{reading?.unit}</span>
@@ -53,8 +56,8 @@ export default function RegionalSnapshot({
         </svg>
       )}
       <div className="legend-labels">
-        <span>01 JUN</span>
-        <span>30 JUN 2026</span>
+        <span>ILLUSTRATIVE TREND</span>
+        <span>2020 – {LAST_IMAGERY_YEAR}</span>
       </div>
     </div>
   );
