@@ -1,87 +1,62 @@
-
 import type { Region } from "../types/region";
-
-interface Props {
+interface RegionSidebarProps {
   regions: Region[];
   selectedRegion: Region | null;
   onSelectRegion: (region: Region | null) => void;
 }
-
 export default function RegionSidebar({
   regions,
   selectedRegion,
   onSelectRegion,
-}: Props) {
+}: RegionSidebarProps) {
   return (
-    <aside className="absolute left-5 top-20 z-20 w-80 rounded-2xl border border-white/10 bg-slate-950/90 p-5 text-white shadow-2xl backdrop-blur-xl">
-      <div className="mb-6">
-        <p className="text-xs font-semibold uppercase tracking-widest text-sky-400">
-          Earth Explorer
-        </p>
-        <h2 className="mt-2 text-2xl font-semibold">
-          Explore our planet
-        </h2>
-        <p className="mt-2 text-sm text-slate-400">
-          Select a region to explore Earth's surface.
-        </p>
+    <aside className="region-panel panel">
+      <div className="eyebrow">THE OBSERVATION DESK</div>
+      <h2>
+        A changing planet.
+        <br />
+        <span>A closer look.</span>
+      </h2>
+      <p className="muted intro">
+        Explore the signals written across Earth's surface.
+      </p>
+      <div className="section-label">
+        <span>CURATED STUDY AREAS</span>
+        <span>0{regions.length}</span>
       </div>
-
-      <div className="space-y-3">
-        {regions.map((region) => (
+      <div className="region-list">
+        {regions.map((region, index) => (
           <button
             key={region.id}
+            className={`region-card ${selectedRegion?.id === region.id ? "active" : ""}`}
             onClick={() => onSelectRegion(region)}
-            className={`w-full rounded-xl border p-4 text-left transition hover:border-sky-400 ${
-              selectedRegion?.id === region.id
-                ? "border-sky-500 bg-sky-500/15"
-                : "border-white/10 bg-white/5"
-            }`}
           >
-            <div className="flex items-center gap-2">
-              <span className="text-sky-400">●</span>
-              <span className="font-medium">
-                {region.name}
-              </span>
-            </div>
-
-            <p className="mt-1 text-xs text-slate-400">
-              {region.country}
-            </p>
+            <span className="region-number">0{index + 1}</span>
+            <span>
+              <strong>{region.name}</strong>
+              <small>{region.country}</small>
+            </span>
+            <span className="region-arrow" aria-hidden="true">
+              ↗
+            </span>
           </button>
         ))}
       </div>
-
-      {selectedRegion && (
-        <div className="mt-6 border-t border-white/10 pt-5">
-          <h3 className="font-semibold">
-            {selectedRegion.name}
-          </h3>
-
-          <p className="mt-2 text-sm text-slate-400">
-            {selectedRegion.description}
-          </p>
-
-          <div className="mt-4 rounded-lg bg-white/5 p-3 text-xs text-slate-300">
-            <p>
-              Latitude: {selectedRegion.latitude.toFixed(4)}°
-            </p>
-            <p>
-              Longitude: {selectedRegion.longitude.toFixed(4)}°
-            </p>
-          </div>
-
-          <p className="mt-4 text-xs text-sky-400">
-            NASA observation layers coming soon
-          </p>
-        </div>
-      )}
-
-      <button
-        onClick={() => onSelectRegion(null)}
-        className="mt-5 w-full rounded-lg border border-white/15 px-4 py-2 text-sm hover:bg-white/10"
-      >
-        Clear selection
+      <div className="region-detail">
+        <span className="status-dot" /> CURATED CAMERA VIEW
+        <p>
+          {selectedRegion?.description ??
+            "Choose a study area to explore its simulated surface changes."}
+        </p>
+      </div>
+      <button className="text-button" onClick={() => onSelectRegion(null)}>
+        ◎ &nbsp; View the whole planet
       </button>
+      <div className="sidebar-note">
+        DEMO COLLECTION / 2026
+        <br />
+        <span>Synthetic observations. Real places.</span>
+      </div>
     </aside>
   );
 }

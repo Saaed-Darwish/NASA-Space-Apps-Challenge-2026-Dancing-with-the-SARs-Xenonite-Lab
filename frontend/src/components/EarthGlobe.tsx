@@ -1,45 +1,72 @@
-
 import { useEffect, useRef, useState } from "react";
 import {
-  Viewer,
-  Cartesian3,
-  Cartesian2,
-  Color,
-  Math as CesiumMath,
-  OpenStreetMapImageryProvider,
+  Entity,
   ImageryLayer,
   Ion,
   IonImageryProvider,
+  OpenStreetMapImageryProvider,
   ScreenSpaceEventHandler,
   ScreenSpaceEventType,
-  VerticalOrigin,
-  HeightReference,
-  LabelStyle,
-  defined,
+  Viewer,
+  type Cartesian2,
 } from "cesium";
-
 import "cesium/Build/Cesium/Widgets/widgets.css";
+import type { Indicator } from "../data/demo";
+import {
+  addDemoOverlay,
+  addRegionMarkers,
+  focusCamera,
+  setInitialCameraView,
+} from "../globe/scene";
 import type { Region } from "../types/region";
 
-interface Props {
+interface EarthGlobeProps {
+  focusRequest: number;
+  indicator: Indicator;
+  showOverlay: boolean;
+  opacity: number;
   regions: Region[];
   selectedRegion: Region | null;
   onSelectRegion: (region: Region) => void;
 }
 
+async function loadBaseImagery(viewer: Viewer, token: string | undefined) {
+  try {
+    const provider = token
+      ? await IonImageryProvider.fromAssetId(2)
+      : new OpenStreetMapImageryProvider({
+          url: "https://tile.openstreetmap.org/",
+        });
+
+    // Imagery may finish loading after React has unmounted the globe.
+    if (!viewer.isDestroyed()) {
+      viewer.imageryLayers.add(new ImageryLayer(provider));
+    }
+  } catch (error) {
+    console.error("Imagery failed to load:", error);
+  }
+}
+
 export default function EarthGlobe({
+  focusRequest,
+  indicator,
+  showOverlay,
+  opacity,
   regions,
   selectedRegion,
   onSelectRegion,
-}: Props) {
+}: EarthGlobeProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const viewerRef = useRef<Viewer | null>(null);
-  const callbackRef = useRef(onSelectRegion);
-  const [viewerReady, setViewerReady] = useState(false);
+  const onSelectRegionRef = useRef(onSelectRegion);
+  const regionsRef = useRef(regions);
+  const [isViewerReady, setIsViewerReady] = useState(false);
 
+  // The Cesium click handler is installed once and reads the latest React props.
   useEffect(() => {
-    callbackRef.current = onSelectRegion;
-  }, [onSelectRegion]);
+    onSelectRegionRef.current = onSelectRegion;
+    regionsRef.current = regions;
+  }, [onSelectRegion, regions]);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -59,133 +86,52 @@ export default function EarthGlobe({
       fullscreenButton: false,
       infoBox: false,
       selectionIndicator: false,
+      requestRenderMode: true,
+      maximumRenderTimeChange: Infinity,
     });
 
     viewerRef.current = viewer;
-
-    viewer.camera.setView({
-      destination: Cartesian3.fromDegrees(
-        -35, 35, 22000000
-      ),
-    });
-
-    viewer.scene.globe.enableLighting = true;
+    setInitialCameraView(viewer);
+    viewer.scene.globe.enableLighting = false;
     viewer.scene.globe.showGroundAtmosphere = true;
+    void loadBaseImagery(viewer, token);
 
-    let cancelled = false;
+    const clickHandler = new ScreenSpaceEventHandler(viewer.scene.canvas);
+    clickHandler.setInputAction((event: { position: Cartesian2 }) => {
+      const pickedObject = viewer.scene.pick(event.position);
+      const pickedEntity: unknown = pickedObject?.id;
+      if (!(pickedEntity instanceof Entity)) return;
 
-    async function loadImagery() {
-      try {
-        const provider = token
-          ? await IonImageryProvider.fromAssetId(2)
-          : new OpenStreetMapImageryProvider({
-              url: "https://tile.openstreetmap.org/",
-            });
-
-        if (!cancelled && !viewer.isDestroyed()) {
-          viewer.imageryLayers.add(
-            new ImageryLayer(provider)
-          );
-        }
-      } catch (error) {
-        console.error("Imagery failed to load:", error);
-      }
-    }
-
-    void loadImagery();
-
-    const handler = new ScreenSpaceEventHandler(
-      viewer.scene.canvas
-    );
-
-    handler.setInputAction((event: any) => {
-      const picked = viewer.scene.pick(event.position);
-
-      if (defined(picked) && picked.id?.id) {
-        const region = regionsRef.current.find(
-          (r) => r.id === picked.id.id
-        );
-
-        if (region) callbackRef.current(region);
-      }
+      const region = regionsRef.current.find(
+        (candidate) => candidate.id === pickedEntity.id,
+      );
+      if (region) onSelectRegionRef.current(region);
     }, ScreenSpaceEventType.LEFT_CLICK);
 
-    setViewerReady(true);
-
+    setIsViewerReady(true);
     return () => {
-      cancelled = true;
-      handler.destroy();
+      clickHandler.destroy();
       viewer.destroy();
       viewerRef.current = null;
     };
   }, []);
 
-  const regionsRef = useRef(regions);
-
-  useEffect(() => {
-    regionsRef.current = regions;
-  }, [regions]);
-
   useEffect(() => {
     const viewer = viewerRef.current;
-    if (!viewerReady || !viewer) return;
+    if (!isViewerReady || !viewer) return;
 
     viewer.entities.removeAll();
-
-    for (const region of regions) {
-      viewer.entities.add({
-        id: region.id,
-        name: region.name,
-        position: Cartesian3.fromDegrees(
-          region.longitude,
-          region.latitude
-        ),
-        point: {
-          pixelSize: 12,
-          color: Color.CYAN,
-          outlineColor: Color.WHITE,
-          outlineWidth: 2,
-          heightReference: HeightReference.CLAMP_TO_GROUND,
-          disableDepthTestDistance: Infinity,
-        },
-        label: {
-          text: region.name,
-          font: "14px sans-serif",
-          fillColor: Color.WHITE,
-          outlineColor: Color.BLACK,
-          outlineWidth: 3,
-          style: LabelStyle.FILL_AND_OUTLINE,
-          pixelOffset: new Cartesian2(0, -24),
-          verticalOrigin: VerticalOrigin.BOTTOM,
-          disableDepthTestDistance: Infinity,
-        },
-      });
+    addRegionMarkers(viewer, regions, indicator);
+    if (selectedRegion && showOverlay) {
+      addDemoOverlay(viewer, selectedRegion, indicator, opacity);
     }
-  }, [regions, viewerReady]);
+  }, [regions, isViewerReady, selectedRegion, indicator, showOverlay, opacity]);
 
   useEffect(() => {
     const viewer = viewerRef.current;
-    if (!viewerReady || !viewer || !selectedRegion) return;
+    if (!isViewerReady || !viewer) return;
+    focusCamera(viewer, selectedRegion);
+  }, [selectedRegion, isViewerReady, focusRequest]);
 
-    viewer.camera.flyTo({
-      destination: Cartesian3.fromDegrees(
-        selectedRegion.longitude,
-        selectedRegion.latitude,
-        selectedRegion.altitude
-      ),
-      orientation: {
-        heading: 0,
-        pitch: CesiumMath.toRadians(-90),
-        roll: 0,
-      },
-      duration: 2.5,
-    });
-  }, [selectedRegion, viewerReady]);
-
-  return (
-    <div
-      ref={containerRef}
-      className="absolute inset-0"
-    />
-  );
+  return <div ref={containerRef} className="absolute inset-0" />;
 }

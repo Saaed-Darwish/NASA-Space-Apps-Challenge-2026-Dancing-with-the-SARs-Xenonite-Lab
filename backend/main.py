@@ -14,6 +14,8 @@ app.add_middleware(
 
 
 class Region(BaseModel):
+    """A study area's location and preferred camera view."""
+
     id: str
     name: str
     country: str
@@ -55,17 +57,20 @@ REGIONS = [
 
 
 @app.get("/api/health")
-def health():
+def health() -> dict[str, str]:
+    """Report whether the API is running."""
     return {"status": "healthy"}
 
 
 @app.get("/api/regions", response_model=list[Region])
-def get_regions():
+def get_regions() -> list[Region]:
+    """Return the API's available study areas."""
     return REGIONS
 
 
 @app.get("/api/regions/{region_id}", response_model=Region)
-def get_region(region_id: str):
+def get_region(region_id: str) -> Region:
+    """Find a study area by its stable identifier, or return HTTP 404."""
     for region in REGIONS:
         if region.id == region_id:
             return region

@@ -4,6 +4,7 @@ export interface Region {
   country: string;
   latitude: number;
   longitude: number;
+  /** Camera height above the ellipsoid, in meters. */
   altitude: number;
   description: string;
   zoom_level: string;

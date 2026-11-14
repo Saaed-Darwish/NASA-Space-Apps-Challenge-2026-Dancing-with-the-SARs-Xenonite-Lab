@@ -1,0 +1,4 @@
+# Generated build output and dependency lock data.
+dist/
+node_modules/
+package-lock.json
