@@ -36,7 +36,11 @@ import { stories, type RegionStory } from "../data/stories";
 import { addStoryMarkers, isStoryVisible } from "../globe/storyMarkers";
 import { storyMarkerOpacity } from "../data/storyTimeline";
 import { PIN_LABEL_BACKGROUND, PIN_LABEL_TEXT } from "../globe/markerStyle";
-import type { DiscoveredArticle } from "../data/articleSearch";
+import {
+  viewportSearchArea,
+  type ArticleSearchArea,
+  type DiscoveredArticle,
+} from "../data/articleSearch";
 
 interface EarthGlobeProps {
   articles: DiscoveredArticle[];
@@ -54,6 +58,7 @@ interface EarthGlobeProps {
   selectedRegion: Region | null;
   onSelectRegion: (region: Region) => void;
   onViewportFocus: (region: Region | null) => void;
+  onSearchAreaChange: (area: ArticleSearchArea | null) => void;
 }
 
 export default function EarthGlobe({
@@ -72,7 +77,12 @@ export default function EarthGlobe({
   selectedRegion,
   onSelectRegion,
   onViewportFocus,
+  onSearchAreaChange,
 }: EarthGlobeProps) {
+  const searchAreaRef = useRef(onSearchAreaChange);
+  useEffect(() => {
+    searchAreaRef.current = onSearchAreaChange;
+  }, [onSearchAreaChange]);
   const viewFocusRef = useRef(onViewportFocus);
   const focusedRegionRef = useRef(selectedRegion);
   const handledFocusRequest = useRef<number | null>(null);
@@ -134,14 +144,23 @@ export default function EarthGlobe({
     setInitialCameraView(viewer);
     imageryRef.current = addHistoricalImagery(viewer, setImageryError);
     const removeVisibilityListener = trackMarkerVisibility(viewer);
-    const removeCameraListener = viewer.camera.moveEnd.addEventListener(() => {
-      if (cameraFlight.current) return;
+    const updateViewport = () => {
       const canvas = viewer.scene.canvas;
       const center = viewer.camera.pickEllipsoid(
         new Cartesian2(canvas.clientWidth / 2, canvas.clientHeight / 2),
         viewer.scene.globe.ellipsoid,
       );
       const location = center ? Cartographic.fromCartesian(center) : null;
+      searchAreaRef.current(
+        location
+          ? viewportSearchArea(
+              CesiumMath.toDegrees(location.latitude),
+              CesiumMath.toDegrees(location.longitude),
+              viewer.camera.positionCartographic.height,
+            )
+          : null,
+      );
+      if (cameraFlight.current) return;
       const story = storyFocusRef.current;
       // A story may lie outside its region's camera center. Keep its context while
       // inspecting the story, then let normal zoom-out/pan focus rules take over.
@@ -170,7 +189,10 @@ export default function EarthGlobe({
         focusedRegionRef.current = next;
         viewFocusRef.current(next);
       }
-    });
+    };
+    updateViewport();
+    const removeCameraListener =
+      viewer.camera.moveEnd.addEventListener(updateViewport);
     const removeTileListener =
       viewer.scene.globe.tileLoadProgressEvent.addEventListener(
         (pendingTiles: number) => setIsLoadingTiles(pendingTiles > 0),
@@ -230,7 +252,7 @@ export default function EarthGlobe({
     const entities: CesiumEntity[] = [];
     for (const article of articles) {
       if (
-        article.regionId !== selectedRegion?.id ||
+        (selectedRegion && article.regionId !== selectedRegion.id) ||
         article.latitude === undefined ||
         article.longitude === undefined
       )
@@ -325,22 +347,25 @@ export default function EarthGlobe({
       // Viewport selection updates context only; explicit clicks/refocus move the camera.
       if (handledFocusRequest.current === focusRequest) return;
       handledFocusRequest.current = focusRequest;
-      const target =
-        selectedArticle && selectedRegion
+      const target = selectedArticle
+        ? {
+            id: selectedArticle.id,
+            name: selectedArticle.title,
+            country: "",
+            description: selectedArticle.summary,
+            zoom_level: "city",
+            latitude: selectedArticle.latitude!,
+            longitude: selectedArticle.longitude!,
+            altitude: 45000,
+          }
+        : selectedStory && selectedRegion
           ? {
               ...selectedRegion,
-              latitude: selectedArticle.latitude!,
-              longitude: selectedArticle.longitude!,
-              altitude: 45000,
+              latitude: selectedStory.latitude,
+              longitude: selectedStory.longitude,
+              altitude: selectedStory.cameraAltitude,
             }
-          : selectedStory && selectedRegion
-            ? {
-                ...selectedRegion,
-                latitude: selectedStory.latitude,
-                longitude: selectedStory.longitude,
-                altitude: selectedStory.cameraAltitude,
-              }
-            : selectedRegion;
+          : selectedRegion;
       focusCamera(viewer, target, (moving) => {
         cameraFlight.current = moving;
       });

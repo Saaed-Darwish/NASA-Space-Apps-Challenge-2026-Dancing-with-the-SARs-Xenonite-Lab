@@ -15,7 +15,10 @@ import AssistantPanel from "./components/AssistantPanel";
 import ArticleSearch from "./components/ArticleSearch";
 import ForecastPanel from "./components/ForecastPanel";
 import { storyMarkerOpacity } from "./data/storyTimeline";
-import type { DiscoveredArticle } from "./data/articleSearch";
+import type {
+  ArticleSearchArea,
+  DiscoveredArticle,
+} from "./data/articleSearch";
 import {
   indicators,
   readings,
@@ -49,7 +52,11 @@ export default function App() {
   }, []);
   const [selectedRegion, setSelectedRegion] = useState<Region | null>(null);
   const [selectedStory, setSelectedStory] = useState<RegionStory | null>(null);
+  const firstStoryPlayPending = useRef(false);
   const [articles, setArticles] = useState<DiscoveredArticle[]>([]);
+  const [viewportArea, setViewportArea] = useState<ArticleSearchArea | null>(
+    null,
+  );
   const [selectedArticle, setSelectedArticle] =
     useState<DiscoveredArticle | null>(null);
   const [showStoryMarkers, setShowStoryMarkers] = useState(true);
@@ -133,7 +140,10 @@ export default function App() {
   }, []);
 
   const regionalArticles = useMemo(
-    () => articles.filter((article) => article.regionId === selectedRegion?.id),
+    () =>
+      selectedRegion
+        ? articles.filter((article) => article.regionId === selectedRegion.id)
+        : articles,
     [articles, selectedRegion?.id],
   );
   const addArticle = useCallback((article: DiscoveredArticle) => {
@@ -166,6 +176,7 @@ export default function App() {
         : previous,
     );
     setSelectedStory(story);
+    firstStoryPlayPending.current = true;
     setShowStoryMarkers(true);
     timeline.setComparisonRange(
       story.beforeYear,
@@ -252,6 +263,7 @@ export default function App() {
         selectedRegion={selectedRegion}
         onSelectRegion={selectRegion}
         onViewportFocus={focusVisibleRegion}
+        onSearchAreaChange={setViewportArea}
         selectedStory={selectedStory}
         onSelectStory={selectStory}
         showStoryMarkers={showStoryMarkers}
@@ -322,16 +334,14 @@ export default function App() {
           onSelectRegion={selectRegion}
           onViewStories={revealStories}
         />
-        {selectedRegion && (
-          <ArticleSearch
-            key={selectedRegion.id}
-            region={selectedRegion}
-            markers={regionalArticles}
-            onAdd={addArticle}
-            onRemove={removeArticle}
-            onFocus={focusArticle}
-          />
-        )}
+        <ArticleSearch
+          key={selectedRegion?.id ?? "viewport"}
+          region={selectedRegion ?? viewportArea}
+          markers={regionalArticles}
+          onAdd={addArticle}
+          onRemove={removeArticle}
+          onFocus={focusArticle}
+        />
       </div>
       <button
         className="dock-toggle dock-toggle-right"
@@ -396,7 +406,14 @@ export default function App() {
       </div>
       <Timeline
         {...timeline}
-        togglePlayback={() => timeline.togglePlayback(Boolean(contextStory))}
+        togglePlayback={() => {
+          const restartFromStart =
+            Boolean(selectedStory) &&
+            firstStoryPlayPending.current &&
+            !timeline.isPlaying;
+          if (restartFromStart) firstStoryPlayPending.current = false;
+          timeline.togglePlayback(restartFromStart);
+        }}
       />
       <MapCaption selectedRegion={selectedRegion} onRefocus={selectRegion} />
       <footer className="map-footer">

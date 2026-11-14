@@ -1,5 +1,35 @@
 import type { Region } from "../types/region";
 
+export type ArticleSearchArea = Pick<
+  Region,
+  "id" | "name" | "country" | "latitude" | "longitude"
+> & { radiusKm?: number };
+
+export function viewportSearchArea(
+  latitude: number,
+  longitude: number,
+  height: number,
+): ArticleSearchArea | null {
+  if (
+    ![latitude, longitude, height].every(Number.isFinite) ||
+    Math.abs(latitude) > 90 ||
+    Math.abs(longitude) > 180 ||
+    height < 0
+  )
+    return null;
+  const lat = Number(latitude.toFixed(3));
+  const lon = Number(longitude.toFixed(3));
+  const radiusKm = Math.round(Math.max(5, Math.min(250, height / 2000)));
+  return {
+    id: `viewport/${lat}/${lon}/${radiusKm}`,
+    name: `map center (${lat.toFixed(3)}°, ${lon.toFixed(3)}°)`,
+    country: "",
+    latitude: lat,
+    longitude: lon,
+    radiusKm,
+  };
+}
+
 export interface DiscoveredArticle {
   id: string;
   regionId: string;
@@ -12,7 +42,7 @@ export interface DiscoveredArticle {
 
 /** Reference articles are context, not verified incidents or dated observations. */
 export async function searchRegionArticles(
-  region: Region,
+  region: ArticleSearchArea,
   topic: string,
   signal: AbortSignal,
 ): Promise<DiscoveredArticle[]> {
@@ -21,7 +51,9 @@ export async function searchRegionArticles(
     format: "json",
     origin: "*",
     generator: "search",
-    gsrsearch: `${region.name} ${topic}`,
+    gsrsearch: region.radiusKm
+      ? `nearcoord:${region.radiusKm}km,${region.latitude},${region.longitude} ${topic}`.trim()
+      : `${region.name} ${topic}`,
     gsrnamespace: "0",
     gsrlimit: "8",
     prop: "extracts|coordinates|info",

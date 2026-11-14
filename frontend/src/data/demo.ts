@@ -104,6 +104,17 @@ export const regions: Region[] = [
     zoom_level: "regional",
   },
   {
+    id: "norilsk",
+    name: "Norilsk",
+    country: "Russia",
+    latitude: 69.4,
+    longitude: 87.95,
+    altitude: 100000,
+    description:
+      "Explore Norilsk and the river corridor affected by the May 29, 2020 diesel tank spill. Compare 2020–2025 for landscape context and open the stories for dated Sentinel-2 evidence. Annual mosaics may miss the spill; 2020 is not a guaranteed pre-spill baseline.",
+    zoom_level: "regional",
+  },
+  {
     id: "nusantara",
     name: "Nusantara",
     country: "Indonesia",
