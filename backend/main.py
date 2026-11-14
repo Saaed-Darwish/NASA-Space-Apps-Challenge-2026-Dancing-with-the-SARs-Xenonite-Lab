@@ -28,6 +28,45 @@ class Region(BaseModel):
 
 REGIONS = [
     Region(
+        id="nusantara",
+        name="Nusantara",
+        country="Indonesia",
+        latitude=-0.97,
+        longitude=116.71,
+        altitude=24000,
+        description=(
+            "Compare 2020–2025 satellite views of Borneo's new capital. "
+            "Watch roads, construction clearings, and government buildings emerge."
+        ),
+        zoom_level="city",
+    ),
+    Region(
+        id="egypt-capital",
+        name="New Administrative Capital",
+        country="Egypt",
+        latitude=30.01,
+        longitude=31.73,
+        altitude=32000,
+        description=(
+            "Watch planned road grids east of Cairo fill with large buildings "
+            "and residential districts between 2020 and 2025."
+        ),
+        zoom_level="city",
+    ),
+    Region(
+        id="tuas",
+        name="Tuas Port",
+        country="Singapore",
+        latitude=1.255,
+        longitude=103.62,
+        altitude=18000,
+        description=(
+            "Compare Singapore's reclaimed coastline, new quays, container yards, "
+            "and port infrastructure through 2020–2025."
+        ),
+        zoom_level="city",
+    ),
+    Region(
         id="alberta",
         name="Alberta",
         country="Canada",

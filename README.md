@@ -70,7 +70,9 @@ React components handle the interface, while the globe scene helpers contain Ces
 
 ## Curated surface-change demo
 
-The explorer uses the local study-area collection in [frontend/src/data/demo.ts](./frontend/src/data/demo.ts), so the visual demo does not require the backend. Alberta foothills, Thames basin, and Sacramento Valley each have a fixed camera destination and synthetic indicator readings. Select any region again, or use Refocus region, to restore its camera view after panning or zooming.
+The explorer uses the local study-area collection in [frontend/src/data/demo.ts](./frontend/src/data/demo.ts), so the visual demo does not require the backend. Nusantara, Egypt's New Administrative Capital, Tuas Port, Alberta foothills, Thames basin, and Sacramento Valley each have a fixed camera destination and synthetic indicator readings. Nusantara opens first as the construction showcase. Select any region again, or use Refocus region, to restore its camera view after panning or zooming.
+
+For construction comparisons, turn off the three simulated overlays and play 2020–2025. Nusantara's government core highlights roads and buildings emerging after 2022; Egypt's new capital shows road grids filling with districts; Tuas Port shows reclaimed coastline and industrial infrastructure. The indicator readings at these locations are mock fixtures, not measurements of construction impacts.
 
 Land displacement (purple to amber), water extent change (tan to blue), and wildfire impact (yellow to red) each have their own visibility switch. All three can be displayed together. The tabs select details and each layer's own opacity; changing a detail tab does not toggle any layer. Turn off all three switches to inspect the satellite imagery by itself.
 

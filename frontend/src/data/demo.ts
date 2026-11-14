@@ -63,6 +63,39 @@ export const indicators: Record<Indicator, IndicatorDefinition> = {
 };
 export const regions: Region[] = [
   {
+    id: "nusantara",
+    name: "Nusantara",
+    country: "Indonesia",
+    latitude: -0.97,
+    longitude: 116.71,
+    altitude: 24000,
+    description:
+      "Watch a new capital take shape in Borneo. Compare 2020–2025 to see roads, construction clearings, and government buildings emerge, especially after 2022. Turn off the simulated overlays for the clearest satellite comparison.",
+    zoom_level: "city",
+  },
+  {
+    id: "egypt-capital",
+    name: "New Administrative Capital",
+    country: "Egypt",
+    latitude: 30.01,
+    longitude: 31.73,
+    altitude: 32000,
+    description:
+      "Explore a city taking shape east of Cairo. Play 2020–2025 and watch planned road grids fill with large buildings and residential districts. Focus on new structures rather than overall image color; annual mosaics can differ in tone.",
+    zoom_level: "city",
+  },
+  {
+    id: "tuas",
+    name: "Tuas Port",
+    country: "Singapore",
+    latitude: 1.255,
+    longitude: 103.62,
+    altitude: 18000,
+    description:
+      "Follow Singapore's growing port and reclaimed coastline through 2020–2025. Look for new quays, container yards, and industrial infrastructure. Turn off simulated overlays to inspect the real shoreline and construction changes.",
+    zoom_level: "city",
+  },
+  {
     id: "alberta",
     name: "Alberta foothills",
     country: "Canada",
@@ -97,6 +130,67 @@ export const regions: Region[] = [
   },
 ];
 export const readings: Record<string, Record<Indicator, RegionalReading>> = {
+  // Construction locations use synthetic indicator fixtures, not measured project impacts.
+  nusantara: {
+    land: {
+      value: "−6.2",
+      unit: "mm",
+      context: "Illustrative vertical movement",
+      trend: [12, 14, 17, 21, 27, 32, 39, 45, 49, 52, 57, 60],
+    },
+    water: {
+      value: "+4.5",
+      unit: "%",
+      context: "Illustrative water extent",
+      trend: [52, 49, 46, 48, 41, 38, 36, 31, 28, 30, 24, 21],
+    },
+    fire: {
+      value: "1.2",
+      unit: "km²",
+      context: "Illustrative affected area",
+      trend: [62, 61, 59, 56, 54, 51, 48, 47, 44, 42, 39, 37],
+    },
+  },
+  "egypt-capital": {
+    land: {
+      value: "−4.8",
+      unit: "mm",
+      context: "Illustrative vertical movement",
+      trend: [15, 18, 20, 24, 28, 31, 35, 38, 44, 48, 50, 54],
+    },
+    water: {
+      value: "+3.1",
+      unit: "%",
+      context: "Illustrative water extent",
+      trend: [57, 55, 51, 49, 46, 42, 40, 37, 35, 32, 30, 27],
+    },
+    fire: {
+      value: "0.3",
+      unit: "km²",
+      context: "Illustrative affected area",
+      trend: [65, 65, 64, 63, 61, 60, 59, 57, 56, 55, 53, 52],
+    },
+  },
+  tuas: {
+    land: {
+      value: "−9.6",
+      unit: "mm",
+      context: "Illustrative vertical movement",
+      trend: [9, 13, 18, 25, 29, 34, 39, 43, 48, 53, 57, 63],
+    },
+    water: {
+      value: "−8.4",
+      unit: "%",
+      context: "Illustrative water extent",
+      trend: [13, 17, 21, 25, 29, 34, 38, 42, 47, 51, 55, 59],
+    },
+    fire: {
+      value: "0.4",
+      unit: "km²",
+      context: "Illustrative affected area",
+      trend: [64, 63, 62, 61, 59, 58, 56, 54, 52, 51, 49, 48],
+    },
+  },
   alberta: {
     land: {
       value: "−12.4",
