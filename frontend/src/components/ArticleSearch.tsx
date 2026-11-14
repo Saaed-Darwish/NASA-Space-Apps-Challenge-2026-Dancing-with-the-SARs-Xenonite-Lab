@@ -1,12 +1,12 @@
 import { memo, useEffect, useRef, useState } from "react";
-import type { Region } from "../types/region";
 import {
   searchRegionArticles,
   type DiscoveredArticle,
+  type ArticleSearchArea,
 } from "../data/articleSearch";
 
 interface Props {
-  region: Region;
+  region: ArticleSearchArea | null;
   markers: DiscoveredArticle[];
   onAdd: (article: DiscoveredArticle) => void;
   onRemove: (id: string) => void;
@@ -27,8 +27,15 @@ export default memo(function ArticleSearch({
   );
   const request = useRef<AbortController | null>(null);
   useEffect(() => () => request.current?.abort(), []);
+  useEffect(() => {
+    request.current?.abort();
+    request.current = null;
+    setResults([]);
+    setStatus("idle");
+  }, [region?.id]);
 
   async function search() {
+    if (!region) return;
     request.current?.abort();
     const controller = new AbortController();
     request.current = controller;
@@ -57,8 +64,9 @@ export default memo(function ArticleSearch({
       <div className="eyebrow">DISCOVER MORE</div>
       <h3>What happened here?</h3>
       <p className="muted small">
-        Search Wikipedia references for {region.name}. These are live results,
-        separate from our curated stories.
+        {region
+          ? `Search Wikipedia references for ${region.name}.${region.radiusKm ? ` Within ${region.radiusKm} km of the map center; pan or zoom to change the area.` : ""} These are live results, separate from our curated stories.`
+          : "Move the globe so land is visible at the map center to discover nearby references."}
       </p>
       <form
         onSubmit={(event) => {
@@ -77,17 +85,19 @@ export default memo(function ArticleSearch({
           <option value="wildfire">Wildfire</option>
           <option value="development">Urban development</option>
         </select>
-        <button type="submit" disabled={status === "loading"}>
-          {status === "loading" ? "Searching…" : "Search articles in region"}
+        <button type="submit" disabled={!region || status === "loading"}>
+          {status === "loading" ? "Searching…" : "Search articles in this area"}
         </button>
       </form>
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href={`https://www.google.com/search?tbm=nws&q=${encodeURIComponent(`${region.name} ${region.country} ${topic}`)}`}
-      >
-        Search news on the web ↗
-      </a>
+      {region && (
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href={`https://www.google.com/search?tbm=nws&q=${encodeURIComponent(`${region.name} ${region.country} ${topic}`)}`}
+        >
+          Search news on the web ↗
+        </a>
+      )}
       <p className="muted small">
         Article coordinates locate the subject, not an event boundary.
         Discovered pins appear in every year; results are not filtered by the
