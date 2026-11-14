@@ -63,7 +63,7 @@ export default function Timeline({
           onClick={togglePlayback}
           aria-label={isPlaying ? "Pause timeline" : "Play timeline"}
         >
-          {isPlaying ? "Ⅱ" : "▶"}
+          {isPlaying ? "❚❚" : "▶︎"}
         </button>
         <div className="timeline-track">
           <input
