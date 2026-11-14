@@ -9,6 +9,7 @@ interface AssistantPanelProps {
   startYear: number;
   endYear: number;
   messages: AssistantMessage[];
+  isAsking: boolean;
   onAsk: (question: string) => void;
 }
 
@@ -16,7 +17,7 @@ const SUGGESTIONS = [
   "What changed here?",
   "Which evidence is real?",
   "How much changed?",
-  "Explain the wildfire",
+  "Explain flood data availability",
 ];
 
 export default function AssistantPanel({
@@ -25,6 +26,7 @@ export default function AssistantPanel({
   startYear,
   endYear,
   messages,
+  isAsking,
   onAsk,
 }: AssistantPanelProps) {
   const [question, setQuestion] = useState("");
@@ -37,7 +39,7 @@ export default function AssistantPanel({
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const text = question.trim();
-    if (!text) return;
+    if (!text || isAsking) return;
     onAsk(text);
     setQuestion("");
   }
@@ -54,7 +56,7 @@ export default function AssistantPanel({
             Earth AI <span>✦</span>
           </h2>
         </div>
-        <span className="mock-pill">GUIDED DEMO</span>
+        <span className="mock-pill">CONTEXTUAL AI</span>
       </div>
       <div className="context-strip">
         {region?.name ?? "Choose a region"}
@@ -63,8 +65,11 @@ export default function AssistantPanel({
         </span>
       </div>
       <p className="demo-explanation">
-        Frontend demo · responses use curated stories and mock readings. No live
-        AI model is connected.
+        Answers use curated stories and available region data.{" "}
+        {region?.waterMonitoring
+          ? "Water measurements are still processing."
+          : "Water monitoring is not configured for this view."}{" "}
+        Check linked evidence before drawing conclusions.
       </p>
       <div
         className="assistant-conversation"
@@ -79,17 +84,31 @@ export default function AssistantPanel({
             <h3>Make sense of the change.</h3>
             <p>
               Ask about this region, follow the evidence, or explore what the
-              mock indicators mean.
+              available water data can tell us.
             </p>
           </div>
         )}
         {messages.map((message) => (
           <article key={message.id} className={`chat-message ${message.role}`}>
             <span className="chat-role">
-              {message.role === "user" ? "YOU" : "EARTH AI · DEMO"}
+              {message.role === "user"
+                ? "YOU"
+                : message.error
+                  ? "CONNECTION ISSUE"
+                  : "EARTH AI"}
             </span>
             {message.text.split("\n").map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
+              <p key={index}>
+                {paragraph
+                  .split(/(\*\*[^*]+\*\*)/g)
+                  .map((part, partIndex) =>
+                    part.startsWith("**") && part.endsWith("**") ? (
+                      <strong key={partIndex}>{part.slice(2, -2)}</strong>
+                    ) : (
+                      part
+                    ),
+                  )}
+              </p>
             ))}
             {message.sources && message.sources.length > 0 && (
               <SourceLinks
@@ -99,13 +118,14 @@ export default function AssistantPanel({
             )}
           </article>
         ))}
+        {isAsking && <p role="status">Earth AI is preparing an answer…</p>}
       </div>
       <div className="suggested-questions">
         {SUGGESTIONS.map((question) => (
           <button
             key={question}
             onClick={() => onAsk(question)}
-            disabled={!region}
+            disabled={!region || isAsking}
           >
             {question} ↗
           </button>
@@ -122,19 +142,19 @@ export default function AssistantPanel({
           maxLength={1000}
           onChange={(event) => setQuestion(event.target.value)}
           rows={2}
-          disabled={!region}
+          disabled={!region || isAsking}
         />
         <button
           type="submit"
-          disabled={!question.trim() || !region}
+          disabled={!question.trim() || !region || isAsking}
           aria-label="Send question"
         >
           ↑
         </button>
       </form>
       <p className="small muted assistant-note">
-        Sources and mock values stay visible. Your team's datasets can replace
-        the demo adapters.
+        AI can make mistakes. Story locations are approximate; annual imagery
+        may miss short events. No forecast results are connected yet.
       </p>
     </section>
   );

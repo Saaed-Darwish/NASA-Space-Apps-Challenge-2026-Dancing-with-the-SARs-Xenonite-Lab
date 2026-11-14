@@ -28,7 +28,7 @@ export default memo(function RegionSidebar({
       </button>
       <div className="section-label">
         <span>CURATED STUDY AREAS</span>
-        <span>0{regions.length}</span>
+        <span>{String(regions.length).padStart(2, "0")}</span>
       </div>
       <div className="region-list">
         {regions.map((region, index) => (
@@ -38,10 +38,17 @@ export default memo(function RegionSidebar({
             aria-pressed={selectedRegion?.id === region.id}
             onClick={() => onSelectRegion(region)}
           >
-            <span className="region-number">0{index + 1}</span>
+            <span className="region-number">
+              {String(index + 1).padStart(2, "0")}
+            </span>
             <span>
               <strong>{region.name}</strong>
               <small>{region.country}</small>
+              {region.floodDataStatus && (
+                <small className="region-data-state">
+                  Water Displacement Viewable
+                </small>
+              )}
             </span>
             <span className="region-arrow" aria-hidden="true">
               ↗
@@ -53,7 +60,7 @@ export default memo(function RegionSidebar({
         <span className="status-dot" /> CURATED CAMERA VIEW
         <p>
           {selectedRegion?.description ??
-            "Choose a study area to explore its simulated surface changes."}
+            "Choose a study area to explore its satellite views and sourced stories."}
         </p>
       </div>
       <button className="text-button" onClick={() => onSelectRegion(null)}>

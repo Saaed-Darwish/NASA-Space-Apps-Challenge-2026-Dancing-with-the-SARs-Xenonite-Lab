@@ -8,4 +8,6 @@ export interface Region {
   altitude: number;
   description: string;
   zoom_level: string;
+  floodDataStatus?: "processing";
+  waterMonitoring?: boolean;
 }

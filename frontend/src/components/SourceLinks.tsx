@@ -1,4 +1,5 @@
 import type { RegionStory, StorySource } from "../data/stories";
+import { storyTimelineLabel } from "../data/storyTimeline";
 
 interface SourceLinksProps {
   sources: StorySource[];
@@ -23,6 +24,7 @@ export default function SourceLinks({
             {source.publishedYear && `· ${source.publishedYear}`}
           </span>
           <strong>{source.title} ↗</strong>
+          {source.id && <small>Source [{source.id}]</small>}
           {source.publishedYear && source.publishedYear > observationYear && (
             <small>
               Retrospective source: published after the selected map year
@@ -42,12 +44,6 @@ export function StoryTiming({
   year: number;
 }) {
   return (
-    <span className="story-timing">
-      {year < story.firstYear
-        ? `Upcoming in this timeline · ${story.firstYear}`
-        : year === story.firstYear
-          ? "Event / development year"
-          : "Historical context · not a live incident"}
-    </span>
+    <span className="story-timing">{storyTimelineLabel(story, year)}</span>
   );
 }

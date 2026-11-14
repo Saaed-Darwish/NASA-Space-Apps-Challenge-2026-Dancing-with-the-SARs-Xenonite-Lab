@@ -553,6 +553,26 @@ input[type="range"] {
 .timeline-range {
   gap: 10px;
 }
+.timeline-reset {
+  align-self: flex-end;
+  flex-shrink: 0;
+  min-height: 28px;
+  padding: 5px 8px;
+  border: 1px solid #ffffff22;
+  border-radius: 5px;
+  background: #152533;
+  color: #d8e9e6;
+  font: inherit;
+  font-size: 11px;
+}
+.timeline-reset:hover {
+  background: #254052;
+  border-color: #83b5de;
+}
+.timeline-reset:focus-visible {
+  outline: 2px solid #9ae7d2;
+  outline-offset: 3px;
+}
 .timeline-range label {
   display: grid;
   gap: 4px;
@@ -902,9 +922,18 @@ input[type="range"] {
   color: #7f97a5;
   line-height: 1.7;
 }
-.story-list-item > span:last-child {
+.story-list-item > .story-arrow {
   margin-left: auto;
   color: #a8d6bd;
+}
+.story-item-content {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+}
+.curated-view-panel,
+.analysis-story {
+  text-align: left;
 }
 .story-preview {
   padding-top: 18px;
@@ -1461,6 +1490,7 @@ input[type="range"] {
     --map-right: calc(var(--edge) + var(--inspector) + 24px);
   }
   .workspace-analyze,
+  .workspace-forecast,
   .workspace-ai {
     --inspector: 420px;
   }
@@ -1522,6 +1552,7 @@ input[type="range"] {
     --inspector: 270px;
   }
   .workspace-analyze,
+  .workspace-forecast,
   .workspace-ai {
     --inspector: 330px;
   }
@@ -1541,6 +1572,7 @@ input[type="range"] {
     --panel-top: 112px;
   }
   .workspace-analyze,
+  .workspace-forecast,
   .workspace-ai {
     --inspector: 420px;
   }
@@ -1712,6 +1744,96 @@ textarea:focus-visible {
 /* Side docks leave the map available when their detail is not needed. */
 .right-dock {
   display: contents;
+}
+.data-status {
+  margin: 20px 0;
+  padding: 16px;
+  border: 1px solid #55d9ed45;
+  border-radius: 10px;
+  background: #55d9ed08;
+}
+.water-analysis-section {
+  margin: 24px 0;
+  padding: 20px 0;
+  border-block: 1px solid #ffffff18;
+}
+.water-analysis-section h2 {
+  margin: 10px 0;
+  font-size: 19px;
+}
+.forecast-empty {
+  margin: 24px 0;
+  padding: 28px 20px;
+  border: 1px dashed #7b98a766;
+  border-radius: 12px;
+  background: #ffffff03;
+  text-align: center;
+  color: #a5d2dc;
+}
+.forecast-empty svg {
+  margin: 0 auto 20px;
+}
+.forecast-empty h3 {
+  font-size: 17px;
+  color: #e5eff2;
+}
+.forecast-empty p {
+  font-size: 13px;
+  line-height: 1.75;
+  color: #b4c4cf;
+}
+.forecast-status {
+  display: grid;
+  gap: 14px;
+  margin: 24px 0;
+  font-size: 12px;
+}
+.forecast-status > div {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #ffffff12;
+}
+.forecast-status dt {
+  color: #b4c4cf;
+}
+.forecast-status dd {
+  margin: 0;
+  color: #d9e9ed;
+}
+.data-status strong {
+  color: #9be9f5;
+  font-size: 13px;
+}
+.data-status p {
+  color: #b4c4cf;
+  font-size: 12px;
+  line-height: 1.75;
+  margin: 10px 0 0;
+}
+.water-metrics {
+  grid-template-columns: minmax(0, 1fr);
+}
+.curated-camera {
+  padding: 18px 0;
+  margin: 18px 0;
+  border-block: 1px solid #ffffff18;
+}
+.curated-camera p {
+  color: #b4c4cf;
+  font-size: 13px;
+  line-height: 1.75;
+}
+.curated-view-panel .story-preview h4 {
+  margin: 18px 0 0;
+  font-size: 12px;
+  color: #d6e7ed;
+}
+.region-card .region-data-state {
+  color: #87dbe8;
+  font-size: 10px;
 }
 .dock-toggle {
   display: none;

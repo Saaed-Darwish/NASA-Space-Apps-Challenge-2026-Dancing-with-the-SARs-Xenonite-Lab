@@ -1,16 +1,35 @@
+import os
+from pathlib import Path
+from threading import BoundedSemaphore
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from dotenv import load_dotenv
+from assistant import ChatRequest, generate_answer
 
+load_dotenv(Path(__file__).parent / ".env")
+chat_slot = BoundedSemaphore(1)
 app = FastAPI(title="EarthPulse API", version="0.1.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=os.getenv("CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173,http://localhost:5174,http://127.0.0.1:5174").split(","),
     allow_credentials=True,
-    allow_methods=["GET"],
+    allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
+
+
+@app.post("/api/chat")
+def chat(body: ChatRequest) -> dict:
+    """Use a worker thread for blocking model inference, keeping health routes responsive."""
+    if not chat_slot.acquire(blocking=False):
+        raise HTTPException(429, "Earth AI is answering another question. Please try again shortly.")
+    try:
+        return generate_answer(body)
+    finally:
+        chat_slot.release()
 
 
 class Region(BaseModel):

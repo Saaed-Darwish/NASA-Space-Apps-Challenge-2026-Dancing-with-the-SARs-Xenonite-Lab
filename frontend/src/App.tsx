@@ -7,14 +7,14 @@ import {
   type CSSProperties,
 } from "react";
 import EarthGlobe from "./components/EarthGlobe";
-import LayerPanel from "./components/LayerPanel";
 import MapCaption from "./components/MapCaption";
 import RegionSidebar from "./components/RegionSidebar";
 import Timeline from "./components/Timeline";
-import StoryPanel from "./components/StoryPanel";
 import AnalysisPanel from "./components/AnalysisPanel";
 import AssistantPanel from "./components/AssistantPanel";
 import ArticleSearch from "./components/ArticleSearch";
+import ForecastPanel from "./components/ForecastPanel";
+import { storyMarkerOpacity } from "./data/storyTimeline";
 import type { DiscoveredArticle } from "./data/articleSearch";
 import {
   indicators,
@@ -25,16 +25,17 @@ import {
 } from "./data/demo";
 import { readingAtYear } from "./data/history";
 import { storiesForRegion, type RegionStory } from "./data/stories";
-import { answerDemoQuestion, type AssistantMessage } from "./data/assistant";
+import type { AssistantMessage } from "./data/assistant";
+import { askEarthAI } from "./data/earthAI";
 import useTimeline from "./hooks/useTimeline";
 import type { Region } from "./types/region";
 
-type WorkspaceMode = "explore" | "analyze" | "ai";
+type WorkspaceMode = "analyze" | "forecast" | "ai";
 const EMPTY_MESSAGES: AssistantMessage[] = [];
 
 export default function App() {
   const timeline = useTimeline();
-  const [mode, setMode] = useState<WorkspaceMode>("explore");
+  const [mode, setMode] = useState<WorkspaceMode>("analyze");
   const [leftCollapsed, setLeftCollapsed] = useState(false);
   const [rightCollapsed, setRightCollapsed] = useState(false);
   const [isDesktop, setIsDesktop] = useState(
@@ -46,66 +47,57 @@ export default function App() {
     media.addEventListener("change", update);
     return () => media.removeEventListener("change", update);
   }, []);
-  const [selectedRegion, setSelectedRegion] = useState<Region | null>(
-    regions.find((region) => region.id === "nusantara") ?? regions[0],
-  );
+  const [selectedRegion, setSelectedRegion] = useState<Region | null>(null);
   const [selectedStory, setSelectedStory] = useState<RegionStory | null>(null);
   const [articles, setArticles] = useState<DiscoveredArticle[]>([]);
   const [selectedArticle, setSelectedArticle] =
     useState<DiscoveredArticle | null>(null);
   const [showStoryMarkers, setShowStoryMarkers] = useState(true);
   const [focusRequest, setFocusRequest] = useState(0);
-  const [selectedIndicator, setSelectedIndicator] = useState<Indicator>("land");
+  const selectedIndicator: Indicator = "water";
   const [conversations, setConversations] = useState<
     Record<string, AssistantMessage[]>
   >({});
   const messageSequence = useRef(0);
+  const pendingRequest = useRef(false);
+  const [isAsking, setIsAsking] = useState(false);
   const leftDockRef = useRef<HTMLDivElement>(null);
   const appRef = useRef<HTMLElement>(null);
   const [overlaySettings, setOverlaySettings] = useState<OverlaySettings>({
-    land: { enabled: true, opacity: 65 },
     water: { enabled: true, opacity: 65 },
-    fire: { enabled: true, opacity: 65 },
   });
 
   const activeLayer = indicators[selectedIndicator];
   const observationYear = Math.floor(timeline.time);
-  const regionalReading = selectedRegion
-    ? readingAtYear(
-        readings[selectedRegion.id][selectedIndicator],
-        selectedIndicator,
-        timeline.time,
-      )
+  const waterReading = selectedRegion
+    ? readings[selectedRegion.id]?.water
+    : null;
+  const regionalReading = waterReading
+    ? readingAtYear(waterReading, selectedIndicator, timeline.time)
     : null;
   const contextStory =
     selectedStory ??
-    (selectedRegion ? storiesForRegion(selectedRegion.id)[0] : null);
+    (selectedRegion
+      ? (storiesForRegion(selectedRegion.id).find(
+          (story) => storyMarkerOpacity(story, timeline.time) > 0,
+        ) ?? storiesForRegion(selectedRegion.id)[0])
+      : null);
   const conversationKey = selectedRegion?.id ?? "global";
   const themeStyle = { "--accent": activeLayer.color } as CSSProperties;
 
   const revealStories = useCallback(() => {
-    setLeftCollapsed(false);
-    const dock = leftDockRef.current;
-    const story = dock?.querySelector<HTMLElement>(".story-panel");
-    if (!dock || !story) return;
-    if (window.matchMedia("(min-width: 1001px)").matches) {
-      dock.scrollTo({ top: story.offsetTop, behavior: "smooth" });
-    } else {
-      story.scrollIntoView({ block: "nearest", behavior: "smooth" });
-    }
+    setMode("analyze");
+    setRightCollapsed(false);
   }, []);
 
   useEffect(() => {
-    if (selectedStory && mode === "explore") revealStories();
-    if (
-      mode !== "explore" &&
-      window.matchMedia("(max-width: 1000px)").matches
-    ) {
+    if (selectedStory && mode === "analyze") setRightCollapsed(false);
+    if (window.matchMedia("(max-width: 1000px)").matches) {
       appRef.current
         ?.querySelector(".workspace-panel")
         ?.scrollIntoView({ block: "start", behavior: "smooth" });
     }
-  }, [selectedStory, focusRequest, mode, revealStories]);
+  }, [selectedStory, focusRequest, mode]);
 
   function updateOverlay(
     indicator: Indicator,
@@ -119,10 +111,25 @@ export default function App() {
 
   const selectRegion = useCallback((region: Region | null) => {
     setSelectedArticle(null);
-    if (region?.id === "manchar") setSelectedIndicator("water");
     setSelectedRegion(region);
+    setMode((previous) =>
+      previous === "forecast" && !region?.waterMonitoring
+        ? "analyze"
+        : previous,
+    );
     setSelectedStory(null);
     setFocusRequest((previous) => previous + 1);
+  }, []);
+
+  const focusVisibleRegion = useCallback((region: Region | null) => {
+    setSelectedRegion(region);
+    setMode((previous) =>
+      previous === "forecast" && !region?.waterMonitoring
+        ? "analyze"
+        : previous,
+    );
+    setSelectedArticle(null);
+    setSelectedStory(null);
   }, []);
 
   const regionalArticles = useMemo(
@@ -147,10 +154,17 @@ export default function App() {
   }, []);
 
   function selectStory(story: RegionStory) {
+    setMode("analyze");
+    setRightCollapsed(false);
     setSelectedArticle(null);
     const region = regions.find((candidate) => candidate.id === story.regionId);
     if (!region) return;
     setSelectedRegion(region);
+    setMode((previous) =>
+      previous === "forecast" && !region?.waterMonitoring
+        ? "analyze"
+        : previous,
+    );
     setSelectedStory(story);
     setShowStoryMarkers(true);
     timeline.setComparisonRange(
@@ -161,45 +175,61 @@ export default function App() {
     setFocusRequest((previous) => previous + 1);
   }
 
-  function compareStory(story: RegionStory) {
-    selectStory(story);
-    timeline.setComparisonRange(
-      story.beforeYear,
-      story.afterYear,
-      story.beforeYear,
-    );
-    // A clean satellite comparison is the starting point; users can re-enable any layer.
-    setOverlaySettings((previous) => ({
-      land: { ...previous.land, enabled: false },
-      water: { ...previous.water, enabled: false },
-      fire: { ...previous.fire, enabled: false },
-    }));
-  }
-
-  function askQuestion(question: string) {
+  async function askQuestion(question: string) {
     const text = question.trim().slice(0, 1000);
-    if (!text) return;
-    const answer = answerDemoQuestion(text, {
-      region: selectedRegion,
-      story: contextStory ?? null,
-      startYear: timeline.startYear,
-      endYear: timeline.endYear,
-      year: observationYear,
-      indicator: selectedIndicator,
-      reading: selectedRegion
-        ? readings[selectedRegion.id][selectedIndicator]
-        : null,
-    });
+    if (!text || !selectedRegion || pendingRequest.current) return;
+    pendingRequest.current = true;
+    setIsAsking(true);
+    const key = conversationKey;
     const questionId = String(++messageSequence.current);
     const answerId = String(++messageSequence.current);
     setConversations((previous) => ({
       ...previous,
-      [conversationKey]: [
-        ...(previous[conversationKey] ?? []),
-        { id: questionId, role: "user", text },
-        { id: answerId, role: "assistant", ...answer, observationYear },
-      ],
+      [key]: [...(previous[key] ?? []), { id: questionId, role: "user", text }],
     }));
+    try {
+      const answer = await askEarthAI({
+        question: text,
+        region_id: selectedRegion.id,
+        story_id: contextStory?.id,
+        year: observationYear,
+        start_year: timeline.startYear,
+        end_year: timeline.endYear,
+        history: (conversations[key] ?? [])
+          .filter((message) => !message.error)
+          .slice(-8)
+          .map((message) => ({
+            role: message.role,
+            content: message.text.slice(0, 4000),
+          })),
+      });
+      setConversations((previous) => ({
+        ...previous,
+        [key]: [
+          ...(previous[key] ?? []),
+          { id: answerId, role: "assistant", ...answer, observationYear },
+        ],
+      }));
+    } catch (error) {
+      setConversations((previous) => ({
+        ...previous,
+        [key]: [
+          ...(previous[key] ?? []),
+          {
+            id: answerId,
+            role: "assistant",
+            error: true,
+            text:
+              error instanceof Error
+                ? error.message
+                : "Earth AI is unavailable. Please try again.",
+          },
+        ],
+      }));
+    } finally {
+      pendingRequest.current = false;
+      setIsAsking(false);
+    }
   }
 
   function openAssistant() {
@@ -221,6 +251,7 @@ export default function App() {
         regions={regions}
         selectedRegion={selectedRegion}
         onSelectRegion={selectRegion}
+        onViewportFocus={focusVisibleRegion}
         selectedStory={selectedStory}
         onSelectStory={selectStory}
         showStoryMarkers={showStoryMarkers}
@@ -235,40 +266,36 @@ export default function App() {
           <span className="brand-mark">◉</span> Earth<span>Pulse</span>
         </a>
         <nav className="workspace-nav" aria-label="Main navigation">
-          {(["explore", "analyze", "ai"] as WorkspaceMode[]).map((view) => (
-            <button
-              key={view}
-              aria-current={mode === view ? "page" : undefined}
-              onClick={() => {
-                setMode(view);
-                setRightCollapsed(false);
-              }}
-            >
-              {view === "ai"
-                ? "✦ Earth AI"
-                : view === "analyze"
-                  ? "Analyze"
-                  : "Explore"}
-            </button>
-          ))}
+          {(["analyze", "forecast", "ai"] as WorkspaceMode[])
+            .filter(
+              (view) => view !== "forecast" || selectedRegion?.waterMonitoring,
+            )
+            .map((view) => (
+              <button
+                key={view}
+                aria-current={mode === view ? "page" : undefined}
+                onClick={() => {
+                  setMode(view);
+                  setRightCollapsed(false);
+                }}
+              >
+                {view === "ai"
+                  ? "✦ Earth AI"
+                  : view === "analyze"
+                    ? "Analyze"
+                    : "Forecast"}
+              </button>
+            ))}
         </nav>
         <span className="demo-badge">REAL IMAGERY / DEMO ANALYSIS</span>
       </header>
 
       <button
         className="dock-toggle dock-toggle-left"
-        aria-label={
-          leftCollapsed
-            ? "Show regions and stories"
-            : "Hide regions and stories"
-        }
+        aria-label={leftCollapsed ? "Show regions" : "Hide regions"}
         aria-expanded={!leftCollapsed}
         aria-controls="region-dock"
-        title={
-          leftCollapsed
-            ? "Show regions and stories"
-            : "Hide regions and stories"
-        }
+        title={leftCollapsed ? "Show regions" : "Hide regions"}
         onClick={() => setLeftCollapsed((previous) => !previous)}
       >
         <svg
@@ -294,20 +321,6 @@ export default function App() {
           selectedRegion={selectedRegion}
           onSelectRegion={selectRegion}
           onViewStories={revealStories}
-        />
-        <StoryPanel
-          region={selectedRegion}
-          year={observationYear}
-          selectedStory={selectedStory}
-          onSelectStory={selectStory}
-          onCompare={compareStory}
-          onAnalyze={() => {
-            setMode("analyze");
-            setRightCollapsed(false);
-          }}
-          onAskAI={openAssistant}
-          showMarkers={showStoryMarkers}
-          onShowMarkersChange={setShowStoryMarkers}
         />
         {selectedRegion && (
           <ArticleSearch
@@ -347,28 +360,26 @@ export default function App() {
         id="workspace-dock"
         inert={isDesktop && rightCollapsed}
       >
-        {mode === "explore" && (
-          <LayerPanel
-            selectedIndicator={selectedIndicator}
-            onSelectIndicator={setSelectedIndicator}
-            overlaySettings={overlaySettings}
-            onUpdateOverlay={updateOverlay}
-            reading={regionalReading}
-            observationYear={observationYear}
-          />
-        )}
         {mode === "analyze" && (
           <AnalysisPanel
             region={selectedRegion}
             story={contextStory ?? null}
-            year={observationYear}
+            time={timeline.time}
             startYear={timeline.startYear}
             endYear={timeline.endYear}
             onSelectStory={selectStory}
-            onCompare={compareStory}
             onShowYear={timeline.seek}
+            onRefocus={selectRegion}
             onAskAI={openAssistant}
+            showMarkers={showStoryMarkers}
+            onShowMarkersChange={setShowStoryMarkers}
+            overlaySettings={overlaySettings}
+            onUpdateOverlay={updateOverlay}
+            reading={regionalReading}
           />
+        )}
+        {mode === "forecast" && selectedRegion?.waterMonitoring && (
+          <ForecastPanel region={selectedRegion} />
         )}
         {mode === "ai" && (
           <AssistantPanel
@@ -378,17 +389,21 @@ export default function App() {
             startYear={timeline.startYear}
             endYear={timeline.endYear}
             messages={conversations[conversationKey] ?? EMPTY_MESSAGES}
+            isAsking={isAsking}
             onAsk={askQuestion}
           />
         )}
       </div>
-      <Timeline {...timeline} />
+      <Timeline
+        {...timeline}
+        togglePlayback={() => timeline.togglePlayback(Boolean(contextStory))}
+      />
       <MapCaption selectedRegion={selectedRegion} onRefocus={selectRegion} />
       <footer className="map-footer">
         <span>
           DRAG TO EXPLORE <b>·</b> SCROLL TO ZOOM
         </span>
-        <span>REAL IMAGERY · SOURCED STORIES · MOCK METRICS & AI</span>
+        <span>REAL IMAGERY · SOURCED STORIES · EARTH AI</span>
       </footer>
     </main>
   );

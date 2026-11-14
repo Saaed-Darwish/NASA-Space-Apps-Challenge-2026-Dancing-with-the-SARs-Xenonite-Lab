@@ -42,8 +42,8 @@ export default function useTimeline() {
     setTime(Math.max(startYear, Math.min(endYear, year)));
   }
 
-  function togglePlayback() {
-    if (!isPlaying && time >= endYear) setTime(startYear);
+  function togglePlayback(restartFromStart = false) {
+    if (!isPlaying && (restartFromStart || time >= endYear)) setTime(startYear);
     setIsPlaying((previous) => !previous);
   }
 

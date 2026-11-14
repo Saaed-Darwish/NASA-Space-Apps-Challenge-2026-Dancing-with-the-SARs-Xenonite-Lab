@@ -1,4 +1,4 @@
-import { CURRENT_YEAR, LAST_IMAGERY_YEAR, YEARS } from "../data/imagery";
+import { CURRENT_YEAR, FIRST_YEAR, LAST_IMAGERY_YEAR, YEARS } from "../data/imagery";
 import type useTimeline from "../hooks/useTimeline";
 
 type TimelineProps = ReturnType<typeof useTimeline>;
@@ -12,6 +12,7 @@ export default function Timeline({
   togglePlayback,
   changeStartYear,
   changeEndYear,
+  setComparisonRange,
 }: TimelineProps) {
   const previousYear = Math.floor(time);
   const nextYear = Math.min(previousYear + 1, endYear);
@@ -31,6 +32,15 @@ export default function Timeline({
           </p>
         </div>
         <div className="timeline-range">
+          <button
+            type="button"
+            className="timeline-reset"
+            onClick={() => setComparisonRange(FIRST_YEAR, LAST_IMAGERY_YEAR, time)}
+            title={`Reset timeline to ${FIRST_YEAR}–${LAST_IMAGERY_YEAR}`}
+            aria-label={`Reset timeline to ${FIRST_YEAR}–${LAST_IMAGERY_YEAR}`}
+          >
+            Reset Range
+          </button>
           <label>
             From{" "}
             <select
@@ -60,7 +70,7 @@ export default function Timeline({
       <div className="timeline-controls">
         <button
           className="play-button"
-          onClick={togglePlayback}
+          onClick={() => togglePlayback()}
           aria-label={isPlaying ? "Pause timeline" : "Play timeline"}
         >
           {isPlaying ? "❚❚" : "▶︎"}

@@ -1,6 +1,10 @@
+import { additionalStories } from "./additionalStories";
+
 export type StoryCategory = "urban" | "fire" | "water";
 
 export interface StorySource {
+  /** Citation identifier returned by the AI backend. */
+  id?: string;
   title: string;
   publisher: string;
   url: string;
@@ -13,6 +17,8 @@ export interface RegionStory {
   title: string;
   category: StoryCategory;
   firstYear: number;
+  /** Exclusive end of this editorial map window, not a measured recovery date. */
+  mapEndYear?: number;
   dateLabel: string;
   latitude: number;
   longitude: number;
@@ -39,6 +45,7 @@ export const stories: RegionStory[] = [
     title: "Lake Manchar overflows",
     category: "water",
     firstYear: 2022,
+    mapEndYear: 2023,
     dateLabel: "Monsoon flooding · September 2022",
     latitude: 26.42,
     longitude: 67.68,
@@ -50,7 +57,7 @@ export const stories: RegionStory[] = [
     lookFor:
       "Inspect the lake shoreline and surrounding floodplain. Open NASA's dated satellite comparison to see the event's flood extent, then explore the annual imagery for broader landscape context.",
     limitation:
-      "Annual cloud-free mosaics combine different acquisition dates and may exclude peak flooding. The simulated water overlay is not a measured flood footprint or an inundation forecast.",
+      "Annual cloud-free mosaics combine different acquisition dates and may exclude peak flooding. This story's map window is editorial context, not a measured flood footprint or a recovery assessment.",
     sources: [
       {
         title: "Lake Manchar is Overflowing",
@@ -131,7 +138,7 @@ export const stories: RegionStory[] = [
     lookFor:
       "Compare the shoreline, quay edges, and large paved yards. Distinguish newly formed land from facilities added on land that already existed.",
     limitation:
-      "A shoreline comparison needs tidal and acquisition context. The colored water overlay here is simulated and is not a reclamation measurement.",
+      "A shoreline comparison needs tidal and acquisition context. This story does not measure reclaimed area or classify land and water boundaries.",
     sources: [
       {
         title: "First Phase of Tuas Port Reclamation Works Completes",
@@ -153,6 +160,7 @@ export const stories: RegionStory[] = [
     title: "Jasper's 2024 wildfire",
     category: "fire",
     firstYear: 2024,
+    mapEndYear: 2025,
     dateLabel: "Wildfire began July 22, 2024",
     latitude: 52.873,
     longitude: -118.082,
@@ -164,7 +172,7 @@ export const stories: RegionStory[] = [
     lookFor:
       "Compare vegetation patterns around the town and surrounding valleys, using the official account to contextualize possible burn scars and recovery.",
     limitation:
-      "The mock wildfire layer does not map this incident's damaged forest. Burn severity and damaged-building counts require separate validated datasets.",
+      "This story does not map damaged forest. Burn severity and damaged-building counts require separate validated datasets.",
     sources: [
       {
         title: "Jasper wildfire response and recovery",
@@ -180,6 +188,7 @@ export const stories: RegionStory[] = [
     title: "Wennington: fire at the urban edge",
     category: "fire",
     firstYear: 2022,
+    mapEndYear: 2023,
     dateLabel: "Incident reported July 19, 2022",
     latitude: 51.506,
     longitude: 0.222,
@@ -207,6 +216,7 @@ export const stories: RegionStory[] = [
     title: "LNU Lightning Complex",
     category: "fire",
     firstYear: 2020,
+    mapEndYear: 2021,
     dateLabel: "Fires began August 2020",
     latitude: 38.52,
     longitude: -122.19,
@@ -232,6 +242,7 @@ export const stories: RegionStory[] = [
       },
     ],
   },
+  ...additionalStories,
 ];
 
 export function storiesForRegion(regionId: string | undefined) {

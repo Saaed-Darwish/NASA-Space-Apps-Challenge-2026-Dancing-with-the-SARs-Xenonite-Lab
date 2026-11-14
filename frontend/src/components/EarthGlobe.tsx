@@ -2,12 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import {
   Entity,
   Cartesian3,
+  Cartesian2,
+  Cartographic,
+  Math as CesiumMath,
   Color,
   ConstantProperty,
   ScreenSpaceEventHandler,
   ScreenSpaceEventType,
   Viewer,
-  type Cartesian2,
   type Entity as CesiumEntity,
 } from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
@@ -17,7 +19,9 @@ import {
   addRegionMarkers,
   focusCamera,
   setInitialCameraView,
+  trackMarkerVisibility,
 } from "../globe/scene";
+import { regionForView } from "../globe/focus";
 import {
   addHistoricalImagery,
   type HistoricalImagery,
@@ -30,6 +34,8 @@ import type { Region } from "../types/region";
 
 import { stories, type RegionStory } from "../data/stories";
 import { addStoryMarkers, isStoryVisible } from "../globe/storyMarkers";
+import { storyMarkerOpacity } from "../data/storyTimeline";
+import { PIN_LABEL_BACKGROUND, PIN_LABEL_TEXT } from "../globe/markerStyle";
 import type { DiscoveredArticle } from "../data/articleSearch";
 
 interface EarthGlobeProps {
@@ -47,6 +53,7 @@ interface EarthGlobeProps {
   regions: Region[];
   selectedRegion: Region | null;
   onSelectRegion: (region: Region) => void;
+  onViewportFocus: (region: Region | null) => void;
 }
 
 export default function EarthGlobe({
@@ -64,7 +71,20 @@ export default function EarthGlobe({
   regions,
   selectedRegion,
   onSelectRegion,
+  onViewportFocus,
 }: EarthGlobeProps) {
+  const viewFocusRef = useRef(onViewportFocus);
+  const focusedRegionRef = useRef(selectedRegion);
+  const handledFocusRequest = useRef<number | null>(null);
+  const cameraFlight = useRef(false);
+  const storyFocusRef = useRef(selectedStory);
+  useEffect(() => {
+    storyFocusRef.current = selectedStory;
+  }, [selectedStory]);
+  useEffect(() => {
+    viewFocusRef.current = onViewportFocus;
+    focusedRegionRef.current = selectedRegion;
+  }, [onViewportFocus, selectedRegion]);
   const storyMarkersRef = useRef<Map<string, CesiumEntity>>(new Map());
   const articlesRef = useRef(articles);
   const onSelectArticleRef = useRef(onSelectArticle);
@@ -113,6 +133,44 @@ export default function EarthGlobe({
     viewer.scene.globe.showGroundAtmosphere = true;
     setInitialCameraView(viewer);
     imageryRef.current = addHistoricalImagery(viewer, setImageryError);
+    const removeVisibilityListener = trackMarkerVisibility(viewer);
+    const removeCameraListener = viewer.camera.moveEnd.addEventListener(() => {
+      if (cameraFlight.current) return;
+      const canvas = viewer.scene.canvas;
+      const center = viewer.camera.pickEllipsoid(
+        new Cartesian2(canvas.clientWidth / 2, canvas.clientHeight / 2),
+        viewer.scene.globe.ellipsoid,
+      );
+      const location = center ? Cartographic.fromCartesian(center) : null;
+      const story = storyFocusRef.current;
+      // A story may lie outside its region's camera center. Keep its context while
+      // inspecting the story, then let normal zoom-out/pan focus rules take over.
+      if (
+        center &&
+        story &&
+        focusedRegionRef.current?.id === story.regionId &&
+        viewer.camera.positionCartographic.height <=
+          Math.max(80_000, story.cameraAltitude * 3) &&
+        Cartesian3.distance(
+          center,
+          Cartesian3.fromDegrees(story.longitude, story.latitude),
+        ) <= Math.max(20_000, viewer.camera.positionCartographic.height)
+      )
+        return;
+      const next = location
+        ? regionForView(
+            regionsRef.current,
+            focusedRegionRef.current,
+            CesiumMath.toDegrees(location.latitude),
+            CesiumMath.toDegrees(location.longitude),
+            viewer.camera.positionCartographic.height,
+          )
+        : null;
+      if (next?.id !== focusedRegionRef.current?.id) {
+        focusedRegionRef.current = next;
+        viewFocusRef.current(next);
+      }
+    });
     const removeTileListener =
       viewer.scene.globe.tileLoadProgressEvent.addEventListener(
         (pendingTiles: number) => setIsLoadingTiles(pendingTiles > 0),
@@ -144,6 +202,9 @@ export default function EarthGlobe({
     setIsViewerReady(true);
 
     return () => {
+      removeVisibilityListener();
+      removeCameraListener();
+      handledFocusRequest.current = null;
       removeTileListener();
       clickHandler.destroy();
       overlaysRef.current?.destroy();
@@ -159,7 +220,7 @@ export default function EarthGlobe({
     const viewer = viewerRef.current;
     if (!isViewerReady || !viewer) return;
     viewer.entities.removeAll();
-    addRegionMarkers(viewer, regions, "land");
+    addRegionMarkers(viewer, regions, "water");
     storyMarkersRef.current = addStoryMarkers(viewer);
   }, [regions, isViewerReady]);
 
@@ -200,7 +261,14 @@ export default function EarthGlobe({
 
   useEffect(() => {
     const viewer = viewerRef.current;
-    if (!isViewerReady || !viewer || !selectedRegion) return;
+    if (
+      !isViewerReady ||
+      !viewer ||
+      !selectedRegion ||
+      !selectedRegion.waterMonitoring ||
+      selectedRegion.floodDataStatus === "processing"
+    )
+      return;
     const collection = createOverlayCollection(
       viewer,
       selectedRegion,
@@ -240,9 +308,7 @@ export default function EarthGlobe({
       if (!marker?.label || !marker.point) continue;
       const isSelected = region.id === selectedRegion?.id;
       marker.label.text = new ConstantProperty(
-        isSelected
-          ? `${region.name} · ${frameYear} satellite mosaic`
-          : region.name,
+        isSelected ? `${region.name} · ${frameYear}` : region.name,
       );
       marker.point.color = new ConstantProperty(
         Color.fromCssColorString(
@@ -256,6 +322,9 @@ export default function EarthGlobe({
   useEffect(() => {
     const viewer = viewerRef.current;
     if (isViewerReady && viewer) {
+      // Viewport selection updates context only; explicit clicks/refocus move the camera.
+      if (handledFocusRequest.current === focusRequest) return;
+      handledFocusRequest.current = focusRequest;
       const target =
         selectedArticle && selectedRegion
           ? {
@@ -272,7 +341,9 @@ export default function EarthGlobe({
                 altitude: selectedStory.cameraAltitude,
               }
             : selectedRegion;
-      focusCamera(viewer, target);
+      focusCamera(viewer, target, (moving) => {
+        cameraFlight.current = moving;
+      });
     }
   }, [
     selectedRegion,
@@ -291,13 +362,26 @@ export default function EarthGlobe({
       marker.show = isStoryVisible(
         story,
         selectedRegion?.id,
-        frameYear,
+        time,
         showStoryMarkers,
       );
+      if (!marker.show) continue;
+      const alpha = storyMarkerOpacity(story, time);
       if (marker.billboard)
-        marker.billboard.scale = new ConstantProperty(
-          selectedStory?.id === story.id ? 1.2 : 1,
+        marker.billboard.color = new ConstantProperty(
+          Color.WHITE.withAlpha(alpha),
         );
+      if (marker.label) {
+        marker.label.fillColor = new ConstantProperty(
+          PIN_LABEL_TEXT.withAlpha(alpha),
+        );
+        marker.label.outlineColor = new ConstantProperty(
+          Color.BLACK.withAlpha(alpha),
+        );
+        marker.label.backgroundColor = new ConstantProperty(
+          PIN_LABEL_BACKGROUND.withAlpha(alpha * PIN_LABEL_BACKGROUND.alpha),
+        );
+      }
     }
     viewer.scene.requestRender();
   }, [
@@ -305,7 +389,7 @@ export default function EarthGlobe({
     isViewerReady,
     selectedRegion,
     selectedStory,
-    frameYear,
+    time,
     showStoryMarkers,
   ]);
 

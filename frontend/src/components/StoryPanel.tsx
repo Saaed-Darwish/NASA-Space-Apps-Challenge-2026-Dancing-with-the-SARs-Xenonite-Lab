@@ -5,13 +5,13 @@ import {
 } from "../data/stories";
 import type { Region } from "../types/region";
 import SourceLinks, { StoryTiming } from "./SourceLinks";
+import { storyTimelineLabel } from "../data/storyTimeline";
 
 interface StoryPanelProps {
   region: Region | null;
   year: number;
   selectedStory: RegionStory | null;
   onSelectStory: (story: RegionStory) => void;
-  onCompare: (story: RegionStory) => void;
   onAnalyze: () => void;
   onAskAI: () => void;
   showMarkers: boolean;
@@ -23,7 +23,6 @@ export default function StoryPanel({
   year,
   selectedStory,
   onSelectStory,
-  onCompare,
   onAnalyze,
   onAskAI,
   showMarkers,
@@ -56,12 +55,9 @@ export default function StoryPanel({
             </span>
             <span>
               <strong>{story.title}</strong>
-              <small>
-                {story.firstYear} · {storyCategories[story.category].label}
-                {year < story.firstYear ? " · not yet on map" : ""}
-              </small>
+              <small>{storyTimelineLabel(story, year)}</small>
             </span>
-            <span>↗</span>
+            <span className="story-arrow">↗</span>
           </button>
         ))}
       </div>
@@ -71,9 +67,6 @@ export default function StoryPanel({
           <h3>{selectedStory.title}</h3>
           <p>{selectedStory.summary}</p>
           <div className="story-actions">
-            <button onClick={() => onCompare(selectedStory)}>
-              View before / after
-            </button>
             <button onClick={onAnalyze}>Analyze</button>
             <button onClick={onAskAI}>Ask AI ↗</button>
           </div>
@@ -82,7 +75,9 @@ export default function StoryPanel({
       )}
       {!selectedStory && (
         <p className="muted small">
-          Select a story here or click its colored marker on the globe.
+          {regionStories.length
+            ? "Select a story here or click its marker on the globe."
+            : "No curated story for this area yet. Search regional references below for context."}
         </p>
       )}
     </section>

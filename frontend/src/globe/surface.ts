@@ -31,61 +31,16 @@ function surfaceSignal(
   const age = year - BASELINE_YEAR;
   const warpX = x + 0.1 * Math.sin(y * 13 + seed);
   const warpY = y + 0.08 * Math.sin(x * 11 - seed);
-  const detail =
-    0.5 + 0.5 * Math.sin(x * 43 + Math.sin(y * 29)) * Math.cos(y * 37 + seed);
-  if (indicator === "land") {
-    const subsidence = gaussian(
-      warpX,
-      warpY,
-      -0.25 + age * 0.018,
-      0.12,
-      0.48 + age * 0.02,
-      0.68,
-    );
-    const uplift = gaussian(warpX, warpY, 0.36, -0.22 - age * 0.015, 0.4, 0.55);
-    return (
-      (uplift - subsidence) * age * 0.15 + ((detail - 0.5) * 0.07 * age) / 6
-    );
-  }
-  if (indicator === "water") {
-    const river = 0.2 * Math.sin(y * 6 + seed) + 0.08 * Math.sin(y * 15);
-    const distance = Math.abs(warpX - river);
-    const originalChannel = Math.exp(-((distance / 0.075) ** 2));
-    const seasonalChannel = Math.exp(
-      -((distance / (0.075 + age * 0.014)) ** 2),
-    );
-    const wetland = gaussian(
-      warpX,
-      warpY,
-      0.22,
-      -0.42,
-      0.45 + age * 0.025,
-      0.25,
-    );
-    const drying = gaussian(warpX, warpY, -0.38, 0.42, 0.25, 0.3);
-    return (
-      (seasonalChannel - originalChannel) * 0.8 +
-      wetland * age * 0.075 -
-      drying * age * 0.09
-    );
-  }
-  const firstScar = gaussian(warpX, warpY, -0.3, 0.25, 0.3 + age * 0.025, 0.38);
-  const secondScar = gaussian(
-    warpX,
-    warpY,
-    0.3,
-    -0.3,
-    0.32,
-    0.38 + age * 0.015,
-  );
-  const recovery = Math.max(0.18, 1 - Math.max(0, age - 3) * 0.15);
+  const river = 0.2 * Math.sin(y * 6 + seed) + 0.08 * Math.sin(y * 15);
+  const distance = Math.abs(warpX - river);
+  const originalChannel = Math.exp(-((distance / 0.075) ** 2));
+  const seasonalChannel = Math.exp(-((distance / (0.075 + age * 0.014)) ** 2));
+  const wetland = gaussian(warpX, warpY, 0.22, -0.42, 0.45 + age * 0.025, 0.25);
+  const drying = gaussian(warpX, warpY, -0.38, 0.42, 0.25, 0.3);
   return (
-    Math.min(
-      1,
-      firstScar * Math.min(age / 3, 1) * recovery +
-        secondScar * Math.max(0, age - 2) * 0.22,
-    ) *
-    (0.82 + detail * 0.18)
+    (seasonalChannel - originalChannel) * 0.8 +
+    wetland * age * 0.075 -
+    drying * age * 0.09
   );
 }
 
@@ -140,8 +95,7 @@ export function createSurfaceTexture(
         Math.min(1, (1 - Math.max(Math.abs(x), Math.abs(y))) / 0.22),
       );
       const visibility = Math.min(1, Math.max(0, (magnitude - 0.035) * 3.5));
-      const palettePosition =
-        indicator === "fire" ? signal : 0.5 + signal * 0.5;
+      const palettePosition = 0.5 + signal * 0.5;
       const colorOffset =
         Math.round(
           Math.max(0, Math.min(1, palettePosition)) * (COLOR_STEPS - 1),

@@ -14,6 +14,8 @@ export interface AssistantMessage {
   text: string;
   sources?: StorySource[];
   observationYear?: number;
+  model?: string;
+  error?: boolean;
 }
 
 export interface AssistantContext {
@@ -59,7 +61,13 @@ export function answerDemoQuestion(
       (source) => source.publishedYear && source.publishedYear > year,
     );
     return {
-      text: `${subject}\n${timelineContext}\n${story?.summary ?? ""}\nThe EOX annual satellite imagery is real. The colored land, water, and wildfire layers, numerical snapshots, and trend charts are simulated. Story markers link to published accounts; their positions are approximate locators, not measured boundaries.\n${story ? story.limitation : "No measured change classification is connected yet."}${retrospective ? " A linked source was published after the selected map year and provides retrospective context." : ""}\nNo calibrated confidence score is available in this demo.`,
+      text: `${subject}\n${timelineContext}\n${story?.summary ?? ""}\nThe EOX annual satellite imagery is real. The illustrative water layer, numerical snapshots, and trend charts are simulated. Story markers link to published accounts; their positions are approximate locators, not measured boundaries.\n${story ? story.limitation : "No measured change classification is connected yet."}${retrospective ? " A linked source was published after the selected map year and provides retrospective context." : ""}\nNo calibrated confidence score is available in this demo.`,
+      sources,
+    };
+  }
+  if (region.floodDataStatus === "processing") {
+    return {
+      text: `${subject}\nThe selected map year is ${year}. ${region.description}\nThe EOX annual imagery is available for landscape context. Flood footprints, event dates, and area statistics are awaiting the backend connection, so I cannot report measured water change yet. Annual mosaics may miss peak flooding.`,
       sources,
     };
   }
@@ -68,17 +76,16 @@ export function answerDemoQuestion(
       normalized,
     )
   ) {
-    const metricIndicator = /fire|burn/.test(normalized)
-      ? "fire"
-      : /water|flood/.test(normalized)
-        ? "water"
-        : /land|displacement|subsiden/.test(normalized)
-          ? "land"
-          : indicator;
+    if (!region.waterMonitoring)
+      return {
+        text: `${subject}\nThis curated view provides satellite comparisons and sourced stories. Water monitoring is not configured here, and no measured change statistics are available. ${story?.summary ?? "Select a story for the published context."}`,
+        sources,
+      };
+    const metricIndicator = "water";
     const metricReading = readings[region.id]?.[metricIndicator] ?? reading;
     if (!metricReading)
       return {
-        text: `${subject}\nSelect an indicator to inspect its illustrative reading. No measured values have been connected yet.`,
+        text: `${subject}\nFlood data for this region is being processed. No measured extent or statistics have been connected yet.`,
         sources,
       };
     const before = readingAtYear(metricReading, metricIndicator, startYear);
@@ -95,7 +102,7 @@ export function answerDemoQuestion(
         sources,
       };
     return {
-      text: `${subject}\nThe selected story is not a verified wildfire incident. Enabling the mock wildfire layer does not establish that a fire occurred here. ${story?.summary ?? "Choose a documented fire story to inspect its sources."}`,
+      text: `${subject}\nThe selected story is not a verified wildfire incident. This explorer supports water overlays only; no wildfire layer is available. ${story?.summary ?? "Choose a documented fire story to inspect its sources."}`,
       sources,
     };
   }
@@ -105,7 +112,7 @@ export function answerDemoQuestion(
     )
   ) {
     return {
-      text: `${subject}\n${timelineContext}\n${story?.summary ?? "This region is available for annual satellite comparisons."}\nWhat to look for: ${story?.lookFor ?? "Compare persistent changes in structures, vegetation, or water boundaries across the selected years."}\n${story?.limitation ?? "Image appearance alone does not establish the cause or amount of a change."}\nUse View before / after to inspect the story's suggested pair with simulated overlays hidden.`,
+      text: `${subject}\n${timelineContext}\n${story?.summary ?? "This region is available for annual satellite comparisons."}\nWhat to look for: ${story?.lookFor ?? "Compare persistent changes in structures, vegetation, or water boundaries across the selected years."}\n${story?.limitation ?? "Image appearance alone does not establish the cause or amount of a change."}\nPress Play to watch the story from the earliest bookmarked year, or use Analyze's Before and After buttons to compare the selected years.`,
       sources,
     };
   }

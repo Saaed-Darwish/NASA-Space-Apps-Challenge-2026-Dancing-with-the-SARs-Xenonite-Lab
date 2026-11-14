@@ -2,7 +2,8 @@ import {
   Cartesian2,
   Cartesian3,
   Color,
-  HeightReference,
+  ConstantProperty,
+  EllipsoidalOccluder,
   LabelStyle,
   Math as CesiumMath,
   VerticalOrigin,
@@ -10,6 +11,7 @@ import {
 } from "cesium";
 import { indicators, type Indicator } from "../data/demo";
 import type { Region } from "../types/region";
+import { PIN_LABEL_BACKGROUND, PIN_LABEL_TEXT } from "./markerStyle";
 
 const GLOBAL_VIEW = { longitude: -35, latitude: 35, altitude: 22_000_000 };
 const TOP_DOWN_ORIENTATION = {
@@ -28,9 +30,14 @@ export function setInitialCameraView(viewer: Viewer) {
   });
 }
 
-export function focusCamera(viewer: Viewer, region: Region | null) {
+export function focusCamera(
+  viewer: Viewer,
+  region: Region | null,
+  onFlightState?: (moving: boolean) => void,
+) {
   const destination = region ?? GLOBAL_VIEW;
   viewer.camera.cancelFlight();
+  onFlightState?.(true);
   viewer.camera.flyTo({
     destination: Cartesian3.fromDegrees(
       destination.longitude,
@@ -39,6 +46,8 @@ export function focusCamera(viewer: Viewer, region: Region | null) {
     ),
     orientation: TOP_DOWN_ORIENTATION,
     duration: region ? 2.5 : 1.8,
+    complete: () => onFlightState?.(false),
+    cancel: () => onFlightState?.(false),
   });
 }
 
@@ -57,20 +66,45 @@ export function addRegionMarkers(
         color: Color.fromCssColorString(indicators[indicator].color),
         outlineColor: Color.WHITE,
         outlineWidth: 2,
-        heightReference: HeightReference.CLAMP_TO_GROUND,
         disableDepthTestDistance: Infinity,
       },
       label: {
         text: region.name,
         font: "14px sans-serif",
-        fillColor: Color.WHITE,
+        fillColor: PIN_LABEL_TEXT,
         outlineColor: Color.BLACK,
         outlineWidth: 3,
-        style: LabelStyle.FILL_AND_OUTLINE,
+        style: LabelStyle.FILL,
         pixelOffset: new Cartesian2(0, -24),
         verticalOrigin: VerticalOrigin.BOTTOM,
+        showBackground: true,
+        backgroundColor: PIN_LABEL_BACKGROUND,
+        backgroundPadding: new Cartesian2(7, 5),
         disableDepthTestDistance: Infinity,
       },
     });
   }
+}
+
+/** Surface anchors stay fixed; horizon culling prevents back-side pins showing through Earth. */
+export function trackMarkerVisibility(viewer: Viewer) {
+  const occluder = new EllipsoidalOccluder(
+    viewer.scene.globe.ellipsoid,
+    viewer.camera.positionWC,
+  );
+  const visibility = new WeakMap<object, boolean>();
+  return viewer.scene.preRender.addEventListener(() => {
+    occluder.cameraPosition = viewer.camera.positionWC;
+    for (const entity of viewer.entities.values) {
+      const position = entity.position?.getValue(viewer.clock.currentTime);
+      if (!position) continue;
+      const visible = occluder.isPointVisible(position);
+      if (visibility.get(entity) === visible) continue;
+      visibility.set(entity, visible);
+      if (entity.point) entity.point.show = new ConstantProperty(visible);
+      if (entity.billboard)
+        entity.billboard.show = new ConstantProperty(visible);
+      if (entity.label) entity.label.show = new ConstantProperty(visible);
+    }
+  });
 }

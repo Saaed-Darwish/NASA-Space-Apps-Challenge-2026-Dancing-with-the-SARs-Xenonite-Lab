@@ -9,7 +9,7 @@ import { LAST_IMAGERY_YEAR } from "../data/imagery";
 import type { Region } from "../types/region";
 import { createSurfaceTexture } from "./surface";
 
-const INDICATOR_ORDER: Indicator[] = ["land", "water", "fire"];
+const INDICATOR_ORDER: Indicator[] = ["water"];
 
 /** Static, decoded raster layers avoid material re-uploads and coplanar entity flashes. */
 export function createOverlayCollection(

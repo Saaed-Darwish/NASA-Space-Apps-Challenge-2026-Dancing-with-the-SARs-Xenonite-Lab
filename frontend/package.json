@@ -7,6 +7,8 @@
     "dev": "vite",
     "build": "tsc --noEmit \u0026\u0026 vite build",
     "preview": "vite preview",
+    "test": "node --test tests",
+    "export:ai-context": "node scripts/export-ai-context.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
