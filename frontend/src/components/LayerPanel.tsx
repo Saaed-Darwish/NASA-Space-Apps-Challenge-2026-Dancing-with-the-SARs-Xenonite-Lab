@@ -1,25 +1,31 @@
-import { indicators, type Indicator, type RegionalReading } from "../data/demo";
+import {
+  indicators,
+  type Indicator,
+  type RegionalReading,
+  type OverlaySettings,
+} from "../data/demo";
 import RegionalSnapshot from "./RegionalSnapshot";
 
 interface LayerPanelProps {
+  observationYear: number;
   selectedIndicator: Indicator;
   onSelectIndicator: (indicator: Indicator) => void;
-  isOverlayVisible: boolean;
-  onOverlayVisibilityChange: (isVisible: boolean) => void;
-  overlayOpacity: number;
-  onOverlayOpacityChange: (opacity: number) => void;
+  overlaySettings: OverlaySettings;
+  onUpdateOverlay: (
+    indicator: Indicator,
+    changes: Partial<OverlaySettings[Indicator]>,
+  ) => void;
   reading: RegionalReading | null;
 }
 
 const INDICATOR_ORDER: Indicator[] = ["land", "water", "fire"];
 
 export default function LayerPanel({
+  observationYear,
   selectedIndicator,
   onSelectIndicator,
-  isOverlayVisible,
-  onOverlayVisibilityChange,
-  overlayOpacity,
-  onOverlayOpacityChange,
+  overlaySettings,
+  onUpdateOverlay,
   reading,
 }: LayerPanelProps) {
   const activeLayer = indicators[selectedIndicator];
@@ -31,6 +37,25 @@ export default function LayerPanel({
       <h2>Read the surface</h2>
       <p className="muted">Three perspectives. One living planet.</p>
 
+      <div className="overlay-toggles" aria-label="Visible overlays">
+        {INDICATOR_ORDER.map((indicator) => (
+          <label key={indicator}>
+            <span>
+              <i style={{ background: indicators[indicator].color }} />
+              {indicators[indicator].name}
+            </span>
+            <input
+              type="checkbox"
+              aria-label={`Show ${indicators[indicator].short.toLowerCase()} overlay`}
+              checked={overlaySettings[indicator].enabled}
+              onChange={(event) =>
+                onUpdateOverlay(indicator, { enabled: event.target.checked })
+              }
+            />
+          </label>
+        ))}
+      </div>
+      <p className="muted small">Combine overlays. Select a tab for details.</p>
       <div className="layer-tabs">
         {INDICATOR_ORDER.map((indicator) => (
           <button
@@ -47,16 +72,6 @@ export default function LayerPanel({
 
       <div className="layer-title">
         <h3>{activeLayer.name}</h3>
-        <label className="toggle">
-          <input
-            type="checkbox"
-            checked={isOverlayVisible}
-            onChange={(event) =>
-              onOverlayVisibilityChange(event.target.checked)
-            }
-          />
-          <span>Show layer</span>
-        </label>
       </div>
       <p className="muted small">{activeLayer.description}</p>
 
@@ -76,18 +91,26 @@ export default function LayerPanel({
       <p className="unit-label">{activeLayer.unit} · illustrative scale</p>
 
       <label className="opacity-label" htmlFor="opacity">
-        Layer opacity <span>{overlayOpacity}%</span>
+        Layer opacity <span>{overlaySettings[selectedIndicator].opacity}%</span>
       </label>
       <input
         id="opacity"
         type="range"
         min="15"
         max="90"
-        value={overlayOpacity}
-        onChange={(event) => onOverlayOpacityChange(Number(event.target.value))}
+        value={overlaySettings[selectedIndicator].opacity}
+        onChange={(event) =>
+          onUpdateOverlay(selectedIndicator, {
+            opacity: Number(event.target.value),
+          })
+        }
       />
 
-      <RegionalSnapshot layer={activeLayer} reading={reading} />
+      <RegionalSnapshot
+        layer={activeLayer}
+        reading={reading}
+        observationYear={observationYear}
+      />
     </section>
   );
 }

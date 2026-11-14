@@ -1,5 +1,10 @@
 import type { Region } from "../types/region";
 export type Indicator = "land" | "water" | "fire";
+export type OverlaySettings = Record<
+  Indicator,
+  { enabled: boolean; opacity: number }
+>;
+
 export interface IndicatorDefinition {
   name: string;
   short: string;
@@ -74,9 +79,9 @@ export const regions: Region[] = [
     country: "United Kingdom",
     latitude: 51.5074,
     longitude: -0.1278,
-    altitude: 65000,
+    altitude: 35000,
     description:
-      "Follow the Thames through a changing urban landscape, with simulated subsidence and water extent observations.",
+      "Compare annual satellite views of London and the Thames. Turn off the simulated overlays to inspect larger developments and urban land-use changes.",
     zoom_level: "city",
   },
   {

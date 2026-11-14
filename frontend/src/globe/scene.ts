@@ -5,7 +5,6 @@ import {
   HeightReference,
   LabelStyle,
   Math as CesiumMath,
-  PolygonHierarchy,
   VerticalOrigin,
   type Viewer,
 } from "cesium";
@@ -73,69 +72,5 @@ export function addRegionMarkers(
         disableDepthTestDistance: Infinity,
       },
     });
-  }
-}
-
-const PATCH_GRID = {
-  rows: 12,
-  columns: 14,
-  referenceAltitude: 380_000,
-  longitudeSpacing: 0.12,
-  latitudeSpacing: 0.075,
-  width: 0.115,
-  height: 0.07,
-};
-
-export function addDemoOverlay(
-  viewer: Viewer,
-  region: Region,
-  indicator: Indicator,
-  opacity: number,
-) {
-  const scale = region.altitude / PATCH_GRID.referenceAltitude;
-  const palette = indicators[indicator].colors;
-
-  // Keep the mock pattern repeatable when changing layers or revisiting a region.
-  for (let row = 0; row < PATCH_GRID.rows; row++) {
-    for (let column = 0; column < PATCH_GRID.columns; column++) {
-      const patchSeed = row * 37 + column * 19 + region.id.length * 13;
-      if (patchSeed % 7 < 2) continue;
-
-      const longitude =
-        region.longitude +
-        (column - PATCH_GRID.columns / 2) * PATCH_GRID.longitudeSpacing * scale;
-      const latitude =
-        region.latitude +
-        (row - PATCH_GRID.rows / 2) * PATCH_GRID.latitudeSpacing * scale;
-      const width = PATCH_GRID.width * scale;
-      const height = PATCH_GRID.height * scale;
-      const colorIndex =
-        indicator === "fire"
-          ? (row + column * 2) % palette.length
-          : (Math.floor(column / 3) + Math.floor(row / 4)) % palette.length;
-
-      // Slightly irregular corners suggest surface patches without tracing real features.
-      const corners = [
-        longitude,
-        latitude,
-        longitude + width,
-        latitude + 0.009 * scale,
-        longitude + width * 0.91,
-        latitude + height,
-        longitude - 0.008 * scale,
-        latitude + height * 0.84,
-      ];
-
-      viewer.entities.add({
-        polygon: {
-          hierarchy: new PolygonHierarchy(Cartesian3.fromDegreesArray(corners)),
-          material: Color.fromCssColorString(palette[colorIndex]).withAlpha(
-            opacity / 100,
-          ),
-          height: 15,
-          outline: false,
-        },
-      });
-    }
   }
 }
