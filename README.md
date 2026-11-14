@@ -52,6 +52,9 @@ The generated frontend is in `frontend/dist`. For deployment, serve those static
 - [frontend/src/data/imagery.ts](./frontend/src/data/imagery.ts): Verified archive years; update only after checking the provider's availability.
 - [frontend/src/hooks/useTimeline.ts](./frontend/src/hooks/useTimeline.ts): Year selection, playback range, and animation timing.
 - [frontend/src/data/demo.ts](./frontend/src/data/demo.ts): Indicator definitions, curated regions, and mock readings.
+- [frontend/src/data/stories.ts](./frontend/src/data/stories.ts): Sourced construction and wildfire stories, approximate marker locations, and suggested comparison years.
+- [frontend/src/data/assistant.ts](./frontend/src/data/assistant.ts): Frontend-only guided assistant adapter and conversation types.
+- [frontend/src/globe/storyMarkers.ts](./frontend/src/globe/storyMarkers.ts): Clickable story symbols and year/region visibility rules.
 - [frontend/src/index.css](./frontend/src/index.css): Styles grouped by interface area, followed by responsive layouts.
 - [backend/main.py](./backend/main.py): FastAPI application and health endpoint.
 - [backend/requirements.txt](./backend/requirements.txt): Python dependencies.
@@ -87,3 +90,24 @@ Basemap years use persistent tiled imagery layers. Simulated overlays use decode
 EOX's 2018–2025 public imagery is licensed under [CC BY-NC-SA 4.0 for non-commercial use](https://cloudless.eox.at/license-non-commercial). Required EOX and Copernicus attribution is displayed on the globe. Commercial deployment requires an appropriate imagery license or another provider. The public service is supplied without availability guarantees; imagery loading and errors are displayed in the map status.
 
 To curate another region, add its coordinates, altitude, description, and all three indicator readings to the local collection. These initial views are candidates for visual approval, not scientifically validated study areas. Satellite tiles require an internet connection; no Cesium ion token or backend is needed for the public EOX archive.
+
+## Analyze, stories, and Earth AI
+
+Explore, Analyze, and Earth AI share the selected region, camera, and timeline. The frontend works without a running backend. Each of the six study areas has a sourced story, including construction in Nusantara and Egypt, Tuas reclamation, the Jasper and Wennington fires, and the LNU Lightning Complex west of the Sacramento Valley.
+
+Use **Stories & evidence** in the region sidebar, or click a colored story symbol on the globe. A story opens an explanatory card with original source links and actions for analysis, comparison, or the demo assistant. Markers appear from their configured first year onward, are filtered to the selected region, and describe historical context rather than live incidents. Their approximate locations do not represent damage footprints. Source cards identify retrospective material published after the selected map year.
+
+**View before / after** focuses the story location, pauses playback, selects its suggested year pair, shows the earlier year, and hides simulated overlays. Analyze provides before/after year buttons, clearly labeled mock indicator snapshots, interpretation guidance, limitations, and source links. The LNU story explicitly notes that the 2020 annual mosaic is not a guaranteed pre-fire image.
+
+**Earth AI is a guided frontend demo, not a connected language model.** Suggested prompts and typed questions select local responses about the current story, sources, mock metrics, and limitations. Unsupported questions receive a demo explanation; the adapter does not invent forecasts or measured confidence scores. Conversations remain separate for each region and persist across navigation during the current page session. A page reload resets them. Questions are not sent to an external model.
+
+### Data handoff
+
+Lake Manchar, Pakistan, adds a water-focused study area with NASA's September 2022 flood account and a suggested 2021–2023 comparison. Annual mosaics may omit the flood peak; the overlay and metrics remain synthetic.
+
+**Discover more** searches live Wikipedia reference articles for the selected study area and an optional topic. Only articles with published Earth coordinates can be added as blue map pins. These coordinates identify the article subject, not a verified event location or boundary; search results are not timeline-filtered. Discovered pins remain separate from curated stories, persist across region changes until reload, and can be refocused, opened, or removed. Search has cancellation, a timeout, empty and error states. A separate external news-search link opens broader web results; it does not automatically ingest news or infer incident coordinates. No backend or API keys are used. Wikipedia extracts are attributed under CC BY-SA.
+
+- Replace the fixtures in [demo.ts](./frontend/src/data/demo.ts) and the mock interpolation in [history.ts](./frontend/src/data/history.ts) with the team's validated measurements. Analyze and the demo assistant use these same adapters.
+- Add or update `RegionStory` records in [stories.ts](./frontend/src/data/stories.ts) to provide event dates, location, comparison years, sources, and interpretation. Link measured event boundaries separately from the editorial locators.
+- Replace synthetic surface textures through [overlays.ts](./frontend/src/globe/overlays.ts) when dated land/water/fire rasters are available. Visibility and per-layer opacity are already independent.
+- Replace `answerDemoQuestion` in [assistant.ts](./frontend/src/data/assistant.ts) with a model integration when needed. Its context includes the region, story, comparison years, selected map year, indicator, and mock reading. Keep model credentials on a future server; none are required or embedded in this frontend demo.

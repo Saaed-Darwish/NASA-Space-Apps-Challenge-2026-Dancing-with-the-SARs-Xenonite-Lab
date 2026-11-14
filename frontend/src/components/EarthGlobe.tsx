@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import {
   Entity,
+  Cartesian3,
   Color,
   ConstantProperty,
   ScreenSpaceEventHandler,
   ScreenSpaceEventType,
   Viewer,
   type Cartesian2,
+  type Entity as CesiumEntity,
 } from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
 import { indicators, type Indicator, type OverlaySettings } from "../data/demo";
@@ -26,7 +28,17 @@ import {
 } from "../globe/overlays";
 import type { Region } from "../types/region";
 
+import { stories, type RegionStory } from "../data/stories";
+import { addStoryMarkers, isStoryVisible } from "../globe/storyMarkers";
+import type { DiscoveredArticle } from "../data/articleSearch";
+
 interface EarthGlobeProps {
+  articles: DiscoveredArticle[];
+  selectedArticle: DiscoveredArticle | null;
+  onSelectArticle: (article: DiscoveredArticle) => void;
+  selectedStory: RegionStory | null;
+  showStoryMarkers: boolean;
+  onSelectStory: (story: RegionStory) => void;
   time: number;
   isPlaying: boolean;
   focusRequest: number;
@@ -38,6 +50,12 @@ interface EarthGlobeProps {
 }
 
 export default function EarthGlobe({
+  articles,
+  selectedArticle,
+  onSelectArticle,
+  selectedStory,
+  showStoryMarkers,
+  onSelectStory,
   time,
   isPlaying,
   focusRequest,
@@ -47,6 +65,14 @@ export default function EarthGlobe({
   selectedRegion,
   onSelectRegion,
 }: EarthGlobeProps) {
+  const storyMarkersRef = useRef<Map<string, CesiumEntity>>(new Map());
+  const articlesRef = useRef(articles);
+  const onSelectArticleRef = useRef(onSelectArticle);
+  useEffect(() => {
+    articlesRef.current = articles;
+    onSelectArticleRef.current = onSelectArticle;
+  }, [articles, onSelectArticle]);
+  const onSelectStoryRef = useRef(onSelectStory);
   const containerRef = useRef<HTMLDivElement>(null);
   const viewerRef = useRef<Viewer | null>(null);
   const imageryRef = useRef<HistoricalImagery | null>(null);
@@ -59,9 +85,10 @@ export default function EarthGlobe({
   const frameYear = Math.floor(time);
 
   useEffect(() => {
+    onSelectStoryRef.current = onSelectStory;
     onSelectRegionRef.current = onSelectRegion;
     regionsRef.current = regions;
-  }, [onSelectRegion, regions]);
+  }, [onSelectRegion, onSelectStory, regions]);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -95,6 +122,20 @@ export default function EarthGlobe({
     clickHandler.setInputAction((event: { position: Cartesian2 }) => {
       const pickedEntity: unknown = viewer.scene.pick(event.position)?.id;
       if (!(pickedEntity instanceof Entity)) return;
+      if (pickedEntity.id.startsWith("article/")) {
+        const article = articlesRef.current.find(
+          (item) => `article/${item.id}` === pickedEntity.id,
+        );
+        if (article) onSelectArticleRef.current(article);
+        return;
+      }
+      if (pickedEntity.id.startsWith("story/")) {
+        const story = stories.find(
+          (candidate) => `story/${candidate.id}` === pickedEntity.id,
+        );
+        if (story) onSelectStoryRef.current(story);
+        return;
+      }
       const region = regionsRef.current.find(
         (candidate) => candidate.id === pickedEntity.id,
       );
@@ -119,7 +160,43 @@ export default function EarthGlobe({
     if (!isViewerReady || !viewer) return;
     viewer.entities.removeAll();
     addRegionMarkers(viewer, regions, "land");
+    storyMarkersRef.current = addStoryMarkers(viewer);
   }, [regions, isViewerReady]);
+
+  useEffect(() => {
+    const viewer = viewerRef.current;
+    if (!isViewerReady || !viewer) return;
+    const entities: CesiumEntity[] = [];
+    for (const article of articles) {
+      if (
+        article.regionId !== selectedRegion?.id ||
+        article.latitude === undefined ||
+        article.longitude === undefined
+      )
+        continue;
+      entities.push(
+        viewer.entities.add({
+          id: `article/${article.id}`,
+          name: article.title,
+          position: Cartesian3.fromDegrees(article.longitude, article.latitude),
+          point: {
+            pixelSize: 13,
+            color: Color.fromCssColorString("#79aaff"),
+            outlineColor: Color.WHITE,
+            outlineWidth: 2,
+            disableDepthTestDistance: Infinity,
+          },
+        }),
+      );
+    }
+    viewer.scene.requestRender();
+    return () => {
+      if (!viewer.isDestroyed()) {
+        entities.forEach((entity) => viewer.entities.remove(entity));
+        viewer.scene.requestRender();
+      }
+    };
+  }, [articles, selectedRegion, isViewerReady]);
 
   useEffect(() => {
     const viewer = viewerRef.current;
@@ -178,20 +255,75 @@ export default function EarthGlobe({
 
   useEffect(() => {
     const viewer = viewerRef.current;
-    if (isViewerReady && viewer) focusCamera(viewer, selectedRegion);
-  }, [selectedRegion, isViewerReady, focusRequest]);
+    if (isViewerReady && viewer) {
+      const target =
+        selectedArticle && selectedRegion
+          ? {
+              ...selectedRegion,
+              latitude: selectedArticle.latitude!,
+              longitude: selectedArticle.longitude!,
+              altitude: 45000,
+            }
+          : selectedStory && selectedRegion
+            ? {
+                ...selectedRegion,
+                latitude: selectedStory.latitude,
+                longitude: selectedStory.longitude,
+                altitude: selectedStory.cameraAltitude,
+              }
+            : selectedRegion;
+      focusCamera(viewer, target);
+    }
+  }, [
+    selectedRegion,
+    selectedStory,
+    selectedArticle,
+    isViewerReady,
+    focusRequest,
+  ]);
+
+  useEffect(() => {
+    const viewer = viewerRef.current;
+    if (!isViewerReady || !viewer) return;
+    for (const story of stories) {
+      const marker = storyMarkersRef.current.get(story.id);
+      if (!marker) continue;
+      marker.show = isStoryVisible(
+        story,
+        selectedRegion?.id,
+        frameYear,
+        showStoryMarkers,
+      );
+      if (marker.billboard)
+        marker.billboard.scale = new ConstantProperty(
+          selectedStory?.id === story.id ? 1.2 : 1,
+        );
+    }
+    viewer.scene.requestRender();
+  }, [
+    regions,
+    isViewerReady,
+    selectedRegion,
+    selectedStory,
+    frameYear,
+    showStoryMarkers,
+  ]);
 
   return (
     <>
       <div ref={containerRef} className="absolute inset-0" />
       <div className="imagery-status" role="status">
         <span className="status-dot" />
-        {imageryError ??
-          (isLoadingTiles
-            ? "Loading satellite imagery…"
-            : `${frameYear} annual satellite mosaic`)}
-        <small>
-          EOX Sentinel-2 · 10 m · Archive through {LAST_IMAGERY_YEAR}
+        <span>
+          {imageryError ??
+            (isLoadingTiles
+              ? "Loading satellite imagery…"
+              : `${frameYear} annual satellite mosaic`)}
+        </span>
+        <small
+          title={`EOX Sentinel-2 · 10 m · Archive through ${LAST_IMAGERY_YEAR}`}
+        >
+          EOX Sentinel-2 · 10 m
         </small>
       </div>
     </>
