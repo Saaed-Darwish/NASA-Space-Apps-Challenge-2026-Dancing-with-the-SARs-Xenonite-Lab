@@ -36,7 +36,7 @@ export const indicators: Record<Indicator, IndicatorDefinition> = {
     unit: "mm",
     description: "Vertical surface movement",
     values: [-24, -12, 0, 12, 24],
-    colors: ["#7052cf", "#a891ed", "#e4dcff", "#f2cf89", "#edab53"],
+    colors: ["#4c1d95", "#7c3aed", "#c4b5fd", "#e879f9", "#a21caf"],
   },
   water: {
     name: "Water extent change",
@@ -47,7 +47,7 @@ export const indicators: Record<Indicator, IndicatorDefinition> = {
     unit: "%",
     description: "Change in surface water extent",
     values: [-30, -15, 0, 15, 30],
-    colors: ["#be985d", "#dbc8a1", "#d1edf0", "#59c9df", "#168db9"],
+    colors: ["#164e63", "#0891b2", "#a5f3fc", "#38bdf8", "#0369a1"],
   },
   fire: {
     name: "Wildfire impact",
@@ -62,6 +62,17 @@ export const indicators: Record<Indicator, IndicatorDefinition> = {
   },
 };
 export const regions: Region[] = [
+  {
+    id: "manchar",
+    name: "Lake Manchar",
+    country: "Pakistan",
+    latitude: 26.42,
+    longitude: 67.68,
+    altitude: 125000,
+    description:
+      "Explore the lake and Indus floodplain affected by Pakistan's 2022 monsoon floods. Compare 2021–2023 and open NASA's dated flood account. Annual mosaics may miss the September flood peak; water overlays are illustrative.",
+    zoom_level: "regional",
+  },
   {
     id: "nusantara",
     name: "Nusantara",
@@ -130,6 +141,26 @@ export const regions: Region[] = [
   },
 ];
 export const readings: Record<string, Record<Indicator, RegionalReading>> = {
+  manchar: {
+    land: {
+      value: "−2.4",
+      unit: "mm",
+      context: "Illustrative vertical movement",
+      trend: [20, 22, 25, 28, 30, 34, 38, 40, 43, 46, 49, 52],
+    },
+    water: {
+      value: "+24.8",
+      unit: "%",
+      context: "Illustrative water extent, not measured flood area",
+      trend: [58, 55, 51, 43, 22, 10, 19, 29, 34, 38, 41, 44],
+    },
+    fire: {
+      value: "0.2",
+      unit: "km²",
+      context: "Illustrative affected area",
+      trend: [62, 62, 61, 60, 60, 59, 59, 58, 57, 57, 56, 56],
+    },
+  },
   // Construction locations use synthetic indicator fixtures, not measured project impacts.
   nusantara: {
     land: {

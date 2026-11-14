@@ -1,13 +1,16 @@
+import { memo } from "react";
 import type { Region } from "../types/region";
 interface RegionSidebarProps {
   regions: Region[];
   selectedRegion: Region | null;
   onSelectRegion: (region: Region | null) => void;
+  onViewStories: () => void;
 }
-export default function RegionSidebar({
+export default memo(function RegionSidebar({
   regions,
   selectedRegion,
   onSelectRegion,
+  onViewStories,
 }: RegionSidebarProps) {
   return (
     <aside className="region-panel panel">
@@ -20,6 +23,9 @@ export default function RegionSidebar({
       <p className="muted intro">
         Explore the signals written across Earth's surface.
       </p>
+      <button className="text-button" onClick={onViewStories}>
+        Stories &amp; evidence ↓
+      </button>
       <div className="section-label">
         <span>CURATED STUDY AREAS</span>
         <span>0{regions.length}</span>
@@ -29,6 +35,7 @@ export default function RegionSidebar({
           <button
             key={region.id}
             className={`region-card ${selectedRegion?.id === region.id ? "active" : ""}`}
+            aria-pressed={selectedRegion?.id === region.id}
             onClick={() => onSelectRegion(region)}
           >
             <span className="region-number">0{index + 1}</span>
@@ -59,4 +66,4 @@ export default function RegionSidebar({
       </div>
     </aside>
   );
-}
+});

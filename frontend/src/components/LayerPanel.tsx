@@ -46,6 +46,7 @@ export default function LayerPanel({
             </span>
             <input
               type="checkbox"
+              style={{ accentColor: indicators[indicator].color }}
               aria-label={`Show ${indicators[indicator].short.toLowerCase()} overlay`}
               checked={overlaySettings[indicator].enabled}
               onChange={(event) =>

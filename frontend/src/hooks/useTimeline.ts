@@ -59,7 +59,23 @@ export default function useTimeline() {
     setTime((previous) => Math.min(previous, year));
   }
 
+  function setComparisonRange(start: number, end: number, selectedYear = end) {
+    const boundedStart = Math.max(
+      FIRST_YEAR,
+      Math.min(LAST_IMAGERY_YEAR - 1, start),
+    );
+    const boundedEnd = Math.max(
+      boundedStart + 1,
+      Math.min(LAST_IMAGERY_YEAR, end),
+    );
+    setIsPlaying(false);
+    setStartYear(boundedStart);
+    setEndYear(boundedEnd);
+    setTime(Math.max(boundedStart, Math.min(boundedEnd, selectedYear)));
+  }
+
   return {
+    setComparisonRange,
     time,
     startYear,
     endYear,

@@ -89,15 +89,27 @@ function surfaceSignal(
   );
 }
 
-function interpolateColor(palette: Color[], value: number) {
-  const position = Math.max(0, Math.min(1, value)) * (palette.length - 1);
-  const index = Math.min(Math.floor(position), palette.length - 2);
-  return Color.lerp(
-    palette[index],
-    palette[index + 1],
-    position - index,
-    new Color(),
+// Build each ramp once instead of allocating a Cesium Color for every pixel.
+const COLOR_STEPS = 1024;
+const colorRamps = new Map<Indicator, Uint8ClampedArray>();
+function colorRamp(indicator: Indicator) {
+  const cached = colorRamps.get(indicator);
+  if (cached) return cached;
+  const palette = indicators[indicator].colors.map((color) =>
+    Color.fromCssColorString(color),
   );
+  const ramp = new Uint8ClampedArray(COLOR_STEPS * 3);
+  const color = new Color();
+  for (let step = 0; step < COLOR_STEPS; step++) {
+    const position = (step / (COLOR_STEPS - 1)) * (palette.length - 1);
+    const index = Math.min(Math.floor(position), palette.length - 2);
+    Color.lerp(palette[index], palette[index + 1], position - index, color);
+    ramp[step * 3] = Math.round(color.red * 255);
+    ramp[step * 3 + 1] = Math.round(color.green * 255);
+    ramp[step * 3 + 2] = Math.round(color.blue * 255);
+  }
+  colorRamps.set(indicator, ramp);
+  return ramp;
 }
 
 export function createSurfaceTexture(
@@ -114,9 +126,7 @@ export function createSurfaceTexture(
   const context = canvas.getContext("2d");
   if (!context) throw new Error("Surface overlay needs a 2D canvas context.");
   const pixels = context.createImageData(TEXTURE_SIZE, TEXTURE_SIZE);
-  const palette = indicators[indicator].colors.map((color) =>
-    Color.fromCssColorString(color),
-  );
+  const ramp = colorRamp(indicator);
   const seed = region.longitude * 0.13 + region.latitude * 0.07;
 
   for (let row = 0; row < TEXTURE_SIZE; row++) {
@@ -132,11 +142,14 @@ export function createSurfaceTexture(
       const visibility = Math.min(1, Math.max(0, (magnitude - 0.035) * 3.5));
       const palettePosition =
         indicator === "fire" ? signal : 0.5 + signal * 0.5;
-      const color = interpolateColor(palette, palettePosition);
+      const colorOffset =
+        Math.round(
+          Math.max(0, Math.min(1, palettePosition)) * (COLOR_STEPS - 1),
+        ) * 3;
       const offset = (row * TEXTURE_SIZE + column) * 4;
-      pixels.data[offset] = Math.round(color.red * 255);
-      pixels.data[offset + 1] = Math.round(color.green * 255);
-      pixels.data[offset + 2] = Math.round(color.blue * 255);
+      pixels.data[offset] = ramp[colorOffset];
+      pixels.data[offset + 1] = ramp[colorOffset + 1];
+      pixels.data[offset + 2] = ramp[colorOffset + 2];
       pixels.data[offset + 3] = Math.round(255 * visibility * edgeFade);
     }
   }
