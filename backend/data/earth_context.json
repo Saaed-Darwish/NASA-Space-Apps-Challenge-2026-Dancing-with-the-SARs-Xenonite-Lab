@@ -59,6 +59,16 @@
       "zoom_level": "regional"
     },
     {
+      "id": "norilsk",
+      "name": "Norilsk",
+      "country": "Russia",
+      "latitude": 69.4,
+      "longitude": 87.95,
+      "altitude": 100000,
+      "description": "Explore Norilsk and the river corridor affected by the May 29, 2020 diesel tank spill. Compare 2020–2025 for landscape context and open the stories for dated Sentinel-2 evidence. Annual mosaics may miss the spill; 2020 is not a guaranteed pre-spill baseline.",
+      "zoom_level": "regional"
+    },
+    {
       "id": "nusantara",
       "name": "Nusantara",
       "country": "Indonesia",
@@ -120,6 +130,62 @@
     }
   ],
   "stories": [
+    {
+      "id": "norilsk-diesel-spill",
+      "regionId": "norilsk",
+      "title": "Norilsk's diesel tank spill",
+      "category": "water",
+      "firstYear": 2020,
+      "mapEndYear": 2021,
+      "dateLabel": "Tank collapse · May 29, 2020",
+      "latitude": 69.35,
+      "longitude": 87.78,
+      "cameraAltitude": 45000,
+      "beforeYear": 2020,
+      "afterYear": 2021,
+      "summary": "A fuel tank at a power plant near Norilsk collapsed on May 29, 2020, releasing diesel into the surrounding environment. ESA published Sentinel-2 views showing red discoloration in the Ambarnaya River on May 31 and June 1.",
+      "lookFor": "Open ESA's dated satellite animation to inspect the river discoloration. Use the 2020–2021 annual comparison to explore the surrounding industrial sites and river corridor; the marker is an approximate area locator, not the tank's surveyed position.",
+      "limitation": "The archive starts in the spill year, so Before (2020) is not a guaranteed pre-spill image. Annual mosaics may omit the plume. This view does not measure diesel extent, concentration, or cleanup success; the marker's time window is editorial, not a recovery date.",
+      "sources": [
+        {
+          "title": "Arctic Circle oil spill",
+          "publisher": "European Space Agency",
+          "publishedYear": 2020,
+          "url": "https://www.esa.int/ESA_Multimedia/Images/2020/06/Arctic_Circle_oil_spill"
+        }
+      ]
+    },
+    {
+      "id": "norilsk-river-monitoring",
+      "regionId": "norilsk",
+      "title": "Following the spill through time",
+      "category": "water",
+      "firstYear": 2020,
+      "mapEndYear": 2021,
+      "dateLabel": "Satellite observations · May–July 2020",
+      "latitude": 69.48,
+      "longitude": 87.7,
+      "cameraAltitude": 65000,
+      "beforeYear": 2020,
+      "afterYear": 2025,
+      "summary": "A Scientific Reports study used dated Sentinel-2 images to examine the Norilsk spill, including a May 23 pre-event scene and observations from late May through July 2020. The Ambarnaya River connects the affected corridor to Lake Pyasino.",
+      "lookFor": "Follow the Ambarnaya corridor toward Lake Pyasino. Open the study's dated image sequence for changes during the spill, then play 2020–2025 here for longer-term landscape context.",
+      "limitation": "This globe shows annual optical mosaics, not the study's individual acquisitions or a processed SAR time series. Image color and later clear-looking water cannot establish pollution levels or ecological recovery. No measured contamination or cleanup layer is connected.",
+      "sources": [
+        {
+          "title": "Monitoring oil spill in Norilsk, Russia using satellite data",
+          "publisher": "Scientific Reports",
+          "publishedYear": 2021,
+          "url": "https://www.nature.com/articles/s41598-021-83260-7"
+        },
+        {
+          "title": "Arctic Circle oil spill",
+          "publisher": "European Space Agency",
+          "publishedYear": 2020,
+          "url": "https://www.esa.int/ESA_Multimedia/Images/2020/06/Arctic_Circle_oil_spill"
+        }
+      ]
+    },
     {
       "id": "manchar-floods",
       "regionId": "manchar",

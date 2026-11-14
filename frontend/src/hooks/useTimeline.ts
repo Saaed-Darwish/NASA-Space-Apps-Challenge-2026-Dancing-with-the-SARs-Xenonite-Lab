@@ -43,7 +43,10 @@ export default function useTimeline() {
   }
 
   function togglePlayback(restartFromStart = false) {
-    if (!isPlaying && (restartFromStart || time >= endYear)) setTime(startYear);
+    if (!isPlaying) {
+      if (restartFromStart) setTime(startYear);
+      else if (time >= endYear) return;
+    }
     setIsPlaying((previous) => !previous);
   }
 

@@ -396,7 +396,7 @@ export default function App() {
       </div>
       <Timeline
         {...timeline}
-        togglePlayback={() => timeline.togglePlayback(Boolean(contextStory))}
+        togglePlayback={() => timeline.togglePlayback(Boolean(selectedStory))}
       />
       <MapCaption selectedRegion={selectedRegion} onRefocus={selectRegion} />
       <footer className="map-footer">
