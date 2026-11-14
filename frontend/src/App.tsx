@@ -35,6 +35,17 @@ const EMPTY_MESSAGES: AssistantMessage[] = [];
 export default function App() {
   const timeline = useTimeline();
   const [mode, setMode] = useState<WorkspaceMode>("explore");
+  const [leftCollapsed, setLeftCollapsed] = useState(false);
+  const [rightCollapsed, setRightCollapsed] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(
+    () => window.matchMedia("(min-width: 1001px)").matches,
+  );
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 1001px)");
+    const update = () => setIsDesktop(media.matches);
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
   const [selectedRegion, setSelectedRegion] = useState<Region | null>(
     regions.find((region) => region.id === "nusantara") ?? regions[0],
   );
@@ -73,9 +84,15 @@ export default function App() {
   const themeStyle = { "--accent": activeLayer.color } as CSSProperties;
 
   const revealStories = useCallback(() => {
-    leftDockRef.current
-      ?.querySelector(".story-panel")
-      ?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    setLeftCollapsed(false);
+    const dock = leftDockRef.current;
+    const story = dock?.querySelector<HTMLElement>(".story-panel");
+    if (!dock || !story) return;
+    if (window.matchMedia("(min-width: 1001px)").matches) {
+      dock.scrollTo({ top: story.offsetTop, behavior: "smooth" });
+    } else {
+      story.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    }
   }, []);
 
   useEffect(() => {
@@ -186,6 +203,7 @@ export default function App() {
   }
 
   function openAssistant() {
+    setRightCollapsed(false);
     setMode("ai");
     askQuestion("Explain what changed here and which evidence supports it.");
   }
@@ -193,7 +211,7 @@ export default function App() {
   return (
     <main
       ref={appRef}
-      className={`app-shell workspace-${mode}`}
+      className={`app-shell workspace-${mode}${leftCollapsed ? " left-collapsed" : ""}${rightCollapsed ? " right-collapsed" : ""}`}
       style={themeStyle}
     >
       <EarthGlobe
@@ -221,7 +239,10 @@ export default function App() {
             <button
               key={view}
               aria-current={mode === view ? "page" : undefined}
-              onClick={() => setMode(view)}
+              onClick={() => {
+                setMode(view);
+                setRightCollapsed(false);
+              }}
             >
               {view === "ai"
                 ? "✦ Earth AI"
@@ -234,7 +255,40 @@ export default function App() {
         <span className="demo-badge">REAL IMAGERY / DEMO ANALYSIS</span>
       </header>
 
-      <div className="left-dock" ref={leftDockRef}>
+      <button
+        className="dock-toggle dock-toggle-left"
+        aria-label={
+          leftCollapsed
+            ? "Show regions and stories"
+            : "Hide regions and stories"
+        }
+        aria-expanded={!leftCollapsed}
+        aria-controls="region-dock"
+        title={
+          leftCollapsed
+            ? "Show regions and stories"
+            : "Hide regions and stories"
+        }
+        onClick={() => setLeftCollapsed((previous) => !previous)}
+      >
+        <svg
+          viewBox="0 0 24 24"
+          width="18"
+          height="18"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.75"
+          aria-hidden="true"
+        >
+          <path d={leftCollapsed ? "m9 6 6 6-6 6" : "m15 6-6 6 6 6"} />
+        </svg>
+      </button>
+      <div
+        className="left-dock"
+        id="region-dock"
+        ref={leftDockRef}
+        inert={isDesktop && leftCollapsed}
+      >
         <RegionSidebar
           regions={regions}
           selectedRegion={selectedRegion}
@@ -247,7 +301,10 @@ export default function App() {
           selectedStory={selectedStory}
           onSelectStory={selectStory}
           onCompare={compareStory}
-          onAnalyze={() => setMode("analyze")}
+          onAnalyze={() => {
+            setMode("analyze");
+            setRightCollapsed(false);
+          }}
           onAskAI={openAssistant}
           showMarkers={showStoryMarkers}
           onShowMarkersChange={setShowStoryMarkers}
@@ -263,40 +320,68 @@ export default function App() {
           />
         )}
       </div>
-      {mode === "explore" && (
-        <LayerPanel
-          selectedIndicator={selectedIndicator}
-          onSelectIndicator={setSelectedIndicator}
-          overlaySettings={overlaySettings}
-          onUpdateOverlay={updateOverlay}
-          reading={regionalReading}
-          observationYear={observationYear}
-        />
-      )}
-      {mode === "analyze" && (
-        <AnalysisPanel
-          region={selectedRegion}
-          story={contextStory ?? null}
-          year={observationYear}
-          startYear={timeline.startYear}
-          endYear={timeline.endYear}
-          onSelectStory={selectStory}
-          onCompare={compareStory}
-          onShowYear={timeline.seek}
-          onAskAI={openAssistant}
-        />
-      )}
-      {mode === "ai" && (
-        <AssistantPanel
-          key={conversationKey}
-          region={selectedRegion}
-          year={observationYear}
-          startYear={timeline.startYear}
-          endYear={timeline.endYear}
-          messages={conversations[conversationKey] ?? EMPTY_MESSAGES}
-          onAsk={askQuestion}
-        />
-      )}
+      <button
+        className="dock-toggle dock-toggle-right"
+        aria-label={
+          rightCollapsed ? "Show workspace panel" : "Hide workspace panel"
+        }
+        aria-expanded={!rightCollapsed}
+        aria-controls="workspace-dock"
+        title={rightCollapsed ? "Show workspace panel" : "Hide workspace panel"}
+        onClick={() => setRightCollapsed((previous) => !previous)}
+      >
+        <svg
+          viewBox="0 0 24 24"
+          width="18"
+          height="18"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.75"
+          aria-hidden="true"
+        >
+          <path d={rightCollapsed ? "m15 6-6 6 6 6" : "m9 6 6 6-6 6"} />
+        </svg>
+      </button>
+      <div
+        className="right-dock"
+        id="workspace-dock"
+        inert={isDesktop && rightCollapsed}
+      >
+        {mode === "explore" && (
+          <LayerPanel
+            selectedIndicator={selectedIndicator}
+            onSelectIndicator={setSelectedIndicator}
+            overlaySettings={overlaySettings}
+            onUpdateOverlay={updateOverlay}
+            reading={regionalReading}
+            observationYear={observationYear}
+          />
+        )}
+        {mode === "analyze" && (
+          <AnalysisPanel
+            region={selectedRegion}
+            story={contextStory ?? null}
+            year={observationYear}
+            startYear={timeline.startYear}
+            endYear={timeline.endYear}
+            onSelectStory={selectStory}
+            onCompare={compareStory}
+            onShowYear={timeline.seek}
+            onAskAI={openAssistant}
+          />
+        )}
+        {mode === "ai" && (
+          <AssistantPanel
+            key={conversationKey}
+            region={selectedRegion}
+            year={observationYear}
+            startYear={timeline.startYear}
+            endYear={timeline.endYear}
+            messages={conversations[conversationKey] ?? EMPTY_MESSAGES}
+            onAsk={askQuestion}
+          />
+        )}
+      </div>
       <Timeline {...timeline} />
       <MapCaption selectedRegion={selectedRegion} onRefocus={selectRegion} />
       <footer className="map-footer">

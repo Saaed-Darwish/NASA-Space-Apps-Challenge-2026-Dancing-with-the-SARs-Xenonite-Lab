@@ -388,6 +388,12 @@ input[type="range"] {
   font-size: 11px;
   margin-top: 10px;
 }
+.refocus:hover,
+.refocus:focus-visible {
+  background: #203846;
+  border-color: #a6d8cc;
+  color: #f2fff9;
+}
 .map-footer {
   position: absolute;
   bottom: 0;
@@ -1477,8 +1483,9 @@ input[type="range"] {
     top: var(--panel-top);
     left: var(--map-left);
     right: var(--map-right);
-    width: auto;
-    max-width: none;
+    right: auto;
+    width: fit-content;
+    max-width: calc(100% - var(--map-left) - var(--map-right));
   }
   .timeline,
   .workspace-analyze .timeline,
@@ -1600,6 +1607,10 @@ input[type="range"] {
   line-height: 1.5;
   overflow-wrap: anywhere;
   box-shadow: 0 6px 24px #0003;
+  padding: 8px 12px;
+  background: #101e2b;
+  backdrop-filter: none;
+  color: #eff7f4;
 }
 .imagery-status .status-dot {
   margin: 6px 0 0;
@@ -1607,6 +1618,8 @@ input[type="range"] {
 .imagery-status small {
   grid-column: 2;
   margin: 0;
+  font-size: 10px;
+  color: #b7cbd3;
 }
 .article-search h3 {
   font-size: 18px;
@@ -1654,7 +1667,8 @@ textarea:focus-visible {
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
   .imagery-status {
-    width: auto;
+    right: auto;
+    width: fit-content;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1690,5 +1704,137 @@ textarea:focus-visible {
   .refocus {
     margin-top: 0;
     padding: 8px 12px;
+  }
+}
+
+/* Side docks leave the map available when their detail is not needed. */
+.right-dock {
+  display: contents;
+}
+.dock-toggle {
+  display: none;
+}
+@media (min-width: 1001px) {
+  .right-dock {
+    display: block;
+    position: absolute;
+    top: var(--panel-top);
+    right: var(--edge);
+    bottom: 64px;
+    width: var(--inspector);
+    z-index: 10;
+  }
+  .right-dock > .panel {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+  }
+  .left-dock,
+  .right-dock {
+    transition:
+      transform 220ms ease,
+      opacity 180ms ease;
+  }
+  .left-collapsed {
+    --map-left: calc(var(--edge) + 48px);
+  }
+  .right-collapsed {
+    --map-right: calc(var(--edge) + 48px);
+  }
+  .left-collapsed .left-dock {
+    transform: translateX(calc(-100% - var(--edge) - 8px));
+    opacity: 0;
+    pointer-events: none;
+  }
+  .right-collapsed .right-dock {
+    transform: translateX(calc(100% + var(--edge) + 8px));
+    opacity: 0;
+    pointer-events: none;
+  }
+  .dock-toggle {
+    position: absolute;
+    top: calc(var(--panel-top) + 12px);
+    z-index: 15;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid #5c7b88;
+    border-radius: 9px;
+    background: #18313f;
+    color: #d8f2e9;
+    box-shadow: 0 4px 12px #0005;
+  }
+  .dock-toggle:hover {
+    background: #294b5c;
+    border-color: #a6d8cc;
+  }
+  .dock-toggle-left {
+    left: calc(var(--edge) + var(--dock) - 22px);
+  }
+  .dock-toggle-right {
+    right: calc(var(--edge) + var(--inspector) - 22px);
+  }
+  .left-collapsed .dock-toggle-left {
+    left: var(--edge);
+  }
+  .right-collapsed .dock-toggle-right {
+    right: var(--edge);
+  }
+}
+
+/* Body copy stays legible even when a satellite tile is very bright. */
+.muted,
+.region-detail p,
+.story-preview p,
+.analysis-story p,
+.assistant-welcome p {
+  color: #b4c4cf;
+  font-size: 13px;
+  line-height: 1.75;
+}
+.small,
+.region-card small,
+.story-list-item small,
+.source-links strong,
+.legend-labels,
+.legend-ticks,
+.opacity-label,
+.reading p {
+  font-size: 11px;
+  color: #b4c4cf;
+}
+.region-card strong,
+.story-list-item strong,
+.overlay-toggles label,
+.layer-title h3 {
+  font-size: 13px;
+}
+.eyebrow,
+.section-label {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #afc6c9;
+}
+.timeline-note,
+.year-bookmarks button,
+.timeline-range label,
+.unit-label,
+.reading .section-label span {
+  font-size: 10px;
+  color: #a7bdc9;
+}
+.map-caption .eyebrow,
+.map-caption p {
+  color: #f1f7f5;
+  text-shadow:
+    0 1px 3px #000,
+    0 2px 10px #000;
+}
+@media (max-width: 1000px) {
+  .timeline .eyebrow {
+    font-size: 9px;
   }
 }

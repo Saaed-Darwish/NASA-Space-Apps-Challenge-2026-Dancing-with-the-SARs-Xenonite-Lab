@@ -314,12 +314,16 @@ export default function EarthGlobe({
       <div ref={containerRef} className="absolute inset-0" />
       <div className="imagery-status" role="status">
         <span className="status-dot" />
-        {imageryError ??
-          (isLoadingTiles
-            ? "Loading satellite imagery…"
-            : `${frameYear} annual satellite mosaic`)}
-        <small>
-          EOX Sentinel-2 · 10 m · Archive through {LAST_IMAGERY_YEAR}
+        <span>
+          {imageryError ??
+            (isLoadingTiles
+              ? "Loading satellite imagery…"
+              : `${frameYear} annual satellite mosaic`)}
+        </span>
+        <small
+          title={`EOX Sentinel-2 · 10 m · Archive through ${LAST_IMAGERY_YEAR}`}
+        >
+          EOX Sentinel-2 · 10 m
         </small>
       </div>
     </>
