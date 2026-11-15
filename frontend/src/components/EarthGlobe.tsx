@@ -7,14 +7,22 @@ import {
   Math as CesiumMath,
   Color,
   ConstantProperty,
+  EllipsoidalOccluder,
+  SceneTransforms,
   ScreenSpaceEventHandler,
   ScreenSpaceEventType,
   Viewer,
+  ImageryLayer,
+  Rectangle,
+  SingleTileImageryProvider,
   type Entity as CesiumEntity,
 } from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
 import { indicators, type Indicator, type OverlaySettings } from "../data/demo";
 import { LAST_IMAGERY_YEAR } from "../data/imagery";
+import type { StudyBounds, SarDataset, SarObservation } from "../data/sar";
+import type { WaterLayerSelection } from "../data/waterChanges";
+import { visibleMapViewport } from "../globe/cameraFit";
 import {
   addRegionMarkers,
   focusCamera,
@@ -43,6 +51,11 @@ import {
 } from "../data/articleSearch";
 
 interface EarthGlobeProps {
+  waterLayer: WaterLayerSelection | null;
+  dataset: SarDataset | null;
+  observation: SarObservation | null;
+  layoutKey: string;
+  studyArea: StudyBounds | null;
   articles: DiscoveredArticle[];
   selectedArticle: DiscoveredArticle | null;
   onSelectArticle: (article: DiscoveredArticle) => void;
@@ -62,6 +75,11 @@ interface EarthGlobeProps {
 }
 
 export default function EarthGlobe({
+  waterLayer,
+  dataset,
+  observation,
+  layoutKey,
+  studyArea,
   articles,
   selectedArticle,
   onSelectArticle,
@@ -85,7 +103,7 @@ export default function EarthGlobe({
   }, [onSearchAreaChange]);
   const viewFocusRef = useRef(onViewportFocus);
   const focusedRegionRef = useRef(selectedRegion);
-  const handledFocusRequest = useRef<number | null>(null);
+  const handledFocusRequest = useRef<string | null>(null);
   const cameraFlight = useRef(false);
   const storyFocusRef = useRef(selectedStory);
   useEffect(() => {
@@ -96,6 +114,7 @@ export default function EarthGlobe({
     focusedRegionRef.current = selectedRegion;
   }, [onViewportFocus, selectedRegion]);
   const storyMarkersRef = useRef<Map<string, CesiumEntity>>(new Map());
+  const storyAlphaRef = useRef(new WeakMap<CesiumEntity, number>());
   const articlesRef = useRef(articles);
   const onSelectArticleRef = useRef(onSelectArticle);
   useEffect(() => {
@@ -104,7 +123,12 @@ export default function EarthGlobe({
   }, [articles, onSelectArticle]);
   const onSelectStoryRef = useRef(onSelectStory);
   const containerRef = useRef<HTMLDivElement>(null);
+  const readoutRef = useRef<HTMLDivElement>(null);
+  const [resizeVersion, setResizeVersion] = useState(0);
   const viewerRef = useRef<Viewer | null>(null);
+  const waterImageryRef = useRef<ImageryLayer | null>(null);
+  const waterOpacityRef = useRef(0.7);
+  const [waterError, setWaterError] = useState<string | null>(null);
   const imageryRef = useRef<HistoricalImagery | null>(null);
   const overlaysRef = useRef<OverlayCollection | null>(null);
   const onSelectRegionRef = useRef(onSelectRegion);
@@ -146,8 +170,12 @@ export default function EarthGlobe({
     const removeVisibilityListener = trackMarkerVisibility(viewer);
     const updateViewport = () => {
       const canvas = viewer.scene.canvas;
+      const visible = visibleMapViewport(canvas);
       const center = viewer.camera.pickEllipsoid(
-        new Cartesian2(canvas.clientWidth / 2, canvas.clientHeight / 2),
+        new Cartesian2(
+          (visible.left + visible.right) / 2,
+          (visible.top + visible.bottom) / 2,
+        ),
         viewer.scene.globe.ellipsoid,
       );
       const location = center ? Cartographic.fromCartesian(center) : null;
@@ -287,6 +315,7 @@ export default function EarthGlobe({
       !isViewerReady ||
       !viewer ||
       !selectedRegion ||
+      !!selectedRegion.datasetIds?.length ||
       !selectedRegion.waterMonitoring ||
       selectedRegion.floodDataStatus === "processing"
     )
@@ -304,8 +333,6 @@ export default function EarthGlobe({
   }, [isViewerReady, selectedRegion]);
 
   useEffect(() => {
-<<<<<<< HEAD
-=======
     const viewer = viewerRef.current;
     if (!isViewerReady || !viewer || !studyArea) return;
     const { west, south, east, north } = studyArea;
@@ -474,7 +501,6 @@ export default function EarthGlobe({
   }, []);
 
   useEffect(() => {
->>>>>>> integrating-backend-data
     if (!isViewerReady) return;
     imageryRef.current?.update(time);
     overlaysRef.current?.update(time, overlaySettings);
@@ -516,8 +542,8 @@ export default function EarthGlobe({
     const viewer = viewerRef.current;
     if (isViewerReady && viewer) {
       // Viewport selection updates context only; explicit clicks/refocus move the camera.
-      if (handledFocusRequest.current === focusRequest) return;
-      handledFocusRequest.current = focusRequest;
+      const key = `${focusRequest}-${layoutKey}-${resizeVersion}`;
+      if (handledFocusRequest.current === key) return;
       const target = selectedArticle
         ? {
             id: selectedArticle.id,
@@ -537,9 +563,25 @@ export default function EarthGlobe({
               altitude: selectedStory.cameraAltitude,
             }
           : selectedRegion;
-      focusCamera(viewer, target, (moving) => {
-        cameraFlight.current = moving;
-      });
+      // Wait for dock transitions before measuring the available map rectangle.
+      cameraFlight.current = true;
+      let started = false;
+      const timer = window.setTimeout(() => {
+        started = true;
+        handledFocusRequest.current = key;
+        focusCamera(
+          viewer,
+          target,
+          (moving) => {
+            cameraFlight.current = moving;
+          },
+          !selectedStory && !selectedArticle ? studyArea : null,
+        );
+      }, 240);
+      return () => {
+        window.clearTimeout(timer);
+        if (!started) cameraFlight.current = false;
+      };
     }
   }, [
     selectedRegion,
@@ -547,6 +589,9 @@ export default function EarthGlobe({
     selectedArticle,
     isViewerReady,
     focusRequest,
+    studyArea,
+    layoutKey,
+    resizeVersion,
   ]);
 
   useEffect(() => {
@@ -563,6 +608,8 @@ export default function EarthGlobe({
       );
       if (!marker.show) continue;
       const alpha = storyMarkerOpacity(story, time);
+      if (storyAlphaRef.current.get(marker) === alpha) continue;
+      storyAlphaRef.current.set(marker, alpha);
       if (marker.billboard)
         marker.billboard.color = new ConstantProperty(
           Color.WHITE.withAlpha(alpha),
@@ -591,7 +638,31 @@ export default function EarthGlobe({
 
   return (
     <>
-      <div ref={containerRef} className="absolute inset-0" />
+      <div ref={containerRef} className="absolute inset-0">
+        {studyArea &&
+          observation &&
+          dataset &&
+          !selectedStory &&
+          !selectedArticle && (
+            <div
+              ref={readoutRef}
+              className={`sar-map-readout ${dataset.kind}`}
+              aria-label="Selected SAR study-area observation"
+              style={{ display: "none" }}
+            >
+              <strong>
+                {observation.value.toLocaleString(undefined, {
+                  maximumFractionDigits: 2,
+                })}{" "}
+                {dataset.unit}
+              </strong>
+              <small>
+                {observation.date}
+                {!observation.qualityPass ? " · rejected" : ""}
+              </small>
+            </div>
+          )}
+      </div>
       <div className="imagery-status" role="status">
         <span className="status-dot" />
         <span>
@@ -605,6 +676,20 @@ export default function EarthGlobe({
         >
           EOX Sentinel-2 · 10 m
         </small>
+        {waterComparison && (
+          <small className="water-map-key">
+            {waterError ?? (
+              <>
+                Water change · {waterComparison.beforeDate} →{" "}
+                {waterComparison.afterDate}
+                <br />
+                <i className="water-gain-swatch" />
+                Gain · <i className="water-loss-swatch" />
+                Loss · Experimental
+              </>
+            )}
+          </small>
+        )}
       </div>
     </>
   );

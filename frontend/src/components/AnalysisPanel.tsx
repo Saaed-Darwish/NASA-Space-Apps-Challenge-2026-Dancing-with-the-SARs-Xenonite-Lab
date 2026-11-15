@@ -8,14 +8,11 @@ import { storyTimelineLabel } from "../data/storyTimeline";
 import type { Indicator, OverlaySettings, RegionalReading } from "../data/demo";
 import SourceLinks, { StoryTiming } from "./SourceLinks";
 import LayerPanel from "./LayerPanel";
-<<<<<<< HEAD
-=======
 import ObservationPanel from "./ObservationPanel";
 import DataTypeTabs from "./DataTypeTabs";
 import type { SarDataset, SarObservation } from "../data/sar";
 import type { TimelineSelection } from "../data/observationTime";
 import type { WaterLayerSelection } from "../data/waterChanges";
->>>>>>> integrating-backend-data
 
 interface AnalysisPanelProps {
   region: Region | null;
@@ -35,6 +32,17 @@ interface AnalysisPanelProps {
     changes: Partial<OverlaySettings[Indicator]>,
   ) => void;
   reading: RegionalReading | null;
+  datasets: SarDataset[];
+  dataset: SarDataset | null;
+  onSelectDataset: (id: string) => void;
+  onSelectObservation: (
+    observation: SarObservation | null,
+    syncTimeline?: boolean,
+  ) => void;
+  timelineSelection: TimelineSelection | null;
+  onShowBasemap: (year: number) => void;
+  onWaterLayer: (layer: WaterLayerSelection | null) => void;
+  onCompareDate: (date: string) => void;
 }
 
 export default function AnalysisPanel({
@@ -52,6 +60,14 @@ export default function AnalysisPanel({
   overlaySettings,
   onUpdateOverlay,
   reading,
+  datasets,
+  dataset,
+  onSelectDataset,
+  onSelectObservation,
+  onShowBasemap,
+  timelineSelection,
+  onWaterLayer,
+  onCompareDate,
 }: AnalysisPanelProps) {
   const candidates = region ? storiesForRegion(region.id) : [];
   return (
@@ -66,7 +82,11 @@ export default function AnalysisPanel({
           <h2>Analyze</h2>
         </div>
         <span className="mock-pill">
-          {region?.waterMonitoring ? "WATER CONTEXT" : "SOURCED STORIES"}
+          {dataset
+            ? "SAR OBSERVATIONS"
+            : region?.waterMonitoring
+              ? "WATER CONTEXT"
+              : "SOURCED STORIES"}
         </span>
       </div>
       <div className="context-strip">
@@ -101,9 +121,6 @@ export default function AnalysisPanel({
               After &middot; {endYear} &rarr;
             </button>
           </div>
-<<<<<<< HEAD
-          {region.waterMonitoring && (
-=======
           {dataset && (
             <DataTypeTabs
               datasets={datasets}
@@ -126,7 +143,6 @@ export default function AnalysisPanel({
             />
           )}
           {region.waterMonitoring && !dataset && (
->>>>>>> integrating-backend-data
             <LayerPanel
               embedded
               region={region}

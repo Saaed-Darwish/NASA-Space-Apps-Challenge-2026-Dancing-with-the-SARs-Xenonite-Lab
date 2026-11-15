@@ -4,21 +4,36 @@ from threading import BoundedSemaphore
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from dotenv import load_dotenv
-from assistant import ChatRequest, generate_answer
+from assistant import CATALOG, ChatRequest, generate_answer
+from security import RequestGuard
+from sar_data import router as sar_router
+from forecast_data import router as forecast_router
+from water_layers import router as water_router
 
 load_dotenv(Path(__file__).parent / ".env")
+allowed_origins = [origin.strip() for origin in os.getenv(
+    "CORS_ORIGINS",
+    "http://localhost:5173,http://127.0.0.1:5173,http://localhost:5174,http://127.0.0.1:5174",
+).split(",") if origin.strip()]
+if not allowed_origins or "*" in allowed_origins or "null" in allowed_origins:
+    raise ValueError("CORS_ORIGINS must contain explicit trusted browser origins")
 chat_slot = BoundedSemaphore(1)
 app = FastAPI(title="EarthPulse API", version="0.1.0")
+app.include_router(sar_router)
+app.include_router(forecast_router)
+app.include_router(water_router)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=os.getenv("CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173,http://localhost:5174,http://127.0.0.1:5174").split(","),
-    allow_credentials=True,
+    allow_origins=allowed_origins,
+    allow_credentials=False,
     allow_methods=["GET", "POST"],
-    allow_headers=["*"],
+    allow_headers=["Content-Type"],
 )
+
+app.add_middleware(RequestGuard, allowed_origins=allowed_origins)
 
 
 @app.post("/api/chat")
@@ -38,80 +53,17 @@ class Region(BaseModel):
     id: str
     name: str
     country: str
-    latitude: float
-    longitude: float
-    altitude: float
+    latitude: float = Field(ge=-90, le=90, allow_inf_nan=False)
+    longitude: float = Field(ge=-180, le=180, allow_inf_nan=False)
+    altitude: float = Field(gt=0, allow_inf_nan=False)
     description: str
     zoom_level: str
+    waterMonitoring: bool = False
+    floodDataStatus: str | None = None
+    datasetIds: list[str] = Field(default_factory=list)
 
 
-REGIONS = [
-    Region(
-        id="nusantara",
-        name="Nusantara",
-        country="Indonesia",
-        latitude=-0.97,
-        longitude=116.71,
-        altitude=24000,
-        description=(
-            "Compare 2020–2025 satellite views of Borneo's new capital. "
-            "Watch roads, construction clearings, and government buildings emerge."
-        ),
-        zoom_level="city",
-    ),
-    Region(
-        id="egypt-capital",
-        name="New Administrative Capital",
-        country="Egypt",
-        latitude=30.01,
-        longitude=31.73,
-        altitude=32000,
-        description=(
-            "Watch planned road grids east of Cairo fill with large buildings "
-            "and residential districts between 2020 and 2025."
-        ),
-        zoom_level="city",
-    ),
-    Region(
-        id="tuas",
-        name="Tuas Port",
-        country="Singapore",
-        latitude=1.255,
-        longitude=103.62,
-        altitude=18000,
-        description=(
-            "Compare Singapore's reclaimed coastline, new quays, container yards, "
-            "and port infrastructure through 2020–2025."
-        ),
-        zoom_level="city",
-    ),
-    Region(
-        id="alberta",
-        name="Alberta",
-        country="Canada",
-        latitude=53.9333,
-        longitude=-116.5765,
-        altitude=850000,
-        description=(
-            "Explore Alberta's forests, mountains, "
-            "prairies, and changing landscapes."
-        ),
-        zoom_level="regional",
-    ),
-    Region(
-        id="london",
-        name="London",
-        country="United Kingdom",
-        latitude=51.5074,
-        longitude=-0.1278,
-        altitude=35000,
-        description=(
-            "Explore London's urban landscape, "
-            "the River Thames, and surrounding areas."
-        ),
-        zoom_level="city",
-    ),
-]
+REGIONS = [Region(**region) for region in CATALOG["regions"]]
 
 
 @app.get("/api/health")

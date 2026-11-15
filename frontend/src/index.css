@@ -1962,8 +1962,6 @@ textarea:focus-visible {
     font-size: 9px;
   }
 }
-<<<<<<< HEAD
-=======
 
 /* Source-traceable SAR observation controls. */
 .sar-panel {
@@ -2280,4 +2278,3 @@ textarea:focus-visible {
 [data-kind] input { accent-color: var(--sar-color); }
 .sar-map-readout.subsidence { border-color: #f59bc8; }
 .sar-map-readout.subsidence strong { color: #f59bc8; }
->>>>>>> integrating-backend-data
