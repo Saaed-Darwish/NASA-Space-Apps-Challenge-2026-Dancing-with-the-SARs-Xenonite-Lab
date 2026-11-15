@@ -44,9 +44,11 @@ export default memo(function RegionSidebar({
             <span>
               <strong>{region.name}</strong>
               <small>{region.country}</small>
-              {region.floodDataStatus && (
+              {(region.datasetIds?.length || region.floodDataStatus) && (
                 <small className="region-data-state">
-                  Water Displacement Viewable
+                  {region.datasetIds?.length
+                    ? "SAR observations available"
+                    : "Water data pending"}
                 </small>
               )}
             </span>
@@ -69,7 +71,7 @@ export default memo(function RegionSidebar({
       <div className="sidebar-note">
         DEMO COLLECTION / 2026
         <br />
-        <span>Synthetic observations. Real places.</span>
+        <span>Satellite imagery, stories &amp; SAR observations.</span>
       </div>
     </aside>
   );

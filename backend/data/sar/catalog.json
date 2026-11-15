@@ -1,0 +1,263 @@
+[
+  {
+    "id": "BRA_PORTO_VELHO",
+    "regionId": "porto-velho",
+    "name": "Madeira River · candidate inundation",
+    "kind": "water",
+    "metric": "Potentially Flooded Area (km²)",
+    "unit": "km²",
+    "bounds": {
+      "west": -64.1,
+      "south": -8.95,
+      "east": -63.75,
+      "north": -8.65
+    },
+    "geometryStatus": "study_area_only",
+    "validationStatus": "exploratory",
+    "note": "Candidate inundation, not confirmed flood extent. Optical comparisons are provisional agreement on specific dates, not per-observation confidence.",
+    "method": "Sentinel-1 VV < −17 dB; 30 m focal median; exclude historical water occurrence ≥90% and slopes ≥5°. Valid coverage ≥95%.",
+    "source": {
+      "file": "Brazil_Multi_Hazard_SAR_Flood_and_Forest_2019_2026.xlsx",
+      "sha256": "fca841829ca1ca997a79f9e252652cf2e2d40d712acb22dbc00420d51e0c055d",
+      "sheet": "Flooding",
+      "publisher": "SAR data team / Copernicus Sentinel-1",
+      "url": "https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S1_GRD"
+    },
+    "validation": [
+      {
+        "label": "April",
+        "date": "2024-04-26",
+        "referenceDate": "2024-04-22",
+        "precision": 0.9527403894488387,
+        "recall": 0.5766438308481031,
+        "iou": 0.5606083217629892
+      },
+      {
+        "label": "September",
+        "date": "2024-09-17",
+        "referenceDate": "2024-09-14",
+        "precision": 0.4808193665059762,
+        "recall": 0.4355698345918882,
+        "iou": 0.2962413299739074
+      }
+    ],
+    "points": [],
+    "startDate": "2019-01-11",
+    "endDate": "2026-11-13",
+    "observationCount": 259,
+    "qualityPassedCount": 259,
+    "schemaVersion": 1
+  },
+  {
+    "id": "BRA_PORTO_VELHO_FOREST",
+    "regionId": "porto-velho",
+    "name": "Madeira River · forest disturbance",
+    "kind": "forest",
+    "metric": "Potential Forest Disturbance (km²)",
+    "unit": "km²",
+    "bounds": {
+      "west": -64.1,
+      "south": -8.95,
+      "east": -63.75,
+      "north": -8.65
+    },
+    "geometryStatus": "study_area_only",
+    "validationStatus": "exploratory",
+    "note": "Potential radar disturbance, not verified deforestation. Annual Hansen comparisons were used for threshold selection, not independent per-scene validation. Never sum repeated detections as newly cleared land. The handoff guide reports annual IoU 9.1% (2023) and 18.9% (2024); a separate validation table was not supplied.",
+    "method": "VH change from a same-season prior-year baseline; ≥3 baseline images and ≥95% forest coverage. Threshold −3 dB in Brazil / −4 dB in Vietnam.",
+    "source": {
+      "file": "Brazil_Multi_Hazard_SAR_Flood_and_Forest_2019_2026.xlsx",
+      "sha256": "fca841829ca1ca997a79f9e252652cf2e2d40d712acb22dbc00420d51e0c055d",
+      "sheet": "Forest Disturbance",
+      "publisher": "SAR data team / Copernicus Sentinel-1",
+      "url": "https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S1_GRD"
+    },
+    "validation": [],
+    "points": [],
+    "startDate": "2019-01-11",
+    "endDate": "2026-11-13",
+    "observationCount": 324,
+    "qualityPassedCount": 304,
+    "schemaVersion": 1
+  },
+  {
+    "id": "VNM_CAN_THO",
+    "regionId": "can-tho",
+    "name": "Can Tho · candidate inundation",
+    "kind": "water",
+    "metric": "Potentially Flooded Area (km²)",
+    "unit": "km²",
+    "bounds": {
+      "west": 105.65,
+      "south": 9.95,
+      "east": 105.9,
+      "north": 10.15
+    },
+    "geometryStatus": "study_area_only",
+    "validationStatus": "exploratory",
+    "note": "Candidate inundation, not confirmed flood extent. Optical comparisons are provisional agreement on specific dates, not per-observation confidence.",
+    "method": "Sentinel-1 VV < −17 dB; 30 m focal median; exclude historical water occurrence ≥90% and slopes ≥5°. Valid coverage ≥95%.",
+    "source": {
+      "file": "Vietnam_Multi_Hazard_SAR_Flood_and_Forest_2019_2026.xlsx",
+      "sha256": "242cdded82cfeed82618699683a74136236386cfb3528996049edbea9578fbea",
+      "sheet": "Flooding",
+      "publisher": "SAR data team / Copernicus Sentinel-1",
+      "url": "https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S1_GRD"
+    },
+    "validation": [
+      {
+        "label": "Dry season",
+        "date": "2024-02-16",
+        "referenceDate": "2024-02-14",
+        "precision": 0.6213000000000001,
+        "recall": 0.1421,
+        "iou": 0.1308
+      },
+      {
+        "label": "Wet season",
+        "date": "2024-10-25",
+        "referenceDate": "2024-10-21",
+        "precision": 0.9784,
+        "recall": 0.4411,
+        "iou": 0.4368
+      }
+    ],
+    "points": [],
+    "startDate": "2019-01-01",
+    "endDate": "2026-11-03",
+    "observationCount": 337,
+    "qualityPassedCount": 337,
+    "schemaVersion": 1
+  },
+  {
+    "id": "VNM_BINH_PHUOC_FOREST",
+    "regionId": "binh-phuoc",
+    "name": "Binh Phuoc · forest disturbance",
+    "kind": "forest",
+    "metric": "Potential Forest Disturbance (km²)",
+    "unit": "km²",
+    "bounds": {
+      "west": 106.7,
+      "south": 11.6,
+      "east": 107.0,
+      "north": 11.9
+    },
+    "geometryStatus": "study_area_only",
+    "validationStatus": "exploratory",
+    "note": "Potential radar disturbance, not verified deforestation. Annual Hansen comparisons were used for threshold selection, not independent per-scene validation. Never sum repeated detections as newly cleared land.",
+    "method": "VH change from a same-season prior-year baseline; ≥3 baseline images and ≥95% forest coverage. Threshold −3 dB in Brazil / −4 dB in Vietnam.",
+    "source": {
+      "file": "Vietnam_Multi_Hazard_SAR_Flood_and_Forest_2019_2026.xlsx",
+      "sha256": "242cdded82cfeed82618699683a74136236386cfb3528996049edbea9578fbea",
+      "sheet": "Forest Disturbance",
+      "publisher": "SAR data team / Copernicus Sentinel-1",
+      "url": "https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S1_GRD"
+    },
+    "validation": [
+      {
+        "label": "2023",
+        "date": "2023-12-31",
+        "precision": 0.5773578229219615,
+        "recall": 0.4826863571646985,
+        "iou": 0.35666303911672864
+      },
+      {
+        "label": "2024",
+        "date": "2024-12-31",
+        "precision": 0.5580562216611185,
+        "recall": 0.5052892918395848,
+        "iou": 0.360880750338441
+      }
+    ],
+    "points": [],
+    "startDate": "2019-01-01",
+    "endDate": "2026-11-09",
+    "observationCount": 456,
+    "qualityPassedCount": 257,
+    "schemaVersion": 1
+  },
+  {
+    "id": "ITA_VENICE_VERTICAL",
+    "regionId": "venice",
+    "name": "Venice · vertical displacement",
+    "kind": "subsidence",
+    "metric": "Vertical displacement",
+    "unit": "mm",
+    "bounds": null,
+    "geometryStatus": "crs_unconfirmed",
+    "validationStatus": "source_quality_metadata",
+    "note": "Eight selected EGMS points, not a citywide surface. Negative values indicate downward movement relative to the source reference. Projected CRS/product/release must be confirmed before mapping points. RMSE is fit quality, not a per-date confidence interval.",
+    "method": "EGMS vertical displacement point histories; original reference values retained without rebasing or interpolation.",
+    "source": {
+      "file": "Venice_Land_Subsidence_8_Points_2020_2025.xlsx",
+      "sha256": "d509efadfc0c1aaa29fee20726c3f0d5f7bb3e5c54357fc906a4f2026a340341",
+      "sheet": "Land Subsidence",
+      "publisher": "Copernicus European Ground Motion Service",
+      "url": "https://land.copernicus.eu/en/products/european-ground-motion-service/egms-ortho"
+    },
+    "validation": [],
+    "points": [
+      {
+        "id": "10UHknz6we",
+        "easting": 4504450.0,
+        "northing": 2483350.0,
+        "velocity": -1.39999998,
+        "rmse": 0.5
+      },
+      {
+        "id": "10UHuBJbKk",
+        "easting": 4504250.0,
+        "northing": 2483550.0,
+        "velocity": -1.5,
+        "rmse": 0.5
+      },
+      {
+        "id": "10UIHcdpJ2",
+        "easting": 4504050.0,
+        "northing": 2484050.0,
+        "velocity": -1.60000002,
+        "rmse": 0.40000001
+      },
+      {
+        "id": "10UHpUeM8p",
+        "easting": 4505150.0,
+        "northing": 2483450.0,
+        "velocity": -1.70000005,
+        "rmse": 0.89999998
+      },
+      {
+        "id": "10UHIfzdmV",
+        "easting": 4505950.0,
+        "northing": 2482750.0,
+        "velocity": -3.4000001,
+        "rmse": 1.10000002
+      },
+      {
+        "id": "10UHpUeM8O",
+        "easting": 4502450.0,
+        "northing": 2483450.0,
+        "velocity": -1.39999998,
+        "rmse": 0.5
+      },
+      {
+        "id": "10UH4bzuBv",
+        "easting": 4503550.0,
+        "northing": 2482450.0,
+        "velocity": -1.5,
+        "rmse": 0.69999999
+      },
+      {
+        "id": "10UIaNIo5E",
+        "easting": 4503650.0,
+        "northing": 2484450.0,
+        "velocity": -1.60000002,
+        "rmse": 0.5
+      }
+    ],
+    "startDate": "2020-12-09",
+    "endDate": "2025-11-25",
+    "observationCount": 2424,
+    "qualityPassedCount": 2424,
+    "schemaVersion": 1
+  }
+]

@@ -12,6 +12,8 @@ import {
 import { indicators, type Indicator } from "../data/demo";
 import type { Region } from "../types/region";
 import { PIN_LABEL_BACKGROUND, PIN_LABEL_TEXT } from "./markerStyle";
+import { studyAreaView, visibleMapViewport } from "./cameraFit";
+import type { StudyBounds } from "../data/sar";
 
 const GLOBAL_VIEW = { longitude: -35, latitude: 35, altitude: 22_000_000 };
 const TOP_DOWN_ORIENTATION = {
@@ -34,8 +36,17 @@ export function focusCamera(
   viewer: Viewer,
   region: Region | null,
   onFlightState?: (moving: boolean) => void,
+  studyArea?: StudyBounds | null,
 ) {
-  const destination = region ?? GLOBAL_VIEW;
+  const frustum = viewer.camera.frustum;
+  const destination =
+    region && studyArea && "fovy" in frustum
+      ? studyAreaView(
+          studyArea,
+          visibleMapViewport(viewer.scene.canvas),
+          frustum.fovy ?? Math.PI / 3,
+        )
+      : (region ?? GLOBAL_VIEW);
   viewer.camera.cancelFlight();
   onFlightState?.(true);
   viewer.camera.flyTo({
@@ -96,6 +107,7 @@ export function trackMarkerVisibility(viewer: Viewer) {
   return viewer.scene.preRender.addEventListener(() => {
     occluder.cameraPosition = viewer.camera.positionWC;
     for (const entity of viewer.entities.values) {
+      if (!entity.show) continue;
       const position = entity.position?.getValue(viewer.clock.currentTime);
       if (!position) continue;
       const visible = occluder.isPointVisible(position);

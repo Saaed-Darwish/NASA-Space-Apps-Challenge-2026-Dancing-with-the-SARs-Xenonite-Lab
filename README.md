@@ -2,25 +2,39 @@
 
 A React + TypeScript + Vite + Tailwind CSS frontend and a Python FastAPI backend.
 
-## Water monitoring update
+## SAR observations and study areas
 
-The frontend now supports water overlays only. Porto Alegre and Rio Grande do Sul
-(Brazil), plus Can Tho and the Mekong Delta (Vietnam), are prioritized study areas.
-Their flood data is being processed by the backend team. Until a flood-data endpoint
-is connected, these areas show a processing state with no invented footprints or
-measurements. Water controls are reserved for these four regions; the remaining
-curated views use a story and camera sidebar, including Lake Manchar.
+Analyze serves 3,800 source-traceable observations through FastAPI: Madeira River
+candidate inundation and forest disturbance, Can Tho candidate inundation, Binh Phuoc
+forest disturbance, and eight Venice vertical-displacement histories. Study-area
+outlines are analysis rectangles, not mapped water/forest event footprints. Venice
+point positions await source CRS confirmation; its city marker is a locator.
 
-Every curated view has two sourced stories. Transient events have an editorial map
-window with smooth fades on the annual timeline: Lake Manchar's flood appears near
-2022 and is hidden by 2023. Hidden markers remain accessible through their story
-cards and source links. These windows do not establish measured recovery dates.
+Use **Dataset**, **Acquisition**, the observation slider and Previous/Next controls to
+inspect actual dates. Forest quality-rejected records are hidden by default and can
+be inspected with a separate toggle. Method/source details show provisional
+validation metrics and workbook hashes. SAR acquisitions (2019–2026) link in both
+directions with the approximate imagery cursor where their date ranges overlap;
+the optical archive remains annual mosaics from 2020–2025. No SAR measurements are
+interpolated. A compact total/date badge sits above each "Study Area" rectangle.
+
+The collection contains 13 curated regions and 24 sourced stories. Porto Alegre is
+no longer a separate region; its two stories live under Rio Grande do Sul, which
+has four stories and no SAR observations. Mekong Delta is no longer a separate
+region; its two stories live under Can Tho. Madeira River/Can Tho totals are never
+assigned to wider areas.
+The Forecast tab serves Omar's exploratory monthly exports for Madeira River and
+Can Tho, with history, approximate ranges and explicit evaluation limitations.
+Six experimental spatial water-change layers are available from independently
+acquired public Sentinel-1 RTC imagery for Madeira River and Can Tho in 2024.
+Use Analyze → Spatial water change → View latest available comparison, or select
+a dated pair. Blue is candidate gain; amber is candidate loss. See
+[the water-change pipeline](./docs/water-change-pipeline.md) and
+[the observation integration guide](./docs/sar-observations.md).
 
 Globe markers use fixed ellipsoid anchors with horizon visibility checks. Camera
 zoom and panning update the focused study area without initiating another camera
-flight. City and regional focus have separate entry and exit bounds to avoid flicker.
-Run `npm test` from [frontend/](./frontend) to check focus transitions and data scope
-(Node.js 22.18+).
+flight. Run `npm test` from [frontend/](./frontend) for focus, scope and adapter checks.
 
 ## Requirements
 
@@ -35,7 +49,7 @@ Open two terminals at the project root.
 
 ```powershell
 python -m venv backend/.venv
-backend/.venv/Scripts/python -m pip install -r backend/requirements.txt
+backend/.venv/Scripts/python -m pip install -r backend/requirements.lock.txt
 backend/.venv/Scripts/python -m uvicorn main:app --app-dir backend --reload
 ```
 
@@ -70,8 +84,7 @@ Earth AI sends the region ID, story ID, selected years, question and up to eight
 recent conversation turns to `POST /api/chat`. The backend resolves region and
 story facts from [earth_context.json](./backend/data/earth_context.json), supplies
 source IDs to the model, and returns links only for supplied sources cited in the
-answer. It never sends illustrative readings as measured water data. Water data
-currently has `processing` or `not_configured` status; forecast outputs are absent.
+answer. It never sends illustrative readings as measured water data. Water context has `observations_available` for a selected water dataset, or `processing` / `not_configured` otherwise; forecast outputs are absent. Selected SAR dataset and observation IDs are resolved and ownership-checked on the backend.
 When validated measurements arrive, integrate them in `build_context` in
 [assistant.py](./backend/assistant.py), including units, dates, provenance and uncertainty.
 
@@ -83,7 +96,7 @@ npm run export:ai-context
 ```
 
 Restart the backend to load the updated catalogue. No embeddings or training step is needed.
-Chat history lives in browser memory until reload. This integration does not persist
+Chat history retains the latest 40 messages per region in browser memory until reload. This integration does not persist
 questions or answers on the backend. Local configuration sends inference requests
 to your own Ollama instance; source links are not automatically fetched by the model.
 
@@ -95,14 +108,51 @@ deployment, add authentication and per-user rate limits; the development backend
 allows one in-flight model request and rejects concurrent requests with HTTP 429.
 Model answers can still be wrong: citations identify supplied evidence, not automatic verification.
 
+The API rejects write requests from browser origins outside `CORS_ORIGINS`, requires
+JSON for chat, and caps request bodies at 160,000 bytes before parsing, including
+chunked requests. Configure explicit origins for your deployed frontend as well as
+local development; wildcard and `null` origins are rejected. Origin checks are not
+authentication: requests without an Origin header are still permitted. AI responses
+are size-limited, and frontend response adapters validate external links and fields.
+The region API and Earth AI use the same exported catalogue.
+
+Use [backend/requirements.lock.txt](./backend/requirements.lock.txt) for the audited,
+pinned Python environment. [backend/requirements.txt](./backend/requirements.txt)
+lists the direct runtime dependencies; regenerate the lock and repeat vulnerability
+checks when updating them. See [the readiness review](./docs/security-readiness.md)
+for verification results and the remaining deployment requirements.
+
 Backend checks:
 
 ```powershell
 cd backend
-.venv/Scripts/python -m unittest test_assistant -v
+.venv/Scripts/python -m unittest discover -v
 ```
 
 ## Production build
+
+### Share a built demo on your local network
+
+Build the frontend, then run this from the project root, replacing the example
+address with the hosting computer's Wi-Fi/Ethernet IPv4 address:
+
+```powershell
+cd frontend
+npm run build
+cd ..
+backend/.venv/Scripts/python backend/serve_local.py --host 192.168.1.86 --port 8080
+```
+
+Open `http://192.168.1.86:8080` on another computer on the same LAN. This launcher
+serves the built frontend and API together and trusts that explicit frontend origin
+for the new server process. It leaves existing development servers and local
+environment files unchanged. Earth AI uses the host computer's configured model;
+Ollama does not need to be exposed on the network. Rebuild and refresh after frontend
+changes. Stop the server with Ctrl+C. If Windows Firewall prompts, allow access on
+your trusted private network. This is for a trusted LAN demo; do not port-forward
+it onto the public internet. The address can change when the host joins another network.
+
+### Build only
 
 ```powershell
 cd frontend
@@ -152,7 +202,7 @@ Land displacement (purple to amber), water extent change (tan to blue), and wild
 
 Smooth raster fields highlight simulated changes with transparent edges. Unchanged areas remain clear, and 2020 is the reference year. Patterns suggest ground movement, channel expansion, and wildfire scars; they do not trace measured terrain, actual water bodies, or burn boundaries. Snapshot values are synthetic estimates for the selected year, independent of the illustrative trend chart and color field. Wildfire area is distinct from the burn-severity index used for map colors.
 
-The timeline runs from 2020 to 2025, the latest verified year in the public archive. The current calendar year is shown separately; a 2026 mosaic is not substituted or invented. Click a year bookmark, scrub between years, or select a From/To playback range. Play advances at approximately 4.5 seconds per year and stops at the selected end year. With only a region selected, Play resumes from the current position and stays at the end once finished; scrub back to play again. After selecting a specific story, the first Play starts at the beginning of the comparison range. Subsequent plays resume from the current position, including after scrubbing; selecting a story again resets this first-play behavior. Pausing preserves the blend position, while selecting a year stops playback. Camera movement remains independent of playback.
+The timeline runs from 2020 to 2025, the latest verified year in the public archive. The current calendar year is shown separately; a 2026 mosaic is not substituted or invented. Click a year bookmark, scrub between years, or select a From/To playback range. Play advances at approximately 4.5 seconds per year and stops at the selected end year. Playing from the end restarts at the beginning of the selected range. With only a region selected, Play otherwise resumes from the current position. After selecting a specific story, the first Play starts at the beginning of the comparison range. Subsequent plays resume from the current position, including after scrubbing, unless already at the end; selecting a story again resets this first-play behavior. Pausing preserves the blend position, while selecting a year stops playback. Camera movement remains independent of playback.
 
 The globe now displays real [EOX Sentinel-2 cloudless annual mosaics](https://maps.eox.at/), streamed directly from the public WMTS service. Selecting 2020 uses the 2020 satellite tiles; selecting 2025 uses the 2025 tiles. These approximately 10-metre mosaics can reveal larger developments and land-use changes, but are composites rather than photos from one date, and cannot reliably resolve individual building modifications. Differences in season, atmosphere, and mosaic processing also affect their appearance; the app does not classify urban growth or measure it from these images.
 
@@ -164,13 +214,13 @@ To curate another region, add its coordinates, altitude, description, and all th
 
 ## Analyze, stories, and Earth AI
 
-Analyze combines camera views, year comparisons, sourced stories, and applicable water controls. Earth AI shares the selected region, camera, and timeline. The frontend works without a running backend, with two sourced stories for each of the twelve curated views.
+Analyze combines camera views, year comparisons, sourced stories, and applicable water controls. Earth AI shares the selected region, camera, and timeline. The globe and curated stories work without a running backend; SAR observation panels require FastAPI. There are 13 regions and 24 stories, including four stories under Rio Grande do Sul.
 
 Use **Stories & evidence** to open Analyze, or click a story symbol on the globe. Story markers are hidden in the global overview and appear only within the focused region and their configured time window. Region and story labels use 50%-transparent black backgrounds with white text. Their approximate locations do not represent damage footprints. Source cards identify retrospective material published after the selected map year.
 
 Selecting a story configures its comparison range. The first **Play** after selection starts the focused story from the earliest bookmarked year; subsequent plays resume from the current position. Analyze's **Before** and **After** buttons jump to the comparison endpoints. The LNU story explicitly notes that the 2020 annual mosaic is not a guaranteed pre-fire image.
 
-**Forecast** appears only for Porto Alegre, Rio Grande do Sul, Can Tho, and the Mekong Delta. It currently shows the time-series model's development state and pending input/output availability; there is no forecast endpoint or invented prediction series. Switching to another region or the global overview returns to Analyze. The map timeline remains a historical imagery control.
+**Forecast** is available when a region is selected. Madeira River and Can Tho load the reviewed export through `GET /api/datasets/{dataset_id}/forecast`; other datasets report unavailable. The tab shows monthly history (including imputed, flagged and partial months), a separate dashed forecast, approximate nominal 95% ranges, a month selector, tables and provenance. The existing model's evaluation needs correction, so skill/accuracy claims are withheld. Forecasts describe a cleaned monthly candidate-inundation indicator, not flood warnings or spatial footprints. No notebook or model training runs in HTTP requests. The map timeline remains a historical imagery control.
 
 **Earth AI connects to a model through the backend.** Local development uses Ollama and Ministral 3 3B. Suggested prompts and typed questions include region, story and timeline context; unavailable water data is explicitly marked. Conversations remain separate for each region during the page session. A page reload resets them. Connection failures are shown explicitly, without substituting demo answers.
 

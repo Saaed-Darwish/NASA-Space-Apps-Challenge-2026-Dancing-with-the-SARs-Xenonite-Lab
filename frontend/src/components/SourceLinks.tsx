@@ -1,5 +1,6 @@
 import type { RegionStory, StorySource } from "../data/stories";
 import { storyTimelineLabel } from "../data/storyTimeline";
+import { safeExternalUrl } from "../data/validation";
 
 interface SourceLinksProps {
   sources: StorySource[];
@@ -12,26 +13,28 @@ export default function SourceLinks({
 }: SourceLinksProps) {
   return (
     <div className="source-links">
-      {sources.map((source) => (
-        <a
-          key={source.url}
-          href={source.url}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <span>
-            {source.publisher}{" "}
-            {source.publishedYear && `· ${source.publishedYear}`}
-          </span>
-          <strong>{source.title} ↗</strong>
-          {source.id && <small>Source [{source.id}]</small>}
-          {source.publishedYear && source.publishedYear > observationYear && (
-            <small>
-              Retrospective source: published after the selected map year
-            </small>
-          )}
-        </a>
-      ))}
+      {sources
+        .filter((source) => safeExternalUrl(source.url))
+        .map((source) => (
+          <a
+            key={source.url}
+            href={source.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span>
+              {source.publisher}{" "}
+              {source.publishedYear && `· ${source.publishedYear}`}
+            </span>
+            <strong>{source.title} ↗</strong>
+            {source.id && <small>Source [{source.id}]</small>}
+            {source.publishedYear && source.publishedYear > observationYear && (
+              <small>
+                Retrospective source: published after the selected map year
+              </small>
+            )}
+          </a>
+        ))}
     </div>
   );
 }
