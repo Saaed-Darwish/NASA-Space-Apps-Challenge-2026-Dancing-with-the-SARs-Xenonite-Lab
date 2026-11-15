@@ -1,0 +1,11 @@
+year,sentinel1_dates,summer_processed,nisar,note
+2017,10,True,False,
+2018,10,True,False,
+2019,8,True,False,
+2020,9,True,False,
+2021,9,True,False,
+2022,0,False,False,no Sentinel-1 over Norilsk
+2023,0,False,False,no Sentinel-1 over Norilsk
+2024,0,False,False,no Sentinel-1 over Norilsk
+2025,9,True,False,
+2026,5,True,True,

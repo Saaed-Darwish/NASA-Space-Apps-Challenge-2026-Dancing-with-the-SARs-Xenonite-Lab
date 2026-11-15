@@ -2839,3 +2839,50 @@ summary {
     height: 30px;
   }
 }
+
+.norilsk-evidence {
+  margin-block: 20px;
+  padding-block: 16px;
+  border-block: 1px solid var(--border, #30414b);
+}
+.norilsk-evidence h3 {
+  margin: 14px 0 8px;
+}
+.norilsk-evidence figure {
+  margin: 12px 0;
+  min-width: 0;
+}
+.norilsk-evidence img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  background: #fff;
+}
+.norilsk-evidence figcaption {
+  font-size: 11px;
+  line-height: 1.5;
+  margin-top: 6px;
+  color: #a9bac5;
+}
+.norilsk-image-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.motion-scale {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 14px;
+  margin: 12px 0 8px;
+  font-size: 11px;
+  background: linear-gradient(90deg, #d95168, #555965 50%, #409cf5) top / 100%
+    8px no-repeat;
+}
+.motion-map-key {
+  max-width: 340px;
+}
+.motion-map-key strong {
+  font-size: 12px;
+}

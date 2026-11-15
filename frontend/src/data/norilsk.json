@@ -1,0 +1,201 @@
+{
+  "overlays": [
+    {
+      "id": "s1_seasonal_2017",
+      "title": "Sentinel-1 summer 2017: vertical change",
+      "description": "Vertical displacement from 20170701 to 20170923 relative to plateau bedrock; slopes > 5 deg masked. At 10-50 km the atmosphere dominates: use it as a pattern map, not for absolute values between distant places.",
+      "period": "20170701/20170923",
+      "limit": 35,
+      "bounds": {
+        "west": 87.54038373470932,
+        "south": 69.19012833126801,
+        "east": 88.93378300744972,
+        "north": 69.58944463885886
+      },
+      "imageUrl": "/norilsk/overlays/overlay_s1_seasonal_2017.png"
+    },
+    {
+      "id": "s1_seasonal_2018",
+      "title": "Sentinel-1 summer 2018: vertical change",
+      "description": "Vertical displacement from 20180626 to 20180930 relative to plateau bedrock; slopes > 5 deg masked. At 10-50 km the atmosphere dominates: use it as a pattern map, not for absolute values between distant places.",
+      "period": "20180626/20180930",
+      "limit": 35,
+      "bounds": {
+        "west": 87.54038373470932,
+        "south": 69.19012833126801,
+        "east": 88.93378300744972,
+        "north": 69.58944463885886
+      },
+      "imageUrl": "/norilsk/overlays/overlay_s1_seasonal_2018.png"
+    },
+    {
+      "id": "s1_seasonal_2019",
+      "title": "Sentinel-1 summer 2019: vertical change",
+      "description": "Vertical displacement from 20190703 to 20190901 relative to plateau bedrock; slopes > 5 deg masked. At 10-50 km the atmosphere dominates: use it as a pattern map, not for absolute values between distant places.",
+      "period": "20190703/20190901",
+      "limit": 35,
+      "bounds": {
+        "west": 87.54038373470932,
+        "south": 69.19012833126801,
+        "east": 88.93378300744972,
+        "north": 69.58944463885886
+      },
+      "imageUrl": "/norilsk/overlays/overlay_s1_seasonal_2019.png"
+    },
+    {
+      "id": "s1_seasonal_2020",
+      "title": "Sentinel-1 summer 2020: vertical change",
+      "description": "Vertical displacement from 20200627 to 20200919 relative to plateau bedrock; slopes > 5 deg masked. At 10-50 km the atmosphere dominates: use it as a pattern map, not for absolute values between distant places.",
+      "period": "20200627/20200919",
+      "limit": 35,
+      "bounds": {
+        "west": 87.54038373470932,
+        "south": 69.19012833126801,
+        "east": 88.93378300744972,
+        "north": 69.58944463885886
+      },
+      "imageUrl": "/norilsk/overlays/overlay_s1_seasonal_2020.png"
+    },
+    {
+      "id": "s1_seasonal_2021",
+      "title": "Sentinel-1 summer 2021: vertical change",
+      "description": "Vertical displacement from 20210716 to 20210926 relative to plateau bedrock; slopes > 5 deg masked. At 10-50 km the atmosphere dominates: use it as a pattern map, not for absolute values between distant places.",
+      "period": "20210716/20210926",
+      "limit": 35,
+      "bounds": {
+        "west": 87.54038373470932,
+        "south": 69.19012833126801,
+        "east": 88.93378300744972,
+        "north": 69.58944463885886
+      },
+      "imageUrl": "/norilsk/overlays/overlay_s1_seasonal_2021.png"
+    },
+    {
+      "id": "s1_seasonal_2025",
+      "title": "Sentinel-1 summer 2025: vertical change",
+      "description": "Vertical displacement from 20250625 to 20250905 relative to plateau bedrock; slopes > 5 deg masked. At 10-50 km the atmosphere dominates: use it as a pattern map, not for absolute values between distant places.",
+      "period": "20250625/20250905",
+      "limit": 35,
+      "bounds": {
+        "west": 87.54038373470932,
+        "south": 69.19012833126801,
+        "east": 88.93378300744972,
+        "north": 69.58944463885886
+      },
+      "imageUrl": "/norilsk/overlays/overlay_s1_seasonal_2025.png"
+    },
+    {
+      "id": "s1_seasonal_2026",
+      "title": "Sentinel-1 summer 2026: vertical change",
+      "description": "Vertical displacement from 20260621 to 20260709 relative to plateau bedrock; slopes > 5 deg masked. At 10-50 km the atmosphere dominates: use it as a pattern map, not for absolute values between distant places. Only 3 dates: preliminary.",
+      "period": "20260621/20260709",
+      "limit": 35,
+      "bounds": {
+        "west": 87.54038373470932,
+        "south": 69.19012833126801,
+        "east": 88.93378300744972,
+        "north": 69.58944463885886
+      },
+      "imageUrl": "/norilsk/overlays/overlay_s1_seasonal_2026.png"
+    },
+    {
+      "id": "local_persistent",
+      "title": "Where the ground sinks every summer",
+      "description": "Local seasonal motion vs ~2 km surroundings, mean of 2020 and 2025 where both summers agree in sign. The reproducible part of the signal: wetlands.",
+      "period": null,
+      "limit": 15.0,
+      "bounds": {
+        "west": 87.54038373470932,
+        "south": 69.19012833126801,
+        "east": 88.93378300744972,
+        "north": 69.58944463885886
+      },
+      "imageUrl": "/norilsk/overlays/overlay_local_persistent.png"
+    },
+    {
+      "id": "local_2020",
+      "title": "Local seasonal motion 2020",
+      "description": "vs ~2 km surroundings, sqrt(TDD) fit",
+      "period": null,
+      "limit": 15.0,
+      "bounds": {
+        "west": 87.54038373470932,
+        "south": 69.19012833126801,
+        "east": 88.93378300744972,
+        "north": 69.58944463885886
+      },
+      "imageUrl": "/norilsk/overlays/overlay_local_2020.png"
+    },
+    {
+      "id": "local_2025",
+      "title": "Local seasonal motion 2025",
+      "description": "vs ~2 km surroundings, sqrt(TDD) fit",
+      "period": null,
+      "limit": 15.0,
+      "bounds": {
+        "west": 87.54038373470932,
+        "south": 69.19012833126801,
+        "east": 88.93378300744972,
+        "north": 69.58944463885886
+      },
+      "imageUrl": "/norilsk/overlays/overlay_local_2025.png"
+    },
+    {
+      "id": "nisar_early_vertical",
+      "title": "NISAR 2026 early window, vertical",
+      "description": "L-band 12-day pair, ascending 111 + descending 6 combined; an independent cross-check, not a time series.",
+      "period": null,
+      "limit": 20.0,
+      "bounds": {
+        "west": 87.54038373470932,
+        "south": 69.19012833126801,
+        "east": 88.93378300744972,
+        "north": 69.58944463885886
+      },
+      "imageUrl": "/norilsk/overlays/overlay_nisar_early_vertical.png"
+    },
+    {
+      "id": "nisar_late_vertical",
+      "title": "NISAR 2026 late window, vertical",
+      "description": "L-band 12-day pair, ascending 111 + descending 6 combined; an independent cross-check, not a time series.",
+      "period": null,
+      "limit": 20.0,
+      "bounds": {
+        "west": 87.54038373470932,
+        "south": 69.19012833126801,
+        "east": 88.93378300744972,
+        "north": 69.58944463885886
+      },
+      "imageUrl": "/norilsk/overlays/overlay_nisar_late_vertical.png"
+    },
+    {
+      "id": "nisar_early_east",
+      "title": "NISAR 2026 early window, east-west (+ east)",
+      "description": "L-band 12-day pair, ascending 111 + descending 6 combined; an independent cross-check, not a time series.",
+      "period": null,
+      "limit": 20.0,
+      "bounds": {
+        "west": 87.54038373470932,
+        "south": 69.19012833126801,
+        "east": 88.93378300744972,
+        "north": 69.58944463885886
+      },
+      "imageUrl": "/norilsk/overlays/overlay_nisar_early_east.png"
+    },
+    {
+      "id": "nisar_late_east",
+      "title": "NISAR 2026 late window, east-west (+ east)",
+      "description": "L-band 12-day pair, ascending 111 + descending 6 combined; an independent cross-check, not a time series.",
+      "period": null,
+      "limit": 20.0,
+      "bounds": {
+        "west": 87.54038373470932,
+        "south": 69.19012833126801,
+        "east": 88.93378300744972,
+        "north": 69.58944463885886
+      },
+      "imageUrl": "/norilsk/overlays/overlay_nisar_late_east.png"
+    }
+  ],
+  "credit": "Contains modified Copernicus Sentinel data 2017-2026 processed by ASF HyP3; NISAR data courtesy NASA/ISRO via ASF DAAC; ERA5 (Copernicus C3S) via Open-Meteo; GNSS NRIL: Nevada Geodetic Laboratory; OpenStreetMap contributors; ESA WorldCover; Copernicus DEM"
+}

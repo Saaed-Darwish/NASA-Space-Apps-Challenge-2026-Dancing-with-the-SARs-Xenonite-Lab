@@ -136,6 +136,11 @@ def main():
             if layer["bounds"]!=meta["bounds"]:raise ValueError("Spatial comparison bounds changed")
             layer["observationSourceSha256"]=meta["source"]["sha256"]
     for meta,rows in datasets:(target/(meta["id"]+".json")).write_text(json.dumps(rows,ensure_ascii=False,allow_nan=False,separators=(",",":"))+"\n",encoding="utf-8")
+    imported_ids = {m["id"] for m in catalogue}
+    catalogue.extend(m for m in json.loads((target/"catalog.json").read_text(encoding="utf-8")) if m["id"] not in imported_ids)
+    for meta in catalogue:
+        meta.setdefault("forecastAvailable", True)
+        meta.setdefault("pointBadge", None)
     content=json.dumps(catalogue,ensure_ascii=False,allow_nan=False,indent=2)+"\n"
     (target/"catalog.json").write_text(content,encoding="utf-8")
     (ROOT.parent/"frontend/src/data/sarCatalog.json").write_text(content,encoding="utf-8")

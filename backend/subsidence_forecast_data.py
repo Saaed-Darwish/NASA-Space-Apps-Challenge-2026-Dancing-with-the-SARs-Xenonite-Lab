@@ -52,7 +52,7 @@ def adapt_subsidence(raw):
     if len(raw) > 1_000_000:
         raise ValueError("Subsidence forecast exceeds artifact budget")
     export = json.loads(raw)
-    datasets=[m for m in CATALOG.values() if m.kind=="subsidence"]
+    datasets=[m for m in CATALOG.values() if m.kind=="subsidence" and m.forecastAvailable]
     all_points={p["id"] for m in datasets for p in m.points}
     if export["units"] != "mm" or set(export["points"]) != all_points:
         raise ValueError("Subsidence export does not match Venice points")
@@ -112,7 +112,12 @@ ARTIFACTS = adapt_subsidence((ROOT / "subsidence_forecast.json").read_bytes())
 
 
 def get_subsidence_forecast(point_id=None, dataset_id=DATASET):
-    pid = point_id or CATALOG[dataset_id].points[0]["id"]
+    meta = CATALOG[dataset_id]
+    if point_id is not None and point_id not in {p["id"] for p in meta.points}:
+        raise HTTPException(422, "Point does not belong to this dataset")
+    if not meta.forecastAvailable:
+        return {"status": "unavailable", "datasetId": dataset_id, "reason": "No forecast supplied: independently rebased radar segments cannot support a continuous trend forecast."}
+    pid = point_id or meta.points[0]["id"]
     if pid not in ARTIFACTS or ARTIFACTS[pid]["datasetId"]!=dataset_id:
         raise HTTPException(422, "Point does not belong to the Venice forecast")
     return ARTIFACTS[pid]

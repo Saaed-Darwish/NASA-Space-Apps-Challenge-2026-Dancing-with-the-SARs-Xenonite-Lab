@@ -1,3 +1,4 @@
+import { norilskResultStories } from "./norilskStories";
 import { additionalStories } from "./additionalStories";
 
 export type StoryCategory = "urban" | "fire" | "water";
@@ -305,6 +306,7 @@ export const stories: RegionStory[] = [
     ],
   },
   ...additionalStories,
+  ...norilskResultStories,
 ];
 
 export function storiesForRegion(regionId: string | undefined) {
