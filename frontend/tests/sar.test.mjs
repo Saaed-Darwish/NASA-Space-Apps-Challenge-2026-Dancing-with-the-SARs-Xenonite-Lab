@@ -25,7 +25,7 @@ test("a different workbook release is rejected before displaying its values", as
 });
 
 test("catalogue scopes observations to measured regions and Venice to individual grid samples", () => {
-  assert.equal(sarDatasets.length, 10);
+  assert.equal(sarDatasets.length, 11);
   assert.equal(
     sarDatasets.find((d) => d.id === "BRA_PORTO_VELHO").regionId,
     "porto-velho",
@@ -68,4 +68,37 @@ test("chart spacing uses elapsed time and breaks lines across missing periods", 
     plot.points[2].x - plot.points[1].x > plot.points[1].x - plot.points[0].x,
   );
   assert.equal(observationPlot([]).points.length, 0);
+});
+
+test("independently rebased Norilsk segments never join even across short gaps", () => {
+  const rows = [
+    {
+      id: "a",
+      date: "2019-12-06",
+      value: 0,
+      qualityPass: true,
+      details: { segment: "winter" },
+    },
+    {
+      id: "b",
+      date: "2019-12-18",
+      value: -2,
+      qualityPass: true,
+      details: { segment: "winter" },
+    },
+    {
+      id: "c",
+      date: "2019-12-30",
+      value: 0,
+      qualityPass: true,
+      details: { segment: "next" },
+    },
+  ];
+  assert.equal(observationPlot(rows).paths.length, 2);
+  const meta = sarDatasets.find((d) => d.id === "NOR_TPP3_TANK_VERTICAL");
+  assert.equal(meta.forecastAvailable, false);
+  assert.equal(meta.points.length, 4);
+  assert.ok(
+    meta.points.every((p) => p.velocity === null && p.gridSizeMeters === 20),
+  );
 });

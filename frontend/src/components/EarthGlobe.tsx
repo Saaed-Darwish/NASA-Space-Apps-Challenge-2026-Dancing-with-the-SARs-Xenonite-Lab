@@ -1,3 +1,4 @@
+import type { GroundMotionSelection } from "../data/norilsk";
 import { configureCameraLimits } from "../globe/cameraLimits";
 import WaterChangeLegend from "./WaterChangeLegend";
 import { useEffect, useRef, useState } from "react";
@@ -53,6 +54,7 @@ import {
 } from "../data/articleSearch";
 
 interface EarthGlobeProps {
+  groundMotion: GroundMotionSelection | null;
   waterLayer: WaterLayerSelection | null;
   dataset: SarDataset | null;
   observation: SarObservation | null;
@@ -77,6 +79,7 @@ interface EarthGlobeProps {
 }
 
 export default function EarthGlobe({
+  groundMotion,
   waterLayer,
   dataset,
   observation,
@@ -425,6 +428,52 @@ export default function EarthGlobe({
     };
   }, [isViewerReady, trackingPoint]);
 
+  const motionLayerRef = useRef<ImageryLayer | null>(null);
+  const [motionError, setMotionError] = useState<string | null>(null);
+  const motionOpacityRef = useRef(0.75);
+  motionOpacityRef.current = groundMotion?.opacity ?? 0.75;
+  const motionOverlay = groundMotion?.overlay;
+  useEffect(() => {
+    const viewer = viewerRef.current;
+    if (!viewer || !isViewerReady || !motionOverlay) return;
+    let disposed = false;
+    let layer: ImageryLayer | null = null;
+    setMotionError(null);
+    const b = motionOverlay.bounds;
+    SingleTileImageryProvider.fromUrl(motionOverlay.imageUrl, {
+      rectangle: Rectangle.fromDegrees(b.west, b.south, b.east, b.north),
+    })
+      .then((provider) => {
+        if (disposed || viewer.isDestroyed()) return;
+        layer = new ImageryLayer(provider, {
+          alpha: motionOpacityRef.current,
+        });
+        viewer.imageryLayers.add(layer);
+        motionLayerRef.current = layer;
+        viewer.scene.requestRender();
+      })
+      .catch(() => {
+        if (!disposed)
+          setMotionError(
+            "Ground-motion overlay could not load. Toggle it off and on to retry.",
+          );
+      });
+    return () => {
+      disposed = true;
+      if (motionLayerRef.current === layer) motionLayerRef.current = null;
+      if (layer && !viewer.isDestroyed()) {
+        viewer.imageryLayers.remove(layer, true);
+        viewer.scene.requestRender();
+      }
+    };
+  }, [isViewerReady, motionOverlay?.id, motionOverlay?.imageUrl]);
+  useEffect(() => {
+    if (motionLayerRef.current) {
+      motionLayerRef.current.alpha = groundMotion?.opacity ?? 0.75;
+      viewerRef.current?.scene.requestRender();
+    }
+  }, [groundMotion?.opacity]);
+
   const waterComparison = waterLayer?.comparison;
   useEffect(() => {
     const viewer = viewerRef.current;
@@ -704,6 +753,31 @@ export default function EarthGlobe({
         >
           EOX Sentinel-2 · 10 m
         </small>
+        {motionOverlay && (
+          <div className="water-map-key motion-map-key">
+            <strong>{motionOverlay.title}</strong>
+            {motionError ? (
+              <p role="alert">{motionError}</p>
+            ) : (
+              <>
+                <div className="motion-scale">
+                  <span>
+                    {motionOverlay.id.endsWith("_east") ? "West" : "Down"} −
+                    {motionOverlay.limit} mm
+                  </span>
+                  <span>0</span>
+                  <span>
+                    {motionOverlay.id.endsWith("_east") ? "East" : "Up"} +
+                    {motionOverlay.limit} mm
+                  </span>
+                </div>
+                <small>
+                  Research ground motion · independent of optical basemap date
+                </small>
+              </>
+            )}
+          </div>
+        )}
         {waterComparison && (
           <div className="water-map-key">
             {waterError ? (

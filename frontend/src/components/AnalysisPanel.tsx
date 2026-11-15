@@ -1,3 +1,5 @@
+import NorilskEvidencePanel from "./NorilskEvidencePanel";
+import type { GroundMotionSelection } from "../data/norilsk";
 import type { Region } from "../types/region";
 import {
   storiesForRegion,
@@ -15,6 +17,8 @@ import type { TimelineSelection } from "../data/observationTime";
 import type { WaterLayerSelection } from "../data/waterChanges";
 
 interface AnalysisPanelProps {
+  groundMotion: GroundMotionSelection | null;
+  onGroundMotion: (selection: GroundMotionSelection | null) => void;
   region: Region | null;
   story: RegionStory | null;
   time: number;
@@ -46,6 +50,8 @@ interface AnalysisPanelProps {
 }
 
 export default function AnalysisPanel({
+  groundMotion,
+  onGroundMotion,
   region,
   story,
   time,
@@ -126,6 +132,12 @@ export default function AnalysisPanel({
               datasets={datasets}
               dataset={dataset}
               onSelect={onSelectDataset}
+            />
+          )}
+          {region.id === "norilsk" && (
+            <NorilskEvidencePanel
+              selection={groundMotion}
+              onChange={onGroundMotion}
             />
           )}
           {dataset && (

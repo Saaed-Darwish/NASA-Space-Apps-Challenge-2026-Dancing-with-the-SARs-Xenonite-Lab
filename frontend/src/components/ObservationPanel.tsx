@@ -29,8 +29,10 @@ interface Props {
   onWaterLayer: (layer: WaterLayerSelection | null) => void;
   onCompareDate: (date: string) => void;
 }
-const numeric = (v: number) =>
-  v.toLocaleString(undefined, { maximumFractionDigits: 2 });
+const numeric = (v: number | null) =>
+  v == null
+    ? "Unavailable"
+    : v.toLocaleString(undefined, { maximumFractionDigits: 2 });
 
 export default memo(function ObservationPanel({
   dataset,
@@ -142,7 +144,8 @@ export default memo(function ObservationPanel({
       <div className="section-label">
         OBSERVATIONS{" "}
         <span className="sar-badge">
-          {dataset.kind === "subsidence" ? "EGMS POINTS" : "EXPLORATORY"}
+          {dataset.pointBadge ??
+            (dataset.kind === "subsidence" ? "EGMS POINTS" : "EXPLORATORY")}
         </span>
       </div>
       <label className="sar-field">
@@ -176,7 +179,9 @@ export default memo(function ObservationPanel({
                 <option key={p.id} value={p.id}>
                   {p.name ?? p.id}
                   {p.areaLabel ? ` · ${p.areaLabel}` : ""} ·{" "}
-                  {numeric(p.velocity)} mm/year
+                  {p.velocity == null
+                    ? "Segmented series"
+                    : `${numeric(p.velocity)} mm/year`}
                 </option>
               ))}
             </select>
@@ -196,8 +201,9 @@ export default memo(function ObservationPanel({
               {Math.abs(point.latitude).toFixed(5)}°
               {point.latitude < 0 ? " S" : " N"},{" "}
               {Math.abs(point.longitude).toFixed(5)}°{" "}
-              {point.longitude < 0 ? "W" : "E"}. Approximate 100 m EGMS grid
-              sample; coordinates follow the source EGMS grid reference.
+              {point.longitude < 0 ? "W" : "E"}. {point.gridSizeMeters ?? 100} m
+              sample using the source coordinates; not an individual building
+              part.
             </p>
           )}
         </div>
@@ -239,6 +245,13 @@ export default memo(function ObservationPanel({
       )}
       {status === "ready" && selected && (
         <>
+          {selected.details.segment != null && (
+            <p className="small sar-caveat">
+              Segment: {selected.details.segment}. Each segment starts at zero;
+              gaps cannot be joined. Negative means downward relative to nearby
+              stable targets.
+            </p>
+          )}
           <div className="sar-value">
             {numeric(selected.value)} <span>{dataset.unit}</span>
           </div>
@@ -260,8 +273,12 @@ export default memo(function ObservationPanel({
             >
               {visible.map((r) => (
                 <option key={r.id} value={r.id}>
-                  {r.date} · {numeric(r.value)} {dataset.unit} · row{" "}
-                  {r.details.sourceRow}
+                  {r.date} · {numeric(r.value)} {dataset.unit}
+                  {r.details.sourceRow != null
+                    ? ` · row ${r.details.sourceRow}`
+                    : r.details.segment != null
+                      ? ` · segment ${r.details.segment}`
+                      : ""}
                   {!r.qualityPass ? " · rejected" : ""}
                 </option>
               ))}
@@ -353,10 +370,12 @@ export default memo(function ObservationPanel({
             </button>
           </div>
           <p className="small muted">
-            Play steps through acquisitions without interpolation. The dated map
-            readout is a study-area total; precise change footprints need
-            georeferenced masks. Observation dates and the timeline link within
-            their overlapping years; imagery is still annual optical context.
+            Play steps through acquisitions without interpolation.{" "}
+            {dataset.kind === "subsidence"
+              ? "Readings describe the selected radar sample, not a citywide surface."
+              : "The dated map readout is a study-area total; precise change footprints need georeferenced masks."}{" "}
+            Observation dates and the timeline link within their overlapping
+            years; imagery is still annual optical context.
           </p>
           <button
             className="text-button"
@@ -401,7 +420,11 @@ export default memo(function ObservationPanel({
               <>
                 <div>
                   <dt>Mean velocity</dt>
-                  <dd>{numeric(point.velocity)} mm/year</dd>
+                  <dd>
+                    {point.velocity == null
+                      ? "Not defined for segmented readings"
+                      : `${numeric(point.velocity)} mm/year`}
+                  </dd>
                 </div>
                 <div>
                   <dt>Time-series RMSE</dt>
@@ -426,18 +449,25 @@ export default memo(function ObservationPanel({
               >
                 {visible.map((r) => (
                   <option key={r.id} value={r.id}>
-                    {r.date} · {numeric(r.value)} {dataset.unit} · row{" "}
-                    {r.details.sourceRow}
+                    {r.date} · {numeric(r.value)} {dataset.unit}
+                    {r.details.sourceRow != null
+                      ? ` · row ${r.details.sourceRow}`
+                      : r.details.segment != null
+                        ? ` · segment ${r.details.segment}`
+                        : ""}
                   </option>
                 ))}
               </select>
             </label>
             <p className="small">
               Change from {comparison.date}:{" "}
-              {numeric(selected.value - comparison.value)} {dataset.unit}.{" "}
-              {dataset.kind === "subsidence"
-                ? "Difference between these two readings at the selected point."
-                : "This is a net indicator difference, not newly affected area."}
+              {selected.details.segment !== comparison.details.segment
+                ? "Different segments: not comparable. "
+                : `${numeric(selected.value - comparison.value)} ${dataset.unit}. `}
+              {selected.details.segment === comparison.details.segment &&
+                (dataset.kind === "subsidence"
+                  ? "Difference between these two readings at the selected point."
+                  : "This is a net indicator difference, not newly affected area.")}
             </p>
             <div className="sar-table-scroll">
               <table>
@@ -464,7 +494,7 @@ export default memo(function ObservationPanel({
       )}
       <p className="small sar-caveat">
         {dataset.geometryStatus === "source_coordinates"
-          ? "Pin = selected 100 m grid sample using source-supplied WGS84 coordinates, not an individual building."
+          ? "Pin = selected radar sample using source-supplied WGS84 coordinates, not an individual building part."
           : dataset.geometryStatus === "area_coordinates_unavailable"
             ? "Study-area boundaries were not supplied. Area aggregates are not assigned to measurement-point coordinates."
             : dataset.geometryStatus === "inferred_egms_grid"

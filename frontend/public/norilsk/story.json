@@ -1,0 +1,185 @@
+{
+ "title": "Norilsk: thawing ground and the TPP-3 tank collapse",
+ "language": "en",
+ "sections": [
+  {
+   "id": "question",
+   "headline": "Was the ground under Norilsk sinking, and did that bring down tank 5?",
+   "text": "On 29 May 2020 fuel tank no. 5 of the TPP-3 power plant collapsed and ~21,000 t of diesel reached the Ambarnaya river. One study (Zhang et al. 2022) blamed thawing permafrost; the federal inspectorate (Rostekhnadzor, Nov 2020) blamed the pile foundation. We measured ground motion with radar satellites 2017-2026.",
+   "datasets": [
+    "images/s2_spill_20200531.png",
+    "vectors/sites.geojson"
+   ]
+  },
+  {
+   "id": "thaw",
+   "headline": "Wetlands sink every summer, as thawing ground should, and the rate is not growing",
+   "text": "Compared with their ~2 km surroundings, herbaceous wetlands sink every summer in proportion to the square root of accumulated thaw (Stefan's law), with the same coefficient in all six summers 2017-2025: no sign of acceleration. The same places sink every summer, and NISAR (L-band, 2026) sees it independently.",
+   "key_numbers": [
+    {
+     "label": "Stefan coefficient, six summers",
+     "value": "-0.195 ± 0.009",
+     "unit": "mm per sqrt(degC day)"
+    },
+    {
+     "label": "Constant across summers (chi-square p)",
+     "value": 0.069,
+     "unit": ""
+    },
+    {
+     "label": "Same pattern in two summers: r",
+     "value": "0.15-0.43 (z >= 6.3)",
+     "unit": ""
+    },
+    {
+     "label": "Local correlation 2020 vs 2025",
+     "value": "0.37 vs 0.006 ± 0.024 by chance",
+     "unit": ""
+    },
+    {
+     "label": "NISAR 2026 wetland minus moss",
+     "value": "-1.54 / -1.21 (z -2.7 / -4.9)",
+     "unit": "mm"
+    }
+   ],
+   "caveats": "Motion of the whole lowland relative to bedrock is not measurable (atmosphere). Part of the wetland signal could be water-level effects on the radar.",
+   "datasets": [
+    "overlays/overlay_local_persistent.webp",
+    "tables/wetland_by_summer.csv",
+    "tables/replication_pairs.csv",
+    "tables/landcover_local.csv"
+   ]
+  },
+  {
+   "id": "industry",
+   "headline": "Industrial ground does not sink more than other lowland ground",
+   "text": "Industrial zones behave like random lowland ground, and plants such as TPP-3 do not sink more than their surroundings in any summer.",
+   "key_numbers": [
+    {
+     "label": "Industrial vs random lowland, z (2020 / 2025)",
+     "value": "0.24 / 0.07",
+     "unit": ""
+    },
+    {
+     "label": "Sites that 'sink every summer' vs chance",
+     "value": "11 vs 6.5 (p 0.17)",
+     "unit": ""
+    }
+   ],
+   "datasets": [
+    "tables/zone_timeseries.csv",
+    "tables/zone_fits.csv"
+   ]
+  },
+  {
+   "id": "tank",
+   "headline": "No ground subsidence under tank 5 in the thaw seasons; a small, local settlement in its last winter",
+   "text": "Relative to the structures around it, tank 5 did not sink in the snow-free summers 2017-2019, when thawing ground would settle; the steady -35 mm/yr of Zhang et al. 2022 is not seen. In its last winter (Dec 2019 - Apr 2020), while the ground was frozen, tank 5 alone settled about 1.5 cm relative to its surroundings, step by step from January; none of 20 other tanks and tank-row structures did, including the one 117 m away. The result survives every check we could run (unwrapping, median, weighting, height error, leaving out any single image). It fits a failing foundation; it is strong evidence of movement, not proof of its cause.",
+   "key_numbers": [
+    {
+     "label": "Snow-free summer 2017, tank vs surroundings",
+     "value": -5.1,
+     "unit": "mm"
+    },
+    {
+     "label": "Snow-free summer 2018, tank vs surroundings",
+     "value": -1.4,
+     "unit": "mm"
+    },
+    {
+     "label": "Snow-free summer 2019, tank vs surroundings",
+     "value": 5.3,
+     "unit": "mm"
+    },
+    {
+     "label": "Last winter before the collapse (20191206 -> 20200404)",
+     "value": "-14.4 (comparable targets 0.9 ± 5.6, z -2.75)",
+     "unit": "mm"
+    },
+    {
+     "label": "Unwrapping check: closures over half a cycle (tank / comparable targets)",
+     "value": "0.0 / 0.002",
+     "unit": "fraction"
+    },
+    {
+     "label": "Tank 5 20191206 -> 20200311: mean / median / weighted / with height term",
+     "value": "-13.9 / -13.2 / -13.7 / -11.5",
+     "unit": "mm"
+    },
+    {
+     "label": "Leave-one-pair-out range (20191206 -> 20200311)",
+     "value": "-15.3 to -12.8",
+     "unit": "mm"
+    },
+    {
+     "label": "Tank 5 20191206 -> 20200404: mean / median / weighted / with height term",
+     "value": "-14.4 / -13.8 / -15.1 / -13.9",
+     "unit": "mm"
+    },
+    {
+     "label": "Leave-one-pair-out range (20191206 -> 20200404)",
+     "value": "-20.5 to -7.8",
+     "unit": "mm"
+    },
+    {
+     "label": "Other tanks, same winter (20191206 -> 20200404): depot tanks mean ± sd (n); tanks/row structures as low as tank 5",
+     "value": "-2.9 ± 4.8 (19); 0 of 20",
+     "unit": "mm"
+    },
+    {
+     "label": "Winter 2019-20 snow: snowfall, blowing-snow hours, r(tank steps, blowing snow)",
+     "value": "195.8 cm, 1096 h, r = -0.09",
+     "unit": ""
+    }
+   ],
+   "caveats": "Dry snow delays the radar (~1 mm per mm of snow water): a drift at the tank could mimic settlement, although the steps do not follow blowing-snow episodes and the neighbouring tank did not move; tanks elsewhere show ~1 cm excursions in other periods (snow onset, autumn 2019). One track, one sensor, 20 m pixels (no tilt); whole-tank motion cannot be compared with damage thresholds, which refer to differences within one tank.",
+   "datasets": [
+    "tables/tank_intervals.csv",
+    "tables/tank_winters.csv",
+    "tables/tank_points_series.csv",
+    "images/fig_tank_series.png",
+    "images/fig_tank_checks.png",
+    "images/s2_tank_before.png",
+    "images/s2_tank_after.png",
+    "app/catalog_entries.json"
+   ]
+  },
+  {
+   "id": "reference",
+   "headline": "The bedrock under Norilsk is not sinking",
+   "text": "The GNSS station NRIL, on bedrock in Norilsk, rises slightly. A regional subsidence like the -30.8 mm/yr area mean of Zhang et al. 2022 does not exist in the bedrock; our InSAR reference (plateau bedrock) is a sound zero.",
+   "key_numbers": [
+    {
+     "label": "NRIL vertical trend 2000-2023",
+     "value": "+1.6",
+     "unit": "mm/yr"
+    },
+    {
+     "label": "NRIL vertical trend 2017-2020",
+     "value": "+3.0 ± 0.6",
+     "unit": "mm/yr"
+    },
+    {
+     "label": "Seasonal amplitude",
+     "value": 8.2,
+     "unit": "mm"
+    }
+   ],
+   "datasets": [
+    "tables/gnss_nril_up.csv",
+    "images/fig_gnss_nril.png"
+   ]
+  },
+  {
+   "id": "verdict",
+   "headline": "Foundation failure, not ground thaw",
+   "text": "The radar shows no thaw-driven settlement of the ground at the tank or the plant before the collapse, and no regional subsidence of the bedrock. This agrees with the inspectorate's finding: pile cap and piles too weak (33 piles failed in a chain, ~30% not on rock), tank returned to service in 2019 without notifying the regulator, no permafrost degradation found. Permafrost thaw is real in Norilsk - wetlands sink every summer - but it is not what the data show at tank 5. Warming of the frozen ground around the piles cannot be ruled out."
+  },
+  {
+   "id": "limits",
+   "headline": "What this cannot say",
+   "text": "No radar data over Norilsk in 2022-2024; motion of the lowland relative to bedrock is atmosphere-dominated; C-band loses the signal at snowmelt and snow onset, so winter and summer cannot be linked; settlement within one tank (tilt) is below the 20 m resolution; uniform settlement of a whole area is invisible to the relative measures used here."
+  }
+ ],
+ "credit": "Contains modified Copernicus Sentinel data 2017-2026 processed by ASF HyP3; NISAR data courtesy NASA/ISRO via ASF DAAC; ERA5 (Copernicus C3S) via Open-Meteo; GNSS NRIL: Nevada Geodetic Laboratory; OpenStreetMap contributors; ESA WorldCover; Copernicus DEM"
+}

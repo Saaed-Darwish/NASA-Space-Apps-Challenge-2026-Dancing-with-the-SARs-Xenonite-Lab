@@ -1,3 +1,4 @@
+import type { GroundMotionSelection } from "./data/norilsk";
 import {
   useCallback,
   useEffect,
@@ -50,6 +51,8 @@ export default function App() {
     },
     [timeline.setComparisonRange, timeline.syncObservationTime],
   );
+  const [groundMotion, setGroundMotion] =
+    useState<GroundMotionSelection | null>(null);
   const [mode, setMode] = useState<WorkspaceMode>("analyze");
   const [leftCollapsed, setLeftCollapsed] = useState(false);
   const [rightCollapsed, setRightCollapsed] = useState(false);
@@ -78,6 +81,9 @@ export default function App() {
     },
     [timeline.setComparisonRange],
   );
+  useEffect(() => {
+    setGroundMotion(null);
+  }, [selectedRegion?.id]);
   const observationId = observation?.id;
   const selectObservation = useCallback(
     (row: SarObservation | null, syncTimeline = false) => {
@@ -376,6 +382,11 @@ export default function App() {
       style={themeStyle}
     >
       <EarthGlobe
+        groundMotion={
+          mode === "analyze" && selectedRegion?.id === "norilsk"
+            ? groundMotion
+            : null
+        }
         articles={articles}
         selectedArticle={selectedArticle}
         onSelectArticle={focusArticle}
@@ -520,6 +531,8 @@ export default function App() {
       >
         {mode === "analyze" && (
           <AnalysisPanel
+            groundMotion={groundMotion}
+            onGroundMotion={setGroundMotion}
             region={selectedRegion}
             story={contextStory ?? null}
             time={timeline.time}

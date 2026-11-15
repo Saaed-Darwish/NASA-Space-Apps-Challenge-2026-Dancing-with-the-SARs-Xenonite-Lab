@@ -384,6 +384,22 @@ function ForecastPanel({
       onSelect={onSelectDataset}
     />
   ) : null;
+  if (dataset?.forecastAvailable === false)
+    return (
+      <section
+        className="workspace-panel forecast-panel panel"
+        data-kind={dataset.kind}
+      >
+        <h2>Forecast</h2>
+        {tabs}
+        <h3>No forecast supplied</h3>
+        <p>
+          The tank readings reset to zero between independently observed
+          segments. A continuous trend or forecast would be misleading. Explore
+          the measured movement in Analyze.
+        </p>
+      </section>
+    );
   if (dataset?.kind === "subsidence")
     return (
       <SubsidenceForecastPanel

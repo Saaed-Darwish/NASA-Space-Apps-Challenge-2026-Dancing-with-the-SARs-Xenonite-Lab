@@ -12,6 +12,8 @@ export interface SarDataset {
   regionId: string;
   name: string;
   kind: "water" | "forest" | "subsidence";
+  forecastAvailable?: boolean;
+  pointBadge?: string | null;
   metric: string;
   unit: "km²" | "mm" | "dB";
   bounds: StudyBounds | null;
@@ -45,7 +47,7 @@ export interface SarDataset {
     longitude?: number;
     locationStatus?: "inferred_egms_grid" | "source_coordinates";
     gridSizeMeters?: number;
-    velocity: number;
+    velocity: number | null;
     rmse: number;
     easting: number;
     northing: number;
@@ -176,6 +178,7 @@ export function observationPlot(rows: SarObservation[]) {
   points.forEach((p, i) => {
     if (
       !i ||
+      rows[i].details?.segment !== rows[i - 1].details?.segment ||
       dates[i] - dates[i - 1] > 45 * 86400000 ||
       !rows[i].qualityPass ||
       !rows[i - 1].qualityPass

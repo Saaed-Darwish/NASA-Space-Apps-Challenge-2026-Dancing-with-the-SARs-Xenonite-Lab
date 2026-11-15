@@ -44,6 +44,9 @@ class FinalizedSarTests(unittest.TestCase):
         for key,meta in CATALOG.items():
             status,_,data=asyncio.run(invoke(path=f"/api/datasets/{key}/forecast"))
             self.assertEqual(status,200)
+            if not meta.forecastAvailable:
+                self.assertEqual(data["status"], "unavailable")
+                continue
             self.assertEqual(data["status"],"available")
             self.assertEqual(data["datasetId"],key)
             self.assertEqual(data["regionId"],meta.regionId)

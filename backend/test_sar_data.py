@@ -14,7 +14,7 @@ class SarTests(unittest.TestCase):
         return asyncio.run(invoke(path=path, query_string=query))
 
     def test_artifacts_preserve_handoff_counts_and_quality(self):
-        expected = {"BRA_PORTO_VELHO": (259,259), "BRA_PORTO_VELHO_FOREST": (324,304),
+        expected = {"NOR_TPP3_TANK_VERTICAL": (237,237), "BRA_PORTO_VELHO": (259,259), "BRA_PORTO_VELHO_FOREST": (324,304),
                     "VNM_CAN_THO": (337,337), "VNM_BINH_PHUOC_FOREST": (456,257),
                     "ITA_VENICE_VERTICAL": (2424,2424), "ITA_VENICE": (379,379), "ITA_BELLUNO_FOREST": (202,202),
                     "GBR_EAST_LONDON": (597,154), "GBR_EPPING_FOREST": (311,311), "GBR_LONDON_VERTICAL": (2416,2416)}

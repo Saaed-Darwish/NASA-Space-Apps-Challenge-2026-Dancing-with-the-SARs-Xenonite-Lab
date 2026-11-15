@@ -38,7 +38,7 @@ export default function MapCaption({
             ? "AREA IN FOCUS"
             : "GLOBAL OVERVIEW"}
       </span>
-      <h1>{place?.title ?? selectedRegion?.name ?? "Our restless Earth"}</h1>
+      <h1>{place?.title ?? selectedRegion?.name ?? "Our Restless Earth"}</h1>
       <p>
         {location
           ? formatCoordinates(location)

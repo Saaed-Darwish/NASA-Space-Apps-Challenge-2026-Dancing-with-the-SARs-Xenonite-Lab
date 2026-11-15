@@ -41,6 +41,8 @@ class Dataset(BaseModel):
     regionId: str
     name: str
     kind: Literal["water", "forest", "subsidence"]
+    forecastAvailable: bool = True
+    pointBadge: str | None = None
     metric: str
     unit: Literal["km²", "mm", "dB"]
     bounds: Bounds | None

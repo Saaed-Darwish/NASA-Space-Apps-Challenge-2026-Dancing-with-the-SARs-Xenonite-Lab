@@ -46,7 +46,9 @@
     "endDate": "2026-11-13",
     "observationCount": 259,
     "qualityPassedCount": 259,
-    "schemaVersion": 1
+    "schemaVersion": 1,
+    "forecastAvailable": true,
+    "pointBadge": null
   },
   {
     "id": "BRA_PORTO_VELHO_FOREST",
@@ -78,7 +80,9 @@
     "endDate": "2026-11-13",
     "observationCount": 324,
     "qualityPassedCount": 304,
-    "schemaVersion": 1
+    "schemaVersion": 1,
+    "forecastAvailable": true,
+    "pointBadge": null
   },
   {
     "id": "VNM_CAN_THO",
@@ -127,7 +131,9 @@
     "endDate": "2026-11-03",
     "observationCount": 337,
     "qualityPassedCount": 337,
-    "schemaVersion": 1
+    "schemaVersion": 1,
+    "forecastAvailable": true,
+    "pointBadge": null
   },
   {
     "id": "VNM_BINH_PHUOC_FOREST",
@@ -174,7 +180,9 @@
     "endDate": "2026-11-09",
     "observationCount": 456,
     "qualityPassedCount": 257,
-    "schemaVersion": 1
+    "schemaVersion": 1,
+    "forecastAvailable": true,
+    "pointBadge": null
   },
   {
     "id": "ITA_VENICE",
@@ -206,7 +214,9 @@
     "endDate": "2026-11-09",
     "observationCount": 379,
     "qualityPassedCount": 379,
-    "schemaVersion": 1
+    "schemaVersion": 1,
+    "forecastAvailable": true,
+    "pointBadge": null
   },
   {
     "id": "ITA_BELLUNO_FOREST",
@@ -238,7 +248,9 @@
     "endDate": "2026-10-27",
     "observationCount": 202,
     "qualityPassedCount": 202,
-    "schemaVersion": 1
+    "schemaVersion": 1,
+    "forecastAvailable": true,
+    "pointBadge": null
   },
   {
     "id": "ITA_VENICE_VERTICAL",
@@ -378,7 +390,9 @@
     "endDate": "2025-11-25",
     "observationCount": 2424,
     "qualityPassedCount": 2424,
-    "schemaVersion": 1
+    "schemaVersion": 1,
+    "forecastAvailable": true,
+    "pointBadge": null
   },
   {
     "id": "GBR_EAST_LONDON",
@@ -410,7 +424,9 @@
     "endDate": "2026-11-14",
     "observationCount": 597,
     "qualityPassedCount": 154,
-    "schemaVersion": 1
+    "schemaVersion": 1,
+    "forecastAvailable": true,
+    "pointBadge": null
   },
   {
     "id": "GBR_EPPING_FOREST",
@@ -442,7 +458,9 @@
     "endDate": "2026-10-28",
     "observationCount": 311,
     "qualityPassedCount": 311,
-    "schemaVersion": 1
+    "schemaVersion": 1,
+    "forecastAvailable": true,
+    "pointBadge": null
   },
   {
     "id": "GBR_LONDON_VERTICAL",
@@ -590,6 +608,94 @@
     "endDate": "2025-11-25",
     "observationCount": 2416,
     "qualityPassedCount": 2416,
-    "schemaVersion": 1
+    "schemaVersion": 1,
+    "forecastAvailable": true,
+    "pointBadge": null
+  },
+  {
+    "id": "NOR_TPP3_TANK_VERTICAL",
+    "regionId": "norilsk",
+    "name": "TPP-3 tank 5 · vertical motion vs surroundings",
+    "kind": "subsidence",
+    "metric": "Vertical displacement",
+    "unit": "mm",
+    "bounds": null,
+    "geometryStatus": "source_coordinates",
+    "validationStatus": "exploratory",
+    "note": "Sentinel-1 (path 136 desc, 20 m), each point minus stable targets 0.3-1.5 km away. The tanks decorrelate at snowmelt and snow onset, so the series is split into segments (details.segment); each segment starts at 0 and values of different segments must not be compared. No mean velocity exists (velocity null) and no forecast is provided. Negative = down.",
+    "method": "HyP3 INSAR_ISCE_MULTI_BURST 5x1 looks, no water mask; 3x3 window minus winter-coherent ring; SBAS per connected segment; vertical = LOS/cos(41.3 deg). Steps 18-19 of the Norilsk pipeline.",
+    "source": {
+      "file": "tank_points_series.csv",
+      "sha256": "288156a84f1bf0db415893bb44c99bc450c4d0fa0af86e237fd7530cdc6e7475",
+      "sheet": "tank_points_series",
+      "publisher": "Norilsk permafrost team / Copernicus Sentinel-1 via ASF HyP3",
+      "url": "https://hyp3-docs.asf.alaska.edu/"
+    },
+    "validation": [],
+    "points": [
+      {
+        "id": "NOR_TANK5",
+        "name": "Tank 5 (collapsed 29 May 2020)",
+        "areaLabel": "TPP-3 fuel tank row",
+        "latitude": 69.32722,
+        "longitude": 87.93381,
+        "locationStatus": "source_coordinates",
+        "gridSizeMeters": 20,
+        "velocity": null,
+        "rmse": 1.26,
+        "easting": 536790.0,
+        "northing": 7691129.9,
+        "sourceCrs": "EPSG:32645"
+      },
+      {
+        "id": "NOR_ROW_117M_SE",
+        "name": "Tank-row structure, 117 m SE of tank 5",
+        "areaLabel": "TPP-3 fuel tank row",
+        "latitude": 69.32632,
+        "longitude": 87.93529,
+        "locationStatus": "source_coordinates",
+        "gridSizeMeters": 20,
+        "velocity": null,
+        "rmse": 1.35,
+        "easting": 536849.8,
+        "northing": 7691030.4,
+        "sourceCrs": "EPSG:32645"
+      },
+      {
+        "id": "NOR_ROW_432M_N",
+        "name": "Tank-row structure, 432 m N of tank 5",
+        "areaLabel": "TPP-3 fuel tank row",
+        "latitude": 69.331,
+        "longitude": 87.93143,
+        "locationStatus": "source_coordinates",
+        "gridSizeMeters": 20,
+        "velocity": null,
+        "rmse": 3.05,
+        "easting": 536689.8,
+        "northing": 7691549.9,
+        "sourceCrs": "EPSG:32645"
+      },
+      {
+        "id": "NOR_ROW_449M_NW",
+        "name": "Tank-row structure, 449 m NW of tank 5",
+        "areaLabel": "TPP-3 fuel tank row",
+        "latitude": 69.33066,
+        "longitude": 87.92787,
+        "locationStatus": "source_coordinates",
+        "gridSizeMeters": 20,
+        "velocity": null,
+        "rmse": 1.28,
+        "easting": 536550.2,
+        "northing": 7691509.8,
+        "sourceCrs": "EPSG:32645"
+      }
+    ],
+    "startDate": "2017-06-19",
+    "endDate": "2020-04-04",
+    "observationCount": 237,
+    "qualityPassedCount": 237,
+    "schemaVersion": 1,
+    "forecastAvailable": false,
+    "pointBadge": "SENTINEL-1 TARGETS"
   }
 ]
