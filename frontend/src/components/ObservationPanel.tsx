@@ -2,6 +2,7 @@ import { memo, useEffect, useMemo, useRef, useState } from "react";
 import {
   dateToTimelineTime,
   nearestObservation,
+  timelineDate,
   type TimelineSelection,
 } from "../data/observationTime";
 import {
@@ -11,6 +12,8 @@ import {
   type SarObservation,
 } from "../data/sar";
 import { FIRST_YEAR, LAST_IMAGERY_YEAR } from "../data/imagery";
+import WaterChangePanel from "./WaterChangePanel";
+import type { WaterLayerSelection } from "../data/waterChanges";
 
 interface Props {
   dataset: SarDataset;
@@ -23,6 +26,8 @@ interface Props {
   ) => void;
   timelineSelection: TimelineSelection | null;
   onShowBasemap: (year: number) => void;
+  onWaterLayer: (layer: WaterLayerSelection | null) => void;
+  onCompareDate: (date: string) => void;
 }
 const numeric = (v: number) =>
   v.toLocaleString(undefined, { maximumFractionDigits: 2 });
@@ -35,6 +40,8 @@ export default memo(function ObservationPanel({
   onSelectObservation,
   onShowBasemap,
   timelineSelection,
+  onWaterLayer,
+  onCompareDate,
 }: Props) {
   const publishRef = useRef(onSelectObservation);
   useEffect(() => {
@@ -168,6 +175,19 @@ export default memo(function ObservationPanel({
             ))}
           </select>
         </label>
+      )}
+      {dataset.kind === "water" && (
+        <WaterChangePanel
+          dataset={dataset}
+          observationDate={selected?.date ?? null}
+          comparisonDate={
+            timelineSelection
+              ? timelineDate(timelineSelection.time)
+              : (selected?.date ?? null)
+          }
+          onLayer={onWaterLayer}
+          onCompareDate={onCompareDate}
+        />
       )}
       {dataset.qualityPassedCount < dataset.observationCount && (
         <label className="sar-quality">
@@ -419,7 +439,7 @@ export default memo(function ObservationPanel({
       <p className="small sar-caveat">
         {dataset.geometryStatus === "crs_unconfirmed"
           ? "Precise point mapping awaits CRS confirmation. The city marker is an approximate locator."
-          : "Outline = study area, not a water or disturbance footprint. No classified spatial masks are supplied."}
+          : "Outline = study area, not an event boundary. Water layers, where available, use separate radar acquisitions and an experimental classification."}
       </p>
       <details className="sar-details">
         <summary>Method, validation &amp; source</summary>

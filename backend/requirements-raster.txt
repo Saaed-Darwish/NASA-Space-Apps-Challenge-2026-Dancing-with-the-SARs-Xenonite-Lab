@@ -1,0 +1,6 @@
+# Offline acquisition/processing environment; the web API does not import these.
+numpy>=2.0,<3
+scipy>=1.14,<2
+rasterio>=1.4,<2
+pyproj>=3.7,<4
+Pillow>=11,<13

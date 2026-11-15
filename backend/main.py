@@ -10,6 +10,7 @@ from assistant import CATALOG, ChatRequest, generate_answer
 from security import RequestGuard
 from sar_data import router as sar_router
 from forecast_data import router as forecast_router
+from water_layers import router as water_router
 
 load_dotenv(Path(__file__).parent / ".env")
 allowed_origins = [origin.strip() for origin in os.getenv(
@@ -22,6 +23,7 @@ chat_slot = BoundedSemaphore(1)
 app = FastAPI(title="EarthPulse API", version="0.1.0")
 app.include_router(sar_router)
 app.include_router(forecast_router)
+app.include_router(water_router)
 
 app.add_middleware(
     CORSMiddleware,

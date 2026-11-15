@@ -54,19 +54,6 @@ export const regions: Region[] = [
     datasetIds: ["BRA_PORTO_VELHO", "BRA_PORTO_VELHO_FOREST"],
   },
   {
-    id: "rio-grande-do-sul",
-    name: "Rio Grande do Sul",
-    country: "Brazil",
-    latitude: -29.75,
-    longitude: -52.5,
-    altitude: 480000,
-    description:
-      "Explore the wider Rio Grande do Sul region. Flood data is being processed; the annual satellite archive provides landscape context, not a dated flood footprint.",
-    zoom_level: "regional",
-    floodDataStatus: "processing",
-    waterMonitoring: true,
-  },
-  {
     id: "can-tho",
     name: "Can Tho",
     country: "Vietnam",
@@ -78,19 +65,6 @@ export const regions: Region[] = [
     zoom_level: "city",
     waterMonitoring: true,
     datasetIds: ["VNM_CAN_THO"],
-  },
-  {
-    id: "mekong-delta",
-    name: "Mekong Delta",
-    country: "Vietnam",
-    latitude: 10.0,
-    longitude: 105.5,
-    altitude: 360000,
-    description:
-      "Explore the rivers, floodplains, and coast of the Mekong Delta. Regional flood data is being processed; annual mosaics may not show peak inundation.",
-    zoom_level: "regional",
-    floodDataStatus: "processing",
-    waterMonitoring: true,
   },
   {
     id: "binh-phuoc",
@@ -115,6 +89,17 @@ export const regions: Region[] = [
       "Explore vertical displacement histories for eight selected EGMS points. The city marker is a locator; precise point positions await confirmation of the source coordinate reference system.",
     zoom_level: "city",
     datasetIds: ["ITA_VENICE_VERTICAL"],
+  },
+  {
+    id: "rio-grande-do-sul",
+    name: "Rio Grande do Sul",
+    country: "Brazil",
+    latitude: -29.75,
+    longitude: -52.5,
+    altitude: 480000,
+    description:
+      "Explore Rio Grande do Sul's flood stories and annual satellite imagery. SAR observations are not available for this region; the imagery provides landscape context, not a dated flood footprint.",
+    zoom_level: "regional",
   },
   {
     id: "manchar",

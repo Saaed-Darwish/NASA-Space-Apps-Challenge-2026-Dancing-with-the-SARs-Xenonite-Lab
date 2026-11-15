@@ -154,7 +154,7 @@ export const additionalStories: RegionStory[] = [
   }),
   story({
     id: "mekong-adaptive-farming",
-    regionId: "mekong-delta",
+    regionId: "can-tho",
     title: "Farming adapts to a changing delta",
     category: "water",
     firstYear: 2021,
@@ -179,7 +179,7 @@ export const additionalStories: RegionStory[] = [
   }),
   story({
     id: "mekong-water-efficient-rice",
-    regionId: "mekong-delta",
+    regionId: "can-tho",
     title: "Using water differently in rice fields",
     category: "water",
     firstYear: 2024,

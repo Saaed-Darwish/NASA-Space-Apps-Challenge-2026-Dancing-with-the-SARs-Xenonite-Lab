@@ -12,12 +12,16 @@ import {
   ScreenSpaceEventHandler,
   ScreenSpaceEventType,
   Viewer,
+  ImageryLayer,
+  Rectangle,
+  SingleTileImageryProvider,
   type Entity as CesiumEntity,
 } from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
 import { indicators, type Indicator, type OverlaySettings } from "../data/demo";
 import { LAST_IMAGERY_YEAR } from "../data/imagery";
 import type { StudyBounds, SarDataset, SarObservation } from "../data/sar";
+import type { WaterLayerSelection } from "../data/waterChanges";
 import { visibleMapViewport } from "../globe/cameraFit";
 import {
   addRegionMarkers,
@@ -47,6 +51,7 @@ import {
 } from "../data/articleSearch";
 
 interface EarthGlobeProps {
+  waterLayer: WaterLayerSelection | null;
   dataset: SarDataset | null;
   observation: SarObservation | null;
   layoutKey: string;
@@ -70,6 +75,7 @@ interface EarthGlobeProps {
 }
 
 export default function EarthGlobe({
+  waterLayer,
   dataset,
   observation,
   layoutKey,
@@ -120,6 +126,9 @@ export default function EarthGlobe({
   const readoutRef = useRef<HTMLDivElement>(null);
   const [resizeVersion, setResizeVersion] = useState(0);
   const viewerRef = useRef<Viewer | null>(null);
+  const waterImageryRef = useRef<ImageryLayer | null>(null);
+  const waterOpacityRef = useRef(0.7);
+  const [waterError, setWaterError] = useState<string | null>(null);
   const imageryRef = useRef<HistoricalImagery | null>(null);
   const overlaysRef = useRef<OverlayCollection | null>(null);
   const onSelectRegionRef = useRef(onSelectRegion);
@@ -369,6 +378,47 @@ export default function EarthGlobe({
     };
   }, [isViewerReady, studyArea]);
 
+  const waterComparison = waterLayer?.comparison;
+  useEffect(() => {
+    const viewer = viewerRef.current;
+    if (!viewer || !isViewerReady || !waterComparison) return;
+    let disposed = false,
+      layer: ImageryLayer | null = null;
+    setWaterError(null);
+    const b = waterComparison.bounds;
+    SingleTileImageryProvider.fromUrl(waterComparison.imageUrl, {
+      rectangle: Rectangle.fromDegrees(b.west, b.south, b.east, b.north),
+    })
+      .then((provider) => {
+        if (disposed || viewer.isDestroyed()) return;
+        layer = new ImageryLayer(provider, { alpha: waterOpacityRef.current });
+        viewer.imageryLayers.add(layer);
+        waterImageryRef.current = layer;
+        viewer.scene.requestRender();
+      })
+      .catch(() => {
+        if (!disposed)
+          setWaterError(
+            "Water overlay could not load. Toggle it off and on to retry.",
+          );
+      });
+    return () => {
+      disposed = true;
+      if (waterImageryRef.current === layer) waterImageryRef.current = null;
+      if (layer && !viewer.isDestroyed()) {
+        viewer.imageryLayers.remove(layer, true);
+        viewer.scene.requestRender();
+      }
+    };
+  }, [isViewerReady, waterComparison?.id, waterComparison?.imageUrl]);
+  useEffect(() => {
+    waterOpacityRef.current = waterLayer?.opacity ?? 0.7;
+    if (waterImageryRef.current) {
+      waterImageryRef.current.alpha = waterOpacityRef.current;
+      viewerRef.current?.scene.requestRender();
+    }
+  }, [waterLayer?.opacity]);
+
   useEffect(() => {
     const viewer = viewerRef.current;
     const element = readoutRef.current;
@@ -596,6 +646,20 @@ export default function EarthGlobe({
         >
           EOX Sentinel-2 · 10 m
         </small>
+        {waterComparison && (
+          <small className="water-map-key">
+            {waterError ?? (
+              <>
+                Water change · {waterComparison.beforeDate} →{" "}
+                {waterComparison.afterDate}
+                <br />
+                <i className="water-gain-swatch" />
+                Gain · <i className="water-loss-swatch" />
+                Loss · Experimental
+              </>
+            )}
+          </small>
+        )}
       </div>
     </>
   );

@@ -11,6 +11,7 @@ from urllib.request import Request, urlopen
 from fastapi import HTTPException
 from pydantic import BaseModel, Field, model_validator
 from sar_data import selected_context
+from water_layers import LAYERS as WATER_LAYERS
 
 CATALOG = json.loads((Path(__file__).parent / "data/earth_context.json").read_text(encoding="utf-8"))
 MAX_PROVIDER_BYTES = 262_144
@@ -26,8 +27,12 @@ Water extent change is not ground displacement. Explain only supplied observatio
 SAR candidate water/forest classifications are exploratory, not confirmed flooding,
 deforestation, damage or human risk. Quality-pass and coverage are not confidence.
 EGMS values are selected-point displacement, not a citywide surface. Observation
-dates can differ from the 2020-2025 optical basemap year. No forecasts or spatial
-event footprints are connected. Do not interpolate missing observations.
+dates can differ from the 2020-2025 optical basemap year. Forecast predictions are
+not supplied to this assistant. Spatial water comparisons, when supplied, are
+experimental RTC classifications with their own dates and method; their areas do
+not reproduce workbook totals and are not validated event footprints. You have
+not inspected their pixels and do not know which layer is currently displayed.
+Do not interpolate missing observations or infer water flow/volume from extent.
 Cite supporting story source IDs in square brackets, for example [S1]. If the context
 does not answer the question, say so. Do not invent links or use unsupported knowledge.
 """
@@ -97,6 +102,13 @@ def build_context(body: ChatRequest) -> tuple[dict, list[dict]]:
     if sar and sar["dataset"]["kind"] == "water":
         context["water_data"] = dict(status="observations_available", measurements=[sar["observation"]],
             note=sar["dataset"]["note"], unit=sar["dataset"]["unit"])
+        layers = sorted((l for l in WATER_LAYERS.values() if l.datasetId==body.dataset_id),key=lambda l:l.afterDate)[-12:]
+        context["spatial_water_comparisons"] = [dict(id=l.id,before_date=l.beforeDate.isoformat(),after_date=l.afterDate.isoformat(),
+            summary=l.summary.model_dump(),method=l.method,limitations=l.limitations) for l in layers]
+        for layer in layers:
+            for source in (layer.before,layer.after):
+                if not any(s["url"]==source.catalogUrl for s in sources):
+                    sources.append(dict(id=f"S{len(sources)+1}",title=source.itemId,publisher="ESA Sentinel-1 / Microsoft Planetary Computer",url=source.catalogUrl))
     return context, sources
 
 
