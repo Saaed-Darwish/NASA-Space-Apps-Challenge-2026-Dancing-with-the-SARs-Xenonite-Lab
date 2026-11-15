@@ -25,13 +25,23 @@ test("focus persists between entry and exit zoom thresholds", () => {
 });
 test("zooming out releases city focus and picks the wider state", () => {
   assert.equal(
+<<<<<<< HEAD
     regionForView(regions, city, city.latitude, city.longitude, 480_000)?.id,
+=======
+    regionForView(nestedRegions, city, city.latitude, city.longitude, 480_000)
+      ?.id,
+>>>>>>> integrating-backend-data
     state.id,
   );
 });
 test("zooming back in replaces state focus with city focus", () => {
   assert.equal(
+<<<<<<< HEAD
     regionForView(regions, state, city.latitude, city.longitude, 100_000)?.id,
+=======
+    regionForView(nestedRegions, state, city.latitude, city.longitude, 100_000)
+      ?.id,
+>>>>>>> integrating-backend-data
     city.id,
   );
 });
@@ -49,6 +59,13 @@ test("Vietnam city and delta focus at their respective scales", () => {
       ?.id,
     "mekong-delta",
   );
+<<<<<<< HEAD
+=======
+  assert.equal(
+    regions.some((r) => r.id === "mekong-delta"),
+    false,
+  );
+>>>>>>> integrating-backend-data
 });
 test("invalid camera coordinates clear focus", () => {
   assert.equal(
@@ -77,6 +94,10 @@ test("water controls are limited to the four backend flood-data regions", () => 
     regions
       .filter((region) => region.waterMonitoring)
       .map((region) => region.id),
+<<<<<<< HEAD
     ["porto-alegre", "rio-grande-do-sul", "can-tho", "mekong-delta"],
+=======
+    ["porto-velho", "can-tho", "venice", "london"],
+>>>>>>> integrating-backend-data
   );
 });

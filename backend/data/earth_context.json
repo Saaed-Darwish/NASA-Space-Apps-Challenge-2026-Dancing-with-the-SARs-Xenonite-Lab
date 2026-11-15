@@ -9,8 +9,72 @@
       "altitude": 85000,
       "description": "Explore Porto Alegre and the Guaíba waterfront. Flood data is being processed by the backend team; measured flood extent is not available in this view yet.",
       "zoom_level": "city",
+<<<<<<< HEAD
       "floodDataStatus": "processing",
       "waterMonitoring": true
+=======
+      "waterMonitoring": true,
+      "datasetIds": [
+        "VNM_CAN_THO"
+      ]
+    },
+    {
+      "id": "binh-phuoc",
+      "name": "Binh Phuoc forest",
+      "country": "Vietnam",
+      "latitude": 11.75,
+      "longitude": 106.85,
+      "altitude": 85000,
+      "description": "Inspect potential forest disturbance across the Binh Phuoc study rectangle. Quality-passing observations are shown by default; these are radar indicators, not confirmed deforestation.",
+      "zoom_level": "regional",
+      "datasetIds": [
+        "VNM_BINH_PHUOC_FOREST"
+      ]
+    },
+    {
+      "id": "venice",
+      "name": "Venice",
+      "country": "Italy",
+      "latitude": 45.44,
+      "longitude": 12.33,
+      "altitude": 26000,
+      "description": "Explore Venice lagoon water observations and eight EGMS vertical-displacement histories. Switch data types to view each source study area or selected measurement point.",
+      "zoom_level": "city",
+      "waterMonitoring": true,
+      "datasetIds": [
+        "ITA_VENICE",
+        "ITA_VENICE_VERTICAL"
+      ]
+>>>>>>> integrating-backend-data
+    },
+    {
+      "id": "london",
+      "name": "London",
+      "country": "United Kingdom",
+      "latitude": 51.51,
+      "longitude": -0.08,
+      "altitude": 80000,
+      "description": "Explore East London / Thames Barrier / Royal Docks water indicators, Epping Forest radar backscatter and eight London subsidence points. Point Metadata and Map Coordinates supply matching WGS84 subsidence locations and approximate area names. The workbook explicitly leaves the water and forest AOI centroids and boundaries unspecified.",
+      "zoom_level": "regional",
+      "waterMonitoring": true,
+      "datasetIds": [
+        "GBR_EAST_LONDON",
+        "GBR_EPPING_FOREST",
+        "GBR_LONDON_VERTICAL"
+      ]
+    },
+    {
+      "id": "belluno",
+      "name": "Belluno forest",
+      "country": "Italy",
+      "latitude": 46.21,
+      "longitude": 12.135,
+      "altitude": 65000,
+      "description": "Explore seasonal forest VH backscatter near Belluno. The source rectangle locates the study area, not forest loss. May–October samples and varying coverage remain visible.",
+      "zoom_level": "regional",
+      "datasetIds": [
+        "ITA_BELLUNO_FOREST"
+      ]
     },
     {
       "id": "rio-grande-do-sul",
@@ -107,16 +171,6 @@
       "altitude": 380000,
       "description": "Boreal forests meet the Rockies. Explore sourced stories about the 2023 fire season and the 2024 Jasper wildfire.",
       "zoom_level": "regional"
-    },
-    {
-      "id": "london",
-      "name": "Thames basin",
-      "country": "United Kingdom",
-      "latitude": 51.5074,
-      "longitude": -0.1278,
-      "altitude": 35000,
-      "description": "Compare annual satellite views of London and the Thames. Explore riverside regeneration and the documented Wennington fire.",
-      "zoom_level": "city"
     },
     {
       "id": "sacramento",

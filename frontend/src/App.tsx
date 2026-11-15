@@ -264,6 +264,24 @@ export default function App() {
         onSelectRegion={selectRegion}
         onViewportFocus={focusVisibleRegion}
         onSearchAreaChange={setViewportArea}
+<<<<<<< HEAD
+=======
+        studyArea={activeDataset?.bounds ?? null}
+        waterLayer={
+          mode === "analyze" &&
+          waterLayer?.comparison.datasetId === activeDataset?.id
+            ? waterLayer
+            : null
+        }
+        dataset={activeDataset}
+        observation={
+          (mode === "analyze" || (mode === "forecast" && activeDataset?.kind === "subsidence")) &&
+          observation?.id.startsWith(`${activeDataset?.id}:`)
+            ? observation
+            : null
+        }
+        layoutKey={`${leftCollapsed}-${rightCollapsed}-${mode}`}
+>>>>>>> integrating-backend-data
         selectedStory={selectedStory}
         onSelectStory={selectStory}
         showStoryMarkers={showStoryMarkers}
@@ -388,8 +406,13 @@ export default function App() {
             reading={regionalReading}
           />
         )}
+<<<<<<< HEAD
         {mode === "forecast" && selectedRegion?.waterMonitoring && (
           <ForecastPanel region={selectedRegion} />
+=======
+        {mode === "forecast" && selectedRegion && (
+          <ForecastPanel key={selectedRegion.id} region={selectedRegion} dataset={activeDataset} datasets={regionDatasets} onSelectDataset={selectDataset} onSelectObservation={setObservation} initialPointId={observation?.pointId ?? undefined} />
+>>>>>>> integrating-backend-data
         )}
         {mode === "ai" && (
           <AssistantPanel

@@ -1,0 +1,2147 @@
+{
+  "datasetId": "VNM_BINH_PHUOC_FOREST",
+  "regionId": "binh-phuoc",
+  "bounds": {
+    "west": 106.7,
+    "south": 11.6,
+    "east": 107.0,
+    "north": 11.9
+  },
+  "sourceSha256": "242cdded82cfeed82618699683a74136236386cfb3528996049edbea9578fbea",
+  "notebookSha256": "c66a7c2fa5729a02b3740f4e919cd6bea3fa252c638996a178484eb646f86a21",
+  "pipelineSha256": "c76ef83c84ef8101146b00c6e17530c5ec84d4f5b64f6253414b640cc57230fe",
+  "generatedLabel": "2026-11-15T15:34:54.808558+00:00",
+  "model": "Month-of-year levels + linear trend (robust two-pass least squares; |z| > 4)",
+  "history": [
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:2",
+      "date": "2019-01-01",
+      "db": -14.408483326626362,
+      "expected": -14.894086305052836,
+      "z": 1.2049664760213306,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:3",
+      "date": "2019-01-07",
+      "db": -14.896006211281895,
+      "expected": -14.893980489067806,
+      "z": 0.05251723773782499,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:4",
+      "date": "2019-01-13",
+      "db": -14.43681383107223,
+      "expected": -14.893874673082776,
+      "z": 1.1375107185396407,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:5",
+      "date": "2019-01-19",
+      "db": -14.620177195426576,
+      "expected": -14.893768857097747,
+      "z": 0.7039043355419653,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:6",
+      "date": "2019-01-25",
+      "db": -14.625609940935151,
+      "expected": -14.893663041112717,
+      "z": 0.6908146405217447,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:7",
+      "date": "2019-01-31",
+      "db": -14.883605255031817,
+      "expected": -14.893557225127687,
+      "z": 0.08082501035431182,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:8",
+      "date": "2019-02-06",
+      "db": -14.852608422459646,
+      "expected": -15.170171426617811,
+      "z": 0.8078250852617253,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:9",
+      "date": "2019-02-12",
+      "db": -15.432967039743087,
+      "expected": -15.170065610632783,
+      "z": -0.564029756531127,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:10",
+      "date": "2019-02-18",
+      "db": -14.888680415585755,
+      "expected": -15.169959794647752,
+      "z": 0.722073290813791,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:11",
+      "date": "2019-02-24",
+      "db": -15.267172430274988,
+      "expected": -15.169853978662722,
+      "z": -0.17269516929363485,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:12",
+      "date": "2019-03-02",
+      "db": -15.522930216435217,
+      "expected": -15.292844368683372,
+      "z": -0.48647424823002056,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:13",
+      "date": "2019-03-08",
+      "db": -15.464665072306357,
+      "expected": -15.292738552698344,
+      "z": -0.34902197495243725,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:14",
+      "date": "2019-03-14",
+      "db": -15.312855366557635,
+      "expected": -15.292632736713314,
+      "z": 0.009511130201439205,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:15",
+      "date": "2019-03-20",
+      "db": -15.5504209881096,
+      "expected": -15.292526920728283,
+      "z": -0.5521954854908854,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:16",
+      "date": "2019-03-26",
+      "db": -15.40825862563948,
+      "expected": -15.292421104743253,
+      "z": -0.21646266546845944,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:17",
+      "date": "2019-04-01",
+      "db": -14.861158445756038,
+      "expected": -15.187832879655186,
+      "z": 0.8293588060022723,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:18",
+      "date": "2019-04-07",
+      "db": -14.065896423411958,
+      "expected": -15.187727063670156,
+      "z": 2.7086107104351096,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:19",
+      "date": "2019-04-13",
+      "db": -15.413464776849613,
+      "expected": -15.187621247685126,
+      "z": -0.47644806064480844,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:20",
+      "date": "2019-04-19",
+      "db": -15.313057750555286,
+      "expected": -15.187515431700096,
+      "z": -0.23939873752658752,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:21",
+      "date": "2019-04-25",
+      "db": -15.506066330959573,
+      "expected": -15.187409615715067,
+      "z": -0.6958003782177354,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:22",
+      "date": "2019-05-01",
+      "db": -15.362612463126167,
+      "expected": -14.614250025761548,
+      "z": -1.7113559258974775,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:23",
+      "date": "2019-05-07",
+      "db": -15.36098247126432,
+      "expected": -14.614144209776518,
+      "z": -1.7077537274913124,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:24",
+      "date": "2019-05-13",
+      "db": -14.625907470440819,
+      "expected": -14.614038393791487,
+      "z": 0.029253704836362155,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:25",
+      "date": "2019-05-19",
+      "db": -15.340785434768813,
+      "expected": -14.613932577806457,
+      "z": -1.6605207319931343,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:26",
+      "date": "2019-05-25",
+      "db": -14.321562118413498,
+      "expected": -14.613826761821429,
+      "z": 0.7480355844835102,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:27",
+      "date": "2019-05-31",
+      "db": -14.058428323236079,
+      "expected": -14.613720945836398,
+      "z": 1.3696692042218939,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:28",
+      "date": "2019-06-06",
+      "db": -13.603718891336978,
+      "expected": -14.248472996517,
+      "z": 1.5811001911987808,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:29",
+      "date": "2019-06-12",
+      "db": -14.137251674475404,
+      "expected": -14.24836718053197,
+      "z": 0.31991233193078894,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:30",
+      "date": "2019-06-18",
+      "db": -13.87735629215522,
+      "expected": -14.248261364546941,
+      "z": 0.9338923692904847,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:31",
+      "date": "2019-06-24",
+      "db": -14.036899106051585,
+      "expected": -14.248155548561911,
+      "z": 0.5565828679052521,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:32",
+      "date": "2019-06-30",
+      "db": -13.780994104642675,
+      "expected": -14.248049732576881,
+      "z": 1.1611321407598647,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:33",
+      "date": "2019-07-06",
+      "db": -14.64746136362206,
+      "expected": -14.199720084817939,
+      "z": -1.0008755445338646,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:34",
+      "date": "2019-07-12",
+      "db": -14.594939166816895,
+      "expected": -14.19961426883291,
+      "z": -0.8769960065362188,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:35",
+      "date": "2019-07-18",
+      "db": -14.60620299293328,
+      "expected": -14.19950845284788,
+      "z": -0.9038667287929693,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:36",
+      "date": "2019-07-30",
+      "db": -13.821595785836728,
+      "expected": -14.19929682087782,
+      "z": 0.9499537741429507,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:37",
+      "date": "2019-08-05",
+      "db": -13.762238535899314,
+      "expected": -14.042389333773892,
+      "z": 0.7194060308102798,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:38",
+      "date": "2019-08-11",
+      "db": -14.286551223580378,
+      "expected": -14.042283517788862,
+      "z": -0.5199912899336672,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:39",
+      "date": "2019-08-17",
+      "db": -13.86511025811675,
+      "expected": -14.042177701803832,
+      "z": 0.47578145978516845,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:40",
+      "date": "2019-08-23",
+      "db": -13.865028244502206,
+      "expected": -14.042071885818801,
+      "z": 0.47572520586964,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:41",
+      "date": "2019-08-29",
+      "db": -13.943884246890153,
+      "expected": -14.041966069833773,
+      "z": 0.2891088575745596,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:42",
+      "date": "2019-09-04",
+      "db": -14.15266871216538,
+      "expected": -13.815633503836345,
+      "z": -0.7392356401870167,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:43",
+      "date": "2019-09-10",
+      "db": -13.944112111011986,
+      "expected": -13.815527687851315,
+      "z": -0.24658836927923972,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:44",
+      "date": "2019-09-16",
+      "db": -13.4455599529884,
+      "expected": -13.815421871866285,
+      "z": 0.9314270068726136,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:45",
+      "date": "2019-09-22",
+      "db": -13.558890905653433,
+      "expected": -13.815316055881254,
+      "z": 0.6633334400821924,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:46",
+      "date": "2019-09-28",
+      "db": -13.573643350754324,
+      "expected": -13.815210239896226,
+      "z": 0.6282178046649345,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:47",
+      "date": "2019-10-04",
+      "db": -13.480854362243361,
+      "expected": -13.933863861469971,
+      "z": 1.1279358782990274,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:48",
+      "date": "2019-10-10",
+      "db": -14.141030131673352,
+      "expected": -13.933758045484941,
+      "z": -0.43255678582138196,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:49",
+      "date": "2019-10-16",
+      "db": -13.636500900889063,
+      "expected": -13.933652229499911,
+      "z": 0.759584651698864,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:50",
+      "date": "2019-10-22",
+      "db": -14.142134219130433,
+      "expected": -13.933546413514883,
+      "z": -0.4356663235692842,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:51",
+      "date": "2019-10-28",
+      "db": -13.996565751322247,
+      "expected": -13.933440597529852,
+      "z": -0.0918836010345361,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:56",
+      "date": "2019-11-21",
+      "db": -14.826153086864984,
+      "expected": -14.248736552366625,
+      "z": -1.3073467375803962,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:59",
+      "date": "2019-12-03",
+      "db": -15.174624267492298,
+      "expected": -14.90835422626927,
+      "z": -0.5719910485106245,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:62",
+      "date": "2019-12-15",
+      "db": -14.953523440806462,
+      "expected": -14.90814259429921,
+      "z": -0.04994715761402132,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:65",
+      "date": "2019-12-27",
+      "db": -15.05057418503813,
+      "expected": -14.90793096232915,
+      "z": -0.2798145776819557,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:70",
+      "date": "2020-01-20",
+      "db": -14.879568858738661,
+      "expected": -14.887314082010928,
+      "z": 0.0756096411756618,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:73",
+      "date": "2020-02-01",
+      "db": -15.351358542442831,
+      "expected": -15.163822467516024,
+      "z": -0.3859132000043226,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:76",
+      "date": "2020-02-13",
+      "db": -15.032064323540377,
+      "expected": -15.163610835545963,
+      "z": 0.3681984504721809,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:79",
+      "date": "2020-02-25",
+      "db": -15.262337153344006,
+      "expected": -15.163399203575905,
+      "z": -0.1765226499436529,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:82",
+      "date": "2020-03-08",
+      "db": -15.23429890573752,
+      "expected": -15.286283777611525,
+      "z": 0.18016449872614987,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:85",
+      "date": "2020-03-20",
+      "db": -15.490608767951752,
+      "expected": -15.286072145641466,
+      "z": -0.4260918602364939,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:88",
+      "date": "2020-04-01",
+      "db": -15.491018212961395,
+      "expected": -15.181378104568367,
+      "z": -0.6744907594765952,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:91",
+      "date": "2020-04-13",
+      "db": -15.127986601509686,
+      "expected": -15.181166472598308,
+      "z": 0.1829887294017138,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:94",
+      "date": "2020-04-25",
+      "db": -13.845994956115703,
+      "expected": -15.180954840628248,
+      "z": 3.21231493226251,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:97",
+      "date": "2020-05-07",
+      "db": -15.379708708186369,
+      "expected": -14.6076894346897,
+      "z": -1.7672658892461577,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:100",
+      "date": "2020-05-19",
+      "db": -15.297881692258448,
+      "expected": -14.60747780271964,
+      "z": -1.5743781717043164,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:103",
+      "date": "2020-05-31",
+      "db": -14.193154787616288,
+      "expected": -14.607266170749579,
+      "z": 1.0360050624887152,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:106",
+      "date": "2020-06-12",
+      "db": -13.969798268188967,
+      "expected": -14.241912405445152,
+      "z": 0.7004123920112448,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:109",
+      "date": "2020-06-24",
+      "db": -13.925127541081856,
+      "expected": -14.241700773475092,
+      "z": 0.8054858839081759,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:112",
+      "date": "2020-07-06",
+      "db": -14.612945732352753,
+      "expected": -14.193265309731121,
+      "z": -0.9345572324849373,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:115",
+      "date": "2020-07-18",
+      "db": -13.901799619963244,
+      "expected": -14.19305367776106,
+      "z": 0.7456471922189318,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:118",
+      "date": "2020-07-30",
+      "db": -14.560263734568766,
+      "expected": -14.192842045791002,
+      "z": -0.8110502733315658,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:121",
+      "date": "2020-08-11",
+      "db": -14.545638492214525,
+      "expected": -14.035828742702043,
+      "z": -1.1475665856791213,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:124",
+      "date": "2020-08-23",
+      "db": -14.380044449361744,
+      "expected": -14.035617110731984,
+      "z": -0.7567060124665262,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:127",
+      "date": "2020-09-04",
+      "db": -14.527111163202166,
+      "expected": -13.809178728749526,
+      "z": -1.639438432872954,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:130",
+      "date": "2020-09-16",
+      "db": -14.192409492945776,
+      "expected": -13.808967096779467,
+      "z": -0.8489132047021727,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:133",
+      "date": "2020-09-28",
+      "db": -13.920422376480522,
+      "expected": -13.808755464809407,
+      "z": -0.2066059539616428,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:136",
+      "date": "2020-10-10",
+      "db": -13.564121524797118,
+      "expected": -13.927303270398124,
+      "z": 0.9156392556708748,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:139",
+      "date": "2020-10-22",
+      "db": -14.147535009060206,
+      "expected": -13.927091638428063,
+      "z": -0.4636854636544441,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:141",
+      "date": "2020-10-28",
+      "db": -14.57696464342639,
+      "expected": -13.926985822443033,
+      "z": -1.4788385953768979,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:142",
+      "date": "2020-11-03",
+      "db": -14.641258450639032,
+      "expected": -14.242599225234896,
+      "z": -0.884876270947428,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:143",
+      "date": "2020-11-09",
+      "db": -14.30245820061835,
+      "expected": -14.242493409249866,
+      "z": -0.08441448105995038,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:144",
+      "date": "2020-11-15",
+      "db": -14.266634608659238,
+      "expected": -14.242387593264835,
+      "z": 0.0,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:147",
+      "date": "2020-11-27",
+      "db": -14.90527865659898,
+      "expected": -14.242175961294777,
+      "z": -1.5098552253343236,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:150",
+      "date": "2020-12-09",
+      "db": -15.13710869429363,
+      "expected": -14.901793635197421,
+      "z": -0.49883283299486214,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:153",
+      "date": "2020-12-21",
+      "db": -15.187922456076635,
+      "expected": -14.901582003227363,
+      "z": -0.6194249476234447,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:156",
+      "date": "2021-01-02",
+      "db": -15.18199627897073,
+      "expected": -14.881176754879199,
+      "z": -0.6536444154321999,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:159",
+      "date": "2021-01-14",
+      "db": -15.145998778073862,
+      "expected": -14.88096512290914,
+      "z": -0.5690690052239001,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:162",
+      "date": "2021-01-26",
+      "db": -14.960520550573042,
+      "expected": -14.88075349093908,
+      "z": -0.13121465699064713,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:165",
+      "date": "2021-02-07",
+      "db": -14.429964067920913,
+      "expected": -15.157261876444174,
+      "z": 1.7761818751071587,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:168",
+      "date": "2021-02-19",
+      "db": -15.465787277829227,
+      "expected": -15.157050244474116,
+      "z": -0.672356454957209,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:171",
+      "date": "2021-03-03",
+      "db": -14.732005691718792,
+      "expected": -15.279934818509735,
+      "z": 1.3522665059691636,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:174",
+      "date": "2021-03-15",
+      "db": -15.367454360689813,
+      "expected": -15.279723186539677,
+      "z": -0.1500368421813675,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:177",
+      "date": "2021-03-27",
+      "db": -15.307279850704548,
+      "expected": -15.279511554569616,
+      "z": -0.008322105121937767,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:180",
+      "date": "2021-04-08",
+      "db": -15.316036165504112,
+      "expected": -15.174817513496519,
+      "z": -0.2764477836078222,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:183",
+      "date": "2021-04-20",
+      "db": -15.08465374687066,
+      "expected": -15.174605881526459,
+      "z": 0.26989535955347316,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:186",
+      "date": "2021-05-02",
+      "db": -15.08501345988712,
+      "expected": -14.60134047558791,
+      "z": -1.085795621169314,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:189",
+      "date": "2021-05-14",
+      "db": -14.380444649465916,
+      "expected": -14.60112884361785,
+      "z": 0.5788641757606445,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:192",
+      "date": "2021-05-26",
+      "db": -13.681751287470306,
+      "expected": -14.600917211647792,
+      "z": 2.2296380876847532,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:195",
+      "date": "2021-06-07",
+      "db": -14.589149936004699,
+      "expected": -14.235563446343363,
+      "z": -0.7783525164885341,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:198",
+      "date": "2021-06-19",
+      "db": -14.199995375484994,
+      "expected": -14.235351814373304,
+      "z": 0.1408652841740982,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:201",
+      "date": "2021-07-01",
+      "db": -15.287071775818973,
+      "expected": -14.186916350629332,
+      "z": -2.5427745038438707,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:204",
+      "date": "2021-07-13",
+      "db": -13.686599590838718,
+      "expected": -14.186704718659273,
+      "z": 1.2392404861456896,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:207",
+      "date": "2021-07-25",
+      "db": -14.950461259558637,
+      "expected": -14.186493086689213,
+      "z": -1.7482381232983697,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:210",
+      "date": "2021-08-06",
+      "db": -14.810825887095445,
+      "expected": -14.029479783600255,
+      "z": -1.789308681463424,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:213",
+      "date": "2021-08-18",
+      "db": -13.845757240828899,
+      "expected": -14.029268151630195,
+      "z": 0.49100978567723963,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:216",
+      "date": "2021-08-30",
+      "db": -13.737344512948965,
+      "expected": -14.029056519660136,
+      "z": 0.7467294970046722,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:219",
+      "date": "2021-09-11",
+      "db": -14.383332209916555,
+      "expected": -13.802618137677678,
+      "z": -1.3151400542007625,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:222",
+      "date": "2021-09-23",
+      "db": -13.690248646653275,
+      "expected": -13.80240650570762,
+      "z": 0.32237580242941716,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:225",
+      "date": "2021-10-05",
+      "db": -13.941915187449977,
+      "expected": -13.920954311296335,
+      "z": 0.00776637769666342,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:228",
+      "date": "2021-10-17",
+      "db": -13.71762612108472,
+      "expected": -13.920742679326274,
+      "z": 0.5373452729627495,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:231",
+      "date": "2021-10-29",
+      "db": -13.999312418151458,
+      "expected": -13.920531047356215,
+      "z": -0.1288851051208033,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:233",
+      "date": "2021-11-10",
+      "db": -14.420763538463872,
+      "expected": -14.236038634163046,
+      "z": -0.3792693510218032,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:236",
+      "date": "2021-11-22",
+      "db": -13.620625112383433,
+      "expected": -14.235827002192988,
+      "z": 1.5112572388693832,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:239",
+      "date": "2021-12-04",
+      "db": -14.859142507105577,
+      "expected": -14.895444676095632,
+      "z": 0.1431003985837814,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:242",
+      "date": "2021-12-16",
+      "db": -14.772748018422632,
+      "expected": -14.895233044125574,
+      "z": 0.3467827647804203,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:245",
+      "date": "2021-12-28",
+      "db": -14.477814411530487,
+      "expected": -14.895021412155513,
+      "z": 1.0433211659413666,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:246",
+      "date": "2022-01-09",
+      "db": -14.654908654794573,
+      "expected": -14.874616163807351,
+      "z": 0.576555903004787,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:247",
+      "date": "2022-01-21",
+      "db": -14.67701738000229,
+      "expected": -14.87440453183729,
+      "z": 0.5238045399411381,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:248",
+      "date": "2022-02-02",
+      "db": -14.824451647813877,
+      "expected": -15.150912917342387,
+      "z": 0.8288550187636442,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:249",
+      "date": "2022-02-14",
+      "db": -14.722171057347168,
+      "expected": -15.150701285372326,
+      "z": 1.070082192876513,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:250",
+      "date": "2022-02-26",
+      "db": -15.02327692005398,
+      "expected": -15.150489653402268,
+      "z": 0.35795610848957576,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:251",
+      "date": "2022-03-10",
+      "db": -15.162292697823911,
+      "expected": -15.273374227437888,
+      "z": 0.31983203287265305,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:252",
+      "date": "2022-03-22",
+      "db": -13.789861687170008,
+      "expected": -15.273162595467829,
+      "z": 3.5629003257042102,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:253",
+      "date": "2022-04-03",
+      "db": -14.81761131568343,
+      "expected": -15.16846855439473,
+      "z": 0.8865118303191588,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:254",
+      "date": "2022-04-15",
+      "db": -14.819462465525936,
+      "expected": -15.168256922424671,
+      "z": 0.8816367043770001,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:255",
+      "date": "2022-04-27",
+      "db": -14.595664189159477,
+      "expected": -15.16804529045461,
+      "z": 1.4100556790733392,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:256",
+      "date": "2022-05-09",
+      "db": -14.537251670678524,
+      "expected": -14.594779884516063,
+      "z": 0.19326549178711616,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:257",
+      "date": "2022-05-21",
+      "db": -14.140940836523011,
+      "expected": -14.594568252546003,
+      "z": 1.1293962471008976,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:258",
+      "date": "2022-06-02",
+      "db": -13.84499878443191,
+      "expected": -14.229214487241576,
+      "z": 0.9653503738461686,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:259",
+      "date": "2022-06-14",
+      "db": -14.805621606620901,
+      "expected": -14.229002855271515,
+      "z": -1.3054612772267657,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:260",
+      "date": "2022-06-26",
+      "db": -13.851014690970935,
+      "expected": -14.228791223301455,
+      "z": 0.9501322025118707,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:261",
+      "date": "2022-07-08",
+      "db": -13.58501530885908,
+      "expected": -14.180355759557484,
+      "z": 1.4643172200706687,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:262",
+      "date": "2022-07-20",
+      "db": -13.480186067601581,
+      "expected": -14.180144127587424,
+      "z": 1.7115678104808951,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:263",
+      "date": "2022-08-01",
+      "db": -13.86284840457494,
+      "expected": -14.023130824498466,
+      "z": 0.43611216258123237,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:264",
+      "date": "2022-08-25",
+      "db": -13.771896897673425,
+      "expected": -14.022707560558347,
+      "z": 0.6500643038455896,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:265",
+      "date": "2022-09-06",
+      "db": -13.702345203304043,
+      "expected": -13.796269178575889,
+      "z": 0.2792823063975266,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:266",
+      "date": "2022-09-18",
+      "db": -13.585817945140871,
+      "expected": -13.79605754660583,
+      "z": 0.5541796917044897,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:267",
+      "date": "2022-09-30",
+      "db": -13.637272271973998,
+      "expected": -13.79584591463577,
+      "z": 0.43207368196858986,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:268",
+      "date": "2022-10-12",
+      "db": -14.082170372617709,
+      "expected": -13.914393720224487,
+      "z": -0.3392142845839649,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:269",
+      "date": "2022-10-24",
+      "db": -14.067503072309552,
+      "expected": -13.914182088254426,
+      "z": -0.30505012660221925,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:270",
+      "date": "2022-11-05",
+      "db": -13.449568442360599,
+      "expected": -14.229689675061259,
+      "z": 1.9010234089971885,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:271",
+      "date": "2022-11-17",
+      "db": -13.762155211162815,
+      "expected": -14.229478043091198,
+      "z": 1.1617636438669443,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:272",
+      "date": "2022-11-29",
+      "db": -14.019182041487518,
+      "expected": -14.22926641112114,
+      "z": 0.5538128207521701,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:273",
+      "date": "2022-12-11",
+      "db": -14.63962075050538,
+      "expected": -14.888884085023784,
+      "z": 0.646407387435575,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:274",
+      "date": "2022-12-23",
+      "db": -15.203690938357921,
+      "expected": -14.888672453053726,
+      "z": -0.6872018783388244,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:275",
+      "date": "2023-01-04",
+      "db": -14.731424095293937,
+      "expected": -14.868267204705562,
+      "z": 0.3807162937370777,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:276",
+      "date": "2023-01-16",
+      "db": -14.619997243915506,
+      "expected": -14.868055572735503,
+      "z": 0.6435595076913497,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:277",
+      "date": "2023-01-28",
+      "db": -14.852920320689762,
+      "expected": -14.867843940765443,
+      "z": 0.09257488115707534,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:278",
+      "date": "2023-02-09",
+      "db": -15.337615841209347,
+      "expected": -15.144352326270539,
+      "z": -0.3994492856991836,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:279",
+      "date": "2023-02-21",
+      "db": -15.437094112045394,
+      "expected": -15.144140694300479,
+      "z": -0.6350538602505481,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:280",
+      "date": "2023-03-05",
+      "db": -15.761579321088522,
+      "expected": -15.2670252683361,
+      "z": -1.1115116609228037,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:281",
+      "date": "2023-03-17",
+      "db": -15.599740326258834,
+      "expected": -15.26681363636604,
+      "z": -0.7295256724675226,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:282",
+      "date": "2023-03-29",
+      "db": -15.268634384379538,
+      "expected": -15.26660200439598,
+      "z": 0.05250150293520932,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:283",
+      "date": "2023-04-10",
+      "db": -15.283449465664328,
+      "expected": -15.161907963322882,
+      "z": -0.22994330978469954,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:284",
+      "date": "2023-04-22",
+      "db": -15.279643816431516,
+      "expected": -15.161696331352822,
+      "z": -0.22144930102066643,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:285",
+      "date": "2023-05-04",
+      "db": -15.490394195258736,
+      "expected": -14.588430925414274,
+      "z": -2.074372217101362,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:286",
+      "date": "2023-06-21",
+      "db": -13.785649007141055,
+      "expected": -14.222442264199668,
+      "z": 1.0896108250161092,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:287",
+      "date": "2023-08-08",
+      "db": -13.877355109443988,
+      "expected": -14.016570233426618,
+      "z": 0.3863222524961935,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:288",
+      "date": "2023-08-20",
+      "db": -14.088860514246598,
+      "expected": -14.016358601456558,
+      "z": -0.11404439417531792,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:289",
+      "date": "2023-09-01",
+      "db": -13.61769407890324,
+      "expected": -13.789920219474102,
+      "z": 0.4643396474364345,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:290",
+      "date": "2023-09-13",
+      "db": -13.609048767811782,
+      "expected": -13.789708587504041,
+      "z": 0.48427158964290096,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:291",
+      "date": "2023-09-25",
+      "db": -13.825186852865421,
+      "expected": -13.789496955533982,
+      "z": -0.027043815416898084,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:292",
+      "date": "2023-10-07",
+      "db": -13.848483785006165,
+      "expected": -13.908044761122698,
+      "z": 0.19806967032902753,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:293",
+      "date": "2023-10-19",
+      "db": -13.535376626183865,
+      "expected": -13.907833129152639,
+      "z": 0.9375589807602874,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:294",
+      "date": "2023-10-31",
+      "db": -13.562062290528816,
+      "expected": -13.907621497182578,
+      "z": 0.8739905964354902,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:295",
+      "date": "2023-11-12",
+      "db": -14.113965683053042,
+      "expected": -14.223129083989411,
+      "z": 0.31529877646150617,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:296",
+      "date": "2023-11-24",
+      "db": -14.700556234881248,
+      "expected": -14.22291745201935,
+      "z": -1.0715345433432033,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:297",
+      "date": "2023-12-06",
+      "db": -14.653290983434273,
+      "expected": -14.882535125921995,
+      "z": 0.5990945394089836,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:298",
+      "date": "2023-12-18",
+      "db": -14.939865193850494,
+      "expected": -14.882323493951937,
+      "z": -0.07868780846020314,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:299",
+      "date": "2023-12-30",
+      "db": -14.783008425332376,
+      "expected": -14.882111861981876,
+      "z": 0.29152331335949466,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:300",
+      "date": "2024-01-11",
+      "db": -15.030512619913182,
+      "expected": -14.861706613633714,
+      "z": -0.34164703331382756,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:301",
+      "date": "2024-01-23",
+      "db": -14.809530664282397,
+      "expected": -14.861494981663654,
+      "z": 0.18011592076205662,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:302",
+      "date": "2024-02-04",
+      "db": -15.02551702743957,
+      "expected": -15.13800336716875,
+      "z": 0.3231521252812281,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:303",
+      "date": "2024-02-16",
+      "db": -15.418980047716664,
+      "expected": -15.13779173519869,
+      "z": -0.607248510525846,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:304",
+      "date": "2024-02-28",
+      "db": -15.482170151577424,
+      "expected": -15.13758010322863,
+      "z": -0.7570905564679662,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:305",
+      "date": "2024-03-11",
+      "db": -15.618747075160545,
+      "expected": -15.26046467726425,
+      "z": -0.7894507062819544,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:306",
+      "date": "2024-03-23",
+      "db": -15.582105001793519,
+      "expected": -15.260253045294192,
+      "z": -0.7033519299320061,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:307",
+      "date": "2024-04-04",
+      "db": -15.637320532542292,
+      "expected": -15.155559004221093,
+      "z": -1.081278134846263,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:308",
+      "date": "2024-04-16",
+      "db": -15.813247146971312,
+      "expected": -15.155347372251034,
+      "z": -1.4975587754823796,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:309",
+      "date": "2024-04-28",
+      "db": -15.941060158394105,
+      "expected": -15.155135740280974,
+      "z": -1.8001289535006058,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:310",
+      "date": "2024-05-10",
+      "db": -14.410116173167339,
+      "expected": -14.581870334342426,
+      "z": 0.46322418336626975,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:311",
+      "date": "2024-05-22",
+      "db": -14.882794365670565,
+      "expected": -14.581658702372366,
+      "z": -0.6543915707728036,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:312",
+      "date": "2024-06-03",
+      "db": -15.067813540583634,
+      "expected": -14.216304937067939,
+      "z": -1.9551289451158278,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:314",
+      "date": "2024-07-09",
+      "db": -13.799681580391965,
+      "expected": -14.167446209383847,
+      "z": 0.9264703254295238,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:315",
+      "date": "2024-07-21",
+      "db": -13.590858945966758,
+      "expected": -14.167234577413788,
+      "z": 1.4194962497879136,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:316",
+      "date": "2024-08-02",
+      "db": -14.619670767722184,
+      "expected": -14.010221274324829,
+      "z": -1.3830526159149141,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:317",
+      "date": "2024-08-14",
+      "db": -14.333656438678574,
+      "expected": -14.010009642354769,
+      "z": -0.7075938086110999,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:318",
+      "date": "2024-08-26",
+      "db": -13.698822167268885,
+      "expected": -14.00979801038471,
+      "z": 0.792257156803611,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:319",
+      "date": "2024-09-07",
+      "db": -14.02044420121,
+      "expected": -13.783359628402252,
+      "z": -0.5030148565843595,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:320",
+      "date": "2024-09-19",
+      "db": -14.158308685223279,
+      "expected": -13.783147996432193,
+      "z": -0.8293404286458709,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:321",
+      "date": "2024-10-01",
+      "db": -14.41410571638036,
+      "expected": -13.901695802020908,
+      "z": -1.1537117489834239,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:322",
+      "date": "2024-10-13",
+      "db": -13.551884932724034,
+      "expected": -13.90148417005085,
+      "z": 0.8835387019216645,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:323",
+      "date": "2024-10-25",
+      "db": -14.416869327963141,
+      "expected": -13.90127253808079,
+      "z": -1.1612435293401702,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:324",
+      "date": "2024-11-06",
+      "db": -13.815731216128032,
+      "expected": -14.216780124887622,
+      "z": 1.005133543600893,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:325",
+      "date": "2024-11-18",
+      "db": -14.824819745526687,
+      "expected": -14.216568492917562,
+      "z": -1.3802207241869238,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:326",
+      "date": "2024-12-12",
+      "db": -14.024065971535066,
+      "expected": -14.875974534850148,
+      "z": 2.0706837558478113,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:327",
+      "date": "2024-12-24",
+      "db": -15.140442275280412,
+      "expected": -14.875762902880089,
+      "z": -0.5682317023714809,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:328",
+      "date": "2025-01-05",
+      "db": -15.284720285083434,
+      "expected": -14.855357654531925,
+      "z": -0.9574399158442884,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:329",
+      "date": "2025-01-17",
+      "db": -15.091039991082491,
+      "expected": -14.855146022561867,
+      "z": -0.5002010127683797,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:330",
+      "date": "2025-01-29",
+      "db": -15.194679951842177,
+      "expected": -14.854934390591806,
+      "z": -0.7456412191768735,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:331",
+      "date": "2025-02-10",
+      "db": -15.260217374213175,
+      "expected": -15.131442776096902,
+      "z": -0.2470378239205193,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:332",
+      "date": "2025-02-22",
+      "db": -14.873213491714763,
+      "expected": -15.131231144126842,
+      "z": 0.6670971191412824,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:333",
+      "date": "2025-03-06",
+      "db": -15.355325022601097,
+      "expected": -15.254115718162463,
+      "z": -0.1818907116604615,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:334",
+      "date": "2025-03-18",
+      "db": -15.468451938802673,
+      "expected": -15.253904086192403,
+      "z": -0.4497521466764458,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:335",
+      "date": "2025-03-30",
+      "db": -14.508713453113822,
+      "expected": -15.253692454222344,
+      "z": 1.8179691548551735,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:338",
+      "date": "2025-04-11",
+      "db": -15.496539732556052,
+      "expected": -15.148998413149245,
+      "z": -0.7640655152394806,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:341",
+      "date": "2025-04-23",
+      "db": -14.509443860066424,
+      "expected": -15.148786781179185,
+      "z": 1.5683115367403055,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:344",
+      "date": "2025-05-05",
+      "db": -15.082184634343635,
+      "expected": -14.575521375240637,
+      "z": -1.1401302504697426,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:359",
+      "date": "2025-08-09",
+      "db": -13.954286387104275,
+      "expected": -14.003660683252981,
+      "z": 0.17399473061744267,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:362",
+      "date": "2025-08-21",
+      "db": -14.11469270606916,
+      "expected": -14.00344905128292,
+      "z": -0.20560563943148402,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:367",
+      "date": "2025-09-14",
+      "db": -13.841485418375068,
+      "expected": -13.776799037330404,
+      "z": -0.09557336571676564,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:370",
+      "date": "2025-09-26",
+      "db": -13.476574911025452,
+      "expected": -13.776587405360345,
+      "z": 0.7663466578214476,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:373",
+      "date": "2025-10-08",
+      "db": -13.998370843694806,
+      "expected": -13.89513521094906,
+      "z": -0.18667968431727175,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:376",
+      "date": "2025-10-20",
+      "db": -14.224205333552348,
+      "expected": -13.894923578979002,
+      "z": -0.720911325266522,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:379",
+      "date": "2025-11-01",
+      "db": -13.462256120142671,
+      "expected": -14.210431165785833,
+      "z": 1.8255226050204887,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:382",
+      "date": "2025-11-13",
+      "db": -14.310419364972415,
+      "expected": -14.210219533815774,
+      "z": -0.1795049482438043,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:385",
+      "date": "2025-11-25",
+      "db": -14.899207553343551,
+      "expected": -14.210007901845714,
+      "z": -1.5715321062221035,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:386",
+      "date": "2025-12-07",
+      "db": -15.059606360537982,
+      "expected": -14.86962557574836,
+      "z": -0.39169096496262723,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:389",
+      "date": "2025-12-19",
+      "db": -14.950052362102527,
+      "expected": -14.8694139437783,
+      "z": -0.13327400390264924,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:392",
+      "date": "2025-12-31",
+      "db": -14.990907600994902,
+      "expected": -14.86920231180824,
+      "z": -0.23033039943869932,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:395",
+      "date": "2026-01-12",
+      "db": -15.124941398187417,
+      "expected": -14.848797063460077,
+      "z": -0.5953277020190868,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:398",
+      "date": "2026-01-24",
+      "db": -15.121876781246332,
+      "expected": -14.848585431490017,
+      "z": -0.5885850300796122,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:401",
+      "date": "2026-02-05",
+      "db": -15.222505361065055,
+      "expected": -15.125093816995113,
+      "z": -0.17291518163457906,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:404",
+      "date": "2026-02-17",
+      "db": -15.541664737307629,
+      "expected": -15.124882185025053,
+      "z": -0.9277084796110782,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:407",
+      "date": "2026-03-01",
+      "db": -15.078511327032063,
+      "expected": -15.247766759060674,
+      "z": 0.457318750610261,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:408",
+      "date": "2026-03-25",
+      "db": -15.414467052683923,
+      "expected": -15.247343495120555,
+      "z": -0.33767077691470054,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:411",
+      "date": "2026-04-06",
+      "db": -15.577124064498722,
+      "expected": -15.142649454047456,
+      "z": -0.9695214388019339,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:414",
+      "date": "2026-04-18",
+      "db": -15.575514482391894,
+      "expected": -15.142437822077397,
+      "z": -0.966217559091485,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:419",
+      "date": "2026-04-30",
+      "db": -15.479130250127122,
+      "expected": -15.142226190107337,
+      "z": -0.7389256876167566,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:420",
+      "date": "2026-05-06",
+      "db": -13.523026686274887,
+      "expected": -14.569066600153818,
+      "z": 2.529488840106309,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:423",
+      "date": "2026-05-18",
+      "db": -13.877303483396606,
+      "expected": -14.568854968183759,
+      "z": 1.6916999249943023,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:426",
+      "date": "2026-05-30",
+      "db": -13.500882321341455,
+      "expected": -14.568643336213698,
+      "z": 2.5808239363825107,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:429",
+      "date": "2026-06-05",
+      "db": -14.696198433994526,
+      "expected": -14.203395386894302,
+      "z": -1.1073733788088629,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:432",
+      "date": "2026-06-17",
+      "db": -14.648912968128908,
+      "expected": -14.203183754924241,
+      "z": -0.9961202799966815,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:433",
+      "date": "2026-06-24",
+      "db": -14.79261822005798,
+      "expected": -14.203060302941706,
+      "z": -1.3360413716971797,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:434",
+      "date": "2026-06-30",
+      "db": -14.52106651981807,
+      "expected": -14.202954486956678,
+      "z": -0.6945130897609636,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:435",
+      "date": "2026-07-06",
+      "db": -14.313340502368025,
+      "expected": -14.154624839197735,
+      "z": -0.31779977367772305,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:436",
+      "date": "2026-07-12",
+      "db": -14.08581883802576,
+      "expected": -14.154519023212705,
+      "z": 0.21966904402847162,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:437",
+      "date": "2026-07-18",
+      "db": -14.21877682543429,
+      "expected": -14.154413207227675,
+      "z": -0.09481055625463279,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:438",
+      "date": "2026-07-24",
+      "db": -13.612434602494572,
+      "expected": -14.154307391242646,
+      "z": 1.3379531110538858,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:439",
+      "date": "2026-07-30",
+      "db": -14.049207833266076,
+      "expected": -14.154201575257616,
+      "z": 0.30544431082288137,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:440",
+      "date": "2026-08-05",
+      "db": -13.701566504861836,
+      "expected": -13.997294088153687,
+      "z": 0.7562198083124266,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:441",
+      "date": "2026-08-11",
+      "db": -14.018030448044405,
+      "expected": -13.997188272168657,
+      "z": 0.008046910907002056,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:442",
+      "date": "2026-08-17",
+      "db": -13.779404327771214,
+      "expected": -13.997082456183628,
+      "z": 0.5717597166359278,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:445",
+      "date": "2026-08-29",
+      "db": -13.610966574705024,
+      "expected": -13.996870824213568,
+      "z": 0.9693410420623169,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:446",
+      "date": "2026-09-04",
+      "db": -13.86374517361491,
+      "expected": -13.77053825821614,
+      "z": -0.16297806943631954,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:447",
+      "date": "2026-09-10",
+      "db": -13.371351995992654,
+      "expected": -13.770432442231112,
+      "z": 1.000481329467294,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:448",
+      "date": "2026-09-16",
+      "db": -13.815312788403894,
+      "expected": -13.770326626246082,
+      "z": -0.049014370685613935,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:449",
+      "date": "2026-09-22",
+      "db": -13.26538796957274,
+      "expected": -13.770220810261051,
+      "z": 1.2504138421973536,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:450",
+      "date": "2026-09-28",
+      "db": -13.659485708950616,
+      "expected": -13.770114994276021,
+      "z": 0.31876321025167753,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:451",
+      "date": "2026-10-04",
+      "db": -14.145231917247283,
+      "expected": -13.888768615849767,
+      "z": -0.5488140496442541,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:452",
+      "date": "2026-10-10",
+      "db": -13.476925796736383,
+      "expected": -13.888662799864738,
+      "z": 1.0303935133233584,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:453",
+      "date": "2026-10-16",
+      "db": -13.416044724061564,
+      "expected": -13.888556983879708,
+      "z": 1.1740282054295137,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:454",
+      "date": "2026-10-22",
+      "db": -14.168080670810006,
+      "expected": -13.888451167894678,
+      "z": -0.6035644596550954,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:455",
+      "date": "2026-10-28",
+      "db": -13.449365653118647,
+      "expected": -13.888345351909647,
+      "z": 1.0947782056598885,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:456",
+      "date": "2026-11-03",
+      "db": -13.9119763415139,
+      "expected": -14.20395875470151,
+      "z": 0.7473685687766769,
+      "flagged": false
+    },
+    {
+      "observationId": "VNM_BINH_PHUOC_FOREST:457",
+      "date": "2026-11-09",
+      "db": -14.043548346919103,
+      "expected": -14.20385293871648,
+      "z": 0.4361645630225886,
+      "flagged": false
+    }
+  ],
+  "forecast": [
+    {
+      "month": "2026-12",
+      "mean": -14.863047348679006,
+      "lower": -15.719232603744459,
+      "upper": -14.006862093613552
+    },
+    {
+      "month": "2027-01",
+      "mean": -14.84230701637825,
+      "lower": -15.696645774075193,
+      "upper": -13.987968258681306
+    },
+    {
+      "month": "2027-02",
+      "mean": -15.11848031793075,
+      "lower": -15.973577151914867,
+      "upper": -14.263383483946633
+    },
+    {
+      "month": "2027-03",
+      "mean": -15.241082716006291,
+      "lower": -16.095309529125196,
+      "upper": -14.386855902887387
+    },
+    {
+      "month": "2027-04",
+      "mean": -15.136053590980598,
+      "lower": -15.989387115975667,
+      "upper": -14.28272006598553
+    },
+    {
+      "month": "2027-05",
+      "mean": -14.56247073708696,
+      "lower": -15.418694167778575,
+      "upper": -13.706247306395344
+    },
+    {
+      "month": "2027-06",
+      "mean": -14.196781887829939,
+      "lower": -15.055581349488364,
+      "upper": -13.337982426171514
+    },
+    {
+      "month": "2027-07",
+      "mean": -14.148028976130878,
+      "lower": -15.004966318896098,
+      "upper": -13.291091633365657
+    },
+    {
+      "month": "2027-08",
+      "mean": -13.990680589089324,
+      "lower": -14.843472323569946,
+      "upper": -13.137888854608702
+    },
+    {
+      "month": "2027-09",
+      "mean": -13.763907123154272,
+      "lower": -14.61516751928931,
+      "upper": -12.912646727019235
+    },
+    {
+      "month": "2027-10",
+      "mean": -13.882137480787899,
+      "lower": -14.732717384277867,
+      "upper": -13.03155757729793
+    },
+    {
+      "month": "2027-11",
+      "mean": -14.197309983642137,
+      "lower": -15.053372940700289,
+      "upper": -13.341247026583986
+    }
+  ]
+}

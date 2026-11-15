@@ -1,10 +1,73 @@
 import type { Region } from "../types/region";
+<<<<<<< HEAD
 
 export default function ForecastPanel({ region }: { region: Region }) {
+=======
+import type { SarDataset } from "../data/sar";
+import type { ReactNode } from "react";
+import DataTypeTabs from "./DataTypeTabs";
+import ForestForecastPanel from "./ForestForecastPanel";
+import SubsidenceForecastPanel from "./SubsidenceForecastPanel";
+import type { SarObservation } from "../data/sar";
+import {
+  forecastPlot,
+  loadForecast,
+  type ForecastResponse,
+} from "../data/forecast";
+const numeric = (v: number) =>
+  v.toLocaleString(undefined, { maximumFractionDigits: 2 });
+
+function WaterForecastPanel({
+  region,
+  dataset,
+  children,
+}: {
+  region: Region;
+  dataset: SarDataset | null;
+  children?: ReactNode;
+}) {
+  const [data, setData] = useState<ForecastResponse | null>(null);
+  const [error, setError] = useState("");
+  const [retry, setRetry] = useState(0);
+  const [fullHistory, setFullHistory] = useState(false);
+  const [selectedMonth, setSelectedMonth] = useState("");
+  useEffect(() => {
+    setData(null);
+    setError("");
+    setSelectedMonth("");
+    if (!dataset) return;
+    let disposed = false;
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 15000);
+    loadForecast(dataset, controller.signal)
+      .then((value) => {
+        if (!disposed) setData(value);
+      })
+      .catch((e) => {
+        if (!disposed)
+          setError(e instanceof Error ? e.message : "Forecast could not load.");
+      })
+      .finally(() => window.clearTimeout(timeout));
+    return () => {
+      disposed = true;
+      controller.abort();
+      window.clearTimeout(timeout);
+    };
+  }, [dataset, retry]);
+  const forecast = data?.status === "available" ? data : null;
+  const plot = useMemo(
+    () => (forecast ? forecastPlot(forecast, fullHistory) : null),
+    [forecast, fullHistory],
+  );
+  const selected =
+    forecast?.forecast.find((r) => r.month === selectedMonth) ??
+    forecast?.forecast[0];
+>>>>>>> integrating-backend-data
   return (
     <section
       className="workspace-panel forecast-panel panel"
       aria-label="Water time-series forecast"
+      data-kind="water"
     >
       <div className="workspace-title">
         <div>
@@ -17,6 +80,7 @@ export default function ForecastPanel({ region }: { region: Region }) {
         {region.name}
         <span>{region.country}</span>
       </div>
+<<<<<<< HEAD
       <p className="muted">
         Model development for this water-monitoring region.
       </p>
@@ -43,6 +107,17 @@ export default function ForecastPanel({ region }: { region: Region }) {
         <div>
           <dt>Observed water series</dt>
           <dd>Awaiting processed data</dd>
+=======
+      {children}
+      {!dataset && (
+        <div className="forecast-empty" role="status">
+          <h3>No forecast for this study area</h3>
+          <p>
+            Forecasts are available for study areas with matching observation
+            series and supplied model exports. This region has no matching
+            dataset.
+          </p>
+>>>>>>> integrating-backend-data
         </div>
         <div>
           <dt>Forecast model</dt>
@@ -62,5 +137,52 @@ export default function ForecastPanel({ region }: { region: Region }) {
         future flood boundaries are displayed.
       </p>
     </section>
+  );
+}
+
+export default function ForecastPanel({
+  region,
+  dataset,
+  datasets,
+  onSelectDataset,
+  onSelectObservation,
+  initialPointId,
+}: {
+  region: Region;
+  dataset: SarDataset | null;
+  datasets: SarDataset[];
+  onSelectDataset: (id: string) => void;
+  onSelectObservation?: (row: SarObservation | null) => void;
+  initialPointId?: string;
+}) {
+  const tabs = dataset ? (
+    <DataTypeTabs
+      datasets={datasets}
+      dataset={dataset}
+      onSelect={onSelectDataset}
+    />
+  ) : null;
+  if (dataset?.kind === "subsidence")
+    return (
+      <SubsidenceForecastPanel
+        key={dataset.id}
+        region={region}
+        dataset={dataset}
+        onSelectObservation={onSelectObservation}
+        initialPointId={initialPointId}
+      >
+        {tabs}
+      </SubsidenceForecastPanel>
+    );
+  if (dataset?.kind === "forest")
+    return (
+      <ForestForecastPanel key={dataset.id} region={region} dataset={dataset}>
+        {tabs}
+      </ForestForecastPanel>
+    );
+  return (
+    <WaterForecastPanel key={dataset?.id} region={region} dataset={dataset}>
+      {tabs}
+    </WaterForecastPanel>
   );
 }

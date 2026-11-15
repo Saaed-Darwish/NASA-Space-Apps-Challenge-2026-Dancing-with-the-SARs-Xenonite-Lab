@@ -8,6 +8,14 @@ import { storyTimelineLabel } from "../data/storyTimeline";
 import type { Indicator, OverlaySettings, RegionalReading } from "../data/demo";
 import SourceLinks, { StoryTiming } from "./SourceLinks";
 import LayerPanel from "./LayerPanel";
+<<<<<<< HEAD
+=======
+import ObservationPanel from "./ObservationPanel";
+import DataTypeTabs from "./DataTypeTabs";
+import type { SarDataset, SarObservation } from "../data/sar";
+import type { TimelineSelection } from "../data/observationTime";
+import type { WaterLayerSelection } from "../data/waterChanges";
+>>>>>>> integrating-backend-data
 
 interface AnalysisPanelProps {
   region: Region | null;
@@ -50,6 +58,7 @@ export default function AnalysisPanel({
     <section
       className="workspace-panel analysis-panel panel"
       aria-label="Region analysis"
+      data-kind={dataset?.kind}
     >
       <div className="workspace-title">
         <div>
@@ -92,7 +101,32 @@ export default function AnalysisPanel({
               After &middot; {endYear} &rarr;
             </button>
           </div>
+<<<<<<< HEAD
           {region.waterMonitoring && (
+=======
+          {dataset && (
+            <DataTypeTabs
+              datasets={datasets}
+              dataset={dataset}
+              onSelect={onSelectDataset}
+            />
+          )}
+          {dataset && (
+            <ObservationPanel
+              key={dataset.id}
+              dataset={dataset}
+              datasets={datasets.filter((d) => d.kind === dataset.kind)}
+              basemapYear={Math.floor(time)}
+              onSelectDataset={onSelectDataset}
+              onSelectObservation={onSelectObservation}
+              onShowBasemap={onShowBasemap}
+              timelineSelection={timelineSelection}
+              onWaterLayer={onWaterLayer}
+              onCompareDate={onCompareDate}
+            />
+          )}
+          {region.waterMonitoring && !dataset && (
+>>>>>>> integrating-backend-data
             <LayerPanel
               embedded
               region={region}

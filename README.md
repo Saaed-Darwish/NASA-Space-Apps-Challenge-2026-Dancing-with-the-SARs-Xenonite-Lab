@@ -4,6 +4,7 @@ A React + TypeScript + Vite + Tailwind CSS frontend and a Python FastAPI backend
 
 ## Water monitoring update
 
+<<<<<<< HEAD
 The frontend now supports water overlays only. Porto Alegre and Rio Grande do Sul
 (Brazil), plus Can Tho and the Mekong Delta (Vietnam), are prioritized study areas.
 Their flood data is being processed by the backend team. Until a flood-data endpoint
@@ -15,6 +16,34 @@ Every curated view has two sourced stories. Transient events have an editorial m
 window with smooth fades on the annual timeline: Lake Manchar's flood appears near
 2022 and is hidden by 2023. Hidden markers remain accessible through their story
 cards and source links. These windows do not establish measured recovery dates.
+=======
+Analyze serves **7,705 source-traceable rows across 10 datasets** through FastAPI.
+Madeira River, Can Tho, Binh Phuoc, Venice, Belluno forest and London have the
+observations and forecasts supplied for their own study areas. See the
+[finalized release guide](./docs/finalized-sar-release.md) for dataset counts,
+source mappings, filters, importing and forecast limitations.
+
+Multi-type regions share **Water / Forest / Subsidence** tabs between Analyze and
+Forecast. Water uses blue, forest orange and subsidence pink. Observation controls
+show real acquisitions; forecasts retain separate monthly/seasonal horizons and
+units. Forest area indicators (km?) are distinct from forecast VH backscatter (dB).
+London water and Epping Forest study boundaries were not supplied, so no rectangles
+are invented. Subsidence uses the source-supplied point coordinates, friendly names
+and original IDs; selected pins do not imply individual building accuracy.
+
+There are 14 curated regions and 24 sourced stories. London upgrades the existing
+Thames basin entry and retains its stories; Belluno is separate from Venice.
+Rio Grande do Sul retains four stories without SAR data. Mekong Delta's stories
+remain under Can Tho. The optical archive remains 2020?2025; observations and
+forecast horizons are independent and no SAR values are interpolated on the globe.
+
+Six experimental spatial water-change layers are available from independently
+acquired public Sentinel-1 RTC imagery for Madeira River and Can Tho in 2024.
+Use Analyze → Spatial water change → View latest available comparison, or select
+a dated pair. Blue is candidate gain; amber is candidate loss. See
+[the water-change pipeline](./docs/water-change-pipeline.md) and
+[the observation integration guide](./docs/sar-observations.md).
+>>>>>>> integrating-backend-data
 
 Globe markers use fixed ellipsoid anchors with horizon visibility checks. Camera
 zoom and panning update the focused study area without initiating another camera
@@ -164,13 +193,21 @@ To curate another region, add its coordinates, altitude, description, and all th
 
 ## Analyze, stories, and Earth AI
 
+<<<<<<< HEAD
 Analyze combines camera views, year comparisons, sourced stories, and applicable water controls. Earth AI shares the selected region, camera, and timeline. The frontend works without a running backend, with two sourced stories for each of the twelve curated views.
+=======
+Analyze combines camera views, year comparisons, sourced stories, and applicable water controls. Earth AI shares the selected region, camera, and timeline. The globe and curated stories work without a running backend; SAR observation panels require FastAPI. There are 14 regions and 24 stories, including four stories under Rio Grande do Sul.
+>>>>>>> integrating-backend-data
 
 Use **Stories & evidence** to open Analyze, or click a story symbol on the globe. Story markers are hidden in the global overview and appear only within the focused region and their configured time window. Region and story labels use 50%-transparent black backgrounds with white text. Their approximate locations do not represent damage footprints. Source cards identify retrospective material published after the selected map year.
 
 Selecting a story configures its comparison range. The first **Play** after selection starts the focused story from the earliest bookmarked year; subsequent plays resume from the current position. Analyze's **Before** and **After** buttons jump to the comparison endpoints. The LNU story explicitly notes that the 2020 annual mosaic is not a guaranteed pre-fire image.
 
+<<<<<<< HEAD
 **Forecast** appears only for Porto Alegre, Rio Grande do Sul, Can Tho, and the Mekong Delta. It currently shows the time-series model's development state and pending input/output availability; there is no forecast endpoint or invented prediction series. Switching to another region or the global overview returns to Analyze. The map timeline remains a historical imagery control.
+=======
+**Forecast** uses the selected SAR type, with matching source exports for all ten datasets. Water has 12 monthly predictions; forest has the observed seasonal months of 2027; Venice and London subsidence have 24 monthly predictions from the November 2025 cutoff. Charts, tables, point/month selectors, approximate ranges and source hashes remain type-specific. Forecasts are exploratory; no model fitting occurs in HTTP requests. See [the finalized release](./docs/finalized-sar-release.md).
+>>>>>>> integrating-backend-data
 
 **Earth AI connects to a model through the backend.** Local development uses Ollama and Ministral 3 3B. Suggested prompts and typed questions include region, story and timeline context; unavailable water data is explicitly marked. Conversations remain separate for each region during the page session. A page reload resets them. Connection failures are shown explicitly, without substituting demo answers.
 

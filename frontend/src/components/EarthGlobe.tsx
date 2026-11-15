@@ -304,6 +304,177 @@ export default function EarthGlobe({
   }, [isViewerReady, selectedRegion]);
 
   useEffect(() => {
+<<<<<<< HEAD
+=======
+    const viewer = viewerRef.current;
+    if (!isViewerReady || !viewer || !studyArea) return;
+    const { west, south, east, north } = studyArea;
+    const boundary = viewer.entities.add({
+      id: "sar-study-area",
+      polyline: {
+        positions: Cartesian3.fromDegreesArray([
+          west,
+          south,
+          east,
+          south,
+          east,
+          north,
+          west,
+          north,
+          west,
+          south,
+        ]),
+        width: 2,
+        material: Color.fromCssColorString(
+          dataset?.kind === "forest" ? "#ffad78" : "#55d9ed",
+        ),
+        clampToGround: true,
+      },
+    });
+    const label = viewer.entities.add({
+      id: "sar-study-area-label",
+      position: Cartesian3.fromDegrees(west, south),
+      label: {
+        text: "Study Area",
+        font: "11px sans-serif",
+        fillColor: PIN_LABEL_TEXT,
+        showBackground: true,
+        backgroundColor: PIN_LABEL_BACKGROUND,
+        pixelOffset: new Cartesian2(0, 18),
+      },
+    });
+    viewer.scene.requestRender();
+    return () => {
+      if (!viewer.isDestroyed()) {
+        viewer.entities.remove(boundary);
+        viewer.entities.remove(label);
+        viewer.scene.requestRender();
+      }
+    };
+  }, [isViewerReady, studyArea, dataset?.kind]);
+
+  const trackingPoint = dataset?.kind === "subsidence"
+    ? dataset.points.find(p => p.id === observation?.pointId)
+    : null;
+  useEffect(() => {
+    const viewer = viewerRef.current;
+    if (!viewer || !isViewerReady || !trackingPoint ||
+        !["inferred_egms_grid", "source_coordinates"].includes(trackingPoint.locationStatus ?? "") ||
+        !Number.isFinite(trackingPoint.latitude) || !Number.isFinite(trackingPoint.longitude)) return;
+    const marker = viewer.entities.add({
+      id: "sar-tracking-point",
+      position: Cartesian3.fromDegrees(trackingPoint.longitude!, trackingPoint.latitude!),
+      point: {
+        pixelSize: 8,
+        color: Color.fromCssColorString("#f59bc8"),
+        outlineColor: Color.WHITE,
+        outlineWidth: 1,
+        disableDepthTestDistance: Number.POSITIVE_INFINITY,
+      },
+    });
+    viewer.scene.requestRender();
+    return () => {
+      if (!viewer.isDestroyed()) {
+        viewer.entities.remove(marker);
+        viewer.scene.requestRender();
+      }
+    };
+  }, [isViewerReady, trackingPoint]);
+
+  const waterComparison = waterLayer?.comparison;
+  useEffect(() => {
+    const viewer = viewerRef.current;
+    if (!viewer || !isViewerReady || !waterComparison) return;
+    let disposed = false,
+      layer: ImageryLayer | null = null;
+    setWaterError(null);
+    const b = waterComparison.bounds;
+    SingleTileImageryProvider.fromUrl(waterComparison.imageUrl, {
+      rectangle: Rectangle.fromDegrees(b.west, b.south, b.east, b.north),
+    })
+      .then((provider) => {
+        if (disposed || viewer.isDestroyed()) return;
+        layer = new ImageryLayer(provider, { alpha: waterOpacityRef.current });
+        viewer.imageryLayers.add(layer);
+        waterImageryRef.current = layer;
+        viewer.scene.requestRender();
+      })
+      .catch(() => {
+        if (!disposed)
+          setWaterError(
+            "Water overlay could not load. Toggle it off and on to retry.",
+          );
+      });
+    return () => {
+      disposed = true;
+      if (waterImageryRef.current === layer) waterImageryRef.current = null;
+      if (layer && !viewer.isDestroyed()) {
+        viewer.imageryLayers.remove(layer, true);
+        viewer.scene.requestRender();
+      }
+    };
+  }, [isViewerReady, waterComparison?.id, waterComparison?.imageUrl]);
+  useEffect(() => {
+    waterOpacityRef.current = waterLayer?.opacity ?? 0.7;
+    if (waterImageryRef.current) {
+      waterImageryRef.current.alpha = waterOpacityRef.current;
+      viewerRef.current?.scene.requestRender();
+    }
+  }, [waterLayer?.opacity]);
+
+  useEffect(() => {
+    const viewer = viewerRef.current;
+    const element = readoutRef.current;
+    if (!viewer || !isViewerReady || !element || !studyArea || !observation)
+      return;
+    const position = Cartesian3.fromDegrees(
+      (studyArea.west + studyArea.east) / 2,
+      studyArea.north,
+    );
+    const occluder = new EllipsoidalOccluder(
+      viewer.scene.globe.ellipsoid,
+      viewer.camera.positionWC,
+    );
+    const update = () => {
+      occluder.cameraPosition = viewer.camera.positionWC;
+      const p = occluder.isPointVisible(position)
+        ? SceneTransforms.worldToWindowCoordinates(viewer.scene, position)
+        : undefined;
+      const canvas = viewer.scene.canvas;
+      element.style.display =
+        p &&
+        p.x >= 0 &&
+        p.x <= canvas.clientWidth &&
+        p.y >= 0 &&
+        p.y <= canvas.clientHeight
+          ? ""
+          : "none";
+      if (p) {
+        element.style.left = `${p.x}px`;
+        element.style.top = `${p.y}px`;
+      }
+    };
+    const remove = viewer.scene.postRender.addEventListener(update);
+    update();
+    viewer.scene.requestRender();
+    return remove;
+  }, [isViewerReady, studyArea, observation]);
+
+  useEffect(() => {
+    let timer = 0;
+    const onResize = () => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => setResizeVersion((v) => v + 1), 250);
+    };
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+      window.clearTimeout(timer);
+    };
+  }, []);
+
+  useEffect(() => {
+>>>>>>> integrating-backend-data
     if (!isViewerReady) return;
     imageryRef.current?.update(time);
     overlaysRef.current?.update(time, overlaySettings);
