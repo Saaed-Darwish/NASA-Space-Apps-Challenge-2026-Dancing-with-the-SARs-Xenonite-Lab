@@ -235,3 +235,5 @@ Lake Manchar, Pakistan, has sourced stories about the 2022 flooding and a sugges
 - Add or update `RegionStory` records in [stories.ts](./frontend/src/data/stories.ts) to provide event dates, location, comparison years, sources, and interpretation. Link measured event boundaries separately from the editorial locators.
 - Replace synthetic surface textures through [overlays.ts](./frontend/src/globe/overlays.ts) when dated land/water/fire rasters are available. Visibility and per-layer opacity are already independent.
 - [earthAI.ts](./frontend/src/data/earthAI.ts) calls the backend model integration. Provider configuration and credentials stay on the backend. [assistant.ts](./frontend/src/data/assistant.ts) retains shared conversation types and the unused legacy demo adapter.
+
+extra commit
