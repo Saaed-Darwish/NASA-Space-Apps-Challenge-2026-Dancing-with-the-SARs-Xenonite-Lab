@@ -145,18 +145,24 @@ export async function loadWaterComparisons(
   return parseWaterComparisons(await response.json(), dataset);
 }
 
-export function comparisonNearDate(
+/** Inclusive acquisition ranges; prefer the selected pair at shared boundaries. */
+export function comparisonForDate(
   comparisons: WaterComparison[],
   date: string | null,
+  preferredId?: string,
 ): WaterComparison | null {
-  if (!date || !comparisons.length) return null;
-  const ranked = [...comparisons].sort(
-    (a, b) =>
-      Math.abs(Date.parse(a.afterDate) - Date.parse(date)) -
-      Math.abs(Date.parse(b.afterDate) - Date.parse(date)),
+  if (!date) return null;
+  const stamp = Date.parse(date);
+  const matching = comparisons.filter(
+    (c) =>
+      Date.parse(c.beforeDate) <= stamp && stamp <= Date.parse(c.afterDate),
   );
-  return Math.abs(Date.parse(ranked[0].afterDate) - Date.parse(date)) <=
-    12 * 86400000
-    ? ranked[0]
-    : null;
+  return (
+    matching.find((c) => c.id === preferredId) ??
+    matching.sort(
+      (a, b) =>
+        a.afterDate.localeCompare(b.afterDate) || a.id.localeCompare(b.id),
+    )[0] ??
+    null
+  );
 }

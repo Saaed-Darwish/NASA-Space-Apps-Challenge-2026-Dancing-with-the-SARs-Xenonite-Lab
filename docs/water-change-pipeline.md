@@ -31,9 +31,13 @@ Blue means candidate water gain; amber means candidate loss. Unchanged and exclu
 pixels are transparent. The visibility switch and opacity slider expose the optical
 background. The map key always shows the actual before/after radar dates.
 
-**Follow selected SAR acquisition** shows the nearest comparison only when its end
-date is within 12 days of the selected workbook acquisition. Otherwise the layer
-is removed. Manual pair selection disables following until it is enabled again.
+The overlay follows the timeline date (or the selected workbook acquisition when
+choosing observations directly). It automatically checks **Show water gain/loss
+overlay** inside a processed pair's inclusive before-to-after date range, and
+unchecks it outside all ranges. You can hide the layer within a range; entering
+another range or leaving and returning turns it on again. At shared endpoints,
+a manually selected pair takes priority; otherwise the earlier-ending pair wins.
+Selecting a pair moves to its end date instead of pinning a layer onto other dates.
 The optical basemap, workbook value and spatial classification are separate products.
 
 ## Acquisition and reproducibility

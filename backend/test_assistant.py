@@ -19,7 +19,7 @@ def request(**overrides):
 class AssistantTests(unittest.TestCase):
     def test_context_excludes_mock_measurements(self):
         context, sources = build_context(request(region_id="rio-grande-do-sul"))
-        self.assertEqual(context["water_data"]["status"], "processing")
+        self.assertEqual(context["water_data"]["status"], "not_configured")
         self.assertEqual(context["water_data"]["measurements"], [])
         self.assertEqual(context["forecast"]["predictions"], [])
         self.assertNotIn("readings", context)
@@ -29,6 +29,14 @@ class AssistantTests(unittest.TestCase):
     def test_story_only_region(self):
         context, _ = build_context(request())
         self.assertEqual(context["water_data"]["status"], "not_configured")
+
+    def test_mekong_stories_belong_to_can_tho(self):
+        for story_id in ("mekong-adaptive-farming", "mekong-water-efficient-rice"):
+            context, _ = build_context(request(region_id="can-tho", story_id=story_id))
+            self.assertIn(story_id, {story["id"] for story in context["stories"]})
+            with self.assertRaises(HTTPException) as raised:
+                build_context(request(region_id="mekong-delta", story_id=story_id))
+            self.assertEqual(raised.exception.status_code, 404)
 
     def test_foreign_story_rejected(self):
         with self.assertRaises(HTTPException) as raised:

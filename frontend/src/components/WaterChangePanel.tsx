@@ -1,7 +1,7 @@
 import { memo, useEffect, useMemo, useState } from "react";
 import type { SarDataset } from "../data/sar";
 import {
-  comparisonNearDate,
+  comparisonForDate,
   loadWaterComparisons,
   type WaterComparison,
   type WaterLayerSelection,
@@ -10,6 +10,7 @@ import {
 interface Props {
   dataset: SarDataset;
   observationDate: string | null;
+  comparisonDate: string | null;
   onLayer: (layer: WaterLayerSelection | null) => void;
   onCompareDate: (date: string) => void;
 }
@@ -19,6 +20,7 @@ const number = (v: number) =>
 export default memo(function WaterChangePanel({
   dataset,
   observationDate,
+  comparisonDate,
   onLayer,
   onCompareDate,
 }: Props) {
@@ -28,7 +30,6 @@ export default memo(function WaterChangePanel({
   );
   const [error, setError] = useState("");
   const [retry, setRetry] = useState(0);
-  const [follow, setFollow] = useState(true);
   const [enabled, setEnabled] = useState(true);
   const [chosenId, setChosenId] = useState("");
   const [opacity, setOpacity] = useState(70);
@@ -64,14 +65,14 @@ export default memo(function WaterChangePanel({
     };
   }, [dataset, retry, onLayer]);
   const chosen = useMemo(
-    () =>
-      follow
-        ? comparisonNearDate(comparisons, observationDate)
-        : (comparisons.find((c) => c.id === chosenId) ??
-          comparisons.at(-1) ??
-          null),
-    [follow, comparisons, observationDate, chosenId],
+    () => comparisonForDate(comparisons, comparisonDate, chosenId),
+    [comparisons, comparisonDate, chosenId],
   );
+  // Re-entering a processed range restores its layer; manual hiding lasts
+  // while staying in that range. No range always means no visible overlay.
+  useEffect(() => {
+    setEnabled(Boolean(chosen));
+  }, [chosen?.id]);
   useEffect(() => {
     onLayer(
       enabled && chosen ? { comparison: chosen, opacity: opacity / 100 } : null,
@@ -82,7 +83,6 @@ export default memo(function WaterChangePanel({
     const row = comparisons.find((c) => c.id === id);
     if (!row) return;
     setChosenId(id);
-    setFollow(false);
     setEnabled(true);
     onCompareDate(row.afterDate);
   }
@@ -120,19 +120,16 @@ export default memo(function WaterChangePanel({
           <label className="sar-quality">
             <input
               type="checkbox"
-              checked={enabled}
+              checked={Boolean(chosen) && enabled}
+              disabled={!chosen}
               onChange={(e) => setEnabled(e.target.checked)}
             />
             Show water gain/loss overlay
           </label>
-          <label className="sar-quality">
-            <input
-              type="checkbox"
-              checked={follow}
-              onChange={(e) => setFollow(e.target.checked)}
-            />
-            Follow selected SAR acquisition
-          </label>
+          <p className="small muted">
+            Automatically shown within processed comparison dates and hidden
+            outside them.
+          </p>
           <label className="sar-field">
             Spatial comparison
             <select
@@ -152,9 +149,9 @@ export default memo(function WaterChangePanel({
           {!chosen && (
             <div role="status">
               <p className="small">
-                No overlay ends within 12 days of{" "}
-                {observationDate ?? "the selected acquisition"}.{" "}
-                {comparisons.length} real comparisons are available.
+                No spatial comparison covers{" "}
+                {comparisonDate ?? "the selected date"}. {comparisons.length}{" "}
+                real comparisons are available.
               </p>
               <button
                 className="text-button"

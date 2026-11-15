@@ -2,6 +2,7 @@ import { memo, useEffect, useMemo, useRef, useState } from "react";
 import {
   dateToTimelineTime,
   nearestObservation,
+  timelineDate,
   type TimelineSelection,
 } from "../data/observationTime";
 import {
@@ -179,6 +180,11 @@ export default memo(function ObservationPanel({
         <WaterChangePanel
           dataset={dataset}
           observationDate={selected?.date ?? null}
+          comparisonDate={
+            timelineSelection
+              ? timelineDate(timelineSelection.time)
+              : (selected?.date ?? null)
+          }
           onLayer={onWaterLayer}
           onCompareDate={onCompareDate}
         />

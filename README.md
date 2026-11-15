@@ -18,10 +18,11 @@ directions with the approximate imagery cursor where their date ranges overlap;
 the optical archive remains annual mosaics from 2020–2025. No SAR measurements are
 interpolated. A compact total/date badge sits above each "Study Area" rectangle.
 
-The collection contains 14 curated regions and 24 sourced stories. Porto Alegre is
+The collection contains 13 curated regions and 24 sourced stories. Porto Alegre is
 no longer a separate region; its two stories live under Rio Grande do Sul, which
-has four stories. Rio Grande do Sul and the Mekong Delta remain pending for their
-own water data; Madeira River/Can Tho totals are never assigned to those wider areas.
+has four stories and no SAR observations. Mekong Delta is no longer a separate
+region; its two stories live under Can Tho. Madeira River/Can Tho totals are never
+assigned to wider areas.
 The Forecast tab serves Omar's exploratory monthly exports for Madeira River and
 Can Tho, with history, approximate ranges and explicit evaluation limitations.
 Six experimental spatial water-change layers are available from independently
@@ -213,7 +214,7 @@ To curate another region, add its coordinates, altitude, description, and all th
 
 ## Analyze, stories, and Earth AI
 
-Analyze combines camera views, year comparisons, sourced stories, and applicable water controls. Earth AI shares the selected region, camera, and timeline. The globe and curated stories work without a running backend; SAR observation panels require FastAPI. There are 14 regions and 24 stories, including four stories under Rio Grande do Sul.
+Analyze combines camera views, year comparisons, sourced stories, and applicable water controls. Earth AI shares the selected region, camera, and timeline. The globe and curated stories work without a running backend; SAR observation panels require FastAPI. There are 13 regions and 24 stories, including four stories under Rio Grande do Sul.
 
 Use **Stories & evidence** to open Analyze, or click a story symbol on the globe. Story markers are hidden in the global overview and appear only within the focused region and their configured time window. Region and story labels use 50%-transparent black backgrounds with white text. Their approximate locations do not represent damage footprints. Source cards identify retrospective material published after the selected map year.
 

@@ -16,18 +16,6 @@
       ]
     },
     {
-      "id": "rio-grande-do-sul",
-      "name": "Rio Grande do Sul",
-      "country": "Brazil",
-      "latitude": -29.75,
-      "longitude": -52.5,
-      "altitude": 480000,
-      "description": "Explore the wider Rio Grande do Sul region. Flood data is being processed; the annual satellite archive provides landscape context, not a dated flood footprint.",
-      "zoom_level": "regional",
-      "floodDataStatus": "processing",
-      "waterMonitoring": true
-    },
-    {
       "id": "can-tho",
       "name": "Can Tho",
       "country": "Vietnam",
@@ -40,18 +28,6 @@
       "datasetIds": [
         "VNM_CAN_THO"
       ]
-    },
-    {
-      "id": "mekong-delta",
-      "name": "Mekong Delta",
-      "country": "Vietnam",
-      "latitude": 10,
-      "longitude": 105.5,
-      "altitude": 360000,
-      "description": "Explore the rivers, floodplains, and coast of the Mekong Delta. Regional flood data is being processed; annual mosaics may not show peak inundation.",
-      "zoom_level": "regional",
-      "floodDataStatus": "processing",
-      "waterMonitoring": true
     },
     {
       "id": "binh-phuoc",
@@ -78,6 +54,16 @@
       "datasetIds": [
         "ITA_VENICE_VERTICAL"
       ]
+    },
+    {
+      "id": "rio-grande-do-sul",
+      "name": "Rio Grande do Sul",
+      "country": "Brazil",
+      "latitude": -29.75,
+      "longitude": -52.5,
+      "altitude": 480000,
+      "description": "Explore Rio Grande do Sul's flood stories and annual satellite imagery. SAR observations are not available for this region; the imagery provides landscape context, not a dated flood footprint.",
+      "zoom_level": "regional"
     },
     {
       "id": "manchar",
@@ -550,7 +536,7 @@
     {
       "limitation": "Approximate story locator, not a measured boundary. Annual mosaics can miss short events and cannot establish their cause or exact dates.",
       "id": "mekong-adaptive-farming",
-      "regionId": "mekong-delta",
+      "regionId": "can-tho",
       "title": "Farming adapts to a changing delta",
       "category": "water",
       "firstYear": 2021,
@@ -574,7 +560,7 @@
     {
       "limitation": "Approximate story locator, not a measured boundary. Annual mosaics can miss short events and cannot establish their cause or exact dates.",
       "id": "mekong-water-efficient-rice",
-      "regionId": "mekong-delta",
+      "regionId": "can-tho",
       "title": "Using water differently in rice fields",
       "category": "water",
       "firstYear": 2024,
