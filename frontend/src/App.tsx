@@ -14,10 +14,6 @@ import AnalysisPanel from "./components/AnalysisPanel";
 import AssistantPanel from "./components/AssistantPanel";
 import ArticleSearch from "./components/ArticleSearch";
 import ForecastPanel from "./components/ForecastPanel";
-import { sarDatasets, type SarObservation } from "./data/sar";
-import { dateToTimelineTime } from "./data/observationTime";
-import type { WaterLayerSelection } from "./data/waterChanges";
-import { FIRST_YEAR, LAST_IMAGERY_YEAR } from "./data/imagery";
 import { storyMarkerOpacity } from "./data/storyTimeline";
 import type {
   ArticleSearchArea,
@@ -42,13 +38,6 @@ const EMPTY_MESSAGES: AssistantMessage[] = [];
 
 export default function App() {
   const timeline = useTimeline();
-  const showObservationBasemap = useCallback(
-    (year: number) => {
-      timeline.setComparisonRange(FIRST_YEAR, LAST_IMAGERY_YEAR, year);
-      timeline.syncObservationTime(year);
-    },
-    [timeline.setComparisonRange, timeline.syncObservationTime],
-  );
   const [mode, setMode] = useState<WorkspaceMode>("analyze");
   const [leftCollapsed, setLeftCollapsed] = useState(false);
   const [rightCollapsed, setRightCollapsed] = useState(false);
@@ -63,53 +52,6 @@ export default function App() {
   }, []);
   const [selectedRegion, setSelectedRegion] = useState<Region | null>(null);
   const [selectedStory, setSelectedStory] = useState<RegionStory | null>(null);
-  const [datasetId, setDatasetId] = useState<string | null>(null);
-  const [observation, setObservation] = useState<SarObservation | null>(null);
-  const [waterLayer, setWaterLayer] = useState<WaterLayerSelection | null>(
-    null,
-  );
-  const showComparisonDate = useCallback(
-    (date: string) => {
-      setSelectedStory(null);
-      const time = dateToTimelineTime(date, FIRST_YEAR, LAST_IMAGERY_YEAR);
-      if (time !== null)
-        timeline.setComparisonRange(FIRST_YEAR, LAST_IMAGERY_YEAR, time);
-    },
-    [timeline.setComparisonRange],
-  );
-  const observationId = observation?.id;
-  const selectObservation = useCallback(
-    (row: SarObservation | null, syncTimeline = false) => {
-      setObservation(row);
-      if (!row || !syncTimeline) return;
-      timeline.pause();
-      const time = dateToTimelineTime(
-        row.date,
-        timeline.startYear,
-        timeline.endYear,
-      );
-      if (time !== null) timeline.syncObservationTime(time);
-    },
-    [
-      timeline.startYear,
-      timeline.endYear,
-      timeline.syncObservationTime,
-      timeline.pause,
-    ],
-  );
-  const regionDatasets = useMemo(
-    () => sarDatasets.filter((d) => d.regionId === selectedRegion?.id),
-    [selectedRegion?.id],
-  );
-  const activeDataset =
-    regionDatasets.find((d) => d.id === datasetId) ?? regionDatasets[0] ?? null;
-  const selectDataset = useCallback((id: string) => {
-    setDatasetId(id);
-    setObservation(null);
-  }, []);
-  useEffect(() => {
-    setObservation(null);
-  }, [activeDataset?.id]);
   const firstStoryPlayPending = useRef(false);
   const [articles, setArticles] = useState<DiscoveredArticle[]>([]);
   const [viewportArea, setViewportArea] = useState<ArticleSearchArea | null>(
@@ -175,25 +117,23 @@ export default function App() {
   }
 
   const selectRegion = useCallback((region: Region | null) => {
-    setObservation((previous) =>
-      region?.datasetIds?.some((id) => previous?.id.startsWith(`${id}:`))
-        ? previous
-        : null,
-    );
     setSelectedArticle(null);
     setSelectedRegion(region);
     setMode((previous) =>
-      !region && previous === "forecast" ? "analyze" : previous,
+      previous === "forecast" && !region?.waterMonitoring
+        ? "analyze"
+        : previous,
     );
     setSelectedStory(null);
     setFocusRequest((previous) => previous + 1);
   }, []);
 
   const focusVisibleRegion = useCallback((region: Region | null) => {
-    setObservation(null);
     setSelectedRegion(region);
     setMode((previous) =>
-      !region && previous === "forecast" ? "analyze" : previous,
+      previous === "forecast" && !region?.waterMonitoring
+        ? "analyze"
+        : previous,
     );
     setSelectedArticle(null);
     setSelectedStory(null);
@@ -246,80 +186,62 @@ export default function App() {
     setFocusRequest((previous) => previous + 1);
   }
 
-  const askQuestion = useCallback(
-    async (question: string) => {
-      const text = question.trim().slice(0, 1000);
-      if (!text || !selectedRegion || pendingRequest.current) return;
-      pendingRequest.current = true;
-      setIsAsking(true);
-      const key = conversationKey;
-      const questionId = String(++messageSequence.current);
-      const answerId = String(++messageSequence.current);
+  async function askQuestion(question: string) {
+    const text = question.trim().slice(0, 1000);
+    if (!text || !selectedRegion || pendingRequest.current) return;
+    pendingRequest.current = true;
+    setIsAsking(true);
+    const key = conversationKey;
+    const questionId = String(++messageSequence.current);
+    const answerId = String(++messageSequence.current);
+    setConversations((previous) => ({
+      ...previous,
+      [key]: [...(previous[key] ?? []), { id: questionId, role: "user", text }],
+    }));
+    try {
+      const answer = await askEarthAI({
+        question: text,
+        region_id: selectedRegion.id,
+        story_id: contextStory?.id,
+        year: observationYear,
+        start_year: timeline.startYear,
+        end_year: timeline.endYear,
+        history: (conversations[key] ?? [])
+          .filter((message) => !message.error)
+          .slice(-8)
+          .map((message) => ({
+            role: message.role,
+            content: message.text.slice(0, 4000),
+          })),
+      });
       setConversations((previous) => ({
         ...previous,
         [key]: [
-          ...(previous[key] ?? []).slice(-39),
-          { id: questionId, role: "user", text },
+          ...(previous[key] ?? []),
+          { id: answerId, role: "assistant", ...answer, observationYear },
         ],
       }));
-      try {
-        const answer = await askEarthAI({
-          question: text,
-          region_id: selectedRegion.id,
-          story_id: contextStory?.id,
-          year: observationYear,
-          start_year: timeline.startYear,
-          end_year: timeline.endYear,
-          dataset_id: activeDataset?.id,
-          observation_id: observationId ?? undefined,
-          history: (conversations[key] ?? [])
-            .filter((message) => !message.error)
-            .slice(-8)
-            .map((message) => ({
-              role: message.role,
-              content: message.text.slice(0, 4000),
-            })),
-        });
-        setConversations((previous) => ({
-          ...previous,
-          [key]: [
-            ...(previous[key] ?? []).slice(-39),
-            { id: answerId, role: "assistant", ...answer, observationYear },
-          ],
-        }));
-      } catch (error) {
-        setConversations((previous) => ({
-          ...previous,
-          [key]: [
-            ...(previous[key] ?? []).slice(-39),
-            {
-              id: answerId,
-              role: "assistant",
-              error: true,
-              text:
-                error instanceof Error
-                  ? error.message
-                  : "Earth AI is unavailable. Please try again.",
-            },
-          ],
-        }));
-      } finally {
-        pendingRequest.current = false;
-        setIsAsking(false);
-      }
-    },
-    [
-      selectedRegion,
-      conversationKey,
-      contextStory,
-      observationYear,
-      timeline.startYear,
-      timeline.endYear,
-      conversations,
-      activeDataset,
-      observationId,
-    ],
-  );
+    } catch (error) {
+      setConversations((previous) => ({
+        ...previous,
+        [key]: [
+          ...(previous[key] ?? []),
+          {
+            id: answerId,
+            role: "assistant",
+            error: true,
+            text:
+              error instanceof Error
+                ? error.message
+                : "Earth AI is unavailable. Please try again.",
+          },
+        ],
+      }));
+    } finally {
+      pendingRequest.current = false;
+      setIsAsking(false);
+    }
+  }
 
   function openAssistant() {
     setRightCollapsed(false);
@@ -342,21 +264,6 @@ export default function App() {
         onSelectRegion={selectRegion}
         onViewportFocus={focusVisibleRegion}
         onSearchAreaChange={setViewportArea}
-        studyArea={activeDataset?.bounds ?? null}
-        waterLayer={
-          mode === "analyze" &&
-          waterLayer?.comparison.datasetId === activeDataset?.id
-            ? waterLayer
-            : null
-        }
-        dataset={activeDataset}
-        observation={
-          mode === "analyze" &&
-          observation?.id.startsWith(`${activeDataset?.id}:`)
-            ? observation
-            : null
-        }
-        layoutKey={`${leftCollapsed}-${rightCollapsed}-${mode}`}
         selectedStory={selectedStory}
         onSelectStory={selectStory}
         showStoryMarkers={showStoryMarkers}
@@ -372,7 +279,9 @@ export default function App() {
         </a>
         <nav className="workspace-nav" aria-label="Main navigation">
           {(["analyze", "forecast", "ai"] as WorkspaceMode[])
-            .filter((view) => view !== "forecast" || !!selectedRegion)
+            .filter(
+              (view) => view !== "forecast" || selectedRegion?.waterMonitoring,
+            )
             .map((view) => (
               <button
                 key={view}
@@ -390,11 +299,7 @@ export default function App() {
               </button>
             ))}
         </nav>
-        <span className="demo-badge">
-          {activeDataset
-            ? "OPTICAL BASEMAP / SAR DATA"
-            : "REAL IMAGERY / SOURCED STORIES"}
-        </span>
+        <span className="demo-badge">REAL IMAGERY / DEMO ANALYSIS</span>
       </header>
 
       <button
@@ -481,18 +386,10 @@ export default function App() {
             overlaySettings={overlaySettings}
             onUpdateOverlay={updateOverlay}
             reading={regionalReading}
-            datasets={regionDatasets}
-            dataset={activeDataset}
-            onSelectDataset={selectDataset}
-            onSelectObservation={selectObservation}
-            timelineSelection={timeline.selection}
-            onShowBasemap={showObservationBasemap}
-            onWaterLayer={setWaterLayer}
-            onCompareDate={showComparisonDate}
           />
         )}
-        {mode === "forecast" && selectedRegion && (
-          <ForecastPanel key={selectedRegion.id} region={selectedRegion} />
+        {mode === "forecast" && selectedRegion?.waterMonitoring && (
+          <ForecastPanel region={selectedRegion} />
         )}
         {mode === "ai" && (
           <AssistantPanel
@@ -509,17 +406,6 @@ export default function App() {
       </div>
       <Timeline
         {...timeline}
-        linkedObservationDate={
-          timeline.selection === null &&
-          observation &&
-          dateToTimelineTime(
-            observation.date,
-            timeline.startYear,
-            timeline.endYear,
-          ) !== null
-            ? observation.date
-            : null
-        }
         togglePlayback={() => {
           const restartFromStart =
             Boolean(selectedStory) &&

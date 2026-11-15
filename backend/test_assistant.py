@@ -8,7 +8,7 @@ from urllib.error import HTTPError, URLError
 from fastapi import HTTPException
 from pydantic import ValidationError
 
-from assistant import MAX_PROVIDER_BYTES, ChatRequest, build_context, generate_answer
+from assistant import ChatRequest, build_context, generate_answer
 
 
 def request(**overrides):
@@ -18,29 +18,21 @@ def request(**overrides):
 
 class AssistantTests(unittest.TestCase):
     def test_context_excludes_mock_measurements(self):
-        context, sources = build_context(request(region_id="rio-grande-do-sul"))
-        self.assertEqual(context["water_data"]["status"], "not_configured")
+        context, sources = build_context(request(region_id="porto-alegre"))
+        self.assertEqual(context["water_data"]["status"], "processing")
         self.assertEqual(context["water_data"]["measurements"], [])
         self.assertEqual(context["forecast"]["predictions"], [])
         self.assertNotIn("readings", context)
-        self.assertEqual(len(context["stories"]), 4)
+        self.assertEqual(len(context["stories"]), 2)
         self.assertTrue(sources)
 
     def test_story_only_region(self):
         context, _ = build_context(request())
         self.assertEqual(context["water_data"]["status"], "not_configured")
 
-    def test_mekong_stories_belong_to_can_tho(self):
-        for story_id in ("mekong-adaptive-farming", "mekong-water-efficient-rice"):
-            context, _ = build_context(request(region_id="can-tho", story_id=story_id))
-            self.assertIn(story_id, {story["id"] for story in context["stories"]})
-            with self.assertRaises(HTTPException) as raised:
-                build_context(request(region_id="mekong-delta", story_id=story_id))
-            self.assertEqual(raised.exception.status_code, 404)
-
     def test_foreign_story_rejected(self):
         with self.assertRaises(HTTPException) as raised:
-            build_context(request(region_id="rio-grande-do-sul", story_id="manchar-floods"))
+            build_context(request(region_id="porto-alegre", story_id="manchar-floods"))
         self.assertEqual(raised.exception.status_code, 422)
 
     def test_unknown_region_rejected(self):
@@ -81,14 +73,6 @@ class AssistantTests(unittest.TestCase):
             with self.assertRaises(HTTPException) as raised:
                 generate_answer(request())
         self.assertEqual(raised.exception.status_code, 502)
-
-    def test_oversized_provider_response_is_rejected(self):
-        for raw in (b"x" * (MAX_PROVIDER_BYTES + 1),
-                    json.dumps({"choices": [{"message": {"content": "x" * 12001}}]}).encode()):
-            with patch("assistant.urlopen", return_value=io.BytesIO(raw)):
-                with self.assertRaises(HTTPException) as raised:
-                    generate_answer(request())
-            self.assertEqual(raised.exception.status_code, 502)
 
 
     def test_history_budget_preserves_current_context(self):

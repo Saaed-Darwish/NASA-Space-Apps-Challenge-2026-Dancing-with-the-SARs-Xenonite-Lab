@@ -30,7 +30,7 @@ function story(
 export const additionalStories: RegionStory[] = [
   story({
     id: "porto-alegre-2024-flood",
-    regionId: "rio-grande-do-sul",
+    regionId: "porto-alegre",
     title: "Guaíba floodwaters reach the city",
     category: "water",
     firstYear: 2024,
@@ -49,7 +49,7 @@ export const additionalStories: RegionStory[] = [
   }),
   story({
     id: "porto-alegre-airport-flood",
-    regionId: "rio-grande-do-sul",
+    regionId: "porto-alegre",
     title: "Flooding disrupts the airport",
     category: "water",
     firstYear: 2024,
@@ -154,7 +154,7 @@ export const additionalStories: RegionStory[] = [
   }),
   story({
     id: "mekong-adaptive-farming",
-    regionId: "can-tho",
+    regionId: "mekong-delta",
     title: "Farming adapts to a changing delta",
     category: "water",
     firstYear: 2021,
@@ -179,7 +179,7 @@ export const additionalStories: RegionStory[] = [
   }),
   story({
     id: "mekong-water-efficient-rice",
-    regionId: "can-tho",
+    regionId: "mekong-delta",
     title: "Using water differently in rice fields",
     category: "water",
     firstYear: 2024,

@@ -41,54 +41,17 @@ export const indicators: Record<Indicator, IndicatorDefinition> = {
 };
 export const regions: Region[] = [
   {
-    id: "porto-velho",
-    name: "Madeira River",
+    id: "porto-alegre",
+    name: "Porto Alegre",
     country: "Brazil",
-    latitude: -8.8,
-    longitude: -63.925,
+    latitude: -30.0346,
+    longitude: -51.2177,
     altitude: 85000,
     description:
-      "Explore the Madeira River study area with dated candidate-inundation and forest-disturbance observations. Outlines locate the analysis area, not affected pixels. Measurements are exploratory and quality flags remain visible.",
-    zoom_level: "regional",
-    waterMonitoring: true,
-    datasetIds: ["BRA_PORTO_VELHO", "BRA_PORTO_VELHO_FOREST"],
-  },
-  {
-    id: "can-tho",
-    name: "Can Tho",
-    country: "Vietnam",
-    latitude: 10.0452,
-    longitude: 105.7469,
-    altitude: 65000,
-    description:
-      "Explore Can Tho along the Hậu River. Dated candidate-inundation observations and the analysis outline are available; annual satellite mosaics provide landscape context.",
+      "Explore Porto Alegre and the Guaíba waterfront. Flood data is being processed by the backend team; measured flood extent is not available in this view yet.",
     zoom_level: "city",
+    floodDataStatus: "processing",
     waterMonitoring: true,
-    datasetIds: ["VNM_CAN_THO"],
-  },
-  {
-    id: "binh-phuoc",
-    name: "Binh Phuoc forest",
-    country: "Vietnam",
-    latitude: 11.75,
-    longitude: 106.85,
-    altitude: 85000,
-    description:
-      "Inspect potential forest disturbance across the Binh Phuoc study rectangle. Quality-passing observations are shown by default; these are radar indicators, not confirmed deforestation.",
-    zoom_level: "regional",
-    datasetIds: ["VNM_BINH_PHUOC_FOREST"],
-  },
-  {
-    id: "venice",
-    name: "Venice",
-    country: "Italy",
-    latitude: 45.44,
-    longitude: 12.33,
-    altitude: 26000,
-    description:
-      "Explore vertical displacement histories for eight selected EGMS points. The city marker is a locator; precise point positions await confirmation of the source coordinate reference system.",
-    zoom_level: "city",
-    datasetIds: ["ITA_VENICE_VERTICAL"],
   },
   {
     id: "rio-grande-do-sul",
@@ -98,8 +61,36 @@ export const regions: Region[] = [
     longitude: -52.5,
     altitude: 480000,
     description:
-      "Explore Rio Grande do Sul's flood stories and annual satellite imagery. SAR observations are not available for this region; the imagery provides landscape context, not a dated flood footprint.",
+      "Explore the wider Rio Grande do Sul region. Flood data is being processed; the annual satellite archive provides landscape context, not a dated flood footprint.",
     zoom_level: "regional",
+    floodDataStatus: "processing",
+    waterMonitoring: true,
+  },
+  {
+    id: "can-tho",
+    name: "Can Tho",
+    country: "Vietnam",
+    latitude: 10.0452,
+    longitude: 105.7469,
+    altitude: 65000,
+    description:
+      "Explore Can Tho along the Hậu River. Flood data is being processed by the backend team; measured inundation and event dates are not connected yet.",
+    zoom_level: "city",
+    floodDataStatus: "processing",
+    waterMonitoring: true,
+  },
+  {
+    id: "mekong-delta",
+    name: "Mekong Delta",
+    country: "Vietnam",
+    latitude: 10.0,
+    longitude: 105.5,
+    altitude: 360000,
+    description:
+      "Explore the rivers, floodplains, and coast of the Mekong Delta. Regional flood data is being processed; annual mosaics may not show peak inundation.",
+    zoom_level: "regional",
+    floodDataStatus: "processing",
+    waterMonitoring: true,
   },
   {
     id: "manchar",
