@@ -1,6 +1,9 @@
 @import "tailwindcss";
 /* Base typography and shared element styles. */
 :root {
+  color-scheme: dark;
+  --water-gain: #55d9ed;
+  --water-loss: #ffb347;
   font-family: Inter, ui-sans-serif, system-ui, sans-serif;
   color: #edf3f1;
   background: #070d14;
@@ -36,7 +39,7 @@ button {
     background 0.2s,
     border-color 0.2s;
 }
-button:hover {
+button:hover:enabled {
   background: #ffffff12;
 }
 a {
@@ -2198,35 +2201,137 @@ textarea:focus-visible {
   margin-block: 12px;
   gap: 8px;
 }
-.water-change-legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
+/* One legend language for the map and the analysis panel. */
+.water-legend {
+  margin-block: 16px;
+  padding: 14px;
+  border: 1px solid #ffffff1f;
+  border-radius: 8px;
+  background: #0b1924;
+  color: #e3edf2;
 }
-.water-change-legend span {
+.water-legend-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  font-size: 12px;
+}
+.water-legend-heading strong {
+  font-weight: 600;
+}
+.experimental-tag {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  flex-shrink: 0;
+  padding: 3px 7px;
+  border: 1px solid #dcbf7e50;
+  border-radius: 4px;
+  color: #e6cc98;
+  background: #dcbf7e0a;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.water-legend-dates {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin-block: 9px 14px;
+  color: #b8cbd6;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+.water-legend-dates time {
+  white-space: nowrap;
+}
+.water-legend-dates > span {
+  color: #819aa9;
+}
+.water-legend-values {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+}
+.water-legend-values > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.water-legend-values dt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #cedce4;
+  font-size: 12px;
+}
+.water-legend-values dd {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.water-legend-values dd span {
+  font-size: 11px;
+  color: #a8bdc9;
+  font-weight: 400;
 }
 .water-gain-swatch,
 .water-loss-swatch {
   display: inline-block;
-  width: 10px;
-  height: 10px;
-  border: 1px solid #ffffff66;
-  margin-right: 4px;
+  width: 11px;
+  height: 11px;
+  flex-shrink: 0;
   border-radius: 2px;
-  vertical-align: middle;
+  box-shadow: inset 0 0 0 1px #ffffff40;
 }
 .water-gain-swatch {
-  background: #55d9ed;
+  background: var(--water-gain);
 }
 .water-loss-swatch {
-  background: #ffb347;
+  background: var(--water-loss);
+}
+.water-legend-note {
+  margin: 12px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid #ffffff14;
+  color: #a8bdc9;
+  font-size: 11px;
+  line-height: 1.65;
 }
 .water-map-key {
-  line-height: 1.7;
-  color: #d6e9ed;
+  min-width: 236px;
+  grid-column: 1 / -1;
+  margin-top: 7px;
+  padding-top: 10px;
+  border-top: 1px solid #ffffff24;
+}
+.water-legend-compact {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+.water-legend-compact .water-legend-heading {
+  font-size: 11px;
+}
+.water-legend-compact .water-legend-dates {
+  margin-block: 6px 10px;
+}
+.water-legend-compact .water-legend-values {
+  gap: 6px;
+}
+.water-legend-compact .water-legend-values dt {
+  font-size: 11px;
+}
+.water-legend-compact .water-legend-values dd {
+  font-size: 12px;
 }
 .forecast-line {
   fill: none;
@@ -2261,20 +2366,450 @@ textarea:focus-visible {
 }
 
 /* SAR type identity is shared by tabs, observations and forecasts. */
-[data-kind="water"] { --sar-color: #55d9ed; }
-[data-kind="forest"] { --sar-color: #ffad78; }
-[data-kind="subsidence"] { --sar-color: #f59bc8; }
-.data-type-picker { margin-block: 18px; }
-.data-type-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
-.data-type-tabs button { flex: 1; min-height: 44px; padding: 9px 10px; border: 1px solid #ffffff24; border-radius: 8px; background: #ffffff04; color: #c4d4df; font: inherit; font-size: 12px; cursor: pointer; }
-.data-type-tabs button[aria-selected="true"] { color: var(--sar-color); border-color: var(--sar-color); background: color-mix(in srgb, var(--sar-color) 12%, transparent); }
-.data-type-tabs button:focus-visible { outline: 2px solid var(--sar-color); outline-offset: 3px; }
-.data-type-dot { display: inline-block; width: 7px; height: 7px; margin-right: 6px; border-radius: 50%; background: var(--sar-color); }
-.data-type-title { color: var(--sar-color); font-size: 12px; line-height: 1.6; }
-[data-kind] .sar-panel { border-color: color-mix(in srgb, var(--sar-color) 35%, transparent); }
-[data-kind] .sar-value, [data-kind] .sar-badge { color: var(--sar-color); }
-[data-kind] .sar-line, [data-kind] .forecast-line { stroke: var(--sar-color); }
-[data-kind] .sar-dot:not(.rejected), [data-kind] .forecast-dot, [data-kind] .forecast-band { fill: var(--sar-color); }
-[data-kind] input { accent-color: var(--sar-color); }
-.sar-map-readout.subsidence { border-color: #f59bc8; }
-.sar-map-readout.subsidence strong { color: #f59bc8; }
+[data-kind="water"] {
+  --sar-color: #55d9ed;
+}
+[data-kind="forest"] {
+  --sar-color: #ffad78;
+}
+[data-kind="subsidence"] {
+  --sar-color: #f59bc8;
+}
+.data-type-picker {
+  margin-block: 18px;
+}
+.data-type-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.data-type-tabs button {
+  flex: 1;
+  min-height: 44px;
+  padding: 9px 10px;
+  border: 1px solid #ffffff24;
+  border-radius: 8px;
+  background: #ffffff04;
+  color: #c4d4df;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+.data-type-tabs button[aria-selected="true"] {
+  color: var(--sar-color);
+  border-color: var(--sar-color);
+  background: color-mix(in srgb, var(--sar-color) 12%, transparent);
+}
+.data-type-tabs button:focus-visible {
+  outline: 2px solid var(--sar-color);
+  outline-offset: 3px;
+}
+.data-type-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: var(--sar-color);
+}
+.data-type-title {
+  color: var(--sar-color);
+  font-size: 12px;
+  line-height: 1.6;
+}
+[data-kind] .sar-panel {
+  border-color: color-mix(in srgb, var(--sar-color) 35%, transparent);
+}
+[data-kind] .sar-value,
+[data-kind] .sar-badge {
+  color: var(--sar-color);
+}
+[data-kind] .sar-line,
+[data-kind] .forecast-line {
+  stroke: var(--sar-color);
+}
+[data-kind] .sar-dot:not(.rejected),
+[data-kind] .forecast-dot,
+[data-kind] .forecast-band {
+  fill: var(--sar-color);
+}
+[data-kind] input {
+  accent-color: var(--sar-color);
+}
+.sar-map-readout.subsidence {
+  border-color: #f59bc8;
+}
+.sar-map-readout.subsidence strong {
+  color: #f59bc8;
+}
+
+/* Finishing details: consistent controls, readable evidence and calm chart keys. */
+button:disabled {
+  cursor: not-allowed;
+}
+button,
+a,
+select,
+textarea,
+input,
+summary {
+  touch-action: manipulation;
+}
+.workspace-title {
+  gap: 12px;
+  align-items: flex-start;
+}
+.workspace-title h2 {
+  margin-bottom: 4px;
+}
+.workspace-title .mock-pill {
+  flex-shrink: 0;
+}
+.section-label {
+  align-items: center;
+  gap: 10px;
+  line-height: 1.5;
+}
+.sar-badge {
+  white-space: nowrap;
+  font-size: 10px;
+  letter-spacing: 0.3px;
+}
+.sar-field select,
+.article-search select {
+  font: inherit;
+  font-size: 12px;
+}
+.sar-field select:hover,
+.article-search select:hover {
+  border-color: #819ba8;
+}
+.sar-field select:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.sar-metrics > div {
+  min-width: 0;
+}
+.sar-metrics dd {
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.sar-metrics dt {
+  line-height: 1.5;
+}
+.sar-details summary {
+  min-height: 40px;
+  display: list-item;
+  align-content: center;
+  line-height: 1.5;
+}
+.sar-details summary:hover {
+  color: #eff8fa;
+}
+.sar-details[open] summary {
+  margin-bottom: 10px;
+}
+.sar-details ul {
+  padding-left: 18px;
+  line-height: 1.65;
+}
+.sar-details li + li {
+  margin-top: 8px;
+}
+.sar-table-scroll {
+  border: 1px solid #ffffff1f;
+  border-radius: 7px;
+  scrollbar-width: thin;
+  scrollbar-color: #48616f transparent;
+}
+.sar-table-scroll caption {
+  padding: 10px;
+}
+.sar-table-scroll thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #142632;
+  font-weight: 600;
+}
+.sar-table-scroll tbody tr:hover {
+  background: #ffffff06;
+}
+.sar-table-scroll td {
+  font-variant-numeric: tabular-nums;
+}
+.sar-chart text {
+  font-size: 11px;
+}
+.sar-line,
+.forecast-line {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px 16px;
+  list-style: none;
+  padding: 0;
+  margin: 16px 0;
+  color: #bfced8;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.chart-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.chart-key {
+  width: 18px;
+  height: 10px;
+  display: inline-block;
+  flex-shrink: 0;
+  color: var(--sar-color, #55d9ed);
+}
+.chart-key-line {
+  height: 0;
+  border-top: 2px solid currentColor;
+}
+.chart-key-dashed {
+  height: 0;
+  border-top: 2px dashed currentColor;
+}
+.chart-key-band {
+  background: color-mix(in srgb, currentColor 22%, transparent);
+  border: 1px solid color-mix(in srgb, currentColor 55%, transparent);
+  border-radius: 2px;
+}
+.chart-key-ring,
+.chart-key-dot,
+.chart-key-square {
+  width: 9px;
+  height: 9px;
+  margin-inline: 4px 5px;
+  border: 2px solid currentColor;
+}
+.chart-key-ring,
+.chart-key-dot {
+  border-radius: 50%;
+}
+.chart-key-dot {
+  background: currentColor;
+}
+.chart-key-bar {
+  width: 8px;
+  margin-inline: 5px;
+  border-block: 1px solid currentColor;
+  background: color-mix(in srgb, currentColor 25%, transparent);
+}
+.control-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.control-heading output {
+  font-variant-numeric: tabular-nums;
+  color: #e0edf4;
+}
+.water-change-controls > .small {
+  line-height: 1.65;
+}
+.water-change-controls > .sar-quality {
+  margin-block: 12px 4px;
+}
+.water-change-controls > .sar-quality + p {
+  margin-top: 0;
+}
+.source-links a {
+  overflow-wrap: anywhere;
+}
+.source-links a:hover {
+  border-color: #9cc6bd70;
+  background: #9cc6bd0a;
+}
+.source-links strong {
+  line-height: 1.6;
+}
+.chat-role {
+  font-size: 10px;
+  letter-spacing: 0.6px;
+}
+.chat-message p {
+  font-size: 13px;
+  line-height: 1.7;
+}
+.suggested-questions button {
+  min-height: 36px;
+  padding: 8px 10px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: #c3d6de;
+}
+.assistant-form {
+  align-items: flex-end;
+}
+.assistant-form:focus-within {
+  border-color: #9ae7d2;
+  box-shadow: 0 0 0 2px #9ae7d216;
+}
+.assistant-form textarea {
+  font-size: 13px;
+  resize: none;
+}
+.assistant-form button {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+.assistant-form textarea::placeholder {
+  color: #9bafbd;
+}
+.place-search-results {
+  display: grid;
+  gap: 6px;
+  margin-top: 12px;
+}
+.place-search-results button {
+  min-height: 40px;
+  padding: 8px 10px;
+  border: 1px solid #ffffff24;
+  border-radius: 6px;
+  background: #ffffff04;
+  color: #c7dce8;
+  text-align: left;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.place-search-results button:hover:enabled {
+  border-color: #92bacd;
+  background: #92bacd12;
+}
+.article-marker-row {
+  gap: 8px;
+  align-items: center;
+}
+.article-marker-row button:last-child {
+  min-width: 36px;
+  min-height: 36px;
+  flex-shrink: 0;
+}
+.region-card > span:nth-child(2) {
+  min-width: 0;
+}
+.region-card strong {
+  overflow-wrap: anywhere;
+}
+.region-data-state {
+  line-height: 1.5;
+}
+@media (max-width: 1000px) {
+  .workspace-nav button {
+    min-height: 36px;
+  }
+  .sar-details summary,
+  .suggested-questions button,
+  .place-search-results button {
+    min-height: 44px;
+  }
+  .assistant-form button {
+    width: 44px;
+    height: 44px;
+  }
+  .assistant-form textarea,
+  .sar-field select,
+  .article-search select {
+    font-size: 16px;
+  }
+  .water-legend {
+    padding: 12px;
+  }
+  .water-legend-compact {
+    padding: 0;
+  }
+  .water-map-key {
+    max-width: 100%;
+  }
+}
+
+.workspace-panel p.small,
+.workspace-panel .small.muted {
+  font-size: 12px;
+  line-height: 1.65;
+}
+.play-button,
+.assistant-form button {
+  display: grid;
+  place-items: center;
+}
+@media (max-width: 1000px) {
+  .map-caption {
+    top: 318px;
+    left: 20px;
+    right: 20px;
+  }
+  .map-caption h1 {
+    font-size: 24px;
+    line-height: 1.2;
+    margin-block: 5px;
+  }
+  .map-caption p {
+    font-size: 11px;
+    margin-block: 6px;
+  }
+  .map-caption .refocus {
+    min-height: 36px;
+  }
+}
+
+/* Forecast and history tables share the observation table's bounded viewport. */
+.forecast-table {
+  width: 100%;
+  min-width: 0;
+  max-height: 300px;
+  overscroll-behavior: contain;
+}
+.forecast-table:focus-visible {
+  outline: 2px solid var(--sar-color, #9ae7d2);
+  outline-offset: 3px;
+}
+.forecast-table table {
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 12px;
+}
+.forecast-table th,
+.forecast-table td {
+  padding: 10px 9px;
+  line-height: 1.5;
+}
+.forecast-table th {
+  color: #c9dce5;
+}
+.forecast-table td {
+  color: #e0eaf0;
+}
+.forecast-table .numeric-cell {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.forecast-table tbody tr:nth-child(even) {
+  background: #ffffff03;
+}
+.forecast-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+.forecast-table caption {
+  font-size: 11px;
+  line-height: 1.6;
+}
+.forecast-history td:last-child {
+  min-width: 105px;
+  white-space: normal;
+  color: #b9cbd5;
+}
+.forecast-values th:first-child {
+  width: 31%;
+}

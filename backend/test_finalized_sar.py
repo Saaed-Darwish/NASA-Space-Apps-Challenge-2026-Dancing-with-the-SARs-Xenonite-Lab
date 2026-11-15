@@ -1,3 +1,4 @@
+import copy
 import asyncio
 import json
 from pathlib import Path
@@ -5,7 +6,7 @@ import unittest
 from sar_data import CATALOG, OBSERVATIONS
 from forecast_data import ARTIFACTS
 from test_security import invoke
-from import_finalized_sar import subsidence
+from import_finalized_sar import subsidence, london_bounds
 
 
 class FinalizedSarTests(unittest.TestCase):
@@ -23,6 +24,22 @@ class FinalizedSarTests(unittest.TestCase):
         location["longitude_wgs84"]="1"
         with self.assertRaises(ValueError):subsidence(Path(__file__),sheets,"London")
 
+    def test_london_rectangle_and_centroids_must_agree(self):
+        location = dict(hazard="Flooding", latitude_wgs84="51.51", longitude_wgs84="0.06",
+                        coordinate_notes="Centroid of original GEE rectangle [0.00,51.48,0.12,51.54]; not a per-pixel measurement")
+        row = dict(latitude_wgs84="51.51", longitude_wgs84="0.06", coordinate_type="AOI centroid (not pixel location)")
+        self.assertEqual(london_bounds({"Map Coordinates":[location]},"water",[row])["west"],0)
+        for defect in ("missing", "duplicate", "malformed", "reversed", "latitude", "observation", "pixel"):
+            loc, observation = copy.deepcopy(location), copy.deepcopy(row)
+            if defect == "malformed": loc["coordinate_notes"] = "Unspecified"
+            if defect == "reversed": loc["coordinate_notes"] = loc["coordinate_notes"].replace("0.00,51.48,0.12", "0.12,51.48,0.00")
+            if defect == "latitude": loc["latitude_wgs84"] = "51.52"
+            if defect == "observation": observation["longitude_wgs84"] = "0.07"
+            if defect == "pixel": observation["coordinate_type"] = "pixel"
+            mapped = [] if defect == "missing" else [loc,loc] if defect == "duplicate" else [loc]
+            with self.subTest(defect=defect), self.assertRaises(ValueError):
+                london_bounds({"Map Coordinates":mapped},"water",[observation])
+
     def test_every_finalized_dataset_has_a_matching_forecast(self):
         for key,meta in CATALOG.items():
             status,_,data=asyncio.run(invoke(path=f"/api/datasets/{key}/forecast"))
@@ -34,9 +51,11 @@ class FinalizedSarTests(unittest.TestCase):
             self.assertEqual(data["unit"],"dB" if meta.kind=="forest" else meta.unit)
 
     def test_london_study_areas_do_not_inherit_point_coordinates(self):
-        for key in ("GBR_EAST_LONDON","GBR_EPPING_FOREST"):
-            self.assertIsNone(CATALOG[key].bounds)
-            self.assertEqual(CATALOG[key].geometryStatus,"area_coordinates_unavailable")
+        for key, bounds in (("GBR_EAST_LONDON", [0,51.48,.12,51.54]), ("GBR_EPPING_FOREST", [0,51.60,.08,51.69])):
+            self.assertEqual(CATALOG[key].bounds.model_dump(), dict(zip(("west","south","east","north"), bounds)))
+            self.assertEqual(CATALOG[key].geometryStatus,"study_area_only")
+            self.assertIn("Coordinates_Completed.xlsx",CATALOG[key].source["file"])
+        self.assertIsNone(CATALOG["GBR_LONDON_VERTICAL"].bounds)
         london=CATALOG["GBR_LONDON_VERTICAL"]
         self.assertEqual(len(london.points),8)
         self.assertTrue(all(p["locationStatus"]=="source_coordinates" for p in london.points))

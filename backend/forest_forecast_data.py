@@ -63,7 +63,7 @@ def adapt_forest_forecast(raw):
             "target":"Expected mean forest VH backscatter","history":history,"forecast":[r.model_dump() for r in future],
             "lastAcquisition":meta.endDate.isoformat(),"historyThrough":history[-1]["date"],
             "evaluationStatus":"requires_revalidation","intervalStatus":"approximate_nominal_95",
-            "provenanceNote":"Finalized forest export matched against quality-passing source VH readings to export rounding. Duplicate dates use the highest forest coverage. Original source rows remain available in Analyze. Forecasts follow the observed seasonal months in the next calendar year; no winter values are fabricated.",
+            "provenanceNote":"Finalized forest export matched against quality-passing source VH readings to export rounding. Duplicate dates use the highest forest coverage. Original source rows remain available in Analyze. Forecasts follow the observed seasonal months in the next calendar year; no winter values are fabricated." + (" Study-area geometry comes from the current observation workbook; the forecast export supplies no geometry." if item.get("location") is None and meta.bounds is not None else ""),
             "limitations":[
                 "Expected radar backscatter in dB, not predicted forest-loss area or confirmed deforestation.",
                 "Coverage varies by acquisition. The notebook selects the highest-coverage scene on duplicate dates, after filtering provided quality flags. No additional coverage threshold is imposed where the source has no quality flag.",

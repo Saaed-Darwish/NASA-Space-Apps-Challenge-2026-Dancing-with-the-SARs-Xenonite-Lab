@@ -387,16 +387,21 @@
     "kind": "water",
     "unit": "km²",
     "metric": "Potentially inundated area",
-    "bounds": null,
-    "geometryStatus": "area_coordinates_unavailable",
+    "bounds": {
+      "west": 0.0,
+      "south": 51.48,
+      "east": 0.12,
+      "north": 51.54
+    },
+    "geometryStatus": "study_area_only",
     "validationStatus": "exploratory",
     "validation": [],
     "points": [],
-    "note": "Study-area coordinates were not supplied. Values are area aggregates; EGMS point coordinates must not be assigned to this area.",
+    "note": "Radar indicator, not confirmed flood extent or forest-loss area. Study areas are distinct from affected pixels. Bounds come from the original GEE rectangle documented in Map Coordinates; acquisition coordinates are AOI centroids, not affected pixels. The workbook guide retains outdated missing-coordinate text.",
     "method": "Sentinel-1 VV dark-water indicator; exclude persistent water and steep slopes; minimum coverage 95%.",
     "source": {
-      "file": "London_Multi_Hazard_SAR_Flood_Forest_Subsidence_2019_2026_With_Coordinates.xlsx",
-      "sha256": "943e488ecc23c85adb18bd98db8b31e37511ab2d948f11856889c442f9cdcba7",
+      "file": "London_Multi_Hazard_SAR_Flood_Forest_Subsidence_2019_2026_Coordinates_Completed.xlsx",
+      "sha256": "87329e9d094e14e0ccc750c87c4af485a393aadc9c99a898f53c6b971cb8631a",
       "sheet": "Flooding",
       "publisher": "SAR data team / Copernicus Sentinel-1",
       "url": "https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S1_GRD"
@@ -414,16 +419,21 @@
     "kind": "forest",
     "unit": "dB",
     "metric": "Mean forest VH backscatter",
-    "bounds": null,
-    "geometryStatus": "area_coordinates_unavailable",
+    "bounds": {
+      "west": 0.0,
+      "south": 51.6,
+      "east": 0.08,
+      "north": 51.69
+    },
+    "geometryStatus": "study_area_only",
     "validationStatus": "exploratory",
     "validation": [],
     "points": [],
-    "note": "Study-area coordinates were not supplied. Values are area aggregates; EGMS point coordinates must not be assigned to this area.",
+    "note": "Radar indicator, not confirmed flood extent or forest-loss area. Study areas are distinct from affected pixels. Bounds come from the original GEE rectangle documented in Map Coordinates; acquisition coordinates are AOI centroids, not affected pixels. The workbook guide retains outdated missing-coordinate text.",
     "method": "Mean forest VH backscatter over the source forest mask. Coverage and seasonal sampling are retained; changes are not automatically deforestation.",
     "source": {
-      "file": "London_Multi_Hazard_SAR_Flood_Forest_Subsidence_2019_2026_With_Coordinates.xlsx",
-      "sha256": "943e488ecc23c85adb18bd98db8b31e37511ab2d948f11856889c442f9cdcba7",
+      "file": "London_Multi_Hazard_SAR_Flood_Forest_Subsidence_2019_2026_Coordinates_Completed.xlsx",
+      "sha256": "87329e9d094e14e0ccc750c87c4af485a393aadc9c99a898f53c6b971cb8631a",
       "sheet": "Forest Disturbance",
       "publisher": "SAR data team / Copernicus Sentinel-1",
       "url": "https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S1_GRD"
@@ -570,8 +580,8 @@
     "note": "Source-supplied WGS84 point coordinates derived from EPSG:3035. Selected 100 m grid samples, not individual buildings or a citywide surface. Negative displacement means downward; RMSE is fit quality, not per-date confidence.",
     "method": "EGMS vertical displacement at selected 100 m grid samples; original reference retained.",
     "source": {
-      "file": "London_Multi_Hazard_SAR_Flood_Forest_Subsidence_2019_2026_With_Coordinates.xlsx",
-      "sha256": "943e488ecc23c85adb18bd98db8b31e37511ab2d948f11856889c442f9cdcba7",
+      "file": "London_Multi_Hazard_SAR_Flood_Forest_Subsidence_2019_2026_Coordinates_Completed.xlsx",
+      "sha256": "87329e9d094e14e0ccc750c87c4af485a393aadc9c99a898f53c6b971cb8631a",
       "sheet": "Land Subsidence",
       "publisher": "Copernicus European Ground Motion Service",
       "url": "https://land.copernicus.eu/en/products/european-ground-motion-service/egms-ortho"

@@ -1,4 +1,5 @@
-﻿import { useEffect, useMemo, useState } from "react";
+import ChartLegend from "./ChartLegend";
+import { memo, useEffect, useMemo, useState } from "react";
 import type { Region } from "../types/region";
 import type { SarDataset } from "../data/sar";
 import type { ReactNode } from "react";
@@ -216,10 +217,7 @@ function WaterForecastPanel({
               </text>
             </svg>
           </div>
-          <p className="small forecast-legend">
-            Solid: monthly history · Dashed: forecast · Shaded: approximate
-            range · Squares: imputed · Rings: flagged or partial
-          </p>
+          <ChartLegend kind="water" />
           <button
             className="text-button"
             aria-pressed={fullHistory}
@@ -254,24 +252,35 @@ function WaterForecastPanel({
           </p>
           <details className="sar-details" open>
             <summary>Forecast values &amp; ranges</summary>
-            <div className="sar-table-wrap">
+            <div
+              className="sar-table-scroll forecast-table forecast-values"
+              role="region"
+              aria-label="Forecast values and ranges"
+              tabIndex={0}
+            >
               <table>
                 <caption>Exploratory monthly indicator, km²</caption>
                 <thead>
                   <tr>
-                    <th>Month</th>
-                    <th>Mean</th>
-                    <th>Lower</th>
-                    <th>Upper</th>
+                    <th scope="col">Month</th>
+                    <th scope="col" className="numeric-cell">
+                      Mean
+                    </th>
+                    <th scope="col" className="numeric-cell">
+                      Lower
+                    </th>
+                    <th scope="col" className="numeric-cell">
+                      Upper
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   {forecast.forecast.map((r) => (
                     <tr key={r.month}>
                       <td>{r.month}</td>
-                      <td>{numeric(r.mean)}</td>
-                      <td>{numeric(r.lower)}</td>
-                      <td>{numeric(r.upper)}</td>
+                      <td className="numeric-cell">{numeric(r.mean)}</td>
+                      <td className="numeric-cell">{numeric(r.lower)}</td>
+                      <td className="numeric-cell">{numeric(r.upper)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -280,25 +289,34 @@ function WaterForecastPanel({
           </details>
           <details className="sar-details">
             <summary>Monthly history &amp; quality</summary>
-            <div className="sar-table-wrap">
+            <div
+              className="sar-table-scroll forecast-table forecast-history"
+              role="region"
+              aria-label="Observed history table"
+              tabIndex={0}
+            >
               <table>
                 <caption>
                   Monthly means, not sums or cumulative flood area
                 </caption>
                 <thead>
                   <tr>
-                    <th>Month</th>
-                    <th>km²</th>
-                    <th>Records</th>
-                    <th>Status</th>
+                    <th scope="col">Month</th>
+                    <th scope="col" className="numeric-cell">
+                      km²
+                    </th>
+                    <th scope="col" className="numeric-cell">
+                      Records
+                    </th>
+                    <th scope="col">Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   {forecast.history.map((r) => (
                     <tr key={r.month}>
                       <td>{r.month}</td>
-                      <td>{numeric(r.value)}</td>
-                      <td>{r.observationCount}</td>
+                      <td className="numeric-cell">{numeric(r.value)}</td>
+                      <td className="numeric-cell">{r.observationCount}</td>
                       <td>
                         {[
                           r.filled ? "Imputed" : "Observed",
@@ -344,7 +362,7 @@ function WaterForecastPanel({
   );
 }
 
-export default function ForecastPanel({
+function ForecastPanel({
   region,
   dataset,
   datasets,
@@ -390,3 +408,6 @@ export default function ForecastPanel({
     </WaterForecastPanel>
   );
 }
+
+// Timeline animation does not change forecast evidence or its table rows.
+export default memo(ForecastPanel);

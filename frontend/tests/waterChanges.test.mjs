@@ -71,3 +71,55 @@ test("comparison ranges include their endpoints and interiors, with no extrapola
     null,
   );
 });
+
+test("London mosaics parse against its completed AOI and stay inside processed dates", () => {
+  const london = sarDatasets.find((d) => d.id === "GBR_EAST_LONDON");
+  const value = {
+    status: "available",
+    datasetId: london.id,
+    comparisons: catalogue
+      .filter((r) => r.datasetId === london.id)
+      .map((r) => ({
+        ...r,
+        imageUrl: `/api/water-changes/${r.id}/${r.pngSha256}.png`,
+      })),
+  };
+  const rows = parseWaterComparisons(value, london);
+  assert.equal(rows.length, 3);
+  assert.equal(comparisonForDate(rows, "2024-08-01").afterDate, "2024-09-24");
+  assert.equal(comparisonForDate(rows, "2024-03-15"), null);
+  assert.equal(comparisonForDate(rows, "2024-10-31"), null);
+  assert.throws(() => parseWaterComparisons(value, dataset));
+  assert.throws(() =>
+    parseWaterComparisons(
+      value,
+      sarDatasets.find((d) => d.id === "GBR_EPPING_FOREST"),
+    ),
+  );
+});
+
+test("Venice comparisons use their lagoon AOI and actual processed date ranges", () => {
+  const venice = sarDatasets.find((d) => d.id === "ITA_VENICE");
+  const rows = parseWaterComparisons(
+    {
+      status: "available",
+      datasetId: venice.id,
+      comparisons: catalogue
+        .filter((r) => r.datasetId === venice.id)
+        .map((r) => ({
+          ...r,
+          imageUrl: `/api/water-changes/${r.id}/${r.pngSha256}.png`,
+        })),
+    },
+    venice,
+  );
+  assert.equal(rows.length, 3);
+  assert.equal(comparisonForDate(rows, "2024-08-01").afterDate, "2024-09-13");
+  assert.equal(comparisonForDate(rows, "2024-03-16"), null);
+  assert.equal(comparisonForDate(rows, "2024-11-13"), null);
+  assert.ok(
+    rows.every(
+      (r) => r.before.relativeOrbit === 95 && r.after.relativeOrbit === 95,
+    ),
+  );
+});

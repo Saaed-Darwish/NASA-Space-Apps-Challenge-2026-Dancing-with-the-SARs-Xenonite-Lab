@@ -33,6 +33,7 @@ import {
 import { readingAtYear } from "./data/history";
 import { storiesForRegion, type RegionStory } from "./data/stories";
 import type { AssistantMessage } from "./data/assistant";
+import { placeQuery, searchPlaces } from "./data/earthCommands";
 import { askEarthAI } from "./data/earthAI";
 import useTimeline from "./hooks/useTimeline";
 import type { Region } from "./types/region";
@@ -147,7 +148,7 @@ export default function App() {
           (story) => storyMarkerOpacity(story, timeline.time) > 0,
         ) ?? storiesForRegion(selectedRegion.id)[0])
       : null);
-  const conversationKey = selectedRegion?.id ?? "global";
+  const conversationKey = "earth-chat";
   const themeStyle = { "--accent": activeLayer.color } as CSSProperties;
 
   const revealStories = useCallback(() => {
@@ -202,7 +203,11 @@ export default function App() {
   const regionalArticles = useMemo(
     () =>
       selectedRegion
-        ? articles.filter((article) => article.regionId === selectedRegion.id)
+        ? articles.filter(
+            (article) =>
+              article.regionId === selectedRegion.id ||
+              article.regionId === "earth-search",
+          )
         : articles,
     [articles, selectedRegion?.id],
   );
@@ -222,6 +227,20 @@ export default function App() {
     setSelectedStory(null);
     setFocusRequest((value) => value + 1);
   }, []);
+
+  const focusSearchPlace = useCallback(
+    (place: DiscoveredArticle) => {
+      setSelectedRegion(null);
+      setObservation(null);
+      setWaterLayer(null);
+      setSelectedStory(null);
+      setSelectedArticle(place);
+      setFocusRequest((value) => value + 1);
+      timeline.pause();
+      addArticle(place);
+    },
+    [addArticle, timeline.pause],
+  );
 
   function selectStory(story: RegionStory) {
     setMode("analyze");
@@ -249,7 +268,7 @@ export default function App() {
   const askQuestion = useCallback(
     async (question: string) => {
       const text = question.trim().slice(0, 1000);
-      if (!text || !selectedRegion || pendingRequest.current) return;
+      if (!text || pendingRequest.current) return;
       pendingRequest.current = true;
       setIsAsking(true);
       const key = conversationKey;
@@ -263,23 +282,45 @@ export default function App() {
         ],
       }));
       try {
-        const answer = await askEarthAI({
-          question: text,
-          region_id: selectedRegion.id,
-          story_id: contextStory?.id,
-          year: observationYear,
-          start_year: timeline.startYear,
-          end_year: timeline.endYear,
-          dataset_id: activeDataset?.id,
-          observation_id: observationId ?? undefined,
-          history: (conversations[key] ?? [])
-            .filter((message) => !message.error)
-            .slice(-8)
-            .map((message) => ({
-              role: message.role,
-              content: message.text.slice(0, 4000),
-            })),
-        });
+        const query = placeQuery(text);
+        let answer: Omit<AssistantMessage, "id" | "role">;
+        if (query) {
+          const places = await searchPlaces(query, AbortSignal.timeout(15000));
+          if (places[0]) focusSearchPlace(places[0]);
+          answer = {
+            mode: "search",
+            places,
+            text: places.length
+              ? `Pinned and zoomed to ${places[0].title}, the top location match. Choose another result below if needed. These reference locations do not imply SAR coverage.`
+              : `No mapped location found for "${query}". Try adding the province, state or country.`,
+            sources: places[0]
+              ? [
+                  {
+                    title: places[0].title,
+                    publisher: "Wikipedia / CC BY-SA",
+                    url: places[0].url,
+                  },
+                ]
+              : [],
+          };
+        } else
+          answer = await askEarthAI({
+            question: text,
+            region_id: selectedRegion?.id,
+            story_id: contextStory?.id,
+            year: observationYear,
+            start_year: timeline.startYear,
+            end_year: timeline.endYear,
+            dataset_id: activeDataset?.id,
+            observation_id: observationId ?? undefined,
+            history: (conversations[key] ?? [])
+              .filter((message) => !message.error)
+              .slice(-8)
+              .map((message) => ({
+                role: message.role,
+                content: message.text.slice(0, 4000),
+              })),
+          });
         setConversations((previous) => ({
           ...previous,
           [key]: [
@@ -318,6 +359,7 @@ export default function App() {
       conversations,
       activeDataset,
       observationId,
+      focusSearchPlace,
     ],
   );
 
@@ -351,7 +393,8 @@ export default function App() {
         }
         dataset={activeDataset}
         observation={
-          (mode === "analyze" || (mode === "forecast" && activeDataset?.kind === "subsidence")) &&
+          (mode === "analyze" ||
+            (mode === "forecast" && activeDataset?.kind === "subsidence")) &&
           observation?.id.startsWith(`${activeDataset?.id}:`)
             ? observation
             : null
@@ -492,7 +535,15 @@ export default function App() {
           />
         )}
         {mode === "forecast" && selectedRegion && (
-          <ForecastPanel key={selectedRegion.id} region={selectedRegion} dataset={activeDataset} datasets={regionDatasets} onSelectDataset={selectDataset} onSelectObservation={setObservation} initialPointId={observation?.pointId ?? undefined} />
+          <ForecastPanel
+            key={selectedRegion.id}
+            region={selectedRegion}
+            dataset={activeDataset}
+            datasets={regionDatasets}
+            onSelectDataset={selectDataset}
+            onSelectObservation={setObservation}
+            initialPointId={observation?.pointId ?? undefined}
+          />
         )}
         {mode === "ai" && (
           <AssistantPanel
@@ -504,6 +555,7 @@ export default function App() {
             messages={conversations[conversationKey] ?? EMPTY_MESSAGES}
             isAsking={isAsking}
             onAsk={askQuestion}
+            onFocusPlace={focusSearchPlace}
           />
         )}
       </div>
@@ -529,7 +581,12 @@ export default function App() {
           timeline.togglePlayback(restartFromStart);
         }}
       />
-      <MapCaption selectedRegion={selectedRegion} onRefocus={selectRegion} />
+      <MapCaption
+        selectedRegion={selectedRegion}
+        place={selectedArticle}
+        onRefocusPlace={focusArticle}
+        onRefocus={selectRegion}
+      />
       <footer className="map-footer">
         <span>
           DRAG TO EXPLORE <b>·</b> SCROLL TO ZOOM

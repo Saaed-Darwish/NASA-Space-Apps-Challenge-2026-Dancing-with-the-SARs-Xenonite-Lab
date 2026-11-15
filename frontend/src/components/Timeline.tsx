@@ -86,7 +86,22 @@ export default function Timeline({
           onClick={() => togglePlayback()}
           aria-label={isPlaying ? "Pause timeline" : "Play timeline"}
         >
-          {isPlaying ? "❚❚" : "▶︎"}
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            {isPlaying ? (
+              <>
+                <rect x="6" y="4" width="4" height="16" rx="1" />
+                <rect x="14" y="4" width="4" height="16" rx="1" />
+              </>
+            ) : (
+              <path d="M8 4.8a1 1 0 0 1 1.5-.86l11 7.2a1 1 0 0 1 0 1.72l-11 7.2A1 1 0 0 1 8 19.2Z" />
+            )}
+          </svg>
         </button>
         <div className="timeline-track">
           <input

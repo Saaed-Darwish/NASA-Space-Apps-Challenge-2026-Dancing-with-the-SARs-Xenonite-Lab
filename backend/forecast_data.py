@@ -6,6 +6,7 @@ the imported acquisition series before this artifact is served.
 from collections import defaultdict
 from hashlib import sha256
 import json
+import math
 from pathlib import Path
 from typing import Literal
 
@@ -75,9 +76,11 @@ def adapt_forecasts(raw: bytes) -> dict:
         location = item.get("location")
         if meta.bounds is None:
             if location is not None: raise ValueError("Forecast invents study area coordinates")
-        elif not location or meta.kind != "water" or meta.bounds.model_dump() != location["bounds"]:
-            # Floats exported independently may differ only at machine precision.
-            if not location or meta.kind != "water" or any(abs(getattr(meta.bounds, k)-v) > 1e-8 for k, v in location["bounds"].items()):
+        elif location is not None:
+            bounds = location.get("bounds", {})
+            if (set(bounds) != {"west", "south", "east", "north"} or
+                    any(not isinstance(v, (int, float)) or not math.isfinite(v) or
+                        abs(getattr(meta.bounds, k)-v) > 1e-8 for k,v in bounds.items())):
                 raise ValueError("Forecast study area does not match observations")
         monthly = defaultdict(list)
         for row in OBSERVATIONS[dataset_id]:
@@ -102,7 +105,7 @@ def adapt_forecasts(raw: bytes) -> dict:
             "evaluationStatus": "requires_revalidation", "intervalStatus": "approximate_nominal_95",
             "history": history, "forecast": [r.model_dump() for r in data.forecast],
             "lastAcquisition": meta.endDate.isoformat(), "historyThrough": data.history[-1].month,
-            "provenanceNote": "Monthly history agrees with the imported observations to export rounding. This is a consistency check; the original export did not record workbook hashes or a reproducible model run ID.",
+            "provenanceNote": "Monthly history agrees with the imported observations to export rounding. This is a consistency check; the original export did not record workbook hashes or a reproducible model run ID." + (" Study-area geometry comes from the current observation workbook; the forecast export supplies no geometry." if location is None and meta.bounds is not None else ""),
             "limitations": LIMITATIONS,
         }
     return artifacts

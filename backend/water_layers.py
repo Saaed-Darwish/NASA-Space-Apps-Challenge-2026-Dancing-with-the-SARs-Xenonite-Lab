@@ -16,7 +16,7 @@ router = APIRouter(tags=["Surface-water change"])
 HASH_PATTERN = r"^[a-f0-9]{64}$"
 
 
-class RadarSource(BaseModel):
+class RadarComponent(BaseModel):
     itemId: str = Field(max_length=160)
     datetime: AwareDatetime
     catalogUrl: str = Field(max_length=500)
@@ -37,6 +37,23 @@ class RadarSource(BaseModel):
             asset.scheme != "https" or not (asset.hostname or "").endswith(".blob.core.windows.net") or
             catalog.query or asset.query or catalog.username or asset.username):
             raise ValueError("Unexpected source URLs; do not persist access tokens")
+        return self
+
+
+class RadarSource(RadarComponent):
+    components: list[RadarComponent] = Field(default_factory=list, max_length=8)
+
+    @model_validator(mode="after")
+    def same_pass_components(self):
+        if self.components:
+            if self.itemId != self.components[0].itemId or len({c.itemId for c in self.components}) != len(self.components):
+                raise ValueError("Invalid mosaic component identities")
+            for component in self.components:
+                if (component.datetime.date() != self.datetime.date() or
+                        abs((component.datetime-self.datetime).total_seconds()) > 120 or
+                        any(getattr(component,k)!=getattr(self,k) for k in
+                            ("platform","orbitState","relativeOrbit","units","coefficient","polarization"))):
+                    raise ValueError("Mosaic components must belong to the same acquisition pass")
         return self
 
 

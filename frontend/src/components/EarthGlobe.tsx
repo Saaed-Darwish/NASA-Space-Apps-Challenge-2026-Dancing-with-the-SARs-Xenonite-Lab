@@ -1,3 +1,5 @@
+import { configureCameraLimits } from "../globe/cameraLimits";
+import WaterChangeLegend from "./WaterChangeLegend";
 import { useEffect, useRef, useState } from "react";
 import {
   Entity,
@@ -161,6 +163,7 @@ export default function EarthGlobe({
       requestRenderMode: true,
       maximumRenderTimeChange: Infinity,
     });
+    configureCameraLimits(viewer.scene.screenSpaceCameraController);
     viewerRef.current = viewer;
     viewer.scene.globe.baseColor = Color.fromCssColorString("#101c28");
     viewer.scene.globe.enableLighting = false;
@@ -280,7 +283,9 @@ export default function EarthGlobe({
     const entities: CesiumEntity[] = [];
     for (const article of articles) {
       if (
-        (selectedRegion && article.regionId !== selectedRegion.id) ||
+        (selectedRegion &&
+          article.regionId !== selectedRegion.id &&
+          article.regionId !== "earth-search") ||
         article.latitude === undefined ||
         article.longitude === undefined
       )
@@ -380,17 +385,29 @@ export default function EarthGlobe({
     };
   }, [isViewerReady, studyArea, dataset?.kind]);
 
-  const trackingPoint = dataset?.kind === "subsidence"
-    ? dataset.points.find(p => p.id === observation?.pointId)
-    : null;
+  const trackingPoint =
+    dataset?.kind === "subsidence"
+      ? dataset.points.find((p) => p.id === observation?.pointId)
+      : null;
   useEffect(() => {
     const viewer = viewerRef.current;
-    if (!viewer || !isViewerReady || !trackingPoint ||
-        !["inferred_egms_grid", "source_coordinates"].includes(trackingPoint.locationStatus ?? "") ||
-        !Number.isFinite(trackingPoint.latitude) || !Number.isFinite(trackingPoint.longitude)) return;
+    if (
+      !viewer ||
+      !isViewerReady ||
+      !trackingPoint ||
+      !["inferred_egms_grid", "source_coordinates"].includes(
+        trackingPoint.locationStatus ?? "",
+      ) ||
+      !Number.isFinite(trackingPoint.latitude) ||
+      !Number.isFinite(trackingPoint.longitude)
+    )
+      return;
     const marker = viewer.entities.add({
       id: "sar-tracking-point",
-      position: Cartesian3.fromDegrees(trackingPoint.longitude!, trackingPoint.latitude!),
+      position: Cartesian3.fromDegrees(
+        trackingPoint.longitude!,
+        trackingPoint.latitude!,
+      ),
       point: {
         pixelSize: 8,
         color: Color.fromCssColorString("#f59bc8"),
@@ -462,13 +479,18 @@ export default function EarthGlobe({
       viewer.scene.globe.ellipsoid,
       viewer.camera.positionWC,
     );
+    const windowPosition = new Cartesian2();
     const update = () => {
       occluder.cameraPosition = viewer.camera.positionWC;
       const p = occluder.isPointVisible(position)
-        ? SceneTransforms.worldToWindowCoordinates(viewer.scene, position)
+        ? SceneTransforms.worldToWindowCoordinates(
+            viewer.scene,
+            position,
+            windowPosition,
+          )
         : undefined;
       const canvas = viewer.scene.canvas;
-      element.style.display =
+      const display =
         p &&
         p.x >= 0 &&
         p.x <= canvas.clientWidth &&
@@ -476,9 +498,12 @@ export default function EarthGlobe({
         p.y <= canvas.clientHeight
           ? ""
           : "none";
-      if (p) {
-        element.style.left = `${p.x}px`;
-        element.style.top = `${p.y}px`;
+      if (element.style.display !== display) element.style.display = display;
+      if (p && display !== "none") {
+        const left = `${Math.round(p.x)}px`;
+        const top = `${Math.round(p.y)}px`;
+        if (element.style.left !== left) element.style.left = left;
+        if (element.style.top !== top) element.style.top = top;
       }
     };
     const remove = viewer.scene.postRender.addEventListener(update);
@@ -542,7 +567,10 @@ export default function EarthGlobe({
     const viewer = viewerRef.current;
     if (isViewerReady && viewer) {
       // Viewport selection updates context only; explicit clicks/refocus move the camera.
-      const key = `${focusRequest}-${layoutKey}-${resizeVersion}`;
+      const areaKey = studyArea
+        ? `${studyArea.west},${studyArea.south},${studyArea.east},${studyArea.north}`
+        : "no-study-area";
+      const key = `${focusRequest}-${layoutKey}-${resizeVersion}-${areaKey}`;
       if (handledFocusRequest.current === key) return;
       const target = selectedArticle
         ? {
@@ -677,18 +705,15 @@ export default function EarthGlobe({
           EOX Sentinel-2 · 10 m
         </small>
         {waterComparison && (
-          <small className="water-map-key">
-            {waterError ?? (
-              <>
-                Water change · {waterComparison.beforeDate} →{" "}
-                {waterComparison.afterDate}
-                <br />
-                <i className="water-gain-swatch" />
-                Gain · <i className="water-loss-swatch" />
-                Loss · Experimental
-              </>
+          <div className="water-map-key">
+            {waterError ? (
+              <p className="small" role="alert">
+                {waterError}
+              </p>
+            ) : (
+              <WaterChangeLegend comparison={waterComparison} compact />
             )}
-          </small>
+          </div>
         )}
       </div>
     </>

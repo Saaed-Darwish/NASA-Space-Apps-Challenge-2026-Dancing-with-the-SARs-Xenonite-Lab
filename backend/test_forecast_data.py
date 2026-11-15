@@ -42,6 +42,15 @@ class ForecastTests(unittest.TestCase):
             with self.subTest(kind=kind), self.assertRaises(ValueError):
                 adapt_forecasts(json.dumps(data).encode())
 
+    def test_london_forecasts_remain_consistent_with_completed_workbook(self):
+        data = json.loads((Path(__file__).parent / "forecasts.json").read_bytes())
+        self.assertIsNone(data["regions"]["GBR_EAST_LONDON"].get("location"))
+        self.assertIn("current observation workbook", adapt_forecasts(json.dumps(data).encode())["GBR_EAST_LONDON"]["provenanceNote"])
+        data["regions"]["GBR_EAST_LONDON"]["location"] = {"bounds":{"west":0,"south":51.48,"east":.13,"north":51.54}}
+        with self.assertRaises(ValueError): adapt_forecasts(json.dumps(data).encode())
+        data["regions"]["GBR_EAST_LONDON"]["location"]["bounds"]["east"] = .12
+        self.assertIn("GBR_EAST_LONDON", adapt_forecasts(json.dumps(data).encode()))
+
     def test_filled_month_counts(self):
         self.assertEqual(sum(r["filled"] for r in ARTIFACTS["BRA_PORTO_VELHO"]["history"]), 2)
         self.assertEqual(sum(r["filled"] for r in ARTIFACTS["VNM_CAN_THO"]["history"]), 1)

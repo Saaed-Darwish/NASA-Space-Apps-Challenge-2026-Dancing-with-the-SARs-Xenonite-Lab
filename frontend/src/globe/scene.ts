@@ -1,3 +1,4 @@
+import { MAX_CAMERA_HEIGHT, OVERVIEW_CAMERA_HEIGHT } from "./cameraLimits";
 import {
   Cartesian2,
   Cartesian3,
@@ -15,7 +16,11 @@ import { PIN_LABEL_BACKGROUND, PIN_LABEL_TEXT } from "./markerStyle";
 import { studyAreaView, visibleMapViewport } from "./cameraFit";
 import type { StudyBounds } from "../data/sar";
 
-const GLOBAL_VIEW = { longitude: -35, latitude: 35, altitude: 22_000_000 };
+const GLOBAL_VIEW = {
+  longitude: -35,
+  latitude: 35,
+  altitude: OVERVIEW_CAMERA_HEIGHT,
+};
 const TOP_DOWN_ORIENTATION = {
   heading: 0,
   pitch: CesiumMath.toRadians(-90),
@@ -53,7 +58,7 @@ export function focusCamera(
     destination: Cartesian3.fromDegrees(
       destination.longitude,
       destination.latitude,
-      destination.altitude,
+      Math.min(destination.altitude, MAX_CAMERA_HEIGHT),
     ),
     orientation: TOP_DOWN_ORIENTATION,
     duration: region ? 2.5 : 1.8,

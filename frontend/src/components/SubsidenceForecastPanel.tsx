@@ -1,3 +1,4 @@
+import ChartLegend from "./ChartLegend";
 import type { ReactNode } from "react";
 import { useEffect, useMemo, useState } from "react";
 import type { Region } from "../types/region";
@@ -221,10 +222,7 @@ export default function SubsidenceForecastPanel({
               </text>
             </svg>
           </div>
-          <p className="small forecast-legend">
-            Solid: measured history · Dashed: forecast · Shaded: approximate
-            prediction range · Rings: residual anomalies.
-          </p>
+          <ChartLegend kind="subsidence" />
           <button
             className="text-button"
             aria-pressed={full}
@@ -252,26 +250,37 @@ export default function SubsidenceForecastPanel({
           </dl>
           <details className="sar-details" open>
             <summary>Forecast values &amp; ranges</summary>
-            <div className="sar-table-wrap">
+            <div
+              className="sar-table-scroll forecast-table forecast-values"
+              role="region"
+              aria-label="Forecast values and ranges"
+              tabIndex={0}
+            >
               <table>
                 <caption>
                   Point displacement in mm, original reference retained
                 </caption>
                 <thead>
                   <tr>
-                    <th>Month</th>
-                    <th>Mean</th>
-                    <th>Lower</th>
-                    <th>Upper</th>
+                    <th scope="col">Month</th>
+                    <th scope="col" className="numeric-cell">
+                      Mean
+                    </th>
+                    <th scope="col" className="numeric-cell">
+                      Lower
+                    </th>
+                    <th scope="col" className="numeric-cell">
+                      Upper
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   {forecast.forecast.map((r) => (
                     <tr key={r.month}>
                       <td>{r.month}</td>
-                      <td>{number(r.mean)}</td>
-                      <td>{number(r.lower)}</td>
-                      <td>{number(r.upper)}</td>
+                      <td className="numeric-cell">{number(r.mean)}</td>
+                      <td className="numeric-cell">{number(r.lower)}</td>
+                      <td className="numeric-cell">{number(r.upper)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -280,7 +289,12 @@ export default function SubsidenceForecastPanel({
           </details>
           <details className="sar-details">
             <summary>Observed history &amp; flags</summary>
-            <div className="sar-table-wrap">
+            <div
+              className="sar-table-scroll forecast-table forecast-history"
+              role="region"
+              aria-label="Observed history table"
+              tabIndex={0}
+            >
               <table>
                 <caption>
                   Original point's {forecast.history.length} readings, rounded
@@ -288,16 +302,18 @@ export default function SubsidenceForecastPanel({
                 </caption>
                 <thead>
                   <tr>
-                    <th>Date</th>
-                    <th>mm</th>
-                    <th>Status</th>
+                    <th scope="col">Date</th>
+                    <th scope="col" className="numeric-cell">
+                      mm
+                    </th>
+                    <th scope="col">Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   {forecast.history.map((r) => (
                     <tr key={r.date}>
                       <td>{r.date}</td>
-                      <td>{number(r.mm)}</td>
+                      <td className="numeric-cell">{number(r.mm)}</td>
                       <td>{r.flagged ? "Flagged residual" : "Observed"}</td>
                     </tr>
                   ))}

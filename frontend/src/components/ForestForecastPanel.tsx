@@ -1,3 +1,4 @@
+import ChartLegend from "./ChartLegend";
 import type { ReactNode } from "react";
 import { useEffect, useMemo, useState } from "react";
 import type { Region } from "../types/region";
@@ -186,10 +187,9 @@ export default function ForestForecastPanel({
               </text>
             </svg>
           </div>
-          <p className="small forecast-legend">
-            Dots: measured VH · Solid: fitted expectation · Future bars:
-            approximate prediction range · Rings: flagged anomalies. Time
-            spacing follows calendar dates; long gaps break the fitted line.
+          <ChartLegend kind="forest" />
+          <p className="small muted">
+            Calendar spacing is preserved; long gaps break the fitted line.
           </p>
           <button
             className="text-button"
@@ -220,26 +220,37 @@ export default function ForestForecastPanel({
           </dl>
           <details className="sar-details" open>
             <summary>Forecast values &amp; ranges</summary>
-            <div className="sar-table-wrap">
+            <div
+              className="sar-table-scroll forecast-table forecast-values"
+              role="region"
+              aria-label="Forecast values and ranges"
+              tabIndex={0}
+            >
               <table>
                 <caption>
                   Expected VH backscatter, dB; no area conversion
                 </caption>
                 <thead>
                   <tr>
-                    <th>Month</th>
-                    <th>Mean</th>
-                    <th>Lower</th>
-                    <th>Upper</th>
+                    <th scope="col">Month</th>
+                    <th scope="col" className="numeric-cell">
+                      Mean
+                    </th>
+                    <th scope="col" className="numeric-cell">
+                      Lower
+                    </th>
+                    <th scope="col" className="numeric-cell">
+                      Upper
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   {forecast.forecast.map((r) => (
                     <tr key={r.month}>
                       <td>{r.month}</td>
-                      <td>{numeric(r.mean)}</td>
-                      <td>{numeric(r.lower)}</td>
-                      <td>{numeric(r.upper)}</td>
+                      <td className="numeric-cell">{numeric(r.mean)}</td>
+                      <td className="numeric-cell">{numeric(r.lower)}</td>
+                      <td className="numeric-cell">{numeric(r.upper)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -248,7 +259,12 @@ export default function ForestForecastPanel({
           </details>
           <details className="sar-details">
             <summary>VH history &amp; anomaly flags</summary>
-            <div className="sar-table-wrap">
+            <div
+              className="sar-table-scroll forecast-table forecast-history"
+              role="region"
+              aria-label="Observed history table"
+              tabIndex={0}
+            >
               <table>
                 <caption>
                   Quality-passing acquisitions; flags are model diagnostics, not
@@ -256,20 +272,26 @@ export default function ForestForecastPanel({
                 </caption>
                 <thead>
                   <tr>
-                    <th>Date</th>
-                    <th>VH dB</th>
-                    <th>Expected dB</th>
-                    <th>Robust z</th>
-                    <th>Status</th>
+                    <th scope="col">Date</th>
+                    <th scope="col" className="numeric-cell">
+                      VH dB
+                    </th>
+                    <th scope="col" className="numeric-cell">
+                      Expected dB
+                    </th>
+                    <th scope="col" className="numeric-cell">
+                      Robust z
+                    </th>
+                    <th scope="col">Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   {forecast.history.map((r) => (
                     <tr key={r.observationId}>
                       <td>{r.date}</td>
-                      <td>{numeric(r.db)}</td>
-                      <td>{numeric(r.expected)}</td>
-                      <td>{numeric(r.z)}</td>
+                      <td className="numeric-cell">{numeric(r.db)}</td>
+                      <td className="numeric-cell">{numeric(r.expected)}</td>
+                      <td className="numeric-cell">{numeric(r.z)}</td>
                       <td>
                         {r.flagged
                           ? r.z < 0

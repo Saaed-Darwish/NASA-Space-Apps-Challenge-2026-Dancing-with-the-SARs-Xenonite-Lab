@@ -2,6 +2,8 @@
 import argparse
 from hashlib import sha256
 import json
+import math
+import re
 from pathlib import Path
 from import_sar import ROOT, SOURCE_URL, workbook, make_dataset, number
 
@@ -20,6 +22,33 @@ def metadata(path, dataset_id, region, name, kind, unit, bounds, sheet):
                 source=dict(file=path.name, sha256=sha256(path.read_bytes()).hexdigest(), sheet=sheet, publisher="SAR data team / Copernicus Sentinel-1" if kind != "subsidence" else "Copernicus European Ground Motion Service", url=SOURCE_URL if kind != "subsidence" else "https://land.copernicus.eu/en/products/european-ground-motion-service/egms-ortho"))
 
 
+def london_bounds(sheets, kind, rows):
+    """Read source GEE rectangles, never infer an aggregate AOI from EGMS points."""
+    hazard = "Forest Disturbance" if kind == "forest" else "Flooding"
+    locations = [r for r in sheets["Map Coordinates"] if r.get("hazard") == hazard]
+    if len(locations) != 1:
+        raise ValueError("London requires exactly one coordinate row per aggregate AOI")
+    location = locations[0]
+    match = re.fullmatch(r"Centroid of original GEE rectangle (\[[^\[\]]+\]); not a per-pixel measurement", location.get("coordinate_notes", ""))
+    if not match:
+        raise ValueError("London source rectangle is missing or malformed")
+    values = json.loads(match[1])
+    if (not isinstance(values, list) or len(values) != 4 or
+            any(type(v) not in (int, float) or not math.isfinite(v) for v in values)):
+        raise ValueError("Invalid London rectangle coordinates")
+    west, south, east, north = values
+    if not (-180 <= west < east <= 180 and -90 <= south < north <= 90):
+        raise ValueError("Invalid London rectangle bounds")
+    latitude, longitude = (south + north) / 2, (west + east) / 2
+    for row in [location, *rows]:
+        if (abs(number(row.get("latitude_wgs84")) - latitude) > 1e-6 or
+                abs(number(row.get("longitude_wgs84")) - longitude) > 1e-6):
+            raise ValueError("London AOI centroid disagrees with source rectangle")
+    if any(row.get("coordinate_type") != "AOI centroid (not pixel location)" for row in rows):
+        raise ValueError("London aggregate coordinates must identify AOI centroids")
+    return dict(zip(("west", "south", "east", "north"), values))
+
+
 def aggregate(path, sheets, kind, country):
     forest = kind == "forest"
     rows = sheets["Forest Disturbance" if forest else "Flooding"]
@@ -29,7 +58,10 @@ def aggregate(path, sheets, kind, country):
     name = ("Epping Forest" if forest else "East London / Thames Barrier / Royal Docks") if london else "Belluno forest" if forest else "Venice lagoon"
     geometry = next((r for r in sheets["Map Coordinates"] if r.get("Study Area ID") == key), None)
     bounds = {k: round(number(geometry[k.title()+" Boundary"]),10) for k in ("west","south","east","north")} if geometry else None
+    if london: bounds = london_bounds(sheets, kind, rows)
     meta = metadata(path,key,region,name,kind,"dB" if forest else "km²",bounds,"Forest Disturbance" if forest else "Flooding")
+    if london:
+        meta["note"] += " Bounds come from the original GEE rectangle documented in Map Coordinates; acquisition coordinates are AOI centroids, not affected pixels. The workbook guide retains outdated missing-coordinate text."
     observations = []
     for index,row in enumerate(rows,2):
         coverage = number(pick(row,"coverage_fraction","Forest Coverage (0–1)","Satellite Image Coverage (0–1)"))

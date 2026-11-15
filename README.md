@@ -14,8 +14,10 @@ Multi-type regions share **Water / Forest / Subsidence** tabs between Analyze an
 Forecast. Water uses blue, forest orange and subsidence pink. Observation controls
 show real acquisitions; forecasts retain separate monthly/seasonal horizons and
 units. Forest area indicators (km?) are distinct from forecast VH backscatter (dB).
-London water and Epping Forest study boundaries were not supplied, so no rectangles
-are invented. Subsidence uses the source-supplied point coordinates, friendly names
+The completed London workbook supplies separate East London water (blue) and
+Epping Forest (orange) study rectangles. Switching data types focuses the matching area.
+London and Venice each have three experimental 2024 SAR water gain/loss comparisons; see the
+[spatial pipeline guide](./docs/water-change-pipeline.md). Subsidence uses the source-supplied point coordinates, friendly names
 and original IDs; selected pins do not imply individual building accuracy.
 
 There are 14 curated regions and 24 sourced stories. London upgrades the existing
@@ -62,11 +64,35 @@ npm install
 npm run dev
 ```
 
-Open the local URL printed by Vite (usually http://localhost:5173). The explorer loads curated map data locally. Earth AI requires the backend and a running model. Vite proxies `/api` requests to http://127.0.0.1:8000.
+Open the local URL printed by Vite (usually http://localhost:5173). The explorer loads curated map data locally. Earth AI guided answers require the backend; a language model is optional. Place search runs in the browser. Vite proxies `/api` requests to http://127.0.0.1:8000.
 
-### Local Earth AI (Ollama)
+### Earth AI guided mode and optional Ollama
 
-Install [Ollama for Windows](https://ollama.com/download/windows), then download the development model:
+Earth AI defaults to `AI_MODE=auto`: it checks the configured provider's `/models`
+endpoint with a 1.5-second timeout. If the selected model is missing, unreachable,
+or fails during generation, it returns a labelled **guided** answer using trusted
+application records. Guided mode supports observations, supplied forecasts, stories,
+sources and help; it does not provide open-ended model reasoning.
+
+For hosting without Ollama, a GPU or an AI subscription, set this server environment variable:
+
+```text
+AI_MODE=guided
+```
+
+`AI_MODE=model` requires the provider and reports failures instead of falling back.
+FastAPI is still required for guided answers and SAR APIs. No new chat dependency
+is needed. Place search works independently of FastAPI or model availability:
+`search Calgary, Alberta`, `find Venice, Italy`, or `zoom to London, UK` queries
+Wikipedia for published Earth coordinates, pins the top mapped result and zooms to
+it. Chat lists alternatives so the user can correct ambiguous matches. Only explicit
+user search commands move the map; model responses cannot issue map actions.
+Search needs internet access. Empty/failed searches leave the existing map location
+unchanged. Place pins do not imply SAR observations and can be removed in Discover.
+Wikipedia reference extracts retain linked CC BY-SA attribution. This is place lookup,
+not a general web-search engine or address geocoder.
+
+To enable a local language model, install [Ollama for Windows](https://ollama.com/download/windows), then download the development model:
 
 ```powershell
 ollama pull ministral-3:3b
@@ -95,11 +121,11 @@ npm run export:ai-context
 ```
 
 Restart the backend to load the updated catalogue. No embeddings or training step is needed.
-Chat history retains the latest 40 messages per region in browser memory until reload. This integration does not persist
+Chat history retains the latest 40 messages across region changes in browser memory until reload. This integration does not persist
 questions or answers on the backend. Local configuration sends inference requests
 to your own Ollama instance; source links are not automatically fetched by the model.
 
-For deployment, set `AI_BASE_URL`, `AI_MODEL` and server-only `AI_API_KEY` to a hosted
+For an optional hosted model, set `AI_BASE_URL`, `AI_MODEL` and server-only `AI_API_KEY` to a hosted
 provider supporting `/v1/chat/completions`; the frontend does not change. The base URL
 must include `/v1` where required by the provider. Configure `CORS_ORIGINS` if the browser
 calls FastAPI directly. Production hosting must route `/api` to FastAPI. Before public
@@ -221,7 +247,13 @@ Selecting a story configures its comparison range. The first **Play** after sele
 
 **Forecast** uses the selected SAR type, with matching source exports for all ten datasets. Water has 12 monthly predictions; forest has the observed seasonal months of 2027; Venice and London subsidence have 24 monthly predictions from the November 2025 cutoff. Charts, tables, point/month selectors, approximate ranges and source hashes remain type-specific. Forecasts are exploratory; no model fitting occurs in HTTP requests. See [the finalized release](./docs/finalized-sar-release.md).
 
-**Earth AI connects to a model through the backend.** Local development uses Ollama and Ministral 3 3B. Suggested prompts and typed questions include region, story and timeline context; unavailable water data is explicitly marked. Conversations remain separate for each region during the page session. A page reload resets them. Connection failures are shown explicitly, without substituting demo answers.
+**Earth AI supports guided chat, optional model answers and place search.** Automatic
+mode falls back to deterministic answers from trusted records when the configured
+model is unavailable. Set `AI_MODE=guided` for deployment without a model. Search
+commands such as "search Calgary, Alberta" work without a selected region, pin the
+top mapped result and offer alternatives. Conversation stays visible when navigating
+between regions; reloading resets it. Guided answers can describe actual observations
+and supplied forecasts without inventing missing measurements.
 
 ### Data handoff
 
@@ -235,3 +267,18 @@ Lake Manchar, Pakistan, has sourced stories about the 2022 flooding and a sugges
 - Add or update `RegionStory` records in [stories.ts](./frontend/src/data/stories.ts) to provide event dates, location, comparison years, sources, and interpretation. Link measured event boundaries separately from the editorial locators.
 - Replace synthetic surface textures through [overlays.ts](./frontend/src/globe/overlays.ts) when dated land/water/fire rasters are available. Visibility and per-layer opacity are already independent.
 - [earthAI.ts](./frontend/src/data/earthAI.ts) calls the backend model integration. Provider configuration and credentials stay on the backend. [assistant.ts](./frontend/src/data/assistant.ts) retains shared conversation types and the unused legacy demo adapter.
+
+## Rendering and camera limits
+
+The globe renders on demand when idle and reuses dated imagery layers during
+playback. Timeline state updates are limited to about 30 per second; playback
+uses continuous globe rendering for tile uploads. Forecast panels are memoized
+so timeline ticks do not rebuild their tables and charts. The floating study-area
+readout reuses its projection coordinates and writes its position only when it
+changes by a screen pixel.
+
+The whole-Earth overview remains at 22,000 km. Wheel/pinch zoom can pull back
+to 40,000 km, giving extra context without letting Earth disappear into the distance.
+Programmatic focus destinations use the same ceiling. Camera
+collision detection stays enabled so Cesium enforces its zoom limit. Region and
+study-area focus remain available below that ceiling.

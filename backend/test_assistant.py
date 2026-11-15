@@ -16,6 +16,7 @@ def request(**overrides):
                           "start_year": 2020, "end_year": 2025} | overrides))
 
 
+@patch.dict(os.environ, {"AI_MODE":"model"})
 class AssistantTests(unittest.TestCase):
     def test_context_excludes_mock_measurements(self):
         context, sources = build_context(request(region_id="rio-grande-do-sul"))
@@ -99,6 +100,53 @@ class AssistantTests(unittest.TestCase):
         messages = json.loads(provider.call_args.args[0].data)["messages"]
         self.assertEqual(sum(len(m["content"]) for m in messages[1:-1]), 4000)
         self.assertIn("Current trusted application context", messages[-1]["content"])
+
+
+class GuidedAssistantTests(unittest.TestCase):
+    @patch.dict(os.environ,{"AI_MODE":"guided"})
+    def test_guided_mode_uses_observations_without_network(self):
+        with patch("assistant.urlopen") as provider:
+            answer=generate_answer(request(region_id="london",dataset_id="GBR_EAST_LONDON",question="How much water was measured?"))
+        provider.assert_not_called()
+        self.assertEqual(answer["mode"],"guided")
+        self.assertIn("km\u00b2",answer["text"])
+        self.assertIn("2026-11",answer["text"])
+        self.assertTrue(answer["sources"])
+        self.assertNotIn("mock",answer["text"].lower())
+
+    @patch.dict(os.environ,{"AI_MODE":"auto"})
+    def test_unavailable_or_missing_model_falls_back_quickly(self):
+        for result in (URLError("offline"),TimeoutError()):
+            with patch("assistant.urlopen",side_effect=result) as provider:
+                answer=generate_answer(request())
+            self.assertEqual(answer["mode"],"guided")
+            self.assertEqual(provider.call_count,1)
+            self.assertLessEqual(provider.call_args.kwargs["timeout"],1.5)
+        with patch("assistant.urlopen",return_value=io.BytesIO(b'{"data":[]}')):
+            self.assertEqual(generate_answer(request())["mode"],"guided")
+
+    @patch.dict(os.environ,{"AI_MODE":"auto"})
+    def test_ready_model_is_used_and_generation_failures_fall_back(self):
+        model=os.getenv("AI_MODEL","ministral-3:3b")
+        ready=lambda:io.BytesIO(json.dumps({"data":[{"id":model}]}).encode())
+        reply=io.BytesIO(b'{"choices":[{"message":{"content":"Supported answer"}}]}')
+        with patch("assistant.urlopen",side_effect=[ready(),reply]):
+            self.assertEqual(generate_answer(request())["mode"],"model")
+        for failure in (URLError("stopped"), ConnectionResetError("reset")):
+            with patch("assistant.urlopen",side_effect=[ready(),failure]):
+                self.assertEqual(generate_answer(request())["mode"],"guided")
+
+    @patch.dict(os.environ,{"AI_MODE":"guided"})
+    def test_global_help_and_forecast_are_grounded(self):
+        with patch("assistant.urlopen") as provider:
+            self.assertIn("search Calgary",generate_answer(request(region_id=None))["text"])
+            for dataset in ("GBR_EAST_LONDON","GBR_EPPING_FOREST","GBR_LONDON_VERTICAL"):
+                answer=generate_answer(request(region_id="london",dataset_id=dataset,question="Show the forecast"))
+                self.assertIn("forecast months",answer["text"])
+                self.assertIn("exploratory",answer["text"])
+        provider.assert_not_called()
+        with self.assertRaises(HTTPException):generate_answer(request(region_id=None,dataset_id="GBR_EAST_LONDON"))
+        with self.assertRaises(HTTPException):generate_answer(request(region_id="london",dataset_id="VNM_CAN_THO"))
 
 
 if __name__ == "__main__":

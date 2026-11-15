@@ -1,3 +1,4 @@
+import type { DiscoveredArticle } from "../data/articleSearch";
 import type { Region } from "../types/region";
 import type { AssistantMessage } from "../data/assistant";
 import SourceLinks from "./SourceLinks";
@@ -11,13 +12,14 @@ interface AssistantPanelProps {
   messages: AssistantMessage[];
   isAsking: boolean;
   onAsk: (question: string) => void;
+  onFocusPlace: (place: DiscoveredArticle) => void;
 }
 
 const SUGGESTIONS = [
   "What changed here?",
   "Which evidence is real?",
   "How much changed?",
-  "Explain flood data availability",
+  "Search Calgary, Alberta",
 ];
 
 export default memo(function AssistantPanel({
@@ -28,6 +30,7 @@ export default memo(function AssistantPanel({
   messages,
   isAsking,
   onAsk,
+  onFocusPlace,
 }: AssistantPanelProps) {
   const [question, setQuestion] = useState("");
   const conversationRef = useRef<HTMLDivElement>(null);
@@ -56,10 +59,10 @@ export default memo(function AssistantPanel({
             Earth AI <span>✦</span>
           </h2>
         </div>
-        <span className="mock-pill">CONTEXTUAL AI</span>
+        <span className="mock-pill">CHAT + SEARCH</span>
       </div>
       <div className="context-strip">
-        {region?.name ?? "Choose a region"}
+        {region?.name ?? "Explore any location"}
         <span>
           {startYear}–{endYear}
         </span>
@@ -79,14 +82,15 @@ export default memo(function AssistantPanel({
         role="log"
         aria-label="Conversation"
         aria-live="polite"
+        aria-busy={isAsking}
       >
         {messages.length === 0 && (
           <div className="assistant-welcome">
             <span>✦</span>
             <h3>Make sense of the change.</h3>
             <p>
-              Ask about this region, follow the evidence, or explore what the
-              available water data can tell us.
+              Type "search Calgary, Alberta" to zoom and pin a place, or select
+              a curated region to ask about its data.
             </p>
           </div>
         )}
@@ -97,7 +101,11 @@ export default memo(function AssistantPanel({
                 ? "YOU"
                 : message.error
                   ? "CONNECTION ISSUE"
-                  : "EARTH AI"}
+                  : message.mode === "guided"
+                    ? "EARTH AI / GUIDED"
+                    : message.mode === "search"
+                      ? "PLACE SEARCH"
+                      : "EARTH AI"}
             </span>
             {message.text.split("\n").map((paragraph, index) => (
               <p key={index}>
@@ -112,6 +120,22 @@ export default memo(function AssistantPanel({
                   )}
               </p>
             ))}
+            {message.places && message.places.length > 0 && (
+              <div
+                className="place-search-results"
+                aria-label="Place search results"
+              >
+                {message.places.map((place) => (
+                  <button
+                    key={place.id}
+                    onClick={() => onFocusPlace(place)}
+                    disabled={isAsking}
+                  >
+                    Zoom to {place.title}
+                  </button>
+                ))}
+              </div>
+            )}
             {message.sources && message.sources.length > 0 && (
               <SourceLinks
                 sources={message.sources}
@@ -120,14 +144,14 @@ export default memo(function AssistantPanel({
             )}
           </article>
         ))}
-        {isAsking && <p role="status">Earth AI is preparing an answer…</p>}
+        {isAsking && <p role="status">Working on your request…</p>}
       </div>
       <div className="suggested-questions">
         {SUGGESTIONS.map((question) => (
           <button
             key={question}
             onClick={() => onAsk(question)}
-            disabled={!region || isAsking}
+            disabled={isAsking}
           >
             {question} ↗
           </button>
@@ -135,28 +159,43 @@ export default memo(function AssistantPanel({
       </div>
       <form onSubmit={submit} className="assistant-form">
         <label className="sr-only" htmlFor="earth-question">
-          Ask about this region
+          Ask a question or search for a place
         </label>
         <textarea
           id="earth-question"
-          placeholder="Ask about this region…"
+          placeholder="Search Calgary, Alberta, or ask about this region"
           value={question}
           maxLength={1000}
           onChange={(event) => setQuestion(event.target.value)}
           rows={2}
-          disabled={!region || isAsking}
+          disabled={isAsking}
         />
         <button
           type="submit"
-          disabled={!question.trim() || !region || isAsking}
+          disabled={!question.trim() || isAsking}
           aria-label="Send question"
         >
-          ↑
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            aria-hidden="true"
+          >
+            <path
+              d="m6 11 6-6 6 6M12 5v14"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </button>
       </form>
       <p className="small muted assistant-note">
-        AI can make mistakes. Story locations are approximate; annual imagery
-        may miss short events. No forecast results are connected yet.
+        Guided answers work without a model. Place search needs internet access
+        and uses Wikipedia coordinates. Pins are reference locations; annual
+        imagery may miss short events.
       </p>
     </section>
   );

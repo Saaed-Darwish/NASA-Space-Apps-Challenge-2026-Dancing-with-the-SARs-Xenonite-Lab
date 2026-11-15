@@ -17,7 +17,7 @@ class WaterLayerTests(unittest.TestCase):
         self.assertTrue(any("Planetary Computer" in s["publisher"] for s in sources))
 
     def test_catalogues_are_scoped_and_not_reused_for_other_hazards(self):
-        for dataset_id in ("BRA_PORTO_VELHO","VNM_CAN_THO"):
+        for dataset_id in ("BRA_PORTO_VELHO","VNM_CAN_THO","GBR_EAST_LONDON","ITA_VENICE"):
             status,_,data=asyncio.run(invoke(path=f"/api/datasets/{dataset_id}/water-changes"))
             self.assertEqual(status,200)
             self.assertEqual(data["status"],"available")
@@ -28,6 +28,33 @@ class WaterLayerTests(unittest.TestCase):
             self.assertEqual(data["status"],"unavailable")
             self.assertEqual(data["comparisons"],[])
         self.assertEqual(asyncio.run(invoke(path="/api/datasets/UNKNOWN/water-changes"))[0],404)
+
+    def test_london_mosaic_components_are_traced_and_same_pass(self):
+        layers=[l for l in LAYERS.values() if l.datasetId=="GBR_EAST_LONDON"]
+        self.assertEqual(len(layers),3)
+        for layer in layers:
+            for source in (layer.before,layer.after):
+                self.assertEqual(len(source.components),2)
+                self.assertEqual(source.relativeOrbit,81)
+                self.assertEqual(source.orbitState,"descending")
+                data=layer.model_dump(mode="json")
+                data["before"]["components"][1]["datetime"]=data["after"]["datetime"]
+                with self.assertRaises(ValidationError):WaterLayer.model_validate(data)
+
+    def test_venice_uses_source_aoi_track_and_serves_all_images(self):
+        from sar_data import CATALOG
+        layers=[l for l in LAYERS.values() if l.datasetId=="ITA_VENICE"]
+        self.assertEqual(len(layers),3)
+        for layer in layers:
+            self.assertEqual(layer.bounds,CATALOG["ITA_VENICE"].bounds)
+            self.assertEqual(layer.before.relativeOrbit,95)
+            self.assertEqual(layer.after.relativeOrbit,95)
+            self.assertEqual(layer.before.orbitState,"descending")
+            self.assertGreaterEqual(layer.summary.validFraction,.95)
+            self.assertTrue(any(note.startswith("Lagoon conditions:") for note in layer.limitations))
+            status,_,png=asyncio.run(invoke(path=f"/api/water-changes/{layer.id}/{layer.pngSha256}.png"))
+            self.assertEqual(status,200)
+            self.assertEqual(sha256(png).hexdigest(),layer.pngSha256)
 
     def test_images_are_fixed_content_addressed_pngs(self):
         layer=next(iter(LAYERS.values()))

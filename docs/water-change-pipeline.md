@@ -1,6 +1,6 @@
 # Experimental spatial water change
 
-Real public Sentinel-1 RTC imagery now supplies six spatial comparisons for the two
+Real public Sentinel-1 RTC imagery now supplies twelve spatial comparisons for four
 water datasets. The offline pipeline discovers scenes, reads study-area COG windows,
 aligns them and exports overlays. FastAPI serves validated precomputed files without
 GDAL, uploads, remote fetching, or request-time processing.
@@ -15,14 +15,42 @@ GDAL, uploads, remote fetching, or request-time processing.
 | Can Tho | 2024-03-11 | 2024-06-15 | 2.49 km² | 4.98 km² |
 | Can Tho | 2024-06-15 | 2024-09-19 | 3.09 km² | 10.16 km² |
 | Can Tho | 2024-09-19 | 2024-11-18 | 18.97 km² | 1.00 km² |
+| East London | 2024-03-16 | 2024-06-08 | 0.000 km² | 0.105 km² |
+| East London | 2024-06-08 | 2024-09-24 | 0.026 km² | 0.000 km² |
+| East London | 2024-09-24 | 2024-10-30 | 0.993 km² | 0.000 km² |
+| Venice lagoon | 2024-03-17 | 2024-06-09 | 1.539 km² | 0.641 km² |
+| Venice lagoon | 2024-06-09 | 2024-09-13 | 0.291 km² | 21.795 km² |
+| Venice lagoon | 2024-09-13 | 2024-11-12 | 9.756 km² | 3.761 km² |
 
-All eight source acquisitions are Sentinel-1A descending passes: relative orbit 156
-for Madeira River, 18 for Can Tho. There is no spatial layer for every spreadsheet
+The original eight source acquisitions are Sentinel-1A descending passes: relative
+orbit 156 for Madeira River, 18 for Can Tho. London's four acquisition dates use
+descending orbit 81, matching the workbook track. Each date mosaics two adjacent
+same-pass slices because a diagonal scene boundary cuts through the study area.
+The London AOI is `[0.00, 51.48, 0.12, 51.54]` (west, south, east, north), as
+supplied in the completed workbook. Common valid support is 98.39% on all three
+pairs after excluding invalid filter neighbourhoods. These are independent RTC
+classifications, not pixel locations reconstructed from the workbook totals. There is no spatial layer for every spreadsheet
 row or every year. Forest and subsidence datasets do not inherit water layers.
+
+Venice uses four Sentinel-1A descending orbit-95 acquisitions over the supplied
+`[12.29, 45.41, 12.38, 45.47]` AOI. Each pair has 98.26% common usable support
+at approximately 30 m. Wind-driven surface roughness can strongly change water
+backscatter ([NASA SAR overview](https://science.nasa.gov/mission/nisar/get-to-know-sar/)).
+Tidal and lagoon conditions also require interpretation. Large apparent losses are
+threshold-classification differences, not evidence that the lagoon drained.
+A lagoon-specific note appears beside the legend and in each artifact's limitations.
+Persistent-water and slope exclusions differ from the workbook; these masks do not
+locate flooded streets, measure water volume or reproduce the spreadsheet totals.
+
+To reproduce Venice:
+
+```powershell
+backend/.venv-raster/Scripts/python backend/prepare_water_layers.py --dataset ITA_VENICE --year 2024 --months 3,6,9,11 --relative-orbit 95 --orbit-state descending
+```
 
 ## Using the app
 
-Select Madeira River or Can Tho, open Analyze with its water dataset selected, and
+Select Madeira River, Can Tho, London or Venice, open Analyze with its water dataset selected, and
 find **Spatial water change**. Choose a **Spatial comparison** or **View latest
 available comparison**. The latter selects its end date on the imagery timeline
 where supported, while the workbook snaps to its nearest real acquisition.
@@ -56,11 +84,25 @@ backend/.venv-raster/Scripts/python -m pip install -r backend/requirements-raste
 backend/.venv-raster/Scripts/python backend/prepare_water_layers.py --dataset all --year 2024
 ```
 
-Options: `--dataset BRA_PORTO_VELHO` or `VNM_CAN_THO` for one area; `--year` to
+Options: `--dataset BRA_PORTO_VELHO`, `VNM_CAN_THO`, `GBR_EAST_LONDON` or `ITA_VENICE` for one area; `--year` to
 request another year; `--months 3,6,9,11` (default) to choose 2–12 months;
 `--resolution 30` (default) for approximate metre spacing. Processing rejects more
 than two million destination pixels, missing compatible acquisitions, or common
 usable coverage below 95%. No substitute imagery is fabricated.
+
+To reproduce London with the workbook's track:
+
+```powershell
+backend/.venv-raster/Scripts/python backend/prepare_water_layers.py --dataset GBR_EAST_LONDON --year 2024 --months 3,6,9,11 --relative-orbit 81 --orbit-state descending
+```
+
+The month arguments are targets; actual dates are chosen from compatible complete
+acquisitions within 20 days. The pipeline screens the union of scene footprints,
+not just their bounding boxes, before reading raster data. Same-pass components
+are grouped by satellite, direction, relative orbit and absolute orbit, with a
+maximum 120-second acquisition span. Each component's original STAC ID, unsigned
+asset URL and crop hash remain in the manifest. The API checks component pass
+consistency. New cache files use short date/hash names for Windows paths.
 
 Source crops and metadata under `backend/data/rasters/` are ignored by Git. Cached
 crops are checked against their hash and requested grid before reuse. Small processed
@@ -76,7 +118,9 @@ a region/version check; the workbook did not generate these raster products.
 ## Method and limits
 
 1. Match IW VV acquisitions by satellite, relative orbit and pass direction.
-2. Average linear gamma-0 power onto one identical north-up EPSG:4326 grid at about
+2. Align adjacent slices from one overpass to the analysis grid, merging valid
+   data and averaging linear power only where slices overlap. Preserve missing cells.
+   Average linear gamma-0 power onto one identical north-up EPSG:4326 grid at about
    30 m spacing. Reproject the pixels, not only their bounds.
 3. Convert explicitly declared power to dB; exclude zero/non-finite/NoData cells.
 4. Apply a 3×3 median. Exclude every output whose neighbourhood touches invalid

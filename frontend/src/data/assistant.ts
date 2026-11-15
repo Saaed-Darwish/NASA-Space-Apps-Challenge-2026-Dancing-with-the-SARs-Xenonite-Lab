@@ -6,6 +6,7 @@ import {
 } from "../data/demo";
 import { readingAtYear } from "../data/history";
 import type { RegionStory, StorySource } from "../data/stories";
+import type { DiscoveredArticle } from "./articleSearch";
 import type { Region } from "../types/region";
 
 export interface AssistantMessage {
@@ -16,6 +17,8 @@ export interface AssistantMessage {
   observationYear?: number;
   model?: string;
   error?: boolean;
+  mode?: "guided" | "model" | "search";
+  places?: DiscoveredArticle[];
 }
 
 export interface AssistantContext {

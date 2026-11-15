@@ -2,6 +2,7 @@
 
 import json
 import os
+import re
 import socket
 from pathlib import Path
 from typing import Literal
@@ -45,7 +46,7 @@ class ChatTurn(BaseModel):
 
 class ChatRequest(BaseModel):
     question: str = Field(min_length=1, max_length=1000)
-    region_id: str = Field(min_length=1, max_length=80)
+    region_id: str | None = Field(default=None, min_length=1, max_length=80)
     story_id: str | None = Field(default=None, max_length=100)
     dataset_id: str | None = Field(default=None, max_length=80)
     observation_id: str | None = Field(default=None, max_length=120)
@@ -64,6 +65,10 @@ class ChatRequest(BaseModel):
 
 
 def build_context(body: ChatRequest) -> tuple[dict, list[dict]]:
+    if body.region_id is None:
+        if body.story_id or body.dataset_id or body.observation_id:
+            raise HTTPException(422, "Select a region before requesting its story or observations")
+        return {"region":None,"stories":[],"sources":[],"sar_observation":None}, []
     region = next((r for r in CATALOG["regions"] if r["id"] == body.region_id), None)
     if region is None:
         raise HTTPException(404, "Unknown study region")
@@ -112,8 +117,7 @@ def build_context(body: ChatRequest) -> tuple[dict, list[dict]]:
     return context, sources
 
 
-def generate_answer(body: ChatRequest) -> dict:
-    context, sources = build_context(body)
+def model_answer(body: ChatRequest, context: dict, sources: list[dict]) -> dict:
     base_url = os.getenv("AI_BASE_URL", "http://127.0.0.1:11434/v1").rstrip("/")
     model = os.getenv("AI_MODEL", "ministral-3:3b")
     key = os.getenv("AI_API_KEY", "")
@@ -154,8 +158,90 @@ def generate_answer(body: ChatRequest) -> dict:
         raise HTTPException(504, "The AI model took too long to respond. Please try again.") from error
     except URLError as error:
         raise HTTPException(503, "Cannot reach the AI model. Start Ollama and check the backend AI_BASE_URL.") from error
+    except OSError as error:
+        raise HTTPException(503, "The AI provider connection failed.") from error
     except (KeyError, IndexError, TypeError, ValueError) as error:
         raise HTTPException(502, "The AI provider returned an invalid response.") from error
     # Link only supplied sources cited in the answer; URLs never come from the model.
     cited = [s for s in sources if f"[{s['id']}]" in answer]
-    return {"text": answer.strip(), "sources": cited, "model": model, "observationYear": body.year}
+    return {"text": answer.strip(), "sources": cited, "model": model, "observationYear": body.year, "mode":"model"}
+
+
+def guided_answer(body, context, sources):
+    """Deterministic answers from trusted app records; no model-generated facts."""
+    question = body.question.lower()
+    region, sar = context["region"], context["sar_observation"]
+    cited = []
+    if region is None:
+        text = 'Try "search Calgary, Alberta" to find a place and pin it on the map. Select a curated region to ask about its observations, forecasts, stories or sources. Place searches do not add SAR coverage.'
+    elif re.search(r"\b(forecast|predict|future)\w*",question):
+        if sar:
+            from forecast_data import get_forecast
+            artifact = get_forecast(sar["dataset"]["id"], point_id=sar["observation"].get("pointId"))
+            future = artifact.get("forecast", [])
+            if future:
+                first = future[0]
+                text = (f'{sar["dataset"]["name"]}: {len(future)} forecast months, {future[0]["month"]} to {future[-1]["month"]}. '
+                        f'The first monthly estimate is {first["mean"]:.3f} {artifact["unit"]}. '
+                        'Open Forecast for the full series, ranges and model limitations. These are exploratory predictions, not confirmed future conditions or warnings.')
+                cited = [s for s in sources if s["title"]==sar["dataset"]["source"]["file"]]
+            else: text = "No forecast export is available for the selected dataset."
+        else: text = "Select a region with SAR observations and a data type to inspect its supplied forecast."
+    elif re.search(r"source|evidence|real|reliab|confiden|accura",question):
+        text = ('Annual EOX mosaics provide landscape context through 2025; I have not inspected their pixels. '
+                'Stories link to published accounts; their pins are approximate locators. '
+                'SAR observations are source-traceable indicators. Coverage and quality flags are not confidence scores. '
+                'Spatial water overlays are independent experimental classifications, not workbook totals or verified flood footprints.')
+        cited = sources[:8]
+    elif sar and re.search(r"measur|how much|area|water|flood|forest|subsiden|displace|observ|data|reading",question):
+        dataset, row = sar["dataset"], sar["observation"]
+        text = f'{dataset["name"]}: {dataset["metric"]} = {row["value"]:.3f} {dataset["unit"]} on {row["date"]}.'
+        if row.get("pointId"): text += f' Measurement point ID: {row["pointId"]}.'
+        if row.get("coverage") is not None: text += f' Acquisition coverage: {row["coverage"]:.1%}.'
+        text += ' Quality filter: ' + ('passed.' if row["qualityPass"] else 'not passed; interpret cautiously.')
+        text += ' ' + dataset["note"] + f' The optical map year ({body.year}) may differ from this acquisition date.'
+        cited = [s for s in sources if s["title"]==dataset["source"]["file"]]
+    elif sar is None and re.search(r"measur|how much|area|water|flood|forest|subsiden|displace|observ|data|reading",question):
+        text = f'{region["name"]} has no selected SAR dataset. Select an available data type in Analyze, or choose a region marked SAR observations available. Story-only regions do not have measured SAR values.'
+    elif re.search(r"chang|compar|explain|story|stories|happen|summary|look",question):
+        stories = context["stories"]
+        story = next((s for s in stories if s["id"]==body.story_id), stories[0] if stories else None)
+        if story:
+            text = f'{region["name"]}: {story["summary"]}\n{story["lookFor"]}\n{story["limitation"]}\nThis is sourced historical context; the optical map is showing {body.year}.'
+            cited = [s for s in sources if s["id"] in story["source_ids"]]
+        else: text = region["description"] + ' Select a data type in Analyze to inspect its dated observations.'
+    else:
+        text = ('I can look up places and explain the selected region using app records. Try "search Calgary, Alberta", '
+                '"How much changed?", "Explain this story", "Which evidence is real?" or "Show the forecast". '
+                'Guided mode supports these topics rather than open-ended AI conversation.')
+    if cited: text += "\n" + " ".join('['+s["id"]+']' for s in cited)
+    return {"text":text,"sources":cited,"mode":"guided","model":"guided","observationYear":body.year}
+
+
+def model_available():
+    """Fast bounded readiness check; model settings are server-controlled."""
+    base = os.getenv("AI_BASE_URL", "http://127.0.0.1:11434/v1").rstrip("/")
+    headers = {}
+    if os.getenv("AI_API_KEY"): headers["Authorization"] = "Bearer " + os.environ["AI_API_KEY"]
+    try:
+        with urlopen(Request(base+"/models",headers=headers),timeout=1.5) as response:
+            raw=response.read(MAX_PROVIDER_BYTES+1)
+        if len(raw)>MAX_PROVIDER_BYTES: return False
+        models=json.loads(raw).get("data",[])
+        return any(isinstance(m,dict) and m.get("id")==os.getenv("AI_MODEL","ministral-3:3b") for m in models)
+    except (OSError, ValueError, TypeError, AttributeError):
+        return False
+
+
+def generate_answer(body: ChatRequest) -> dict:
+    context, sources = build_context(body)
+    mode = os.getenv("AI_MODE","auto").lower()
+    if mode not in ("auto","guided","model"):
+        raise HTTPException(503,"Invalid AI_MODE configuration")
+    if mode=="guided" or context["region"] is None or (mode=="auto" and not model_available()):
+        return guided_answer(body,context,sources)
+    try:
+        return model_answer(body,context,sources)
+    except HTTPException:
+        if mode=="model": raise
+        return guided_answer(body,context,sources)

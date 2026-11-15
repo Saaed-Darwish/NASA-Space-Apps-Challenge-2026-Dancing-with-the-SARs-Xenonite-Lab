@@ -64,7 +64,7 @@
       "latitude": 51.51,
       "longitude": -0.08,
       "altitude": 80000,
-      "description": "Explore East London / Thames Barrier / Royal Docks water indicators, Epping Forest radar backscatter and eight London subsidence points. Point Metadata and Map Coordinates supply matching WGS84 subsidence locations and approximate area names. The workbook explicitly leaves the water and forest AOI centroids and boundaries unspecified.",
+      "description": "Explore East London / Thames Barrier / Royal Docks water indicators, Epping Forest radar backscatter and eight London subsidence points. Point Metadata and Map Coordinates supply matching WGS84 subsidence locations and approximate area names. The completed workbook supplies the original East London water and Epping Forest study rectangles and their centroids; switch data types to explore each study area.",
       "zoom_level": "regional",
       "waterMonitoring": true,
       "datasetIds": [

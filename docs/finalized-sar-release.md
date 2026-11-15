@@ -33,9 +33,14 @@ Venice lagoon and Belluno. Forest observations in Brazil/Vietnam remain disturba
 area in km²; Italy/London forest observations are mean VH in dB. All forest
 forecasts predict VH in dB, never forest-loss area.
 
-Only source-supplied study rectangles are displayed. **London water and forest
-boundaries are unavailable**; subsidence-point coordinates are not reused as their
-area boundaries. Venice and London subsidence coordinates now come directly from
+Only source-supplied study rectangles are displayed. London's completed coordinate
+workbook documents the original GEE rectangles in Map Coordinates (west, south,
+east, north): East London water `[0.00, 51.48, 0.12, 51.54]`; Epping Forest
+`[0.00, 51.60, 0.08, 51.69]`. The importer checks their centroids against both
+Map Coordinates and every acquisition's added WGS84 coordinates. These coordinates
+identify aggregate AOIs, not affected pixels. Older missing-coordinate statements
+in Data Guide and Validation Notes are superseded by these explicit rectangles.
+Subsidence-point coordinates are not reused as area boundaries. Venice and London subsidence coordinates now come directly from
 the finalized workbooks. Selected-point pins are small, pink and unlabelled; friendly
 point names and original IDs remain in the panel. These represent 100 m grid samples,
 not individual buildings. No unsupported continuous subsidence surface is drawn.
@@ -43,15 +48,23 @@ not individual buildings. No unsupported continuous subsidence surface is drawn.
 The six existing Madeira/Can Tho spatial comparisons remain independent experimental
 radar classifications. Rebinding them to the finalized workbook hashes required
 all original water IDs, dates, values, coverage, quality flags and bounds to remain
-identical. The import verified this before changing their metadata. No new spatial
-water layers are fabricated for London or Venice.
+identical. The import verified this before changing their metadata. London now has three
+independently processed 2024 RTC comparisons (eight adjacent slices across four
+dates), using its completed AOI and descending orbit 81. See
+[the spatial pipeline](./water-change-pipeline.md). Venice now has three independently processed 2024 comparisons on descending
+orbit 95, using its supplied lagoon AOI and retaining an explicit lagoon-condition
+interpretation note. Workbook aggregates are never converted into synthetic pixel maps.
+
+London forecast exports still lack geometry. Their unchanged histories are checked
+against the completed workbook; displayed study geometry comes from that workbook,
+with this distinction recorded in forecast provenance.
 
 ## Import and serve
 
 Run the dependency-free importer with exact source paths:
 
 ```powershell
-backend/.venv/Scripts/python backend/import_finalized_sar.py --brazil "C:/path/Brazil.xlsx" --vietnam "C:/path/Vietnam.xlsx" --italy "C:/path/Italy.xlsx" --london "C:/path/London_With_Coordinates.xlsx"
+backend/.venv/Scripts/python backend/import_finalized_sar.py --brazil "C:/path/Brazil.xlsx" --vietnam "C:/path/Vietnam.xlsx" --italy "C:/path/Italy.xlsx" --london "C:/path/London_Coordinates_Completed.xlsx"
 ```
 
 [import_sar.py](../backend/import_sar.py) also delegates to this importer when

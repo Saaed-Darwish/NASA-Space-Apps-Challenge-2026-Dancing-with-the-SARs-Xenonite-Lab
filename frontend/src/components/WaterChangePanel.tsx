@@ -1,4 +1,5 @@
 import { memo, useEffect, useMemo, useState } from "react";
+import WaterChangeLegend from "./WaterChangeLegend";
 import type { SarDataset } from "../data/sar";
 import {
   comparisonForDate,
@@ -92,7 +93,8 @@ export default memo(function WaterChangePanel({
       aria-label="Spatial water change"
     >
       <div className="section-label">
-        SPATIAL WATER CHANGE <span className="sar-badge">EXPERIMENTAL</span>
+        Spatial water change{" "}
+        {!chosen && <span className="experimental-tag">Experimental</span>}
       </div>
       {status === "loading" && (
         <p role="status" className="small">
@@ -127,8 +129,7 @@ export default memo(function WaterChangePanel({
             Show water gain/loss overlay
           </label>
           <p className="small muted">
-            Automatically shown within processed comparison dates and hidden
-            outside them.
+            Follows the timeline within available comparison dates.
           </p>
           <label className="sar-field">
             Spatial comparison
@@ -163,20 +164,14 @@ export default memo(function WaterChangePanel({
           )}
           {chosen && (
             <>
-              <p className="small water-change-legend">
-                <span>
-                  <i className="water-gain-swatch" />
-                  Candidate water gain
-                </span>
-                <span>
-                  <i className="water-loss-swatch" />
-                  Candidate water loss
-                </span>
-              </p>
-              <p className="small">
-                Radar comparison: {chosen.beforeDate} → {chosen.afterDate}.
-                Transparent pixels are unchanged or excluded.
-              </p>
+              <WaterChangeLegend comparison={chosen} />
+              {chosen.limitations
+                .filter((note) => note.startsWith("Lagoon conditions:"))
+                .map((note) => (
+                  <p className="small sar-caveat" key={note}>
+                    {note}
+                  </p>
+                ))}
               {observationDate !== chosen.afterDate && (
                 <p className="small muted">
                   The displayed workbook acquisition is{" "}
@@ -185,7 +180,9 @@ export default memo(function WaterChangePanel({
                 </p>
               )}
               <label className="sar-field">
-                Water overlay opacity · {opacity}%
+                <span className="control-heading">
+                  Water overlay opacity <output>{opacity}%</output>
+                </span>
                 <input
                   aria-label="Water overlay opacity"
                   type="range"
@@ -197,14 +194,6 @@ export default memo(function WaterChangePanel({
                 />
               </label>
               <dl className="sar-metrics">
-                <div>
-                  <dt>Candidate gain</dt>
-                  <dd>{number(chosen.summary.gainedKm2)} km²</dd>
-                </div>
-                <div>
-                  <dt>Candidate loss</dt>
-                  <dd>{number(chosen.summary.lostKm2)} km²</dd>
-                </div>
                 <div>
                   <dt>Common usable area</dt>
                   <dd>

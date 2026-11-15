@@ -4,7 +4,7 @@ import { isRecord, safeExternalUrl } from "./validation.ts";
 
 export interface EarthAIRequest {
   question: string;
-  region_id: string;
+  region_id?: string;
   story_id?: string;
   dataset_id?: string;
   observation_id?: string;
@@ -27,7 +27,7 @@ export async function askEarthAI(
     });
   } catch {
     throw new Error(
-      "Earth AI could not be reached. Check that the backend and local model are running, then try again.",
+      "Earth AI could not be reached. Check that the backend is running, then try again.",
     );
   }
   const result = await response.json().catch(() => null);
@@ -81,6 +81,10 @@ export function parseEarthAIResponse(
     });
   return {
     text: result.text,
+    mode:
+      result.mode === "guided" || result.mode === "model"
+        ? result.mode
+        : undefined,
     sources,
     model:
       typeof result.model === "string" ? result.model.slice(0, 200) : undefined,
