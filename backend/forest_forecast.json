@@ -1,0 +1,7067 @@
+{
+ "label": "VH forest backscatter indicator (dB), expected range; drops may indicate disturbance",
+ "units": "dB",
+ "caveat": "Indicator over a fixed 2021 forest mask, May\u2013October only. Not mapped forest loss; flags are candidates to check (snow, moisture or processing can also cause drops).",
+ "generated": "2026-11-15 15:44",
+ "regions": {
+  "BRA_PORTO_VELHO_FOREST": {
+   "location": null,
+   "history": [
+    {
+     "date": "2019-01-11",
+     "db": -14.29,
+     "expected": -14.275,
+     "z": -0.18,
+     "flagged": false
+    },
+    {
+     "date": "2019-01-23",
+     "db": -14.444,
+     "expected": -14.275,
+     "z": -0.8,
+     "flagged": false
+    },
+    {
+     "date": "2019-02-04",
+     "db": -13.978,
+     "expected": -14.104,
+     "z": 0.39,
+     "flagged": false
+    },
+    {
+     "date": "2019-02-16",
+     "db": -14.126,
+     "expected": -14.104,
+     "z": -0.2,
+     "flagged": false
+    },
+    {
+     "date": "2019-02-28",
+     "db": -13.886,
+     "expected": -14.105,
+     "z": 0.77,
+     "flagged": false
+    },
+    {
+     "date": "2019-03-12",
+     "db": -14.383,
+     "expected": -14.193,
+     "z": -0.89,
+     "flagged": false
+    },
+    {
+     "date": "2019-03-24",
+     "db": -14.052,
+     "expected": -14.194,
+     "z": 0.46,
+     "flagged": false
+    },
+    {
+     "date": "2019-04-05",
+     "db": -13.897,
+     "expected": -14.179,
+     "z": 1.03,
+     "flagged": false
+    },
+    {
+     "date": "2019-04-17",
+     "db": -14.236,
+     "expected": -14.179,
+     "z": -0.35,
+     "flagged": false
+    },
+    {
+     "date": "2019-04-29",
+     "db": -14.154,
+     "expected": -14.179,
+     "z": -0.02,
+     "flagged": false
+    },
+    {
+     "date": "2019-05-05",
+     "db": -14.375,
+     "expected": -14.262,
+     "z": -0.58,
+     "flagged": false
+    },
+    {
+     "date": "2019-05-11",
+     "db": -14.33,
+     "expected": -14.262,
+     "z": -0.39,
+     "flagged": false
+    },
+    {
+     "date": "2019-05-17",
+     "db": -14.709,
+     "expected": -14.262,
+     "z": -1.93,
+     "flagged": false
+    },
+    {
+     "date": "2019-05-23",
+     "db": -14.203,
+     "expected": -14.262,
+     "z": 0.12,
+     "flagged": false
+    },
+    {
+     "date": "2019-05-29",
+     "db": -14.511,
+     "expected": -14.263,
+     "z": -1.12,
+     "flagged": false
+    },
+    {
+     "date": "2019-06-04",
+     "db": -14.522,
+     "expected": -14.319,
+     "z": -0.94,
+     "flagged": false
+    },
+    {
+     "date": "2019-06-10",
+     "db": -14.461,
+     "expected": -14.319,
+     "z": -0.69,
+     "flagged": false
+    },
+    {
+     "date": "2019-06-16",
+     "db": -14.412,
+     "expected": -14.319,
+     "z": -0.5,
+     "flagged": false
+    },
+    {
+     "date": "2019-06-22",
+     "db": -14.712,
+     "expected": -14.319,
+     "z": -1.71,
+     "flagged": false
+    },
+    {
+     "date": "2019-06-28",
+     "db": -14.25,
+     "expected": -14.319,
+     "z": 0.17,
+     "flagged": false
+    },
+    {
+     "date": "2019-07-04",
+     "db": -14.824,
+     "expected": -14.684,
+     "z": -0.68,
+     "flagged": false
+    },
+    {
+     "date": "2019-07-10",
+     "db": -14.792,
+     "expected": -14.684,
+     "z": -0.55,
+     "flagged": false
+    },
+    {
+     "date": "2019-07-16",
+     "db": -14.805,
+     "expected": -14.684,
+     "z": -0.61,
+     "flagged": false
+    },
+    {
+     "date": "2019-07-22",
+     "db": -14.706,
+     "expected": -14.684,
+     "z": -0.21,
+     "flagged": false
+    },
+    {
+     "date": "2019-07-28",
+     "db": -15.115,
+     "expected": -14.685,
+     "z": -1.86,
+     "flagged": false
+    },
+    {
+     "date": "2019-08-03",
+     "db": -14.69,
+     "expected": -14.769,
+     "z": 0.2,
+     "flagged": false
+    },
+    {
+     "date": "2019-08-09",
+     "db": -15.033,
+     "expected": -14.769,
+     "z": -1.19,
+     "flagged": false
+    },
+    {
+     "date": "2019-08-15",
+     "db": -15.156,
+     "expected": -14.769,
+     "z": -1.69,
+     "flagged": false
+    },
+    {
+     "date": "2019-08-21",
+     "db": -14.518,
+     "expected": -14.769,
+     "z": 0.9,
+     "flagged": false
+    },
+    {
+     "date": "2019-08-27",
+     "db": -14.72,
+     "expected": -14.769,
+     "z": 0.08,
+     "flagged": false
+    },
+    {
+     "date": "2019-09-02",
+     "db": -14.847,
+     "expected": -14.584,
+     "z": -1.18,
+     "flagged": false
+    },
+    {
+     "date": "2019-09-08",
+     "db": -14.744,
+     "expected": -14.584,
+     "z": -0.77,
+     "flagged": false
+    },
+    {
+     "date": "2019-09-14",
+     "db": -15.087,
+     "expected": -14.584,
+     "z": -2.16,
+     "flagged": false
+    },
+    {
+     "date": "2019-09-20",
+     "db": -14.728,
+     "expected": -14.584,
+     "z": -0.7,
+     "flagged": false
+    },
+    {
+     "date": "2019-10-02",
+     "db": -14.283,
+     "expected": -14.464,
+     "z": 0.62,
+     "flagged": false
+    },
+    {
+     "date": "2019-10-08",
+     "db": -14.94,
+     "expected": -14.464,
+     "z": -2.05,
+     "flagged": false
+    },
+    {
+     "date": "2019-10-14",
+     "db": -14.037,
+     "expected": -14.464,
+     "z": 1.61,
+     "flagged": false
+    },
+    {
+     "date": "2019-10-20",
+     "db": -14.876,
+     "expected": -14.464,
+     "z": -1.78,
+     "flagged": false
+    },
+    {
+     "date": "2019-10-26",
+     "db": -14.771,
+     "expected": -14.465,
+     "z": -1.36,
+     "flagged": false
+    },
+    {
+     "date": "2019-11-01",
+     "db": -14.268,
+     "expected": -14.439,
+     "z": 0.57,
+     "flagged": false
+    },
+    {
+     "date": "2019-11-07",
+     "db": -14.265,
+     "expected": -14.439,
+     "z": 0.59,
+     "flagged": false
+    },
+    {
+     "date": "2019-11-13",
+     "db": -14.876,
+     "expected": -14.439,
+     "z": -1.88,
+     "flagged": false
+    },
+    {
+     "date": "2019-11-19",
+     "db": -14.154,
+     "expected": -14.439,
+     "z": 1.04,
+     "flagged": false
+    },
+    {
+     "date": "2019-11-25",
+     "db": -14.865,
+     "expected": -14.44,
+     "z": -1.84,
+     "flagged": false
+    },
+    {
+     "date": "2019-12-01",
+     "db": -14.698,
+     "expected": -14.305,
+     "z": -1.71,
+     "flagged": false
+    },
+    {
+     "date": "2019-12-13",
+     "db": -14.503,
+     "expected": -14.306,
+     "z": -0.92,
+     "flagged": false
+    },
+    {
+     "date": "2019-12-19",
+     "db": -13.868,
+     "expected": -14.306,
+     "z": 1.66,
+     "flagged": false
+    },
+    {
+     "date": "2019-12-25",
+     "db": -14.262,
+     "expected": -14.306,
+     "z": 0.06,
+     "flagged": false
+    },
+    {
+     "date": "2019-12-31",
+     "db": -14.276,
+     "expected": -14.306,
+     "z": 0.01,
+     "flagged": false
+    },
+    {
+     "date": "2020-01-06",
+     "db": -14.239,
+     "expected": -14.286,
+     "z": 0.07,
+     "flagged": false
+    },
+    {
+     "date": "2020-01-12",
+     "db": -14.558,
+     "expected": -14.286,
+     "z": -1.22,
+     "flagged": false
+    },
+    {
+     "date": "2020-01-18",
+     "db": -14.373,
+     "expected": -14.287,
+     "z": -0.47,
+     "flagged": false
+    },
+    {
+     "date": "2020-01-24",
+     "db": -14.58,
+     "expected": -14.287,
+     "z": -1.31,
+     "flagged": false
+    },
+    {
+     "date": "2020-01-30",
+     "db": -14.375,
+     "expected": -14.287,
+     "z": -0.47,
+     "flagged": false
+    },
+    {
+     "date": "2020-02-05",
+     "db": -14.573,
+     "expected": -14.116,
+     "z": -1.97,
+     "flagged": false
+    },
+    {
+     "date": "2020-02-11",
+     "db": -13.98,
+     "expected": -14.116,
+     "z": 0.43,
+     "flagged": false
+    },
+    {
+     "date": "2020-02-17",
+     "db": -14.245,
+     "expected": -14.116,
+     "z": -0.64,
+     "flagged": false
+    },
+    {
+     "date": "2020-02-23",
+     "db": -13.986,
+     "expected": -14.116,
+     "z": 0.41,
+     "flagged": false
+    },
+    {
+     "date": "2020-02-29",
+     "db": -14.107,
+     "expected": -14.116,
+     "z": -0.08,
+     "flagged": false
+    },
+    {
+     "date": "2020-03-06",
+     "db": -14.271,
+     "expected": -14.205,
+     "z": -0.39,
+     "flagged": false
+    },
+    {
+     "date": "2020-03-12",
+     "db": -14.218,
+     "expected": -14.205,
+     "z": -0.17,
+     "flagged": false
+    },
+    {
+     "date": "2020-03-18",
+     "db": -14.293,
+     "expected": -14.205,
+     "z": -0.47,
+     "flagged": false
+    },
+    {
+     "date": "2020-03-24",
+     "db": -14.414,
+     "expected": -14.205,
+     "z": -0.96,
+     "flagged": false
+    },
+    {
+     "date": "2020-04-05",
+     "db": -14.448,
+     "expected": -14.19,
+     "z": -1.16,
+     "flagged": false
+    },
+    {
+     "date": "2020-04-11",
+     "db": -14.024,
+     "expected": -14.19,
+     "z": 0.56,
+     "flagged": false
+    },
+    {
+     "date": "2020-04-17",
+     "db": -14.343,
+     "expected": -14.191,
+     "z": -0.73,
+     "flagged": false
+    },
+    {
+     "date": "2020-04-23",
+     "db": -13.978,
+     "expected": -14.191,
+     "z": 0.74,
+     "flagged": false
+    },
+    {
+     "date": "2020-04-29",
+     "db": -14.148,
+     "expected": -14.191,
+     "z": 0.06,
+     "flagged": false
+    },
+    {
+     "date": "2020-05-05",
+     "db": -14.356,
+     "expected": -14.274,
+     "z": -0.45,
+     "flagged": false
+    },
+    {
+     "date": "2020-05-17",
+     "db": -14.217,
+     "expected": -14.274,
+     "z": 0.11,
+     "flagged": false
+    },
+    {
+     "date": "2020-05-23",
+     "db": -14.093,
+     "expected": -14.274,
+     "z": 0.62,
+     "flagged": false
+    },
+    {
+     "date": "2020-05-29",
+     "db": -14.307,
+     "expected": -14.274,
+     "z": -0.25,
+     "flagged": false
+    },
+    {
+     "date": "2020-06-04",
+     "db": -14.5,
+     "expected": -14.33,
+     "z": -0.8,
+     "flagged": false
+    },
+    {
+     "date": "2020-06-10",
+     "db": -14.07,
+     "expected": -14.331,
+     "z": 0.94,
+     "flagged": false
+    },
+    {
+     "date": "2020-06-16",
+     "db": -13.973,
+     "expected": -14.331,
+     "z": 1.33,
+     "flagged": false
+    },
+    {
+     "date": "2020-06-22",
+     "db": -14.359,
+     "expected": -14.331,
+     "z": -0.23,
+     "flagged": false
+    },
+    {
+     "date": "2020-06-28",
+     "db": -14.476,
+     "expected": -14.331,
+     "z": -0.7,
+     "flagged": false
+    },
+    {
+     "date": "2020-07-04",
+     "db": -14.329,
+     "expected": -14.696,
+     "z": 1.37,
+     "flagged": false
+    },
+    {
+     "date": "2020-07-10",
+     "db": -14.533,
+     "expected": -14.696,
+     "z": 0.54,
+     "flagged": false
+    },
+    {
+     "date": "2020-07-16",
+     "db": -14.397,
+     "expected": -14.696,
+     "z": 1.1,
+     "flagged": false
+    },
+    {
+     "date": "2020-07-22",
+     "db": -14.485,
+     "expected": -14.696,
+     "z": 0.74,
+     "flagged": false
+    },
+    {
+     "date": "2020-07-28",
+     "db": -14.569,
+     "expected": -14.696,
+     "z": 0.4,
+     "flagged": false
+    },
+    {
+     "date": "2020-08-03",
+     "db": -14.724,
+     "expected": -14.78,
+     "z": 0.11,
+     "flagged": false
+    },
+    {
+     "date": "2020-08-09",
+     "db": -14.797,
+     "expected": -14.781,
+     "z": -0.18,
+     "flagged": false
+    },
+    {
+     "date": "2020-08-15",
+     "db": -14.631,
+     "expected": -14.781,
+     "z": 0.49,
+     "flagged": false
+    },
+    {
+     "date": "2020-08-21",
+     "db": -14.585,
+     "expected": -14.781,
+     "z": 0.68,
+     "flagged": false
+    },
+    {
+     "date": "2020-08-27",
+     "db": -14.623,
+     "expected": -14.781,
+     "z": 0.53,
+     "flagged": false
+    },
+    {
+     "date": "2020-09-02",
+     "db": -14.778,
+     "expected": -14.595,
+     "z": -0.86,
+     "flagged": false
+    },
+    {
+     "date": "2020-09-08",
+     "db": -14.446,
+     "expected": -14.596,
+     "z": 0.49,
+     "flagged": false
+    },
+    {
+     "date": "2020-09-14",
+     "db": -14.63,
+     "expected": -14.596,
+     "z": -0.25,
+     "flagged": false
+    },
+    {
+     "date": "2020-09-20",
+     "db": -14.498,
+     "expected": -14.596,
+     "z": 0.28,
+     "flagged": false
+    },
+    {
+     "date": "2020-09-26",
+     "db": -14.045,
+     "expected": -14.596,
+     "z": 2.12,
+     "flagged": false
+    },
+    {
+     "date": "2020-10-02",
+     "db": -14.423,
+     "expected": -14.475,
+     "z": 0.09,
+     "flagged": false
+    },
+    {
+     "date": "2020-10-08",
+     "db": -14.625,
+     "expected": -14.476,
+     "z": -0.72,
+     "flagged": false
+    },
+    {
+     "date": "2020-10-14",
+     "db": -14.177,
+     "expected": -14.476,
+     "z": 1.1,
+     "flagged": false
+    },
+    {
+     "date": "2020-10-20",
+     "db": -14.571,
+     "expected": -14.476,
+     "z": -0.5,
+     "flagged": false
+    },
+    {
+     "date": "2020-10-26",
+     "db": -14.182,
+     "expected": -14.476,
+     "z": 1.08,
+     "flagged": false
+    },
+    {
+     "date": "2020-11-01",
+     "db": -14.081,
+     "expected": -14.451,
+     "z": 1.38,
+     "flagged": false
+    },
+    {
+     "date": "2020-11-07",
+     "db": -14.531,
+     "expected": -14.451,
+     "z": -0.44,
+     "flagged": false
+    },
+    {
+     "date": "2020-11-13",
+     "db": -14.625,
+     "expected": -14.451,
+     "z": -0.82,
+     "flagged": false
+    },
+    {
+     "date": "2020-11-19",
+     "db": -14.293,
+     "expected": -14.451,
+     "z": 0.53,
+     "flagged": false
+    },
+    {
+     "date": "2020-11-25",
+     "db": -14.335,
+     "expected": -14.451,
+     "z": 0.36,
+     "flagged": false
+    },
+    {
+     "date": "2020-12-01",
+     "db": -13.885,
+     "expected": -14.317,
+     "z": 1.63,
+     "flagged": false
+    },
+    {
+     "date": "2020-12-07",
+     "db": -14.292,
+     "expected": -14.317,
+     "z": -0.02,
+     "flagged": false
+    },
+    {
+     "date": "2020-12-13",
+     "db": -14.368,
+     "expected": -14.317,
+     "z": -0.32,
+     "flagged": false
+    },
+    {
+     "date": "2020-12-19",
+     "db": -14.175,
+     "expected": -14.317,
+     "z": 0.46,
+     "flagged": false
+    },
+    {
+     "date": "2020-12-25",
+     "db": -14.188,
+     "expected": -14.318,
+     "z": 0.41,
+     "flagged": false
+    },
+    {
+     "date": "2020-12-31",
+     "db": -14.16,
+     "expected": -14.318,
+     "z": 0.52,
+     "flagged": false
+    },
+    {
+     "date": "2021-01-06",
+     "db": -13.946,
+     "expected": -14.298,
+     "z": 1.31,
+     "flagged": false
+    },
+    {
+     "date": "2021-01-12",
+     "db": -14.248,
+     "expected": -14.298,
+     "z": 0.09,
+     "flagged": false
+    },
+    {
+     "date": "2021-01-18",
+     "db": -14.347,
+     "expected": -14.298,
+     "z": -0.32,
+     "flagged": false
+    },
+    {
+     "date": "2021-01-24",
+     "db": -14.23,
+     "expected": -14.299,
+     "z": 0.16,
+     "flagged": false
+    },
+    {
+     "date": "2021-01-30",
+     "db": -14.13,
+     "expected": -14.299,
+     "z": 0.57,
+     "flagged": false
+    },
+    {
+     "date": "2021-02-05",
+     "db": -14.379,
+     "expected": -14.127,
+     "z": -1.14,
+     "flagged": false
+    },
+    {
+     "date": "2021-02-11",
+     "db": -13.97,
+     "expected": -14.128,
+     "z": 0.52,
+     "flagged": false
+    },
+    {
+     "date": "2021-02-17",
+     "db": -13.969,
+     "expected": -14.128,
+     "z": 0.53,
+     "flagged": false
+    },
+    {
+     "date": "2021-02-23",
+     "db": -14.328,
+     "expected": -14.128,
+     "z": -0.93,
+     "flagged": false
+    },
+    {
+     "date": "2021-03-01",
+     "db": -13.924,
+     "expected": -14.216,
+     "z": 1.07,
+     "flagged": false
+    },
+    {
+     "date": "2021-03-07",
+     "db": -14.182,
+     "expected": -14.216,
+     "z": 0.02,
+     "flagged": false
+    },
+    {
+     "date": "2021-03-13",
+     "db": -14.347,
+     "expected": -14.217,
+     "z": -0.65,
+     "flagged": false
+    },
+    {
+     "date": "2021-03-19",
+     "db": -14.298,
+     "expected": -14.217,
+     "z": -0.45,
+     "flagged": false
+    },
+    {
+     "date": "2021-03-25",
+     "db": -14.018,
+     "expected": -14.217,
+     "z": 0.69,
+     "flagged": false
+    },
+    {
+     "date": "2021-03-31",
+     "db": -13.8,
+     "expected": -14.217,
+     "z": 1.58,
+     "flagged": false
+    },
+    {
+     "date": "2021-04-06",
+     "db": -14.34,
+     "expected": -14.202,
+     "z": -0.68,
+     "flagged": false
+    },
+    {
+     "date": "2021-04-12",
+     "db": -13.669,
+     "expected": -14.202,
+     "z": 2.04,
+     "flagged": false
+    },
+    {
+     "date": "2021-04-18",
+     "db": -13.935,
+     "expected": -14.202,
+     "z": 0.97,
+     "flagged": false
+    },
+    {
+     "date": "2021-04-24",
+     "db": -14.142,
+     "expected": -14.203,
+     "z": 0.13,
+     "flagged": false
+    },
+    {
+     "date": "2021-04-30",
+     "db": -14.669,
+     "expected": -14.203,
+     "z": -2.0,
+     "flagged": false
+    },
+    {
+     "date": "2021-05-06",
+     "db": -13.966,
+     "expected": -14.285,
+     "z": 1.18,
+     "flagged": false
+    },
+    {
+     "date": "2021-05-12",
+     "db": -14.17,
+     "expected": -14.286,
+     "z": 0.35,
+     "flagged": false
+    },
+    {
+     "date": "2021-05-18",
+     "db": -14.307,
+     "expected": -14.286,
+     "z": -0.2,
+     "flagged": false
+    },
+    {
+     "date": "2021-05-24",
+     "db": -14.135,
+     "expected": -14.286,
+     "z": 0.5,
+     "flagged": false
+    },
+    {
+     "date": "2021-05-30",
+     "db": -14.166,
+     "expected": -14.286,
+     "z": 0.37,
+     "flagged": false
+    },
+    {
+     "date": "2021-06-05",
+     "db": -14.21,
+     "expected": -14.342,
+     "z": 0.42,
+     "flagged": false
+    },
+    {
+     "date": "2021-06-11",
+     "db": -14.157,
+     "expected": -14.342,
+     "z": 0.64,
+     "flagged": false
+    },
+    {
+     "date": "2021-06-17",
+     "db": -14.127,
+     "expected": -14.342,
+     "z": 0.76,
+     "flagged": false
+    },
+    {
+     "date": "2021-06-23",
+     "db": -14.115,
+     "expected": -14.343,
+     "z": 0.81,
+     "flagged": false
+    },
+    {
+     "date": "2021-07-05",
+     "db": -14.595,
+     "expected": -14.707,
+     "z": 0.34,
+     "flagged": false
+    },
+    {
+     "date": "2021-07-11",
+     "db": -14.695,
+     "expected": -14.708,
+     "z": -0.07,
+     "flagged": false
+    },
+    {
+     "date": "2021-07-17",
+     "db": -14.553,
+     "expected": -14.708,
+     "z": 0.51,
+     "flagged": false
+    },
+    {
+     "date": "2021-07-23",
+     "db": -14.757,
+     "expected": -14.708,
+     "z": -0.32,
+     "flagged": false
+    },
+    {
+     "date": "2021-07-29",
+     "db": -14.838,
+     "expected": -14.708,
+     "z": -0.64,
+     "flagged": false
+    },
+    {
+     "date": "2021-08-04",
+     "db": -14.965,
+     "expected": -14.792,
+     "z": -0.82,
+     "flagged": false
+    },
+    {
+     "date": "2021-08-10",
+     "db": -14.674,
+     "expected": -14.792,
+     "z": 0.36,
+     "flagged": false
+    },
+    {
+     "date": "2021-08-16",
+     "db": -14.925,
+     "expected": -14.793,
+     "z": -0.65,
+     "flagged": false
+    },
+    {
+     "date": "2021-08-22",
+     "db": -14.628,
+     "expected": -14.793,
+     "z": 0.55,
+     "flagged": false
+    },
+    {
+     "date": "2021-08-28",
+     "db": -14.749,
+     "expected": -14.793,
+     "z": 0.06,
+     "flagged": false
+    },
+    {
+     "date": "2021-09-03",
+     "db": -14.082,
+     "expected": -14.607,
+     "z": 2.01,
+     "flagged": false
+    },
+    {
+     "date": "2021-09-09",
+     "db": -14.95,
+     "expected": -14.607,
+     "z": -1.5,
+     "flagged": false
+    },
+    {
+     "date": "2021-09-15",
+     "db": -14.482,
+     "expected": -14.608,
+     "z": 0.39,
+     "flagged": false
+    },
+    {
+     "date": "2021-09-21",
+     "db": -14.695,
+     "expected": -14.608,
+     "z": -0.47,
+     "flagged": false
+    },
+    {
+     "date": "2021-09-27",
+     "db": -14.538,
+     "expected": -14.608,
+     "z": 0.16,
+     "flagged": false
+    },
+    {
+     "date": "2021-10-03",
+     "db": -14.68,
+     "expected": -14.487,
+     "z": -0.9,
+     "flagged": false
+    },
+    {
+     "date": "2021-10-09",
+     "db": -14.28,
+     "expected": -14.487,
+     "z": 0.72,
+     "flagged": false
+    },
+    {
+     "date": "2021-10-15",
+     "db": -14.858,
+     "expected": -14.488,
+     "z": -1.62,
+     "flagged": false
+    },
+    {
+     "date": "2021-10-21",
+     "db": -14.269,
+     "expected": -14.488,
+     "z": 0.77,
+     "flagged": false
+    },
+    {
+     "date": "2021-10-27",
+     "db": -14.343,
+     "expected": -14.488,
+     "z": 0.47,
+     "flagged": false
+    },
+    {
+     "date": "2021-11-02",
+     "db": -14.319,
+     "expected": -14.462,
+     "z": 0.47,
+     "flagged": false
+    },
+    {
+     "date": "2021-11-08",
+     "db": -14.157,
+     "expected": -14.463,
+     "z": 1.12,
+     "flagged": false
+    },
+    {
+     "date": "2021-11-14",
+     "db": -14.091,
+     "expected": -14.463,
+     "z": 1.39,
+     "flagged": false
+    },
+    {
+     "date": "2021-11-20",
+     "db": -14.195,
+     "expected": -14.463,
+     "z": 0.97,
+     "flagged": false
+    },
+    {
+     "date": "2021-11-26",
+     "db": -14.251,
+     "expected": -14.463,
+     "z": 0.74,
+     "flagged": false
+    },
+    {
+     "date": "2021-12-02",
+     "db": -14.26,
+     "expected": -14.329,
+     "z": 0.16,
+     "flagged": false
+    },
+    {
+     "date": "2021-12-08",
+     "db": -14.443,
+     "expected": -14.329,
+     "z": -0.58,
+     "flagged": false
+    },
+    {
+     "date": "2021-12-14",
+     "db": -13.913,
+     "expected": -14.329,
+     "z": 1.57,
+     "flagged": false
+    },
+    {
+     "date": "2021-12-20",
+     "db": -14.036,
+     "expected": -14.329,
+     "z": 1.07,
+     "flagged": false
+    },
+    {
+     "date": "2021-12-26",
+     "db": -14.606,
+     "expected": -14.329,
+     "z": -1.24,
+     "flagged": false
+    },
+    {
+     "date": "2022-01-07",
+     "db": -14.621,
+     "expected": -14.31,
+     "z": -1.38,
+     "flagged": false
+    },
+    {
+     "date": "2022-01-19",
+     "db": -14.592,
+     "expected": -14.31,
+     "z": -1.26,
+     "flagged": false
+    },
+    {
+     "date": "2022-01-31",
+     "db": -14.315,
+     "expected": -14.31,
+     "z": -0.13,
+     "flagged": false
+    },
+    {
+     "date": "2022-02-12",
+     "db": -14.078,
+     "expected": -14.139,
+     "z": 0.13,
+     "flagged": false
+    },
+    {
+     "date": "2022-02-24",
+     "db": -14.287,
+     "expected": -14.14,
+     "z": -0.71,
+     "flagged": false
+    },
+    {
+     "date": "2022-03-08",
+     "db": -14.005,
+     "expected": -14.228,
+     "z": 0.79,
+     "flagged": false
+    },
+    {
+     "date": "2022-03-20",
+     "db": -13.694,
+     "expected": -14.229,
+     "z": 2.05,
+     "flagged": false
+    },
+    {
+     "date": "2022-04-01",
+     "db": -14.122,
+     "expected": -14.214,
+     "z": 0.25,
+     "flagged": false
+    },
+    {
+     "date": "2022-04-13",
+     "db": -14.087,
+     "expected": -14.214,
+     "z": 0.4,
+     "flagged": false
+    },
+    {
+     "date": "2022-05-07",
+     "db": -14.587,
+     "expected": -14.297,
+     "z": -1.29,
+     "flagged": false
+    },
+    {
+     "date": "2022-07-06",
+     "db": -14.645,
+     "expected": -14.719,
+     "z": 0.18,
+     "flagged": false
+    },
+    {
+     "date": "2022-07-18",
+     "db": -14.702,
+     "expected": -14.719,
+     "z": -0.05,
+     "flagged": false
+    },
+    {
+     "date": "2022-07-30",
+     "db": -15.052,
+     "expected": -14.72,
+     "z": -1.46,
+     "flagged": false
+    },
+    {
+     "date": "2022-08-11",
+     "db": -15.094,
+     "expected": -14.804,
+     "z": -1.29,
+     "flagged": false
+    },
+    {
+     "date": "2022-08-23",
+     "db": -15.027,
+     "expected": -14.804,
+     "z": -1.02,
+     "flagged": false
+    },
+    {
+     "date": "2022-09-04",
+     "db": -14.778,
+     "expected": -14.619,
+     "z": -0.76,
+     "flagged": false
+    },
+    {
+     "date": "2022-09-16",
+     "db": -15.132,
+     "expected": -14.619,
+     "z": -2.19,
+     "flagged": false
+    },
+    {
+     "date": "2022-09-28",
+     "db": -14.603,
+     "expected": -14.62,
+     "z": -0.05,
+     "flagged": false
+    },
+    {
+     "date": "2022-10-10",
+     "db": -14.739,
+     "expected": -14.499,
+     "z": -1.09,
+     "flagged": false
+    },
+    {
+     "date": "2022-10-22",
+     "db": -13.942,
+     "expected": -14.499,
+     "z": 2.14,
+     "flagged": false
+    },
+    {
+     "date": "2022-11-03",
+     "db": -15.104,
+     "expected": -14.474,
+     "z": -2.67,
+     "flagged": false
+    },
+    {
+     "date": "2022-11-15",
+     "db": -14.61,
+     "expected": -14.474,
+     "z": -0.67,
+     "flagged": false
+    },
+    {
+     "date": "2022-11-27",
+     "db": -14.365,
+     "expected": -14.475,
+     "z": 0.33,
+     "flagged": false
+    },
+    {
+     "date": "2022-12-09",
+     "db": -14.181,
+     "expected": -14.34,
+     "z": 0.53,
+     "flagged": false
+    },
+    {
+     "date": "2022-12-21",
+     "db": -14.117,
+     "expected": -14.341,
+     "z": 0.79,
+     "flagged": false
+    },
+    {
+     "date": "2023-01-02",
+     "db": -14.292,
+     "expected": -14.321,
+     "z": 0.0,
+     "flagged": false
+    },
+    {
+     "date": "2023-01-14",
+     "db": -14.168,
+     "expected": -14.322,
+     "z": 0.5,
+     "flagged": false
+    },
+    {
+     "date": "2023-01-26",
+     "db": -14.155,
+     "expected": -14.322,
+     "z": 0.56,
+     "flagged": false
+    },
+    {
+     "date": "2023-02-07",
+     "db": -14.554,
+     "expected": -14.151,
+     "z": -1.75,
+     "flagged": false
+    },
+    {
+     "date": "2023-02-19",
+     "db": -14.05,
+     "expected": -14.151,
+     "z": 0.29,
+     "flagged": false
+    },
+    {
+     "date": "2023-03-03",
+     "db": -14.188,
+     "expected": -14.24,
+     "z": 0.09,
+     "flagged": false
+    },
+    {
+     "date": "2023-03-15",
+     "db": -14.497,
+     "expected": -14.24,
+     "z": -1.16,
+     "flagged": false
+    },
+    {
+     "date": "2023-03-27",
+     "db": -13.996,
+     "expected": -14.24,
+     "z": 0.87,
+     "flagged": false
+    },
+    {
+     "date": "2023-04-20",
+     "db": -14.263,
+     "expected": -14.226,
+     "z": -0.27,
+     "flagged": false
+    },
+    {
+     "date": "2023-05-02",
+     "db": -14.426,
+     "expected": -14.309,
+     "z": -0.59,
+     "flagged": false
+    },
+    {
+     "date": "2023-05-14",
+     "db": -14.498,
+     "expected": -14.309,
+     "z": -0.88,
+     "flagged": false
+    },
+    {
+     "date": "2023-05-26",
+     "db": -13.894,
+     "expected": -14.309,
+     "z": 1.57,
+     "flagged": false
+    },
+    {
+     "date": "2023-06-07",
+     "db": -14.226,
+     "expected": -14.366,
+     "z": 0.45,
+     "flagged": false
+    },
+    {
+     "date": "2023-06-19",
+     "db": -14.53,
+     "expected": -14.366,
+     "z": -0.78,
+     "flagged": false
+    },
+    {
+     "date": "2023-07-01",
+     "db": -14.581,
+     "expected": -14.731,
+     "z": 0.49,
+     "flagged": false
+    },
+    {
+     "date": "2023-07-13",
+     "db": -14.467,
+     "expected": -14.731,
+     "z": 0.95,
+     "flagged": false
+    },
+    {
+     "date": "2023-07-25",
+     "db": -14.799,
+     "expected": -14.731,
+     "z": -0.39,
+     "flagged": false
+    },
+    {
+     "date": "2023-08-06",
+     "db": -14.782,
+     "expected": -14.816,
+     "z": 0.02,
+     "flagged": false
+    },
+    {
+     "date": "2023-08-18",
+     "db": -14.769,
+     "expected": -14.816,
+     "z": 0.07,
+     "flagged": false
+    },
+    {
+     "date": "2023-08-30",
+     "db": -14.675,
+     "expected": -14.816,
+     "z": 0.46,
+     "flagged": false
+    },
+    {
+     "date": "2023-09-11",
+     "db": -14.494,
+     "expected": -14.631,
+     "z": 0.44,
+     "flagged": false
+    },
+    {
+     "date": "2023-10-05",
+     "db": -14.731,
+     "expected": -14.511,
+     "z": -1.01,
+     "flagged": false
+    },
+    {
+     "date": "2023-10-17",
+     "db": -14.497,
+     "expected": -14.511,
+     "z": -0.06,
+     "flagged": false
+    },
+    {
+     "date": "2023-11-10",
+     "db": -14.916,
+     "expected": -14.486,
+     "z": -1.86,
+     "flagged": false
+    },
+    {
+     "date": "2023-11-22",
+     "db": -15.023,
+     "expected": -14.486,
+     "z": -2.29,
+     "flagged": false
+    },
+    {
+     "date": "2023-12-04",
+     "db": -14.816,
+     "expected": -14.352,
+     "z": -2.0,
+     "flagged": false
+    },
+    {
+     "date": "2023-12-28",
+     "db": -14.806,
+     "expected": -14.353,
+     "z": -1.95,
+     "flagged": false
+    },
+    {
+     "date": "2024-01-09",
+     "db": -14.454,
+     "expected": -14.333,
+     "z": -0.61,
+     "flagged": false
+    },
+    {
+     "date": "2024-01-21",
+     "db": -14.166,
+     "expected": -14.333,
+     "z": 0.56,
+     "flagged": false
+    },
+    {
+     "date": "2024-02-26",
+     "db": -13.761,
+     "expected": -14.163,
+     "z": 1.51,
+     "flagged": false
+    },
+    {
+     "date": "2024-03-21",
+     "db": -14.148,
+     "expected": -14.252,
+     "z": 0.3,
+     "flagged": false
+    },
+    {
+     "date": "2024-04-02",
+     "db": -14.188,
+     "expected": -14.237,
+     "z": 0.08,
+     "flagged": false
+    },
+    {
+     "date": "2024-04-14",
+     "db": -14.18,
+     "expected": -14.237,
+     "z": 0.11,
+     "flagged": false
+    },
+    {
+     "date": "2024-04-26",
+     "db": -14.169,
+     "expected": -14.238,
+     "z": 0.16,
+     "flagged": false
+    },
+    {
+     "date": "2024-05-08",
+     "db": -14.106,
+     "expected": -14.32,
+     "z": 0.75,
+     "flagged": false
+    },
+    {
+     "date": "2024-05-20",
+     "db": -14.415,
+     "expected": -14.321,
+     "z": -0.5,
+     "flagged": false
+    },
+    {
+     "date": "2024-06-01",
+     "db": -14.395,
+     "expected": -14.377,
+     "z": -0.19,
+     "flagged": false
+    },
+    {
+     "date": "2024-06-13",
+     "db": -14.334,
+     "expected": -14.377,
+     "z": 0.06,
+     "flagged": false
+    },
+    {
+     "date": "2024-07-07",
+     "db": -14.546,
+     "expected": -14.742,
+     "z": 0.68,
+     "flagged": false
+    },
+    {
+     "date": "2024-07-19",
+     "db": -14.869,
+     "expected": -14.743,
+     "z": -0.63,
+     "flagged": false
+    },
+    {
+     "date": "2024-07-31",
+     "db": -14.71,
+     "expected": -14.743,
+     "z": 0.02,
+     "flagged": false
+    },
+    {
+     "date": "2024-08-12",
+     "db": -15.0,
+     "expected": -14.827,
+     "z": -0.82,
+     "flagged": false
+    },
+    {
+     "date": "2024-08-24",
+     "db": -15.004,
+     "expected": -14.828,
+     "z": -0.83,
+     "flagged": false
+    },
+    {
+     "date": "2024-09-05",
+     "db": -14.907,
+     "expected": -14.642,
+     "z": -1.19,
+     "flagged": false
+    },
+    {
+     "date": "2024-09-17",
+     "db": -15.07,
+     "expected": -14.643,
+     "z": -1.85,
+     "flagged": false
+    },
+    {
+     "date": "2024-09-29",
+     "db": -13.96,
+     "expected": -14.643,
+     "z": 2.65,
+     "flagged": false
+    },
+    {
+     "date": "2024-10-11",
+     "db": -14.839,
+     "expected": -14.523,
+     "z": -1.4,
+     "flagged": false
+    },
+    {
+     "date": "2024-10-23",
+     "db": -14.667,
+     "expected": -14.523,
+     "z": -0.7,
+     "flagged": false
+    },
+    {
+     "date": "2024-11-04",
+     "db": -14.638,
+     "expected": -14.497,
+     "z": -0.69,
+     "flagged": false
+    },
+    {
+     "date": "2024-11-16",
+     "db": -14.263,
+     "expected": -14.498,
+     "z": 0.83,
+     "flagged": false
+    },
+    {
+     "date": "2024-11-28",
+     "db": -14.77,
+     "expected": -14.498,
+     "z": -1.22,
+     "flagged": false
+    },
+    {
+     "date": "2024-12-10",
+     "db": -14.745,
+     "expected": -14.364,
+     "z": -1.66,
+     "flagged": false
+    },
+    {
+     "date": "2024-12-22",
+     "db": -14.488,
+     "expected": -14.364,
+     "z": -0.62,
+     "flagged": false
+    },
+    {
+     "date": "2025-01-03",
+     "db": -14.549,
+     "expected": -14.345,
+     "z": -0.94,
+     "flagged": false
+    },
+    {
+     "date": "2025-01-15",
+     "db": -14.072,
+     "expected": -14.345,
+     "z": 0.99,
+     "flagged": false
+    },
+    {
+     "date": "2025-01-27",
+     "db": -14.314,
+     "expected": -14.345,
+     "z": 0.01,
+     "flagged": false
+    },
+    {
+     "date": "2025-02-08",
+     "db": -14.101,
+     "expected": -14.174,
+     "z": 0.18,
+     "flagged": false
+    },
+    {
+     "date": "2025-02-20",
+     "db": -14.407,
+     "expected": -14.175,
+     "z": -1.06,
+     "flagged": false
+    },
+    {
+     "date": "2025-03-16",
+     "db": -14.401,
+     "expected": -14.264,
+     "z": -0.67,
+     "flagged": false
+    },
+    {
+     "date": "2025-03-28",
+     "db": -14.662,
+     "expected": -14.264,
+     "z": -1.73,
+     "flagged": false
+    },
+    {
+     "date": "2025-04-03",
+     "db": -14.726,
+     "expected": -14.249,
+     "z": -2.05,
+     "flagged": false
+    },
+    {
+     "date": "2025-04-09",
+     "db": -13.969,
+     "expected": -14.249,
+     "z": 1.02,
+     "flagged": false
+    },
+    {
+     "date": "2025-04-21",
+     "db": -14.554,
+     "expected": -14.249,
+     "z": -1.35,
+     "flagged": false
+    },
+    {
+     "date": "2025-05-03",
+     "db": -14.411,
+     "expected": -14.332,
+     "z": -0.44,
+     "flagged": false
+    },
+    {
+     "date": "2025-05-15",
+     "db": -13.795,
+     "expected": -14.332,
+     "z": 2.06,
+     "flagged": false
+    },
+    {
+     "date": "2025-05-27",
+     "db": -14.237,
+     "expected": -14.333,
+     "z": 0.27,
+     "flagged": false
+    },
+    {
+     "date": "2025-06-08",
+     "db": -14.318,
+     "expected": -14.389,
+     "z": 0.17,
+     "flagged": false
+    },
+    {
+     "date": "2025-06-20",
+     "db": -14.549,
+     "expected": -14.389,
+     "z": -0.77,
+     "flagged": false
+    },
+    {
+     "date": "2025-07-02",
+     "db": -15.165,
+     "expected": -14.754,
+     "z": -1.78,
+     "flagged": false
+    },
+    {
+     "date": "2025-07-14",
+     "db": -14.976,
+     "expected": -14.754,
+     "z": -1.02,
+     "flagged": false
+    },
+    {
+     "date": "2025-07-26",
+     "db": -14.957,
+     "expected": -14.755,
+     "z": -0.94,
+     "flagged": false
+    },
+    {
+     "date": "2025-08-07",
+     "db": -14.704,
+     "expected": -14.839,
+     "z": 0.43,
+     "flagged": false
+    },
+    {
+     "date": "2025-08-19",
+     "db": -14.864,
+     "expected": -14.839,
+     "z": -0.22,
+     "flagged": false
+    },
+    {
+     "date": "2025-08-31",
+     "db": -15.041,
+     "expected": -14.84,
+     "z": -0.93,
+     "flagged": false
+    },
+    {
+     "date": "2025-09-12",
+     "db": -14.783,
+     "expected": -14.654,
+     "z": -0.64,
+     "flagged": false
+    },
+    {
+     "date": "2025-09-24",
+     "db": -14.559,
+     "expected": -14.655,
+     "z": 0.27,
+     "flagged": false
+    },
+    {
+     "date": "2025-10-06",
+     "db": -14.783,
+     "expected": -14.534,
+     "z": -1.13,
+     "flagged": false
+    },
+    {
+     "date": "2025-10-18",
+     "db": -14.503,
+     "expected": -14.534,
+     "z": 0.01,
+     "flagged": false
+    },
+    {
+     "date": "2025-10-30",
+     "db": -14.121,
+     "expected": -14.535,
+     "z": 1.56,
+     "flagged": false
+    },
+    {
+     "date": "2025-11-11",
+     "db": -14.726,
+     "expected": -14.509,
+     "z": -0.99,
+     "flagged": false
+    },
+    {
+     "date": "2025-11-23",
+     "db": -15.033,
+     "expected": -14.51,
+     "z": -2.24,
+     "flagged": false
+    },
+    {
+     "date": "2025-12-05",
+     "db": -14.84,
+     "expected": -14.375,
+     "z": -2.0,
+     "flagged": false
+    },
+    {
+     "date": "2025-12-17",
+     "db": -14.027,
+     "expected": -14.376,
+     "z": 1.3,
+     "flagged": false
+    },
+    {
+     "date": "2025-12-29",
+     "db": -14.365,
+     "expected": -14.376,
+     "z": -0.07,
+     "flagged": false
+    },
+    {
+     "date": "2026-01-10",
+     "db": -14.463,
+     "expected": -14.357,
+     "z": -0.55,
+     "flagged": false
+    },
+    {
+     "date": "2026-01-22",
+     "db": -13.862,
+     "expected": -14.357,
+     "z": 1.89,
+     "flagged": false
+    },
+    {
+     "date": "2026-02-03",
+     "db": -14.076,
+     "expected": -14.186,
+     "z": 0.33,
+     "flagged": false
+    },
+    {
+     "date": "2026-02-15",
+     "db": -13.892,
+     "expected": -14.186,
+     "z": 1.07,
+     "flagged": false
+    },
+    {
+     "date": "2026-02-27",
+     "db": -14.323,
+     "expected": -14.187,
+     "z": -0.67,
+     "flagged": false
+    },
+    {
+     "date": "2026-03-11",
+     "db": -14.515,
+     "expected": -14.275,
+     "z": -1.09,
+     "flagged": false
+    },
+    {
+     "date": "2026-03-23",
+     "db": -14.707,
+     "expected": -14.275,
+     "z": -1.86,
+     "flagged": false
+    },
+    {
+     "date": "2026-04-04",
+     "db": -14.317,
+     "expected": -14.26,
+     "z": -0.35,
+     "flagged": false
+    },
+    {
+     "date": "2026-04-16",
+     "db": -14.382,
+     "expected": -14.261,
+     "z": -0.61,
+     "flagged": false
+    },
+    {
+     "date": "2026-04-28",
+     "db": -14.457,
+     "expected": -14.261,
+     "z": -0.91,
+     "flagged": false
+    },
+    {
+     "date": "2026-05-10",
+     "db": -14.261,
+     "expected": -14.344,
+     "z": 0.22,
+     "flagged": false
+    },
+    {
+     "date": "2026-05-22",
+     "db": -14.911,
+     "expected": -14.344,
+     "z": -2.41,
+     "flagged": false
+    },
+    {
+     "date": "2026-06-03",
+     "db": -14.47,
+     "expected": -14.4,
+     "z": -0.4,
+     "flagged": false
+    },
+    {
+     "date": "2026-06-15",
+     "db": -14.311,
+     "expected": -14.401,
+     "z": 0.25,
+     "flagged": false
+    },
+    {
+     "date": "2026-06-27",
+     "db": -14.61,
+     "expected": -14.401,
+     "z": -0.96,
+     "flagged": false
+    },
+    {
+     "date": "2026-07-04",
+     "db": -14.905,
+     "expected": -14.766,
+     "z": -0.68,
+     "flagged": false
+    },
+    {
+     "date": "2026-07-16",
+     "db": -14.585,
+     "expected": -14.766,
+     "z": 0.62,
+     "flagged": false
+    },
+    {
+     "date": "2026-07-28",
+     "db": -14.628,
+     "expected": -14.766,
+     "z": 0.44,
+     "flagged": false
+    },
+    {
+     "date": "2026-08-09",
+     "db": -14.668,
+     "expected": -14.851,
+     "z": 0.62,
+     "flagged": false
+    },
+    {
+     "date": "2026-08-21",
+     "db": -14.597,
+     "expected": -14.851,
+     "z": 0.91,
+     "flagged": false
+    },
+    {
+     "date": "2026-09-02",
+     "db": -14.76,
+     "expected": -14.666,
+     "z": -0.5,
+     "flagged": false
+    },
+    {
+     "date": "2026-09-14",
+     "db": -14.497,
+     "expected": -14.666,
+     "z": 0.57,
+     "flagged": false
+    },
+    {
+     "date": "2026-09-26",
+     "db": -13.984,
+     "expected": -14.666,
+     "z": 2.65,
+     "flagged": false
+    },
+    {
+     "date": "2026-10-08",
+     "db": -14.465,
+     "expected": -14.546,
+     "z": 0.21,
+     "flagged": false
+    },
+    {
+     "date": "2026-10-20",
+     "db": -14.299,
+     "expected": -14.546,
+     "z": 0.89,
+     "flagged": false
+    },
+    {
+     "date": "2026-11-01",
+     "db": -13.921,
+     "expected": -14.521,
+     "z": 2.31,
+     "flagged": false
+    },
+    {
+     "date": "2026-11-13",
+     "db": -14.04,
+     "expected": -14.521,
+     "z": 1.83,
+     "flagged": false
+    }
+   ],
+   "events": [],
+   "forecast": [
+    {
+     "month": "2027-01",
+     "mean": -14.368,
+     "lower": -14.865,
+     "upper": -13.872
+    },
+    {
+     "month": "2027-02",
+     "mean": -14.198,
+     "lower": -14.696,
+     "upper": -13.699
+    },
+    {
+     "month": "2027-03",
+     "mean": -14.287,
+     "lower": -14.785,
+     "upper": -13.788
+    },
+    {
+     "month": "2027-04",
+     "mean": -14.272,
+     "lower": -14.769,
+     "upper": -13.776
+    },
+    {
+     "month": "2027-05",
+     "mean": -14.356,
+     "lower": -14.853,
+     "upper": -13.858
+    },
+    {
+     "month": "2027-06",
+     "mean": -14.413,
+     "lower": -14.911,
+     "upper": -13.914
+    },
+    {
+     "month": "2027-07",
+     "mean": -14.778,
+     "lower": -15.273,
+     "upper": -14.282
+    },
+    {
+     "month": "2027-08",
+     "mean": -14.863,
+     "lower": -15.359,
+     "upper": -14.366
+    },
+    {
+     "month": "2027-09",
+     "mean": -14.678,
+     "lower": -15.174,
+     "upper": -14.181
+    },
+    {
+     "month": "2027-10",
+     "mean": -14.558,
+     "lower": -15.055,
+     "upper": -14.061
+    },
+    {
+     "month": "2027-11",
+     "mean": -14.533,
+     "lower": -15.03,
+     "upper": -14.036
+    },
+    {
+     "month": "2027-12",
+     "mean": -14.399,
+     "lower": -14.897,
+     "upper": -13.901
+    }
+   ],
+   "trend_db_per_year": {
+    "estimate": -0.0117,
+    "ci95": [
+     -0.0239,
+     0.0006
+    ]
+   },
+   "backtest": {
+    "held_out_season": 2026,
+    "mae_model": 0.255,
+    "mae_naive": 0.265,
+    "skill": 0.037
+   },
+   "model": "month-of-season levels + linear trend (robust two-pass least squares)"
+  },
+  "GBR_EPPING_FOREST": {
+   "location": null,
+   "history": [
+    {
+     "date": "2019-05-01",
+     "db": -16.391,
+     "expected": -16.259,
+     "z": -0.31,
+     "flagged": false
+    },
+    {
+     "date": "2019-05-13",
+     "db": -16.485,
+     "expected": -16.259,
+     "z": -0.62,
+     "flagged": false
+    },
+    {
+     "date": "2019-05-19",
+     "db": -16.122,
+     "expected": -16.259,
+     "z": 0.56,
+     "flagged": false
+    },
+    {
+     "date": "2019-05-31",
+     "db": -16.344,
+     "expected": -16.259,
+     "z": -0.16,
+     "flagged": false
+    },
+    {
+     "date": "2019-06-06",
+     "db": -16.143,
+     "expected": -16.022,
+     "z": -0.28,
+     "flagged": false
+    },
+    {
+     "date": "2019-06-12",
+     "db": -16.289,
+     "expected": -16.022,
+     "z": -0.75,
+     "flagged": false
+    },
+    {
+     "date": "2019-06-18",
+     "db": -16.106,
+     "expected": -16.022,
+     "z": -0.16,
+     "flagged": false
+    },
+    {
+     "date": "2019-06-24",
+     "db": -15.953,
+     "expected": -16.022,
+     "z": 0.34,
+     "flagged": false
+    },
+    {
+     "date": "2019-06-30",
+     "db": -15.965,
+     "expected": -16.022,
+     "z": 0.3,
+     "flagged": false
+    },
+    {
+     "date": "2019-07-06",
+     "db": -16.131,
+     "expected": -16.039,
+     "z": -0.19,
+     "flagged": false
+    },
+    {
+     "date": "2019-07-12",
+     "db": -16.001,
+     "expected": -16.038,
+     "z": 0.23,
+     "flagged": false
+    },
+    {
+     "date": "2019-07-18",
+     "db": -15.912,
+     "expected": -16.038,
+     "z": 0.52,
+     "flagged": false
+    },
+    {
+     "date": "2019-07-24",
+     "db": -15.743,
+     "expected": -16.038,
+     "z": 1.07,
+     "flagged": false
+    },
+    {
+     "date": "2019-07-30",
+     "db": -16.047,
+     "expected": -16.038,
+     "z": 0.09,
+     "flagged": false
+    },
+    {
+     "date": "2019-08-05",
+     "db": -15.944,
+     "expected": -16.064,
+     "z": 0.5,
+     "flagged": false
+    },
+    {
+     "date": "2019-08-11",
+     "db": -16.132,
+     "expected": -16.064,
+     "z": -0.11,
+     "flagged": false
+    },
+    {
+     "date": "2019-08-17",
+     "db": -15.55,
+     "expected": -16.064,
+     "z": 1.78,
+     "flagged": false
+    },
+    {
+     "date": "2019-08-29",
+     "db": -16.241,
+     "expected": -16.063,
+     "z": -0.46,
+     "flagged": false
+    },
+    {
+     "date": "2019-09-04",
+     "db": -15.337,
+     "expected": -16.198,
+     "z": 2.91,
+     "flagged": false
+    },
+    {
+     "date": "2019-09-10",
+     "db": -16.485,
+     "expected": -16.198,
+     "z": -0.82,
+     "flagged": false
+    },
+    {
+     "date": "2019-09-16",
+     "db": -16.358,
+     "expected": -16.198,
+     "z": -0.41,
+     "flagged": false
+    },
+    {
+     "date": "2019-09-22",
+     "db": -16.137,
+     "expected": -16.198,
+     "z": 0.31,
+     "flagged": false
+    },
+    {
+     "date": "2019-09-28",
+     "db": -16.116,
+     "expected": -16.197,
+     "z": 0.38,
+     "flagged": false
+    },
+    {
+     "date": "2019-10-04",
+     "db": -15.868,
+     "expected": -16.033,
+     "z": 0.65,
+     "flagged": false
+    },
+    {
+     "date": "2019-10-10",
+     "db": -16.33,
+     "expected": -16.033,
+     "z": -0.85,
+     "flagged": false
+    },
+    {
+     "date": "2019-10-16",
+     "db": -15.564,
+     "expected": -16.033,
+     "z": 1.63,
+     "flagged": false
+    },
+    {
+     "date": "2019-10-22",
+     "db": -16.432,
+     "expected": -16.033,
+     "z": -1.18,
+     "flagged": false
+    },
+    {
+     "date": "2019-10-28",
+     "db": -16.424,
+     "expected": -16.032,
+     "z": -1.16,
+     "flagged": false
+    },
+    {
+     "date": "2020-05-01",
+     "db": -16.286,
+     "expected": -16.254,
+     "z": 0.01,
+     "flagged": false
+    },
+    {
+     "date": "2020-05-07",
+     "db": -16.573,
+     "expected": -16.254,
+     "z": -0.92,
+     "flagged": false
+    },
+    {
+     "date": "2020-05-13",
+     "db": -16.759,
+     "expected": -16.254,
+     "z": -1.52,
+     "flagged": false
+    },
+    {
+     "date": "2020-05-19",
+     "db": -16.327,
+     "expected": -16.254,
+     "z": -0.12,
+     "flagged": false
+    },
+    {
+     "date": "2020-05-25",
+     "db": -16.475,
+     "expected": -16.254,
+     "z": -0.6,
+     "flagged": false
+    },
+    {
+     "date": "2020-05-31",
+     "db": -16.15,
+     "expected": -16.254,
+     "z": 0.45,
+     "flagged": false
+    },
+    {
+     "date": "2020-06-06",
+     "db": -16.705,
+     "expected": -16.017,
+     "z": -2.12,
+     "flagged": false
+    },
+    {
+     "date": "2020-06-12",
+     "db": -16.11,
+     "expected": -16.017,
+     "z": -0.19,
+     "flagged": false
+    },
+    {
+     "date": "2020-06-18",
+     "db": -15.208,
+     "expected": -16.017,
+     "z": 2.74,
+     "flagged": false
+    },
+    {
+     "date": "2020-06-24",
+     "db": -15.943,
+     "expected": -16.017,
+     "z": 0.35,
+     "flagged": false
+    },
+    {
+     "date": "2020-06-30",
+     "db": -16.465,
+     "expected": -16.017,
+     "z": -1.34,
+     "flagged": false
+    },
+    {
+     "date": "2020-07-06",
+     "db": -16.377,
+     "expected": -16.034,
+     "z": -1.0,
+     "flagged": false
+    },
+    {
+     "date": "2020-07-12",
+     "db": -16.447,
+     "expected": -16.033,
+     "z": -1.23,
+     "flagged": false
+    },
+    {
+     "date": "2020-07-18",
+     "db": -16.204,
+     "expected": -16.033,
+     "z": -0.44,
+     "flagged": false
+    },
+    {
+     "date": "2020-07-24",
+     "db": -16.445,
+     "expected": -16.033,
+     "z": -1.22,
+     "flagged": false
+    },
+    {
+     "date": "2020-07-30",
+     "db": -16.239,
+     "expected": -16.033,
+     "z": -0.56,
+     "flagged": false
+    },
+    {
+     "date": "2020-08-05",
+     "db": -16.284,
+     "expected": -16.059,
+     "z": -0.62,
+     "flagged": false
+    },
+    {
+     "date": "2020-08-11",
+     "db": -16.117,
+     "expected": -16.059,
+     "z": -0.08,
+     "flagged": false
+    },
+    {
+     "date": "2020-08-17",
+     "db": -15.385,
+     "expected": -16.059,
+     "z": 2.3,
+     "flagged": false
+    },
+    {
+     "date": "2020-08-23",
+     "db": -16.115,
+     "expected": -16.059,
+     "z": -0.07,
+     "flagged": false
+    },
+    {
+     "date": "2020-08-29",
+     "db": -16.034,
+     "expected": -16.058,
+     "z": 0.19,
+     "flagged": false
+    },
+    {
+     "date": "2020-09-04",
+     "db": -16.187,
+     "expected": -16.193,
+     "z": 0.13,
+     "flagged": false
+    },
+    {
+     "date": "2020-09-10",
+     "db": -16.849,
+     "expected": -16.193,
+     "z": -2.02,
+     "flagged": false
+    },
+    {
+     "date": "2020-09-16",
+     "db": -16.129,
+     "expected": -16.193,
+     "z": 0.32,
+     "flagged": false
+    },
+    {
+     "date": "2020-09-22",
+     "db": -16.544,
+     "expected": -16.192,
+     "z": -1.03,
+     "flagged": false
+    },
+    {
+     "date": "2020-09-28",
+     "db": -16.434,
+     "expected": -16.192,
+     "z": -0.67,
+     "flagged": false
+    },
+    {
+     "date": "2020-10-04",
+     "db": -15.475,
+     "expected": -16.028,
+     "z": 1.91,
+     "flagged": false
+    },
+    {
+     "date": "2020-10-10",
+     "db": -16.302,
+     "expected": -16.028,
+     "z": -0.78,
+     "flagged": false
+    },
+    {
+     "date": "2020-10-16",
+     "db": -16.315,
+     "expected": -16.028,
+     "z": -0.82,
+     "flagged": false
+    },
+    {
+     "date": "2020-10-22",
+     "db": -15.729,
+     "expected": -16.027,
+     "z": 1.08,
+     "flagged": false
+    },
+    {
+     "date": "2020-10-28",
+     "db": -15.751,
+     "expected": -16.027,
+     "z": 1.01,
+     "flagged": false
+    },
+    {
+     "date": "2021-05-02",
+     "db": -15.668,
+     "expected": -16.249,
+     "z": 2.0,
+     "flagged": false
+    },
+    {
+     "date": "2021-05-08",
+     "db": -15.077,
+     "expected": -16.249,
+     "z": 3.92,
+     "flagged": false
+    },
+    {
+     "date": "2021-05-14",
+     "db": -15.72,
+     "expected": -16.249,
+     "z": 1.83,
+     "flagged": false
+    },
+    {
+     "date": "2021-05-20",
+     "db": -16.178,
+     "expected": -16.249,
+     "z": 0.35,
+     "flagged": false
+    },
+    {
+     "date": "2021-05-26",
+     "db": -16.054,
+     "expected": -16.249,
+     "z": 0.75,
+     "flagged": false
+    },
+    {
+     "date": "2021-06-01",
+     "db": -15.917,
+     "expected": -16.012,
+     "z": 0.42,
+     "flagged": false
+    },
+    {
+     "date": "2021-06-07",
+     "db": -15.383,
+     "expected": -16.012,
+     "z": 2.16,
+     "flagged": false
+    },
+    {
+     "date": "2021-06-13",
+     "db": -15.906,
+     "expected": -16.012,
+     "z": 0.46,
+     "flagged": false
+    },
+    {
+     "date": "2021-06-19",
+     "db": -15.532,
+     "expected": -16.012,
+     "z": 1.67,
+     "flagged": false
+    },
+    {
+     "date": "2021-06-25",
+     "db": -16.178,
+     "expected": -16.012,
+     "z": -0.43,
+     "flagged": false
+    },
+    {
+     "date": "2021-07-01",
+     "db": -16.115,
+     "expected": -16.029,
+     "z": -0.17,
+     "flagged": false
+    },
+    {
+     "date": "2021-07-07",
+     "db": -15.955,
+     "expected": -16.028,
+     "z": 0.35,
+     "flagged": false
+    },
+    {
+     "date": "2021-07-13",
+     "db": -15.52,
+     "expected": -16.028,
+     "z": 1.76,
+     "flagged": false
+    },
+    {
+     "date": "2021-07-19",
+     "db": -15.893,
+     "expected": -16.028,
+     "z": 0.55,
+     "flagged": false
+    },
+    {
+     "date": "2021-07-25",
+     "db": -15.887,
+     "expected": -16.028,
+     "z": 0.57,
+     "flagged": false
+    },
+    {
+     "date": "2021-07-31",
+     "db": -16.102,
+     "expected": -16.028,
+     "z": -0.13,
+     "flagged": false
+    },
+    {
+     "date": "2021-08-06",
+     "db": -15.827,
+     "expected": -16.054,
+     "z": 0.85,
+     "flagged": false
+    },
+    {
+     "date": "2021-08-12",
+     "db": -16.019,
+     "expected": -16.054,
+     "z": 0.23,
+     "flagged": false
+    },
+    {
+     "date": "2021-08-18",
+     "db": -15.892,
+     "expected": -16.054,
+     "z": 0.64,
+     "flagged": false
+    },
+    {
+     "date": "2021-08-24",
+     "db": -16.366,
+     "expected": -16.053,
+     "z": -0.9,
+     "flagged": false
+    },
+    {
+     "date": "2021-08-30",
+     "db": -16.354,
+     "expected": -16.053,
+     "z": -0.86,
+     "flagged": false
+    },
+    {
+     "date": "2021-09-05",
+     "db": -16.284,
+     "expected": -16.188,
+     "z": -0.2,
+     "flagged": false
+    },
+    {
+     "date": "2021-09-11",
+     "db": -15.873,
+     "expected": -16.188,
+     "z": 1.14,
+     "flagged": false
+    },
+    {
+     "date": "2021-09-17",
+     "db": -16.193,
+     "expected": -16.188,
+     "z": 0.1,
+     "flagged": false
+    },
+    {
+     "date": "2021-09-23",
+     "db": -16.258,
+     "expected": -16.187,
+     "z": -0.12,
+     "flagged": false
+    },
+    {
+     "date": "2021-09-29",
+     "db": -16.213,
+     "expected": -16.187,
+     "z": 0.03,
+     "flagged": false
+    },
+    {
+     "date": "2021-10-05",
+     "db": -15.561,
+     "expected": -16.023,
+     "z": 1.61,
+     "flagged": false
+    },
+    {
+     "date": "2021-10-11",
+     "db": -16.657,
+     "expected": -16.023,
+     "z": -1.94,
+     "flagged": false
+    },
+    {
+     "date": "2021-10-17",
+     "db": -16.175,
+     "expected": -16.023,
+     "z": -0.38,
+     "flagged": false
+    },
+    {
+     "date": "2021-10-23",
+     "db": -16.193,
+     "expected": -16.022,
+     "z": -0.44,
+     "flagged": false
+    },
+    {
+     "date": "2021-10-29",
+     "db": -15.547,
+     "expected": -16.022,
+     "z": 1.66,
+     "flagged": false
+    },
+    {
+     "date": "2022-05-09",
+     "db": -16.597,
+     "expected": -16.244,
+     "z": -1.03,
+     "flagged": false
+    },
+    {
+     "date": "2022-05-21",
+     "db": -16.392,
+     "expected": -16.244,
+     "z": -0.37,
+     "flagged": false
+    },
+    {
+     "date": "2022-06-02",
+     "db": -16.417,
+     "expected": -16.007,
+     "z": -1.22,
+     "flagged": false
+    },
+    {
+     "date": "2022-06-14",
+     "db": -16.306,
+     "expected": -16.007,
+     "z": -0.86,
+     "flagged": false
+    },
+    {
+     "date": "2022-06-26",
+     "db": -16.27,
+     "expected": -16.007,
+     "z": -0.74,
+     "flagged": false
+    },
+    {
+     "date": "2022-07-08",
+     "db": -16.275,
+     "expected": -16.023,
+     "z": -0.7,
+     "flagged": false
+    },
+    {
+     "date": "2022-07-20",
+     "db": -16.092,
+     "expected": -16.023,
+     "z": -0.11,
+     "flagged": false
+    },
+    {
+     "date": "2022-08-01",
+     "db": -16.357,
+     "expected": -16.049,
+     "z": -0.89,
+     "flagged": false
+    },
+    {
+     "date": "2022-08-13",
+     "db": -16.214,
+     "expected": -16.049,
+     "z": -0.42,
+     "flagged": false
+    },
+    {
+     "date": "2022-08-25",
+     "db": -14.938,
+     "expected": -16.048,
+     "z": 3.72,
+     "flagged": false
+    },
+    {
+     "date": "2022-09-06",
+     "db": -15.518,
+     "expected": -16.183,
+     "z": 2.27,
+     "flagged": false
+    },
+    {
+     "date": "2022-09-18",
+     "db": -16.68,
+     "expected": -16.183,
+     "z": -1.5,
+     "flagged": false
+    },
+    {
+     "date": "2022-09-30",
+     "db": -16.676,
+     "expected": -16.182,
+     "z": -1.49,
+     "flagged": false
+    },
+    {
+     "date": "2022-10-12",
+     "db": -16.77,
+     "expected": -16.018,
+     "z": -2.33,
+     "flagged": false
+    },
+    {
+     "date": "2022-10-24",
+     "db": -15.698,
+     "expected": -16.017,
+     "z": 1.15,
+     "flagged": false
+    },
+    {
+     "date": "2023-05-04",
+     "db": -15.843,
+     "expected": -16.239,
+     "z": 1.4,
+     "flagged": false
+    },
+    {
+     "date": "2023-05-16",
+     "db": -16.234,
+     "expected": -16.239,
+     "z": 0.13,
+     "flagged": false
+    },
+    {
+     "date": "2023-05-28",
+     "db": -15.998,
+     "expected": -16.239,
+     "z": 0.9,
+     "flagged": false
+    },
+    {
+     "date": "2023-06-09",
+     "db": -16.049,
+     "expected": -16.002,
+     "z": -0.04,
+     "flagged": false
+    },
+    {
+     "date": "2023-06-21",
+     "db": -15.796,
+     "expected": -16.002,
+     "z": 0.78,
+     "flagged": false
+    },
+    {
+     "date": "2023-07-03",
+     "db": -16.123,
+     "expected": -16.019,
+     "z": -0.23,
+     "flagged": false
+    },
+    {
+     "date": "2023-07-15",
+     "db": -15.697,
+     "expected": -16.018,
+     "z": 1.16,
+     "flagged": false
+    },
+    {
+     "date": "2023-07-27",
+     "db": -15.443,
+     "expected": -16.018,
+     "z": 1.98,
+     "flagged": false
+    },
+    {
+     "date": "2023-08-08",
+     "db": -16.264,
+     "expected": -16.044,
+     "z": -0.6,
+     "flagged": false
+    },
+    {
+     "date": "2023-08-20",
+     "db": -16.002,
+     "expected": -16.044,
+     "z": 0.25,
+     "flagged": false
+    },
+    {
+     "date": "2023-09-01",
+     "db": -15.145,
+     "expected": -16.178,
+     "z": 3.47,
+     "flagged": false
+    },
+    {
+     "date": "2023-09-13",
+     "db": -16.191,
+     "expected": -16.178,
+     "z": 0.07,
+     "flagged": false
+    },
+    {
+     "date": "2023-09-25",
+     "db": -16.005,
+     "expected": -16.177,
+     "z": 0.67,
+     "flagged": false
+    },
+    {
+     "date": "2023-10-07",
+     "db": -16.008,
+     "expected": -16.013,
+     "z": 0.13,
+     "flagged": false
+    },
+    {
+     "date": "2023-10-19",
+     "db": -15.171,
+     "expected": -16.012,
+     "z": 2.85,
+     "flagged": false
+    },
+    {
+     "date": "2023-10-31",
+     "db": -16.008,
+     "expected": -16.012,
+     "z": 0.13,
+     "flagged": false
+    },
+    {
+     "date": "2024-05-10",
+     "db": -15.828,
+     "expected": -16.234,
+     "z": 1.43,
+     "flagged": false
+    },
+    {
+     "date": "2024-05-22",
+     "db": -14.912,
+     "expected": -16.234,
+     "z": 4.41,
+     "flagged": true
+    },
+    {
+     "date": "2024-06-03",
+     "db": -16.024,
+     "expected": -15.997,
+     "z": 0.03,
+     "flagged": false
+    },
+    {
+     "date": "2024-06-15",
+     "db": -16.158,
+     "expected": -15.997,
+     "z": -0.41,
+     "flagged": false
+    },
+    {
+     "date": "2024-06-27",
+     "db": -15.713,
+     "expected": -15.997,
+     "z": 1.04,
+     "flagged": false
+    },
+    {
+     "date": "2024-07-09",
+     "db": -15.582,
+     "expected": -16.013,
+     "z": 1.52,
+     "flagged": false
+    },
+    {
+     "date": "2024-07-21",
+     "db": -15.768,
+     "expected": -16.013,
+     "z": 0.91,
+     "flagged": false
+    },
+    {
+     "date": "2024-08-02",
+     "db": -15.965,
+     "expected": -16.039,
+     "z": 0.35,
+     "flagged": false
+    },
+    {
+     "date": "2024-08-14",
+     "db": -16.009,
+     "expected": -16.039,
+     "z": 0.21,
+     "flagged": false
+    },
+    {
+     "date": "2024-08-26",
+     "db": -16.035,
+     "expected": -16.038,
+     "z": 0.13,
+     "flagged": false
+    },
+    {
+     "date": "2024-09-07",
+     "db": -16.325,
+     "expected": -16.173,
+     "z": -0.38,
+     "flagged": false
+    },
+    {
+     "date": "2024-09-19",
+     "db": -16.109,
+     "expected": -16.172,
+     "z": 0.32,
+     "flagged": false
+    },
+    {
+     "date": "2024-10-01",
+     "db": -16.076,
+     "expected": -16.008,
+     "z": -0.11,
+     "flagged": false
+    },
+    {
+     "date": "2024-10-13",
+     "db": -16.609,
+     "expected": -16.008,
+     "z": -1.84,
+     "flagged": false
+    },
+    {
+     "date": "2024-10-25",
+     "db": -15.735,
+     "expected": -16.007,
+     "z": 1.0,
+     "flagged": false
+    },
+    {
+     "date": "2025-05-05",
+     "db": -16.922,
+     "expected": -16.229,
+     "z": -2.14,
+     "flagged": false
+    },
+    {
+     "date": "2025-05-11",
+     "db": -17.03,
+     "expected": -16.229,
+     "z": -2.49,
+     "flagged": false
+    },
+    {
+     "date": "2025-05-17",
+     "db": -16.549,
+     "expected": -16.229,
+     "z": -0.92,
+     "flagged": false
+    },
+    {
+     "date": "2025-05-23",
+     "db": -16.833,
+     "expected": -16.229,
+     "z": -1.85,
+     "flagged": false
+    },
+    {
+     "date": "2025-05-29",
+     "db": -16.238,
+     "expected": -16.229,
+     "z": 0.09,
+     "flagged": false
+    },
+    {
+     "date": "2025-06-04",
+     "db": -16.547,
+     "expected": -15.992,
+     "z": -1.69,
+     "flagged": false
+    },
+    {
+     "date": "2025-06-10",
+     "db": -16.212,
+     "expected": -15.992,
+     "z": -0.6,
+     "flagged": false
+    },
+    {
+     "date": "2025-06-16",
+     "db": -16.158,
+     "expected": -15.992,
+     "z": -0.42,
+     "flagged": false
+    },
+    {
+     "date": "2025-06-22",
+     "db": -16.149,
+     "expected": -15.992,
+     "z": -0.4,
+     "flagged": false
+    },
+    {
+     "date": "2025-06-28",
+     "db": -15.998,
+     "expected": -15.992,
+     "z": 0.09,
+     "flagged": false
+    },
+    {
+     "date": "2025-07-04",
+     "db": -16.288,
+     "expected": -16.008,
+     "z": -0.79,
+     "flagged": false
+    },
+    {
+     "date": "2025-07-16",
+     "db": -16.435,
+     "expected": -16.008,
+     "z": -1.27,
+     "flagged": false
+    },
+    {
+     "date": "2025-07-22",
+     "db": -16.147,
+     "expected": -16.008,
+     "z": -0.34,
+     "flagged": false
+    },
+    {
+     "date": "2025-07-28",
+     "db": -16.317,
+     "expected": -16.008,
+     "z": -0.89,
+     "flagged": false
+    },
+    {
+     "date": "2025-08-03",
+     "db": -16.285,
+     "expected": -16.034,
+     "z": -0.7,
+     "flagged": false
+    },
+    {
+     "date": "2025-08-09",
+     "db": -16.471,
+     "expected": -16.034,
+     "z": -1.3,
+     "flagged": false
+    },
+    {
+     "date": "2025-08-15",
+     "db": -16.263,
+     "expected": -16.034,
+     "z": -0.63,
+     "flagged": false
+    },
+    {
+     "date": "2025-08-21",
+     "db": -16.491,
+     "expected": -16.033,
+     "z": -1.37,
+     "flagged": false
+    },
+    {
+     "date": "2025-09-02",
+     "db": -16.245,
+     "expected": -16.168,
+     "z": -0.14,
+     "flagged": false
+    },
+    {
+     "date": "2025-09-08",
+     "db": -16.308,
+     "expected": -16.168,
+     "z": -0.34,
+     "flagged": false
+    },
+    {
+     "date": "2025-09-14",
+     "db": -16.596,
+     "expected": -16.168,
+     "z": -1.28,
+     "flagged": false
+    },
+    {
+     "date": "2025-09-20",
+     "db": -16.269,
+     "expected": -16.167,
+     "z": -0.21,
+     "flagged": false
+    },
+    {
+     "date": "2025-09-26",
+     "db": -16.554,
+     "expected": -16.167,
+     "z": -1.14,
+     "flagged": false
+    },
+    {
+     "date": "2025-10-02",
+     "db": -16.496,
+     "expected": -16.003,
+     "z": -1.49,
+     "flagged": false
+    },
+    {
+     "date": "2025-10-08",
+     "db": -16.404,
+     "expected": -16.003,
+     "z": -1.19,
+     "flagged": false
+    },
+    {
+     "date": "2025-10-14",
+     "db": -16.37,
+     "expected": -16.003,
+     "z": -1.08,
+     "flagged": false
+    },
+    {
+     "date": "2025-10-20",
+     "db": -15.153,
+     "expected": -16.002,
+     "z": 2.87,
+     "flagged": false
+    },
+    {
+     "date": "2025-10-26",
+     "db": -16.349,
+     "expected": -16.002,
+     "z": -1.01,
+     "flagged": false
+    },
+    {
+     "date": "2026-05-06",
+     "db": -16.339,
+     "expected": -16.224,
+     "z": -0.26,
+     "flagged": false
+    },
+    {
+     "date": "2026-05-07",
+     "db": -16.178,
+     "expected": -16.224,
+     "z": 0.27,
+     "flagged": false
+    },
+    {
+     "date": "2026-05-12",
+     "db": -16.478,
+     "expected": -16.224,
+     "z": -0.71,
+     "flagged": false
+    },
+    {
+     "date": "2026-05-18",
+     "db": -16.259,
+     "expected": -16.224,
+     "z": 0.0,
+     "flagged": false
+    },
+    {
+     "date": "2026-05-19",
+     "db": -15.37,
+     "expected": -16.224,
+     "z": 2.89,
+     "flagged": false
+    },
+    {
+     "date": "2026-05-24",
+     "db": -15.837,
+     "expected": -16.224,
+     "z": 1.37,
+     "flagged": false
+    },
+    {
+     "date": "2026-05-30",
+     "db": -15.843,
+     "expected": -16.224,
+     "z": 1.35,
+     "flagged": false
+    },
+    {
+     "date": "2026-05-31",
+     "db": -16.808,
+     "expected": -16.224,
+     "z": -1.78,
+     "flagged": false
+    },
+    {
+     "date": "2026-06-05",
+     "db": -15.795,
+     "expected": -15.987,
+     "z": 0.74,
+     "flagged": false
+    },
+    {
+     "date": "2026-06-12",
+     "db": -15.622,
+     "expected": -15.987,
+     "z": 1.3,
+     "flagged": false
+    },
+    {
+     "date": "2026-06-17",
+     "db": -15.86,
+     "expected": -15.987,
+     "z": 0.53,
+     "flagged": false
+    },
+    {
+     "date": "2026-06-24",
+     "db": -15.317,
+     "expected": -15.987,
+     "z": 2.29,
+     "flagged": false
+    },
+    {
+     "date": "2026-06-29",
+     "db": -16.062,
+     "expected": -15.987,
+     "z": -0.13,
+     "flagged": false
+    },
+    {
+     "date": "2026-06-30",
+     "db": -15.894,
+     "expected": -15.987,
+     "z": 0.42,
+     "flagged": false
+    },
+    {
+     "date": "2026-07-06",
+     "db": -15.696,
+     "expected": -16.003,
+     "z": 1.11,
+     "flagged": false
+    },
+    {
+     "date": "2026-07-12",
+     "db": -16.044,
+     "expected": -16.003,
+     "z": -0.02,
+     "flagged": false
+    },
+    {
+     "date": "2026-07-18",
+     "db": -15.99,
+     "expected": -16.003,
+     "z": 0.16,
+     "flagged": false
+    },
+    {
+     "date": "2026-07-24",
+     "db": -16.043,
+     "expected": -16.003,
+     "z": -0.01,
+     "flagged": false
+    },
+    {
+     "date": "2026-07-30",
+     "db": -15.751,
+     "expected": -16.003,
+     "z": 0.93,
+     "flagged": false
+    },
+    {
+     "date": "2026-08-05",
+     "db": -15.985,
+     "expected": -16.029,
+     "z": 0.26,
+     "flagged": false
+    },
+    {
+     "date": "2026-08-11",
+     "db": -16.064,
+     "expected": -16.029,
+     "z": -0.0,
+     "flagged": false
+    },
+    {
+     "date": "2026-08-17",
+     "db": -15.938,
+     "expected": -16.029,
+     "z": 0.41,
+     "flagged": false
+    },
+    {
+     "date": "2026-08-23",
+     "db": -16.129,
+     "expected": -16.028,
+     "z": -0.21,
+     "flagged": false
+    },
+    {
+     "date": "2026-08-29",
+     "db": -15.773,
+     "expected": -16.028,
+     "z": 0.94,
+     "flagged": false
+    },
+    {
+     "date": "2026-09-04",
+     "db": -15.688,
+     "expected": -16.163,
+     "z": 1.66,
+     "flagged": false
+    },
+    {
+     "date": "2026-09-10",
+     "db": -16.015,
+     "expected": -16.163,
+     "z": 0.59,
+     "flagged": false
+    },
+    {
+     "date": "2026-09-16",
+     "db": -15.931,
+     "expected": -16.162,
+     "z": 0.87,
+     "flagged": false
+    },
+    {
+     "date": "2026-09-22",
+     "db": -16.198,
+     "expected": -16.162,
+     "z": 0.0,
+     "flagged": false
+    },
+    {
+     "date": "2026-09-28",
+     "db": -16.114,
+     "expected": -16.162,
+     "z": 0.27,
+     "flagged": false
+    },
+    {
+     "date": "2026-10-04",
+     "db": -16.372,
+     "expected": -15.998,
+     "z": -1.1,
+     "flagged": false
+    },
+    {
+     "date": "2026-10-10",
+     "db": -16.185,
+     "expected": -15.998,
+     "z": -0.49,
+     "flagged": false
+    },
+    {
+     "date": "2026-10-16",
+     "db": -15.087,
+     "expected": -15.997,
+     "z": 3.07,
+     "flagged": false
+    },
+    {
+     "date": "2026-10-22",
+     "db": -15.68,
+     "expected": -15.997,
+     "z": 1.15,
+     "flagged": false
+    },
+    {
+     "date": "2026-10-28",
+     "db": -16.014,
+     "expected": -15.997,
+     "z": 0.06,
+     "flagged": false
+    }
+   ],
+   "events": [
+    {
+     "date": "2024-05-22",
+     "db": -14.912,
+     "z": 4.41,
+     "direction": "rise"
+    }
+   ],
+   "forecast": [
+    {
+     "month": "2027-05",
+     "mean": -16.219,
+     "lower": -16.836,
+     "upper": -15.602
+    },
+    {
+     "month": "2027-06",
+     "mean": -15.982,
+     "lower": -16.599,
+     "upper": -15.365
+    },
+    {
+     "month": "2027-07",
+     "mean": -15.998,
+     "lower": -16.617,
+     "upper": -15.38
+    },
+    {
+     "month": "2027-08",
+     "mean": -16.024,
+     "lower": -16.642,
+     "upper": -15.405
+    },
+    {
+     "month": "2027-09",
+     "mean": -16.157,
+     "lower": -16.775,
+     "upper": -15.54
+    },
+    {
+     "month": "2027-10",
+     "mean": -15.992,
+     "lower": -16.61,
+     "upper": -15.375
+    }
+   ],
+   "trend_db_per_year": {
+    "estimate": 0.005,
+    "ci95": [
+     -0.0122,
+     0.0222
+    ]
+   },
+   "backtest": {
+    "held_out_season": 2026,
+    "mae_model": 0.316,
+    "mae_naive": 0.454,
+    "skill": 0.304
+   },
+   "model": "month-of-season levels + linear trend (robust two-pass least squares)"
+  },
+  "ITA_BELLUNO_FOREST": {
+   "location": {
+    "centre": {
+     "lat": 46.21,
+     "lon": 12.135
+    },
+    "bounds": {
+     "south": 46.15,
+     "west": 12.05,
+     "north": 46.27,
+     "east": 12.22
+    }
+   },
+   "history": [
+    {
+     "date": "2019-05-06",
+     "db": -13.198,
+     "expected": -12.839,
+     "z": -0.9,
+     "flagged": false
+    },
+    {
+     "date": "2019-05-12",
+     "db": -12.527,
+     "expected": -12.839,
+     "z": 0.99,
+     "flagged": false
+    },
+    {
+     "date": "2019-05-18",
+     "db": -13.257,
+     "expected": -12.839,
+     "z": -1.07,
+     "flagged": false
+    },
+    {
+     "date": "2019-05-24",
+     "db": -13.034,
+     "expected": -12.839,
+     "z": -0.44,
+     "flagged": false
+    },
+    {
+     "date": "2019-05-30",
+     "db": -13.148,
+     "expected": -12.84,
+     "z": -0.76,
+     "flagged": false
+    },
+    {
+     "date": "2019-06-05",
+     "db": -12.98,
+     "expected": -12.827,
+     "z": -0.32,
+     "flagged": false
+    },
+    {
+     "date": "2019-06-11",
+     "db": -13.221,
+     "expected": -12.827,
+     "z": -1.0,
+     "flagged": false
+    },
+    {
+     "date": "2019-06-17",
+     "db": -13.057,
+     "expected": -12.827,
+     "z": -0.54,
+     "flagged": false
+    },
+    {
+     "date": "2019-06-23",
+     "db": -13.028,
+     "expected": -12.828,
+     "z": -0.45,
+     "flagged": false
+    },
+    {
+     "date": "2019-06-29",
+     "db": -13.037,
+     "expected": -12.828,
+     "z": -0.48,
+     "flagged": false
+    },
+    {
+     "date": "2019-07-05",
+     "db": -13.335,
+     "expected": -12.917,
+     "z": -1.07,
+     "flagged": false
+    },
+    {
+     "date": "2019-07-11",
+     "db": -13.273,
+     "expected": -12.917,
+     "z": -0.89,
+     "flagged": false
+    },
+    {
+     "date": "2019-07-17",
+     "db": -13.527,
+     "expected": -12.917,
+     "z": -1.61,
+     "flagged": false
+    },
+    {
+     "date": "2019-07-23",
+     "db": -13.089,
+     "expected": -12.918,
+     "z": -0.37,
+     "flagged": false
+    },
+    {
+     "date": "2019-07-29",
+     "db": -12.761,
+     "expected": -12.918,
+     "z": 0.56,
+     "flagged": false
+    },
+    {
+     "date": "2019-08-04",
+     "db": -13.352,
+     "expected": -12.979,
+     "z": -0.94,
+     "flagged": false
+    },
+    {
+     "date": "2019-08-10",
+     "db": -13.237,
+     "expected": -12.98,
+     "z": -0.61,
+     "flagged": false
+    },
+    {
+     "date": "2019-08-16",
+     "db": -12.891,
+     "expected": -12.98,
+     "z": 0.36,
+     "flagged": false
+    },
+    {
+     "date": "2019-08-22",
+     "db": -12.858,
+     "expected": -12.98,
+     "z": 0.46,
+     "flagged": false
+    },
+    {
+     "date": "2019-08-28",
+     "db": -13.344,
+     "expected": -12.981,
+     "z": -0.91,
+     "flagged": false
+    },
+    {
+     "date": "2019-09-03",
+     "db": -13.253,
+     "expected": -13.218,
+     "z": 0.01,
+     "flagged": false
+    },
+    {
+     "date": "2019-09-09",
+     "db": -13.225,
+     "expected": -13.218,
+     "z": 0.09,
+     "flagged": false
+    },
+    {
+     "date": "2019-09-15",
+     "db": -13.563,
+     "expected": -13.218,
+     "z": -0.86,
+     "flagged": false
+    },
+    {
+     "date": "2019-09-21",
+     "db": -14.056,
+     "expected": -13.219,
+     "z": -2.25,
+     "flagged": false
+    },
+    {
+     "date": "2019-09-27",
+     "db": -13.528,
+     "expected": -13.219,
+     "z": -0.76,
+     "flagged": false
+    },
+    {
+     "date": "2019-10-03",
+     "db": -13.235,
+     "expected": -13.07,
+     "z": -0.35,
+     "flagged": false
+    },
+    {
+     "date": "2019-10-09",
+     "db": -13.68,
+     "expected": -13.07,
+     "z": -1.61,
+     "flagged": false
+    },
+    {
+     "date": "2019-10-15",
+     "db": -13.326,
+     "expected": -13.071,
+     "z": -0.61,
+     "flagged": false
+    },
+    {
+     "date": "2019-10-21",
+     "db": -12.951,
+     "expected": -13.071,
+     "z": 0.45,
+     "flagged": false
+    },
+    {
+     "date": "2019-10-27",
+     "db": -12.882,
+     "expected": -13.071,
+     "z": 0.65,
+     "flagged": false
+    },
+    {
+     "date": "2020-05-06",
+     "db": -13.429,
+     "expected": -12.859,
+     "z": -1.5,
+     "flagged": false
+    },
+    {
+     "date": "2020-05-12",
+     "db": -12.836,
+     "expected": -12.859,
+     "z": 0.18,
+     "flagged": false
+    },
+    {
+     "date": "2020-05-18",
+     "db": -12.538,
+     "expected": -12.859,
+     "z": 1.02,
+     "flagged": false
+    },
+    {
+     "date": "2020-05-24",
+     "db": -12.861,
+     "expected": -12.86,
+     "z": 0.11,
+     "flagged": false
+    },
+    {
+     "date": "2020-05-30",
+     "db": -13.533,
+     "expected": -12.86,
+     "z": -1.79,
+     "flagged": false
+    },
+    {
+     "date": "2020-06-05",
+     "db": -12.437,
+     "expected": -12.847,
+     "z": 1.27,
+     "flagged": false
+    },
+    {
+     "date": "2020-06-11",
+     "db": -12.808,
+     "expected": -12.847,
+     "z": 0.22,
+     "flagged": false
+    },
+    {
+     "date": "2020-06-17",
+     "db": -12.222,
+     "expected": -12.847,
+     "z": 1.88,
+     "flagged": false
+    },
+    {
+     "date": "2020-06-23",
+     "db": -13.025,
+     "expected": -12.848,
+     "z": -0.39,
+     "flagged": false
+    },
+    {
+     "date": "2020-06-29",
+     "db": -12.72,
+     "expected": -12.848,
+     "z": 0.47,
+     "flagged": false
+    },
+    {
+     "date": "2020-07-05",
+     "db": -12.848,
+     "expected": -12.937,
+     "z": 0.36,
+     "flagged": false
+    },
+    {
+     "date": "2020-07-11",
+     "db": -12.622,
+     "expected": -12.937,
+     "z": 1.0,
+     "flagged": false
+    },
+    {
+     "date": "2020-07-17",
+     "db": -12.708,
+     "expected": -12.938,
+     "z": 0.76,
+     "flagged": false
+    },
+    {
+     "date": "2020-07-23",
+     "db": -12.731,
+     "expected": -12.938,
+     "z": 0.69,
+     "flagged": false
+    },
+    {
+     "date": "2020-07-29",
+     "db": -12.751,
+     "expected": -12.938,
+     "z": 0.64,
+     "flagged": false
+    },
+    {
+     "date": "2020-08-04",
+     "db": -12.277,
+     "expected": -12.999,
+     "z": 2.15,
+     "flagged": false
+    },
+    {
+     "date": "2020-08-10",
+     "db": -13.074,
+     "expected": -13.0,
+     "z": -0.1,
+     "flagged": false
+    },
+    {
+     "date": "2020-08-16",
+     "db": -12.78,
+     "expected": -13.0,
+     "z": 0.73,
+     "flagged": false
+    },
+    {
+     "date": "2020-08-22",
+     "db": -12.869,
+     "expected": -13.0,
+     "z": 0.48,
+     "flagged": false
+    },
+    {
+     "date": "2020-08-28",
+     "db": -12.818,
+     "expected": -13.001,
+     "z": 0.63,
+     "flagged": false
+    },
+    {
+     "date": "2020-09-03",
+     "db": -13.09,
+     "expected": -13.238,
+     "z": 0.53,
+     "flagged": false
+    },
+    {
+     "date": "2020-09-09",
+     "db": -12.837,
+     "expected": -13.238,
+     "z": 1.24,
+     "flagged": false
+    },
+    {
+     "date": "2020-09-15",
+     "db": -13.07,
+     "expected": -13.238,
+     "z": 0.59,
+     "flagged": false
+    },
+    {
+     "date": "2020-09-21",
+     "db": -13.095,
+     "expected": -13.239,
+     "z": 0.52,
+     "flagged": false
+    },
+    {
+     "date": "2020-09-27",
+     "db": -13.592,
+     "expected": -13.239,
+     "z": -0.88,
+     "flagged": false
+    },
+    {
+     "date": "2020-10-03",
+     "db": -12.04,
+     "expected": -13.09,
+     "z": 3.08,
+     "flagged": false
+    },
+    {
+     "date": "2020-10-09",
+     "db": -13.384,
+     "expected": -13.091,
+     "z": -0.72,
+     "flagged": false
+    },
+    {
+     "date": "2020-10-15",
+     "db": -12.805,
+     "expected": -13.091,
+     "z": 0.92,
+     "flagged": false
+    },
+    {
+     "date": "2020-10-21",
+     "db": -13.133,
+     "expected": -13.091,
+     "z": -0.01,
+     "flagged": false
+    },
+    {
+     "date": "2020-10-27",
+     "db": -11.426,
+     "expected": -13.092,
+     "z": 4.81,
+     "flagged": true
+    },
+    {
+     "date": "2021-05-01",
+     "db": -12.075,
+     "expected": -12.879,
+     "z": 2.38,
+     "flagged": false
+    },
+    {
+     "date": "2021-05-07",
+     "db": -12.472,
+     "expected": -12.879,
+     "z": 1.26,
+     "flagged": false
+    },
+    {
+     "date": "2021-05-13",
+     "db": -12.3,
+     "expected": -12.879,
+     "z": 1.75,
+     "flagged": false
+    },
+    {
+     "date": "2021-05-19",
+     "db": -12.378,
+     "expected": -12.879,
+     "z": 1.53,
+     "flagged": false
+    },
+    {
+     "date": "2021-05-25",
+     "db": -12.181,
+     "expected": -12.88,
+     "z": 2.08,
+     "flagged": false
+    },
+    {
+     "date": "2021-05-31",
+     "db": -12.892,
+     "expected": -12.88,
+     "z": 0.08,
+     "flagged": false
+    },
+    {
+     "date": "2021-06-06",
+     "db": -12.24,
+     "expected": -12.867,
+     "z": 1.88,
+     "flagged": false
+    },
+    {
+     "date": "2021-06-12",
+     "db": -12.756,
+     "expected": -12.867,
+     "z": 0.42,
+     "flagged": false
+    },
+    {
+     "date": "2021-06-18",
+     "db": -12.34,
+     "expected": -12.868,
+     "z": 1.6,
+     "flagged": false
+    },
+    {
+     "date": "2021-06-24",
+     "db": -12.688,
+     "expected": -12.868,
+     "z": 0.62,
+     "flagged": false
+    },
+    {
+     "date": "2021-06-30",
+     "db": -13.079,
+     "expected": -12.868,
+     "z": -0.48,
+     "flagged": false
+    },
+    {
+     "date": "2021-07-06",
+     "db": -12.942,
+     "expected": -12.957,
+     "z": 0.15,
+     "flagged": false
+    },
+    {
+     "date": "2021-07-12",
+     "db": -13.113,
+     "expected": -12.957,
+     "z": -0.33,
+     "flagged": false
+    },
+    {
+     "date": "2021-07-18",
+     "db": -12.695,
+     "expected": -12.958,
+     "z": 0.85,
+     "flagged": false
+    },
+    {
+     "date": "2021-07-24",
+     "db": -13.109,
+     "expected": -12.958,
+     "z": -0.31,
+     "flagged": false
+    },
+    {
+     "date": "2021-07-30",
+     "db": -12.682,
+     "expected": -12.958,
+     "z": 0.89,
+     "flagged": false
+    },
+    {
+     "date": "2021-08-05",
+     "db": -12.63,
+     "expected": -13.02,
+     "z": 1.21,
+     "flagged": false
+    },
+    {
+     "date": "2021-08-11",
+     "db": -12.836,
+     "expected": -13.02,
+     "z": 0.63,
+     "flagged": false
+    },
+    {
+     "date": "2021-08-17",
+     "db": -13.231,
+     "expected": -13.02,
+     "z": -0.48,
+     "flagged": false
+    },
+    {
+     "date": "2021-08-23",
+     "db": -12.541,
+     "expected": -13.021,
+     "z": 1.47,
+     "flagged": false
+    },
+    {
+     "date": "2021-08-29",
+     "db": -13.418,
+     "expected": -13.021,
+     "z": -1.01,
+     "flagged": false
+    },
+    {
+     "date": "2021-09-04",
+     "db": -13.273,
+     "expected": -13.258,
+     "z": 0.07,
+     "flagged": false
+    },
+    {
+     "date": "2021-09-10",
+     "db": -13.709,
+     "expected": -13.258,
+     "z": -1.16,
+     "flagged": false
+    },
+    {
+     "date": "2021-09-16",
+     "db": -13.128,
+     "expected": -13.259,
+     "z": 0.48,
+     "flagged": false
+    },
+    {
+     "date": "2021-09-22",
+     "db": -13.207,
+     "expected": -13.259,
+     "z": 0.26,
+     "flagged": false
+    },
+    {
+     "date": "2021-09-28",
+     "db": -13.049,
+     "expected": -13.259,
+     "z": 0.7,
+     "flagged": false
+    },
+    {
+     "date": "2021-10-04",
+     "db": -13.117,
+     "expected": -13.11,
+     "z": 0.09,
+     "flagged": false
+    },
+    {
+     "date": "2021-10-10",
+     "db": -13.517,
+     "expected": -13.111,
+     "z": -1.03,
+     "flagged": false
+    },
+    {
+     "date": "2021-10-16",
+     "db": -13.81,
+     "expected": -13.111,
+     "z": -1.86,
+     "flagged": false
+    },
+    {
+     "date": "2021-10-22",
+     "db": -13.02,
+     "expected": -13.111,
+     "z": 0.37,
+     "flagged": false
+    },
+    {
+     "date": "2021-10-28",
+     "db": -13.464,
+     "expected": -13.112,
+     "z": -0.88,
+     "flagged": false
+    },
+    {
+     "date": "2022-05-08",
+     "db": -12.33,
+     "expected": -12.899,
+     "z": 1.72,
+     "flagged": false
+    },
+    {
+     "date": "2022-05-20",
+     "db": -13.24,
+     "expected": -12.9,
+     "z": -0.85,
+     "flagged": false
+    },
+    {
+     "date": "2022-06-01",
+     "db": -13.353,
+     "expected": -12.887,
+     "z": -1.2,
+     "flagged": false
+    },
+    {
+     "date": "2022-06-13",
+     "db": -12.297,
+     "expected": -12.887,
+     "z": 1.78,
+     "flagged": false
+    },
+    {
+     "date": "2022-06-25",
+     "db": -12.935,
+     "expected": -12.888,
+     "z": -0.02,
+     "flagged": false
+    },
+    {
+     "date": "2022-07-07",
+     "db": -12.748,
+     "expected": -12.977,
+     "z": 0.76,
+     "flagged": false
+    },
+    {
+     "date": "2022-07-19",
+     "db": -13.242,
+     "expected": -12.978,
+     "z": -0.63,
+     "flagged": false
+    },
+    {
+     "date": "2022-07-31",
+     "db": -13.278,
+     "expected": -12.979,
+     "z": -0.73,
+     "flagged": false
+    },
+    {
+     "date": "2022-08-12",
+     "db": -12.729,
+     "expected": -13.04,
+     "z": 0.99,
+     "flagged": false
+    },
+    {
+     "date": "2022-09-05",
+     "db": -13.395,
+     "expected": -13.278,
+     "z": -0.22,
+     "flagged": false
+    },
+    {
+     "date": "2022-09-17",
+     "db": -12.833,
+     "expected": -13.279,
+     "z": 1.37,
+     "flagged": false
+    },
+    {
+     "date": "2022-09-29",
+     "db": -13.341,
+     "expected": -13.279,
+     "z": -0.06,
+     "flagged": false
+    },
+    {
+     "date": "2022-10-11",
+     "db": -13.569,
+     "expected": -13.131,
+     "z": -1.13,
+     "flagged": false
+    },
+    {
+     "date": "2022-10-23",
+     "db": -12.565,
+     "expected": -13.132,
+     "z": 1.71,
+     "flagged": false
+    },
+    {
+     "date": "2023-05-03",
+     "db": -12.33,
+     "expected": -12.919,
+     "z": 1.77,
+     "flagged": false
+    },
+    {
+     "date": "2023-05-15",
+     "db": -12.453,
+     "expected": -12.92,
+     "z": 1.43,
+     "flagged": false
+    },
+    {
+     "date": "2023-05-27",
+     "db": -12.657,
+     "expected": -12.92,
+     "z": 0.85,
+     "flagged": false
+    },
+    {
+     "date": "2023-06-08",
+     "db": -12.672,
+     "expected": -12.907,
+     "z": 0.78,
+     "flagged": false
+    },
+    {
+     "date": "2023-06-20",
+     "db": -13.104,
+     "expected": -12.908,
+     "z": -0.44,
+     "flagged": false
+    },
+    {
+     "date": "2023-07-02",
+     "db": -12.464,
+     "expected": -12.997,
+     "z": 1.62,
+     "flagged": false
+    },
+    {
+     "date": "2023-07-14",
+     "db": -12.798,
+     "expected": -12.998,
+     "z": 0.67,
+     "flagged": false
+    },
+    {
+     "date": "2023-07-26",
+     "db": -13.388,
+     "expected": -12.998,
+     "z": -0.99,
+     "flagged": false
+    },
+    {
+     "date": "2023-08-07",
+     "db": -13.492,
+     "expected": -13.06,
+     "z": -1.11,
+     "flagged": false
+    },
+    {
+     "date": "2023-08-19",
+     "db": -13.319,
+     "expected": -13.061,
+     "z": -0.62,
+     "flagged": false
+    },
+    {
+     "date": "2023-08-31",
+     "db": -13.215,
+     "expected": -13.061,
+     "z": -0.32,
+     "flagged": false
+    },
+    {
+     "date": "2023-09-12",
+     "db": -13.635,
+     "expected": -13.299,
+     "z": -0.84,
+     "flagged": false
+    },
+    {
+     "date": "2023-09-24",
+     "db": -13.355,
+     "expected": -13.299,
+     "z": -0.04,
+     "flagged": false
+    },
+    {
+     "date": "2023-10-06",
+     "db": -13.805,
+     "expected": -13.151,
+     "z": -1.73,
+     "flagged": false
+    },
+    {
+     "date": "2023-10-18",
+     "db": -14.098,
+     "expected": -13.151,
+     "z": -2.56,
+     "flagged": false
+    },
+    {
+     "date": "2023-10-30",
+     "db": -11.973,
+     "expected": -13.152,
+     "z": 3.44,
+     "flagged": false
+    },
+    {
+     "date": "2024-05-09",
+     "db": -13.001,
+     "expected": -12.939,
+     "z": -0.06,
+     "flagged": false
+    },
+    {
+     "date": "2024-05-21",
+     "db": -12.224,
+     "expected": -12.94,
+     "z": 2.13,
+     "flagged": false
+    },
+    {
+     "date": "2024-06-02",
+     "db": -13.139,
+     "expected": -12.927,
+     "z": -0.49,
+     "flagged": false
+    },
+    {
+     "date": "2024-06-14",
+     "db": -13.121,
+     "expected": -12.928,
+     "z": -0.43,
+     "flagged": false
+    },
+    {
+     "date": "2024-06-26",
+     "db": -12.562,
+     "expected": -12.928,
+     "z": 1.14,
+     "flagged": false
+    },
+    {
+     "date": "2024-07-08",
+     "db": -12.722,
+     "expected": -13.018,
+     "z": 0.94,
+     "flagged": false
+    },
+    {
+     "date": "2024-07-20",
+     "db": -13.002,
+     "expected": -13.018,
+     "z": 0.16,
+     "flagged": false
+    },
+    {
+     "date": "2024-08-01",
+     "db": -13.028,
+     "expected": -13.08,
+     "z": 0.26,
+     "flagged": false
+    },
+    {
+     "date": "2024-08-13",
+     "db": -13.221,
+     "expected": -13.08,
+     "z": -0.29,
+     "flagged": false
+    },
+    {
+     "date": "2024-08-25",
+     "db": -13.256,
+     "expected": -13.081,
+     "z": -0.38,
+     "flagged": false
+    },
+    {
+     "date": "2024-09-06",
+     "db": -12.239,
+     "expected": -13.319,
+     "z": 3.16,
+     "flagged": false
+    },
+    {
+     "date": "2024-09-18",
+     "db": -13.679,
+     "expected": -13.319,
+     "z": -0.9,
+     "flagged": false
+    },
+    {
+     "date": "2024-09-30",
+     "db": -13.545,
+     "expected": -13.32,
+     "z": -0.52,
+     "flagged": false
+    },
+    {
+     "date": "2024-10-12",
+     "db": -13.394,
+     "expected": -13.171,
+     "z": -0.52,
+     "flagged": false
+    },
+    {
+     "date": "2024-10-24",
+     "db": -11.972,
+     "expected": -13.172,
+     "z": 3.5,
+     "flagged": false
+    },
+    {
+     "date": "2025-05-04",
+     "db": -13.193,
+     "expected": -12.959,
+     "z": -0.55,
+     "flagged": false
+    },
+    {
+     "date": "2025-05-10",
+     "db": -12.973,
+     "expected": -12.96,
+     "z": 0.07,
+     "flagged": false
+    },
+    {
+     "date": "2025-05-16",
+     "db": -13.642,
+     "expected": -12.96,
+     "z": -1.81,
+     "flagged": false
+    },
+    {
+     "date": "2025-05-22",
+     "db": -12.367,
+     "expected": -12.96,
+     "z": 1.79,
+     "flagged": false
+    },
+    {
+     "date": "2025-05-28",
+     "db": -13.112,
+     "expected": -12.961,
+     "z": -0.32,
+     "flagged": false
+    },
+    {
+     "date": "2025-06-03",
+     "db": -13.001,
+     "expected": -12.947,
+     "z": -0.04,
+     "flagged": false
+    },
+    {
+     "date": "2025-06-09",
+     "db": -13.049,
+     "expected": -12.948,
+     "z": -0.18,
+     "flagged": false
+    },
+    {
+     "date": "2025-06-15",
+     "db": -13.208,
+     "expected": -12.948,
+     "z": -0.62,
+     "flagged": false
+    },
+    {
+     "date": "2025-06-21",
+     "db": -13.079,
+     "expected": -12.948,
+     "z": -0.26,
+     "flagged": false
+    },
+    {
+     "date": "2025-06-27",
+     "db": -12.901,
+     "expected": -12.949,
+     "z": 0.25,
+     "flagged": false
+    },
+    {
+     "date": "2025-07-03",
+     "db": -13.011,
+     "expected": -13.037,
+     "z": 0.19,
+     "flagged": false
+    },
+    {
+     "date": "2025-07-09",
+     "db": -13.298,
+     "expected": -13.038,
+     "z": -0.62,
+     "flagged": false
+    },
+    {
+     "date": "2025-07-15",
+     "db": -13.057,
+     "expected": -13.038,
+     "z": 0.06,
+     "flagged": false
+    },
+    {
+     "date": "2025-07-21",
+     "db": -12.567,
+     "expected": -13.038,
+     "z": 1.44,
+     "flagged": false
+    },
+    {
+     "date": "2025-07-27",
+     "db": -13.118,
+     "expected": -13.039,
+     "z": -0.11,
+     "flagged": false
+    },
+    {
+     "date": "2025-08-02",
+     "db": -13.215,
+     "expected": -13.1,
+     "z": -0.21,
+     "flagged": false
+    },
+    {
+     "date": "2025-08-08",
+     "db": -13.247,
+     "expected": -13.1,
+     "z": -0.3,
+     "flagged": false
+    },
+    {
+     "date": "2025-08-14",
+     "db": -13.103,
+     "expected": -13.101,
+     "z": 0.1,
+     "flagged": false
+    },
+    {
+     "date": "2025-08-20",
+     "db": -13.43,
+     "expected": -13.101,
+     "z": -0.82,
+     "flagged": false
+    },
+    {
+     "date": "2025-08-26",
+     "db": -13.587,
+     "expected": -13.101,
+     "z": -1.26,
+     "flagged": false
+    },
+    {
+     "date": "2025-09-01",
+     "db": -13.446,
+     "expected": -13.338,
+     "z": -0.19,
+     "flagged": false
+    },
+    {
+     "date": "2025-09-07",
+     "db": -13.448,
+     "expected": -13.339,
+     "z": -0.2,
+     "flagged": false
+    },
+    {
+     "date": "2025-09-13",
+     "db": -12.786,
+     "expected": -13.339,
+     "z": 1.67,
+     "flagged": false
+    },
+    {
+     "date": "2025-09-19",
+     "db": -13.339,
+     "expected": -13.339,
+     "z": 0.11,
+     "flagged": false
+    },
+    {
+     "date": "2025-09-25",
+     "db": -13.182,
+     "expected": -13.34,
+     "z": 0.56,
+     "flagged": false
+    },
+    {
+     "date": "2025-10-01",
+     "db": -13.04,
+     "expected": -13.191,
+     "z": 0.54,
+     "flagged": false
+    },
+    {
+     "date": "2025-10-07",
+     "db": -13.805,
+     "expected": -13.191,
+     "z": -1.62,
+     "flagged": false
+    },
+    {
+     "date": "2025-10-13",
+     "db": -13.481,
+     "expected": -13.191,
+     "z": -0.71,
+     "flagged": false
+    },
+    {
+     "date": "2025-10-19",
+     "db": -13.396,
+     "expected": -13.192,
+     "z": -0.47,
+     "flagged": false
+    },
+    {
+     "date": "2025-10-25",
+     "db": -13.232,
+     "expected": -13.192,
+     "z": 0.0,
+     "flagged": false
+    },
+    {
+     "date": "2025-10-31",
+     "db": -12.086,
+     "expected": -13.192,
+     "z": 3.23,
+     "flagged": false
+    },
+    {
+     "date": "2026-05-05",
+     "db": -13.395,
+     "expected": -12.979,
+     "z": -1.06,
+     "flagged": false
+    },
+    {
+     "date": "2026-05-06",
+     "db": -12.852,
+     "expected": -12.979,
+     "z": 0.47,
+     "flagged": false
+    },
+    {
+     "date": "2026-05-11",
+     "db": -13.419,
+     "expected": -12.98,
+     "z": -1.13,
+     "flagged": false
+    },
+    {
+     "date": "2026-05-17",
+     "db": -13.729,
+     "expected": -12.98,
+     "z": -2.0,
+     "flagged": false
+    },
+    {
+     "date": "2026-05-18",
+     "db": -13.759,
+     "expected": -12.98,
+     "z": -2.08,
+     "flagged": false
+    },
+    {
+     "date": "2026-05-23",
+     "db": -13.385,
+     "expected": -12.98,
+     "z": -1.03,
+     "flagged": false
+    },
+    {
+     "date": "2026-05-29",
+     "db": -13.147,
+     "expected": -12.981,
+     "z": -0.36,
+     "flagged": false
+    },
+    {
+     "date": "2026-05-30",
+     "db": -18.48,
+     "expected": -12.981,
+     "z": -15.4,
+     "flagged": true
+    },
+    {
+     "date": "2026-06-04",
+     "db": -13.498,
+     "expected": -12.967,
+     "z": -1.38,
+     "flagged": false
+    },
+    {
+     "date": "2026-06-11",
+     "db": -13.425,
+     "expected": -12.968,
+     "z": -1.18,
+     "flagged": false
+    },
+    {
+     "date": "2026-06-16",
+     "db": -13.27,
+     "expected": -12.968,
+     "z": -0.74,
+     "flagged": false
+    },
+    {
+     "date": "2026-06-23",
+     "db": -12.664,
+     "expected": -12.968,
+     "z": 0.97,
+     "flagged": false
+    },
+    {
+     "date": "2026-06-28",
+     "db": -12.804,
+     "expected": -12.969,
+     "z": 0.58,
+     "flagged": false
+    },
+    {
+     "date": "2026-06-29",
+     "db": -12.799,
+     "expected": -12.969,
+     "z": 0.59,
+     "flagged": false
+    },
+    {
+     "date": "2026-07-05",
+     "db": -13.462,
+     "expected": -13.058,
+     "z": -1.03,
+     "flagged": false
+    },
+    {
+     "date": "2026-07-11",
+     "db": -12.988,
+     "expected": -13.058,
+     "z": 0.31,
+     "flagged": false
+    },
+    {
+     "date": "2026-07-17",
+     "db": -12.539,
+     "expected": -13.058,
+     "z": 1.58,
+     "flagged": false
+    },
+    {
+     "date": "2026-07-23",
+     "db": -13.309,
+     "expected": -13.059,
+     "z": -0.6,
+     "flagged": false
+    },
+    {
+     "date": "2026-07-29",
+     "db": -13.329,
+     "expected": -13.059,
+     "z": -0.65,
+     "flagged": false
+    },
+    {
+     "date": "2026-08-04",
+     "db": -13.024,
+     "expected": -13.12,
+     "z": 0.38,
+     "flagged": false
+    },
+    {
+     "date": "2026-08-10",
+     "db": -13.213,
+     "expected": -13.12,
+     "z": -0.15,
+     "flagged": false
+    },
+    {
+     "date": "2026-08-16",
+     "db": -13.087,
+     "expected": -13.121,
+     "z": 0.21,
+     "flagged": false
+    },
+    {
+     "date": "2026-08-22",
+     "db": -12.323,
+     "expected": -13.121,
+     "z": 2.36,
+     "flagged": false
+    },
+    {
+     "date": "2026-08-28",
+     "db": -12.926,
+     "expected": -13.121,
+     "z": 0.66,
+     "flagged": false
+    },
+    {
+     "date": "2026-09-03",
+     "db": -13.385,
+     "expected": -13.359,
+     "z": 0.04,
+     "flagged": false
+    },
+    {
+     "date": "2026-09-09",
+     "db": -12.613,
+     "expected": -13.359,
+     "z": 2.22,
+     "flagged": false
+    },
+    {
+     "date": "2026-09-15",
+     "db": -13.472,
+     "expected": -13.359,
+     "z": -0.21,
+     "flagged": false
+    },
+    {
+     "date": "2026-09-21",
+     "db": -13.229,
+     "expected": -13.36,
+     "z": 0.48,
+     "flagged": false
+    },
+    {
+     "date": "2026-09-27",
+     "db": -13.862,
+     "expected": -13.36,
+     "z": -1.3,
+     "flagged": false
+    },
+    {
+     "date": "2026-10-03",
+     "db": -13.731,
+     "expected": -13.211,
+     "z": -1.36,
+     "flagged": false
+    },
+    {
+     "date": "2026-10-09",
+     "db": -13.121,
+     "expected": -13.211,
+     "z": 0.37,
+     "flagged": false
+    },
+    {
+     "date": "2026-10-15",
+     "db": -13.61,
+     "expected": -13.212,
+     "z": -1.01,
+     "flagged": false
+    },
+    {
+     "date": "2026-10-21",
+     "db": -11.852,
+     "expected": -13.212,
+     "z": 3.95,
+     "flagged": false
+    },
+    {
+     "date": "2026-10-27",
+     "db": -13.447,
+     "expected": -13.212,
+     "z": -0.55,
+     "flagged": false
+    }
+   ],
+   "events": [
+    {
+     "date": "2020-10-27",
+     "db": -11.426,
+     "z": 4.81,
+     "direction": "rise"
+    },
+    {
+     "date": "2026-05-30",
+     "db": -18.48,
+     "z": -15.4,
+     "direction": "drop (possible disturbance)"
+    }
+   ],
+   "forecast": [
+    {
+     "month": "2027-05",
+     "mean": -13.0,
+     "lower": -13.71,
+     "upper": -12.29
+    },
+    {
+     "month": "2027-06",
+     "mean": -12.988,
+     "lower": -13.698,
+     "upper": -12.278
+    },
+    {
+     "month": "2027-07",
+     "mean": -13.078,
+     "lower": -13.789,
+     "upper": -12.367
+    },
+    {
+     "month": "2027-08",
+     "mean": -13.141,
+     "lower": -13.852,
+     "upper": -12.43
+    },
+    {
+     "month": "2027-09",
+     "mean": -13.379,
+     "lower": -14.09,
+     "upper": -12.668
+    },
+    {
+     "month": "2027-10",
+     "mean": -13.232,
+     "lower": -13.943,
+     "upper": -12.521
+    }
+   ],
+   "trend_db_per_year": {
+    "estimate": -0.0201,
+    "ci95": [
+     -0.0397,
+     -0.0005
+    ]
+   },
+   "backtest": {
+    "held_out_season": 2026,
+    "mae_model": 0.388,
+    "mae_naive": 0.378,
+    "skill": -0.027
+   },
+   "model": "month-of-season levels + linear trend (robust two-pass least squares)"
+  },
+  "VNM_BINH_PHUOC_FOREST": {
+   "location": {
+    "centre": {
+     "lat": 11.75,
+     "lon": 106.85
+    },
+    "bounds": {
+     "south": 11.6,
+     "west": 106.7,
+     "north": 11.9,
+     "east": 107.0
+    }
+   },
+   "history": [
+    {
+     "date": "2019-01-01",
+     "db": -14.408,
+     "expected": -14.894,
+     "z": 1.2,
+     "flagged": false
+    },
+    {
+     "date": "2019-01-07",
+     "db": -14.896,
+     "expected": -14.894,
+     "z": 0.05,
+     "flagged": false
+    },
+    {
+     "date": "2019-01-13",
+     "db": -14.437,
+     "expected": -14.894,
+     "z": 1.14,
+     "flagged": false
+    },
+    {
+     "date": "2019-01-19",
+     "db": -14.62,
+     "expected": -14.894,
+     "z": 0.7,
+     "flagged": false
+    },
+    {
+     "date": "2019-01-25",
+     "db": -14.626,
+     "expected": -14.894,
+     "z": 0.69,
+     "flagged": false
+    },
+    {
+     "date": "2019-01-31",
+     "db": -14.884,
+     "expected": -14.894,
+     "z": 0.08,
+     "flagged": false
+    },
+    {
+     "date": "2019-02-06",
+     "db": -14.853,
+     "expected": -15.17,
+     "z": 0.81,
+     "flagged": false
+    },
+    {
+     "date": "2019-02-12",
+     "db": -15.433,
+     "expected": -15.17,
+     "z": -0.56,
+     "flagged": false
+    },
+    {
+     "date": "2019-02-18",
+     "db": -14.889,
+     "expected": -15.17,
+     "z": 0.72,
+     "flagged": false
+    },
+    {
+     "date": "2019-02-24",
+     "db": -15.267,
+     "expected": -15.17,
+     "z": -0.17,
+     "flagged": false
+    },
+    {
+     "date": "2019-03-02",
+     "db": -15.523,
+     "expected": -15.293,
+     "z": -0.49,
+     "flagged": false
+    },
+    {
+     "date": "2019-03-08",
+     "db": -15.465,
+     "expected": -15.293,
+     "z": -0.35,
+     "flagged": false
+    },
+    {
+     "date": "2019-03-14",
+     "db": -15.313,
+     "expected": -15.293,
+     "z": 0.01,
+     "flagged": false
+    },
+    {
+     "date": "2019-03-20",
+     "db": -15.55,
+     "expected": -15.293,
+     "z": -0.55,
+     "flagged": false
+    },
+    {
+     "date": "2019-03-26",
+     "db": -15.408,
+     "expected": -15.292,
+     "z": -0.22,
+     "flagged": false
+    },
+    {
+     "date": "2019-04-01",
+     "db": -14.861,
+     "expected": -15.188,
+     "z": 0.83,
+     "flagged": false
+    },
+    {
+     "date": "2019-04-07",
+     "db": -14.066,
+     "expected": -15.188,
+     "z": 2.71,
+     "flagged": false
+    },
+    {
+     "date": "2019-04-13",
+     "db": -15.413,
+     "expected": -15.188,
+     "z": -0.48,
+     "flagged": false
+    },
+    {
+     "date": "2019-04-19",
+     "db": -15.313,
+     "expected": -15.188,
+     "z": -0.24,
+     "flagged": false
+    },
+    {
+     "date": "2019-04-25",
+     "db": -15.506,
+     "expected": -15.187,
+     "z": -0.7,
+     "flagged": false
+    },
+    {
+     "date": "2019-05-01",
+     "db": -15.363,
+     "expected": -14.614,
+     "z": -1.71,
+     "flagged": false
+    },
+    {
+     "date": "2019-05-07",
+     "db": -15.361,
+     "expected": -14.614,
+     "z": -1.71,
+     "flagged": false
+    },
+    {
+     "date": "2019-05-13",
+     "db": -14.626,
+     "expected": -14.614,
+     "z": 0.03,
+     "flagged": false
+    },
+    {
+     "date": "2019-05-19",
+     "db": -15.341,
+     "expected": -14.614,
+     "z": -1.66,
+     "flagged": false
+    },
+    {
+     "date": "2019-05-25",
+     "db": -14.322,
+     "expected": -14.614,
+     "z": 0.75,
+     "flagged": false
+    },
+    {
+     "date": "2019-05-31",
+     "db": -14.058,
+     "expected": -14.614,
+     "z": 1.37,
+     "flagged": false
+    },
+    {
+     "date": "2019-06-06",
+     "db": -13.604,
+     "expected": -14.248,
+     "z": 1.58,
+     "flagged": false
+    },
+    {
+     "date": "2019-06-12",
+     "db": -14.137,
+     "expected": -14.248,
+     "z": 0.32,
+     "flagged": false
+    },
+    {
+     "date": "2019-06-18",
+     "db": -13.877,
+     "expected": -14.248,
+     "z": 0.93,
+     "flagged": false
+    },
+    {
+     "date": "2019-06-24",
+     "db": -14.037,
+     "expected": -14.248,
+     "z": 0.56,
+     "flagged": false
+    },
+    {
+     "date": "2019-06-30",
+     "db": -13.781,
+     "expected": -14.248,
+     "z": 1.16,
+     "flagged": false
+    },
+    {
+     "date": "2019-07-06",
+     "db": -14.647,
+     "expected": -14.2,
+     "z": -1.0,
+     "flagged": false
+    },
+    {
+     "date": "2019-07-12",
+     "db": -14.595,
+     "expected": -14.2,
+     "z": -0.88,
+     "flagged": false
+    },
+    {
+     "date": "2019-07-18",
+     "db": -14.606,
+     "expected": -14.2,
+     "z": -0.9,
+     "flagged": false
+    },
+    {
+     "date": "2019-07-30",
+     "db": -13.822,
+     "expected": -14.199,
+     "z": 0.95,
+     "flagged": false
+    },
+    {
+     "date": "2019-08-05",
+     "db": -13.762,
+     "expected": -14.042,
+     "z": 0.72,
+     "flagged": false
+    },
+    {
+     "date": "2019-08-11",
+     "db": -14.287,
+     "expected": -14.042,
+     "z": -0.52,
+     "flagged": false
+    },
+    {
+     "date": "2019-08-17",
+     "db": -13.865,
+     "expected": -14.042,
+     "z": 0.48,
+     "flagged": false
+    },
+    {
+     "date": "2019-08-23",
+     "db": -13.865,
+     "expected": -14.042,
+     "z": 0.48,
+     "flagged": false
+    },
+    {
+     "date": "2019-08-29",
+     "db": -13.944,
+     "expected": -14.042,
+     "z": 0.29,
+     "flagged": false
+    },
+    {
+     "date": "2019-09-04",
+     "db": -14.153,
+     "expected": -13.816,
+     "z": -0.74,
+     "flagged": false
+    },
+    {
+     "date": "2019-09-10",
+     "db": -13.944,
+     "expected": -13.816,
+     "z": -0.25,
+     "flagged": false
+    },
+    {
+     "date": "2019-09-16",
+     "db": -13.446,
+     "expected": -13.815,
+     "z": 0.93,
+     "flagged": false
+    },
+    {
+     "date": "2019-09-22",
+     "db": -13.559,
+     "expected": -13.815,
+     "z": 0.66,
+     "flagged": false
+    },
+    {
+     "date": "2019-09-28",
+     "db": -13.574,
+     "expected": -13.815,
+     "z": 0.63,
+     "flagged": false
+    },
+    {
+     "date": "2019-10-04",
+     "db": -13.481,
+     "expected": -13.934,
+     "z": 1.13,
+     "flagged": false
+    },
+    {
+     "date": "2019-10-10",
+     "db": -14.141,
+     "expected": -13.934,
+     "z": -0.43,
+     "flagged": false
+    },
+    {
+     "date": "2019-10-16",
+     "db": -13.637,
+     "expected": -13.934,
+     "z": 0.76,
+     "flagged": false
+    },
+    {
+     "date": "2019-10-22",
+     "db": -14.142,
+     "expected": -13.934,
+     "z": -0.44,
+     "flagged": false
+    },
+    {
+     "date": "2019-10-28",
+     "db": -13.997,
+     "expected": -13.933,
+     "z": -0.09,
+     "flagged": false
+    },
+    {
+     "date": "2019-11-21",
+     "db": -14.826,
+     "expected": -14.249,
+     "z": -1.31,
+     "flagged": false
+    },
+    {
+     "date": "2019-12-03",
+     "db": -15.175,
+     "expected": -14.908,
+     "z": -0.57,
+     "flagged": false
+    },
+    {
+     "date": "2019-12-15",
+     "db": -14.954,
+     "expected": -14.908,
+     "z": -0.05,
+     "flagged": false
+    },
+    {
+     "date": "2019-12-27",
+     "db": -15.051,
+     "expected": -14.908,
+     "z": -0.28,
+     "flagged": false
+    },
+    {
+     "date": "2020-01-20",
+     "db": -14.88,
+     "expected": -14.887,
+     "z": 0.08,
+     "flagged": false
+    },
+    {
+     "date": "2020-02-01",
+     "db": -15.351,
+     "expected": -15.164,
+     "z": -0.39,
+     "flagged": false
+    },
+    {
+     "date": "2020-02-13",
+     "db": -15.032,
+     "expected": -15.164,
+     "z": 0.37,
+     "flagged": false
+    },
+    {
+     "date": "2020-02-25",
+     "db": -15.262,
+     "expected": -15.163,
+     "z": -0.18,
+     "flagged": false
+    },
+    {
+     "date": "2020-03-08",
+     "db": -15.234,
+     "expected": -15.286,
+     "z": 0.18,
+     "flagged": false
+    },
+    {
+     "date": "2020-03-20",
+     "db": -15.491,
+     "expected": -15.286,
+     "z": -0.43,
+     "flagged": false
+    },
+    {
+     "date": "2020-04-01",
+     "db": -15.491,
+     "expected": -15.181,
+     "z": -0.67,
+     "flagged": false
+    },
+    {
+     "date": "2020-04-13",
+     "db": -15.128,
+     "expected": -15.181,
+     "z": 0.18,
+     "flagged": false
+    },
+    {
+     "date": "2020-04-25",
+     "db": -13.846,
+     "expected": -15.181,
+     "z": 3.21,
+     "flagged": false
+    },
+    {
+     "date": "2020-05-07",
+     "db": -15.38,
+     "expected": -14.608,
+     "z": -1.77,
+     "flagged": false
+    },
+    {
+     "date": "2020-05-19",
+     "db": -15.298,
+     "expected": -14.607,
+     "z": -1.57,
+     "flagged": false
+    },
+    {
+     "date": "2020-05-31",
+     "db": -14.193,
+     "expected": -14.607,
+     "z": 1.04,
+     "flagged": false
+    },
+    {
+     "date": "2020-06-12",
+     "db": -13.97,
+     "expected": -14.242,
+     "z": 0.7,
+     "flagged": false
+    },
+    {
+     "date": "2020-06-24",
+     "db": -13.925,
+     "expected": -14.242,
+     "z": 0.81,
+     "flagged": false
+    },
+    {
+     "date": "2020-07-06",
+     "db": -14.613,
+     "expected": -14.193,
+     "z": -0.93,
+     "flagged": false
+    },
+    {
+     "date": "2020-07-18",
+     "db": -13.902,
+     "expected": -14.193,
+     "z": 0.75,
+     "flagged": false
+    },
+    {
+     "date": "2020-07-30",
+     "db": -14.56,
+     "expected": -14.193,
+     "z": -0.81,
+     "flagged": false
+    },
+    {
+     "date": "2020-08-11",
+     "db": -14.546,
+     "expected": -14.036,
+     "z": -1.15,
+     "flagged": false
+    },
+    {
+     "date": "2020-08-23",
+     "db": -14.38,
+     "expected": -14.036,
+     "z": -0.76,
+     "flagged": false
+    },
+    {
+     "date": "2020-09-04",
+     "db": -14.527,
+     "expected": -13.809,
+     "z": -1.64,
+     "flagged": false
+    },
+    {
+     "date": "2020-09-16",
+     "db": -14.192,
+     "expected": -13.809,
+     "z": -0.85,
+     "flagged": false
+    },
+    {
+     "date": "2020-09-28",
+     "db": -13.92,
+     "expected": -13.809,
+     "z": -0.21,
+     "flagged": false
+    },
+    {
+     "date": "2020-10-10",
+     "db": -13.564,
+     "expected": -13.927,
+     "z": 0.92,
+     "flagged": false
+    },
+    {
+     "date": "2020-10-22",
+     "db": -14.148,
+     "expected": -13.927,
+     "z": -0.46,
+     "flagged": false
+    },
+    {
+     "date": "2020-10-28",
+     "db": -14.577,
+     "expected": -13.927,
+     "z": -1.48,
+     "flagged": false
+    },
+    {
+     "date": "2020-11-03",
+     "db": -14.641,
+     "expected": -14.243,
+     "z": -0.88,
+     "flagged": false
+    },
+    {
+     "date": "2020-11-09",
+     "db": -14.302,
+     "expected": -14.242,
+     "z": -0.08,
+     "flagged": false
+    },
+    {
+     "date": "2020-11-15",
+     "db": -14.267,
+     "expected": -14.242,
+     "z": 0.0,
+     "flagged": false
+    },
+    {
+     "date": "2020-11-27",
+     "db": -14.905,
+     "expected": -14.242,
+     "z": -1.51,
+     "flagged": false
+    },
+    {
+     "date": "2020-12-09",
+     "db": -15.137,
+     "expected": -14.902,
+     "z": -0.5,
+     "flagged": false
+    },
+    {
+     "date": "2020-12-21",
+     "db": -15.188,
+     "expected": -14.902,
+     "z": -0.62,
+     "flagged": false
+    },
+    {
+     "date": "2021-01-02",
+     "db": -15.182,
+     "expected": -14.881,
+     "z": -0.65,
+     "flagged": false
+    },
+    {
+     "date": "2021-01-14",
+     "db": -15.146,
+     "expected": -14.881,
+     "z": -0.57,
+     "flagged": false
+    },
+    {
+     "date": "2021-01-26",
+     "db": -14.961,
+     "expected": -14.881,
+     "z": -0.13,
+     "flagged": false
+    },
+    {
+     "date": "2021-02-07",
+     "db": -14.43,
+     "expected": -15.157,
+     "z": 1.78,
+     "flagged": false
+    },
+    {
+     "date": "2021-02-19",
+     "db": -15.466,
+     "expected": -15.157,
+     "z": -0.67,
+     "flagged": false
+    },
+    {
+     "date": "2021-03-03",
+     "db": -14.732,
+     "expected": -15.28,
+     "z": 1.35,
+     "flagged": false
+    },
+    {
+     "date": "2021-03-15",
+     "db": -15.367,
+     "expected": -15.28,
+     "z": -0.15,
+     "flagged": false
+    },
+    {
+     "date": "2021-03-27",
+     "db": -15.307,
+     "expected": -15.28,
+     "z": -0.01,
+     "flagged": false
+    },
+    {
+     "date": "2021-04-08",
+     "db": -15.316,
+     "expected": -15.175,
+     "z": -0.28,
+     "flagged": false
+    },
+    {
+     "date": "2021-04-20",
+     "db": -15.085,
+     "expected": -15.175,
+     "z": 0.27,
+     "flagged": false
+    },
+    {
+     "date": "2021-05-02",
+     "db": -15.085,
+     "expected": -14.601,
+     "z": -1.09,
+     "flagged": false
+    },
+    {
+     "date": "2021-05-14",
+     "db": -14.38,
+     "expected": -14.601,
+     "z": 0.58,
+     "flagged": false
+    },
+    {
+     "date": "2021-05-26",
+     "db": -13.682,
+     "expected": -14.601,
+     "z": 2.23,
+     "flagged": false
+    },
+    {
+     "date": "2021-06-07",
+     "db": -14.589,
+     "expected": -14.236,
+     "z": -0.78,
+     "flagged": false
+    },
+    {
+     "date": "2021-06-19",
+     "db": -14.2,
+     "expected": -14.235,
+     "z": 0.14,
+     "flagged": false
+    },
+    {
+     "date": "2021-07-01",
+     "db": -15.287,
+     "expected": -14.187,
+     "z": -2.54,
+     "flagged": false
+    },
+    {
+     "date": "2021-07-13",
+     "db": -13.687,
+     "expected": -14.187,
+     "z": 1.24,
+     "flagged": false
+    },
+    {
+     "date": "2021-07-25",
+     "db": -14.95,
+     "expected": -14.186,
+     "z": -1.75,
+     "flagged": false
+    },
+    {
+     "date": "2021-08-06",
+     "db": -14.811,
+     "expected": -14.029,
+     "z": -1.79,
+     "flagged": false
+    },
+    {
+     "date": "2021-08-18",
+     "db": -13.846,
+     "expected": -14.029,
+     "z": 0.49,
+     "flagged": false
+    },
+    {
+     "date": "2021-08-30",
+     "db": -13.737,
+     "expected": -14.029,
+     "z": 0.75,
+     "flagged": false
+    },
+    {
+     "date": "2021-09-11",
+     "db": -14.383,
+     "expected": -13.803,
+     "z": -1.32,
+     "flagged": false
+    },
+    {
+     "date": "2021-09-23",
+     "db": -13.69,
+     "expected": -13.802,
+     "z": 0.32,
+     "flagged": false
+    },
+    {
+     "date": "2021-10-05",
+     "db": -13.942,
+     "expected": -13.921,
+     "z": 0.01,
+     "flagged": false
+    },
+    {
+     "date": "2021-10-17",
+     "db": -13.718,
+     "expected": -13.921,
+     "z": 0.54,
+     "flagged": false
+    },
+    {
+     "date": "2021-10-29",
+     "db": -13.999,
+     "expected": -13.921,
+     "z": -0.13,
+     "flagged": false
+    },
+    {
+     "date": "2021-11-10",
+     "db": -14.421,
+     "expected": -14.236,
+     "z": -0.38,
+     "flagged": false
+    },
+    {
+     "date": "2021-11-22",
+     "db": -13.621,
+     "expected": -14.236,
+     "z": 1.51,
+     "flagged": false
+    },
+    {
+     "date": "2021-12-04",
+     "db": -14.859,
+     "expected": -14.895,
+     "z": 0.14,
+     "flagged": false
+    },
+    {
+     "date": "2021-12-16",
+     "db": -14.773,
+     "expected": -14.895,
+     "z": 0.35,
+     "flagged": false
+    },
+    {
+     "date": "2021-12-28",
+     "db": -14.478,
+     "expected": -14.895,
+     "z": 1.04,
+     "flagged": false
+    },
+    {
+     "date": "2022-01-09",
+     "db": -14.655,
+     "expected": -14.875,
+     "z": 0.58,
+     "flagged": false
+    },
+    {
+     "date": "2022-01-21",
+     "db": -14.677,
+     "expected": -14.874,
+     "z": 0.52,
+     "flagged": false
+    },
+    {
+     "date": "2022-02-02",
+     "db": -14.824,
+     "expected": -15.151,
+     "z": 0.83,
+     "flagged": false
+    },
+    {
+     "date": "2022-02-14",
+     "db": -14.722,
+     "expected": -15.151,
+     "z": 1.07,
+     "flagged": false
+    },
+    {
+     "date": "2022-02-26",
+     "db": -15.023,
+     "expected": -15.15,
+     "z": 0.36,
+     "flagged": false
+    },
+    {
+     "date": "2022-03-10",
+     "db": -15.162,
+     "expected": -15.273,
+     "z": 0.32,
+     "flagged": false
+    },
+    {
+     "date": "2022-03-22",
+     "db": -13.79,
+     "expected": -15.273,
+     "z": 3.56,
+     "flagged": false
+    },
+    {
+     "date": "2022-04-03",
+     "db": -14.818,
+     "expected": -15.168,
+     "z": 0.89,
+     "flagged": false
+    },
+    {
+     "date": "2022-04-15",
+     "db": -14.819,
+     "expected": -15.168,
+     "z": 0.88,
+     "flagged": false
+    },
+    {
+     "date": "2022-04-27",
+     "db": -14.596,
+     "expected": -15.168,
+     "z": 1.41,
+     "flagged": false
+    },
+    {
+     "date": "2022-05-09",
+     "db": -14.537,
+     "expected": -14.595,
+     "z": 0.19,
+     "flagged": false
+    },
+    {
+     "date": "2022-05-21",
+     "db": -14.141,
+     "expected": -14.595,
+     "z": 1.13,
+     "flagged": false
+    },
+    {
+     "date": "2022-06-02",
+     "db": -13.845,
+     "expected": -14.229,
+     "z": 0.97,
+     "flagged": false
+    },
+    {
+     "date": "2022-06-14",
+     "db": -14.806,
+     "expected": -14.229,
+     "z": -1.31,
+     "flagged": false
+    },
+    {
+     "date": "2022-06-26",
+     "db": -13.851,
+     "expected": -14.229,
+     "z": 0.95,
+     "flagged": false
+    },
+    {
+     "date": "2022-07-08",
+     "db": -13.585,
+     "expected": -14.18,
+     "z": 1.46,
+     "flagged": false
+    },
+    {
+     "date": "2022-07-20",
+     "db": -13.48,
+     "expected": -14.18,
+     "z": 1.71,
+     "flagged": false
+    },
+    {
+     "date": "2022-08-01",
+     "db": -13.863,
+     "expected": -14.023,
+     "z": 0.44,
+     "flagged": false
+    },
+    {
+     "date": "2022-08-25",
+     "db": -13.772,
+     "expected": -14.023,
+     "z": 0.65,
+     "flagged": false
+    },
+    {
+     "date": "2022-09-06",
+     "db": -13.702,
+     "expected": -13.796,
+     "z": 0.28,
+     "flagged": false
+    },
+    {
+     "date": "2022-09-18",
+     "db": -13.586,
+     "expected": -13.796,
+     "z": 0.55,
+     "flagged": false
+    },
+    {
+     "date": "2022-09-30",
+     "db": -13.637,
+     "expected": -13.796,
+     "z": 0.43,
+     "flagged": false
+    },
+    {
+     "date": "2022-10-12",
+     "db": -14.082,
+     "expected": -13.914,
+     "z": -0.34,
+     "flagged": false
+    },
+    {
+     "date": "2022-10-24",
+     "db": -14.068,
+     "expected": -13.914,
+     "z": -0.31,
+     "flagged": false
+    },
+    {
+     "date": "2022-11-05",
+     "db": -13.45,
+     "expected": -14.23,
+     "z": 1.9,
+     "flagged": false
+    },
+    {
+     "date": "2022-11-17",
+     "db": -13.762,
+     "expected": -14.229,
+     "z": 1.16,
+     "flagged": false
+    },
+    {
+     "date": "2022-11-29",
+     "db": -14.019,
+     "expected": -14.229,
+     "z": 0.55,
+     "flagged": false
+    },
+    {
+     "date": "2022-12-11",
+     "db": -14.64,
+     "expected": -14.889,
+     "z": 0.65,
+     "flagged": false
+    },
+    {
+     "date": "2022-12-23",
+     "db": -15.204,
+     "expected": -14.889,
+     "z": -0.69,
+     "flagged": false
+    },
+    {
+     "date": "2023-01-04",
+     "db": -14.731,
+     "expected": -14.868,
+     "z": 0.38,
+     "flagged": false
+    },
+    {
+     "date": "2023-01-16",
+     "db": -14.62,
+     "expected": -14.868,
+     "z": 0.64,
+     "flagged": false
+    },
+    {
+     "date": "2023-01-28",
+     "db": -14.853,
+     "expected": -14.868,
+     "z": 0.09,
+     "flagged": false
+    },
+    {
+     "date": "2023-02-09",
+     "db": -15.338,
+     "expected": -15.144,
+     "z": -0.4,
+     "flagged": false
+    },
+    {
+     "date": "2023-02-21",
+     "db": -15.437,
+     "expected": -15.144,
+     "z": -0.64,
+     "flagged": false
+    },
+    {
+     "date": "2023-03-05",
+     "db": -15.762,
+     "expected": -15.267,
+     "z": -1.11,
+     "flagged": false
+    },
+    {
+     "date": "2023-03-17",
+     "db": -15.6,
+     "expected": -15.267,
+     "z": -0.73,
+     "flagged": false
+    },
+    {
+     "date": "2023-03-29",
+     "db": -15.269,
+     "expected": -15.267,
+     "z": 0.05,
+     "flagged": false
+    },
+    {
+     "date": "2023-04-10",
+     "db": -15.283,
+     "expected": -15.162,
+     "z": -0.23,
+     "flagged": false
+    },
+    {
+     "date": "2023-04-22",
+     "db": -15.28,
+     "expected": -15.162,
+     "z": -0.22,
+     "flagged": false
+    },
+    {
+     "date": "2023-05-04",
+     "db": -15.49,
+     "expected": -14.588,
+     "z": -2.07,
+     "flagged": false
+    },
+    {
+     "date": "2023-06-21",
+     "db": -13.786,
+     "expected": -14.222,
+     "z": 1.09,
+     "flagged": false
+    },
+    {
+     "date": "2023-08-08",
+     "db": -13.877,
+     "expected": -14.017,
+     "z": 0.39,
+     "flagged": false
+    },
+    {
+     "date": "2023-08-20",
+     "db": -14.089,
+     "expected": -14.016,
+     "z": -0.11,
+     "flagged": false
+    },
+    {
+     "date": "2023-09-01",
+     "db": -13.618,
+     "expected": -13.79,
+     "z": 0.46,
+     "flagged": false
+    },
+    {
+     "date": "2023-09-13",
+     "db": -13.609,
+     "expected": -13.79,
+     "z": 0.48,
+     "flagged": false
+    },
+    {
+     "date": "2023-09-25",
+     "db": -13.825,
+     "expected": -13.789,
+     "z": -0.03,
+     "flagged": false
+    },
+    {
+     "date": "2023-10-07",
+     "db": -13.848,
+     "expected": -13.908,
+     "z": 0.2,
+     "flagged": false
+    },
+    {
+     "date": "2023-10-19",
+     "db": -13.535,
+     "expected": -13.908,
+     "z": 0.94,
+     "flagged": false
+    },
+    {
+     "date": "2023-10-31",
+     "db": -13.562,
+     "expected": -13.908,
+     "z": 0.87,
+     "flagged": false
+    },
+    {
+     "date": "2023-11-12",
+     "db": -14.114,
+     "expected": -14.223,
+     "z": 0.32,
+     "flagged": false
+    },
+    {
+     "date": "2023-11-24",
+     "db": -14.701,
+     "expected": -14.223,
+     "z": -1.07,
+     "flagged": false
+    },
+    {
+     "date": "2023-12-06",
+     "db": -14.653,
+     "expected": -14.883,
+     "z": 0.6,
+     "flagged": false
+    },
+    {
+     "date": "2023-12-18",
+     "db": -14.94,
+     "expected": -14.882,
+     "z": -0.08,
+     "flagged": false
+    },
+    {
+     "date": "2023-12-30",
+     "db": -14.783,
+     "expected": -14.882,
+     "z": 0.29,
+     "flagged": false
+    },
+    {
+     "date": "2024-01-11",
+     "db": -15.031,
+     "expected": -14.862,
+     "z": -0.34,
+     "flagged": false
+    },
+    {
+     "date": "2024-01-23",
+     "db": -14.81,
+     "expected": -14.861,
+     "z": 0.18,
+     "flagged": false
+    },
+    {
+     "date": "2024-02-04",
+     "db": -15.026,
+     "expected": -15.138,
+     "z": 0.32,
+     "flagged": false
+    },
+    {
+     "date": "2024-02-16",
+     "db": -15.419,
+     "expected": -15.138,
+     "z": -0.61,
+     "flagged": false
+    },
+    {
+     "date": "2024-02-28",
+     "db": -15.482,
+     "expected": -15.138,
+     "z": -0.76,
+     "flagged": false
+    },
+    {
+     "date": "2024-03-11",
+     "db": -15.619,
+     "expected": -15.26,
+     "z": -0.79,
+     "flagged": false
+    },
+    {
+     "date": "2024-03-23",
+     "db": -15.582,
+     "expected": -15.26,
+     "z": -0.7,
+     "flagged": false
+    },
+    {
+     "date": "2024-04-04",
+     "db": -15.637,
+     "expected": -15.156,
+     "z": -1.08,
+     "flagged": false
+    },
+    {
+     "date": "2024-04-16",
+     "db": -15.813,
+     "expected": -15.155,
+     "z": -1.5,
+     "flagged": false
+    },
+    {
+     "date": "2024-04-28",
+     "db": -15.941,
+     "expected": -15.155,
+     "z": -1.8,
+     "flagged": false
+    },
+    {
+     "date": "2024-05-10",
+     "db": -14.41,
+     "expected": -14.582,
+     "z": 0.46,
+     "flagged": false
+    },
+    {
+     "date": "2024-05-22",
+     "db": -14.883,
+     "expected": -14.582,
+     "z": -0.65,
+     "flagged": false
+    },
+    {
+     "date": "2024-06-03",
+     "db": -15.068,
+     "expected": -14.216,
+     "z": -1.96,
+     "flagged": false
+    },
+    {
+     "date": "2024-07-09",
+     "db": -13.8,
+     "expected": -14.167,
+     "z": 0.93,
+     "flagged": false
+    },
+    {
+     "date": "2024-07-21",
+     "db": -13.591,
+     "expected": -14.167,
+     "z": 1.42,
+     "flagged": false
+    },
+    {
+     "date": "2024-08-02",
+     "db": -14.62,
+     "expected": -14.01,
+     "z": -1.38,
+     "flagged": false
+    },
+    {
+     "date": "2024-08-14",
+     "db": -14.334,
+     "expected": -14.01,
+     "z": -0.71,
+     "flagged": false
+    },
+    {
+     "date": "2024-08-26",
+     "db": -13.699,
+     "expected": -14.01,
+     "z": 0.79,
+     "flagged": false
+    },
+    {
+     "date": "2024-09-07",
+     "db": -14.02,
+     "expected": -13.783,
+     "z": -0.5,
+     "flagged": false
+    },
+    {
+     "date": "2024-09-19",
+     "db": -14.158,
+     "expected": -13.783,
+     "z": -0.83,
+     "flagged": false
+    },
+    {
+     "date": "2024-10-01",
+     "db": -14.414,
+     "expected": -13.902,
+     "z": -1.15,
+     "flagged": false
+    },
+    {
+     "date": "2024-10-13",
+     "db": -13.552,
+     "expected": -13.901,
+     "z": 0.88,
+     "flagged": false
+    },
+    {
+     "date": "2024-10-25",
+     "db": -14.417,
+     "expected": -13.901,
+     "z": -1.16,
+     "flagged": false
+    },
+    {
+     "date": "2024-11-06",
+     "db": -13.816,
+     "expected": -14.217,
+     "z": 1.01,
+     "flagged": false
+    },
+    {
+     "date": "2024-11-18",
+     "db": -14.825,
+     "expected": -14.217,
+     "z": -1.38,
+     "flagged": false
+    },
+    {
+     "date": "2024-12-12",
+     "db": -14.024,
+     "expected": -14.876,
+     "z": 2.07,
+     "flagged": false
+    },
+    {
+     "date": "2024-12-24",
+     "db": -15.14,
+     "expected": -14.876,
+     "z": -0.57,
+     "flagged": false
+    },
+    {
+     "date": "2025-01-05",
+     "db": -15.285,
+     "expected": -14.855,
+     "z": -0.96,
+     "flagged": false
+    },
+    {
+     "date": "2025-01-17",
+     "db": -15.091,
+     "expected": -14.855,
+     "z": -0.5,
+     "flagged": false
+    },
+    {
+     "date": "2025-01-29",
+     "db": -15.195,
+     "expected": -14.855,
+     "z": -0.75,
+     "flagged": false
+    },
+    {
+     "date": "2025-02-10",
+     "db": -15.26,
+     "expected": -15.131,
+     "z": -0.25,
+     "flagged": false
+    },
+    {
+     "date": "2025-02-22",
+     "db": -14.873,
+     "expected": -15.131,
+     "z": 0.67,
+     "flagged": false
+    },
+    {
+     "date": "2025-03-06",
+     "db": -15.355,
+     "expected": -15.254,
+     "z": -0.18,
+     "flagged": false
+    },
+    {
+     "date": "2025-03-18",
+     "db": -15.468,
+     "expected": -15.254,
+     "z": -0.45,
+     "flagged": false
+    },
+    {
+     "date": "2025-03-30",
+     "db": -14.509,
+     "expected": -15.254,
+     "z": 1.82,
+     "flagged": false
+    },
+    {
+     "date": "2025-04-11",
+     "db": -15.497,
+     "expected": -15.149,
+     "z": -0.76,
+     "flagged": false
+    },
+    {
+     "date": "2025-04-23",
+     "db": -14.509,
+     "expected": -15.149,
+     "z": 1.57,
+     "flagged": false
+    },
+    {
+     "date": "2025-05-05",
+     "db": -15.082,
+     "expected": -14.576,
+     "z": -1.14,
+     "flagged": false
+    },
+    {
+     "date": "2025-08-09",
+     "db": -13.954,
+     "expected": -14.004,
+     "z": 0.17,
+     "flagged": false
+    },
+    {
+     "date": "2025-08-21",
+     "db": -14.115,
+     "expected": -14.003,
+     "z": -0.21,
+     "flagged": false
+    },
+    {
+     "date": "2025-09-14",
+     "db": -13.841,
+     "expected": -13.777,
+     "z": -0.1,
+     "flagged": false
+    },
+    {
+     "date": "2025-09-26",
+     "db": -13.477,
+     "expected": -13.777,
+     "z": 0.77,
+     "flagged": false
+    },
+    {
+     "date": "2025-10-08",
+     "db": -13.998,
+     "expected": -13.895,
+     "z": -0.19,
+     "flagged": false
+    },
+    {
+     "date": "2025-10-20",
+     "db": -14.224,
+     "expected": -13.895,
+     "z": -0.72,
+     "flagged": false
+    },
+    {
+     "date": "2025-11-01",
+     "db": -13.462,
+     "expected": -14.21,
+     "z": 1.83,
+     "flagged": false
+    },
+    {
+     "date": "2025-11-13",
+     "db": -14.31,
+     "expected": -14.21,
+     "z": -0.18,
+     "flagged": false
+    },
+    {
+     "date": "2025-11-25",
+     "db": -14.899,
+     "expected": -14.21,
+     "z": -1.57,
+     "flagged": false
+    },
+    {
+     "date": "2025-12-07",
+     "db": -15.06,
+     "expected": -14.87,
+     "z": -0.39,
+     "flagged": false
+    },
+    {
+     "date": "2025-12-19",
+     "db": -14.95,
+     "expected": -14.869,
+     "z": -0.13,
+     "flagged": false
+    },
+    {
+     "date": "2025-12-31",
+     "db": -14.991,
+     "expected": -14.869,
+     "z": -0.23,
+     "flagged": false
+    },
+    {
+     "date": "2026-01-12",
+     "db": -15.125,
+     "expected": -14.849,
+     "z": -0.6,
+     "flagged": false
+    },
+    {
+     "date": "2026-01-24",
+     "db": -15.122,
+     "expected": -14.849,
+     "z": -0.59,
+     "flagged": false
+    },
+    {
+     "date": "2026-02-05",
+     "db": -15.223,
+     "expected": -15.125,
+     "z": -0.17,
+     "flagged": false
+    },
+    {
+     "date": "2026-02-17",
+     "db": -15.542,
+     "expected": -15.125,
+     "z": -0.93,
+     "flagged": false
+    },
+    {
+     "date": "2026-03-01",
+     "db": -15.079,
+     "expected": -15.248,
+     "z": 0.46,
+     "flagged": false
+    },
+    {
+     "date": "2026-03-25",
+     "db": -15.414,
+     "expected": -15.247,
+     "z": -0.34,
+     "flagged": false
+    },
+    {
+     "date": "2026-04-06",
+     "db": -15.577,
+     "expected": -15.143,
+     "z": -0.97,
+     "flagged": false
+    },
+    {
+     "date": "2026-04-18",
+     "db": -15.576,
+     "expected": -15.142,
+     "z": -0.97,
+     "flagged": false
+    },
+    {
+     "date": "2026-04-30",
+     "db": -15.479,
+     "expected": -15.142,
+     "z": -0.74,
+     "flagged": false
+    },
+    {
+     "date": "2026-05-06",
+     "db": -13.523,
+     "expected": -14.569,
+     "z": 2.53,
+     "flagged": false
+    },
+    {
+     "date": "2026-05-18",
+     "db": -13.877,
+     "expected": -14.569,
+     "z": 1.69,
+     "flagged": false
+    },
+    {
+     "date": "2026-05-30",
+     "db": -13.501,
+     "expected": -14.569,
+     "z": 2.58,
+     "flagged": false
+    },
+    {
+     "date": "2026-06-05",
+     "db": -14.696,
+     "expected": -14.203,
+     "z": -1.11,
+     "flagged": false
+    },
+    {
+     "date": "2026-06-17",
+     "db": -14.649,
+     "expected": -14.203,
+     "z": -1.0,
+     "flagged": false
+    },
+    {
+     "date": "2026-06-24",
+     "db": -14.793,
+     "expected": -14.203,
+     "z": -1.34,
+     "flagged": false
+    },
+    {
+     "date": "2026-06-30",
+     "db": -14.521,
+     "expected": -14.203,
+     "z": -0.69,
+     "flagged": false
+    },
+    {
+     "date": "2026-07-06",
+     "db": -14.313,
+     "expected": -14.155,
+     "z": -0.32,
+     "flagged": false
+    },
+    {
+     "date": "2026-07-12",
+     "db": -14.086,
+     "expected": -14.155,
+     "z": 0.22,
+     "flagged": false
+    },
+    {
+     "date": "2026-07-18",
+     "db": -14.219,
+     "expected": -14.154,
+     "z": -0.09,
+     "flagged": false
+    },
+    {
+     "date": "2026-07-24",
+     "db": -13.612,
+     "expected": -14.154,
+     "z": 1.34,
+     "flagged": false
+    },
+    {
+     "date": "2026-07-30",
+     "db": -14.049,
+     "expected": -14.154,
+     "z": 0.31,
+     "flagged": false
+    },
+    {
+     "date": "2026-08-05",
+     "db": -13.702,
+     "expected": -13.997,
+     "z": 0.76,
+     "flagged": false
+    },
+    {
+     "date": "2026-08-11",
+     "db": -14.018,
+     "expected": -13.997,
+     "z": 0.01,
+     "flagged": false
+    },
+    {
+     "date": "2026-08-17",
+     "db": -13.779,
+     "expected": -13.997,
+     "z": 0.57,
+     "flagged": false
+    },
+    {
+     "date": "2026-08-29",
+     "db": -13.611,
+     "expected": -13.997,
+     "z": 0.97,
+     "flagged": false
+    },
+    {
+     "date": "2026-09-04",
+     "db": -13.864,
+     "expected": -13.771,
+     "z": -0.16,
+     "flagged": false
+    },
+    {
+     "date": "2026-09-10",
+     "db": -13.371,
+     "expected": -13.77,
+     "z": 1.0,
+     "flagged": false
+    },
+    {
+     "date": "2026-09-16",
+     "db": -13.815,
+     "expected": -13.77,
+     "z": -0.05,
+     "flagged": false
+    },
+    {
+     "date": "2026-09-22",
+     "db": -13.265,
+     "expected": -13.77,
+     "z": 1.25,
+     "flagged": false
+    },
+    {
+     "date": "2026-09-28",
+     "db": -13.659,
+     "expected": -13.77,
+     "z": 0.32,
+     "flagged": false
+    },
+    {
+     "date": "2026-10-04",
+     "db": -14.145,
+     "expected": -13.889,
+     "z": -0.55,
+     "flagged": false
+    },
+    {
+     "date": "2026-10-10",
+     "db": -13.477,
+     "expected": -13.889,
+     "z": 1.03,
+     "flagged": false
+    },
+    {
+     "date": "2026-10-16",
+     "db": -13.416,
+     "expected": -13.889,
+     "z": 1.17,
+     "flagged": false
+    },
+    {
+     "date": "2026-10-22",
+     "db": -14.168,
+     "expected": -13.888,
+     "z": -0.6,
+     "flagged": false
+    },
+    {
+     "date": "2026-10-28",
+     "db": -13.449,
+     "expected": -13.888,
+     "z": 1.09,
+     "flagged": false
+    },
+    {
+     "date": "2026-11-03",
+     "db": -13.912,
+     "expected": -14.204,
+     "z": 0.75,
+     "flagged": false
+    },
+    {
+     "date": "2026-11-09",
+     "db": -14.044,
+     "expected": -14.204,
+     "z": 0.44,
+     "flagged": false
+    }
+   ],
+   "events": [],
+   "forecast": [
+    {
+     "month": "2027-01",
+     "mean": -14.842,
+     "lower": -15.697,
+     "upper": -13.988
+    },
+    {
+     "month": "2027-02",
+     "mean": -15.118,
+     "lower": -15.974,
+     "upper": -14.263
+    },
+    {
+     "month": "2027-03",
+     "mean": -15.241,
+     "lower": -16.095,
+     "upper": -14.387
+    },
+    {
+     "month": "2027-04",
+     "mean": -15.136,
+     "lower": -15.989,
+     "upper": -14.283
+    },
+    {
+     "month": "2027-05",
+     "mean": -14.562,
+     "lower": -15.419,
+     "upper": -13.706
+    },
+    {
+     "month": "2027-06",
+     "mean": -14.197,
+     "lower": -15.056,
+     "upper": -13.338
+    },
+    {
+     "month": "2027-07",
+     "mean": -14.148,
+     "lower": -15.005,
+     "upper": -13.291
+    },
+    {
+     "month": "2027-08",
+     "mean": -13.991,
+     "lower": -14.843,
+     "upper": -13.138
+    },
+    {
+     "month": "2027-09",
+     "mean": -13.764,
+     "lower": -14.615,
+     "upper": -12.913
+    },
+    {
+     "month": "2027-10",
+     "mean": -13.882,
+     "lower": -14.733,
+     "upper": -13.032
+    },
+    {
+     "month": "2027-11",
+     "mean": -14.197,
+     "lower": -15.053,
+     "upper": -13.341
+    },
+    {
+     "month": "2027-12",
+     "mean": -14.857,
+     "lower": -15.715,
+     "upper": -13.998
+    }
+   ],
+   "trend_db_per_year": {
+    "estimate": 0.0064,
+    "ci95": [
+     -0.0146,
+     0.0275
+    ]
+   },
+   "backtest": {
+    "held_out_season": 2026,
+    "mae_model": 0.398,
+    "mae_naive": 0.418,
+    "skill": 0.049
+   },
+   "model": "month-of-season levels + linear trend (robust two-pass least squares)"
+  }
+ }
+}

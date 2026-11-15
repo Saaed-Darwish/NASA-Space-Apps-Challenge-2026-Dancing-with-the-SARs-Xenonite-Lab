@@ -16,7 +16,8 @@ class SarTests(unittest.TestCase):
     def test_artifacts_preserve_handoff_counts_and_quality(self):
         expected = {"BRA_PORTO_VELHO": (259,259), "BRA_PORTO_VELHO_FOREST": (324,304),
                     "VNM_CAN_THO": (337,337), "VNM_BINH_PHUOC_FOREST": (456,257),
-                    "ITA_VENICE_VERTICAL": (2424,2424)}
+                    "ITA_VENICE_VERTICAL": (2424,2424), "ITA_VENICE": (379,379), "ITA_BELLUNO_FOREST": (202,202),
+                    "GBR_EAST_LONDON": (597,154), "GBR_EPPING_FOREST": (311,311), "GBR_LONDON_VERTICAL": (2416,2416)}
         self.assertEqual(set(CATALOG),set(expected))
         for key,(total,passing) in expected.items():
             self.assertEqual(len(OBSERVATIONS[key]),total)
@@ -60,15 +61,19 @@ class SarTests(unittest.TestCase):
             self.assertEqual(self.call(path,query)[0],422)
         self.assertEqual(self.call("/api/datasets/UNKNOWN/observations")[0],404)
 
-    def test_venice_point_histories_do_not_claim_geographic_positions(self):
+    def test_venice_point_histories_preserve_ids_and_inferred_grid_positions(self):
         meta=CATALOG["ITA_VENICE_VERTICAL"]
         self.assertIsNone(meta.bounds)
-        self.assertEqual(meta.geometryStatus,"crs_unconfirmed")
+        self.assertEqual(meta.geometryStatus,"source_coordinates")
         for point in meta.points:
             _,_,data=self.call("/api/datasets/ITA_VENICE_VERTICAL/observations","point_id="+point["id"])
             self.assertEqual(data["total"],303)
             self.assertTrue(all(r["pointId"]==point["id"] for r in data["observations"]))
-            self.assertNotIn("latitude",point)
+            self.assertEqual(point["locationStatus"], "source_coordinates")
+            self.assertEqual(point["gridSizeMeters"], 100)
+            self.assertTrue(point["name"].startswith("Venice Point "))
+            self.assertTrue(45.3 < point["latitude"] < 45.6)
+            self.assertTrue(12.2 < point["longitude"] < 12.5)
 
     def test_grounded_context_enforces_dataset_and_observation_ownership(self):
         context,_=build_context(request(region_id="porto-velho",dataset_id="BRA_PORTO_VELHO"))

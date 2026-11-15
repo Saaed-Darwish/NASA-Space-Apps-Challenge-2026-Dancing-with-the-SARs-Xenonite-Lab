@@ -24,8 +24,8 @@ test("a different workbook release is rejected before displaying its values", as
   );
 });
 
-test("catalogue scopes observations to the measured regions and keeps Venice unmapped", () => {
-  assert.equal(sarDatasets.length, 5);
+test("catalogue scopes observations to measured regions and Venice to individual grid samples", () => {
+  assert.equal(sarDatasets.length, 10);
   assert.equal(
     sarDatasets.find((d) => d.id === "BRA_PORTO_VELHO").regionId,
     "porto-velho",

@@ -28,13 +28,15 @@ test("focus persists between entry and exit zoom thresholds", () => {
 });
 test("zooming out releases city focus and picks the wider state", () => {
   assert.equal(
-    regionForView(nestedRegions, city, city.latitude, city.longitude, 480_000)?.id,
+    regionForView(nestedRegions, city, city.latitude, city.longitude, 480_000)
+      ?.id,
     state.id,
   );
 });
 test("zooming back in replaces state focus with city focus", () => {
   assert.equal(
-    regionForView(nestedRegions, state, city.latitude, city.longitude, 100_000)?.id,
+    regionForView(nestedRegions, state, city.latitude, city.longitude, 100_000)
+      ?.id,
     city.id,
   );
 });
@@ -52,7 +54,10 @@ test("Can Tho remains available without a Mekong Delta region pin", () => {
       ?.id,
     undefined,
   );
-  assert.equal(regions.some((r) => r.id === "mekong-delta"), false);
+  assert.equal(
+    regions.some((r) => r.id === "mekong-delta"),
+    false,
+  );
 });
 test("invalid camera coordinates clear focus", () => {
   assert.equal(
@@ -76,7 +81,7 @@ test("water monitoring covers only the configured water regions", () => {
     regions
       .filter((region) => region.waterMonitoring)
       .map((region) => region.id),
-    ["porto-velho", "can-tho"],
+    ["porto-velho", "can-tho", "venice", "london"],
   );
 });
 

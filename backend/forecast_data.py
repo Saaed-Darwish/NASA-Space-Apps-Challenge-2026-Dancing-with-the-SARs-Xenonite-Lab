@@ -9,9 +9,11 @@ import json
 from pathlib import Path
 from typing import Literal
 
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel, Field, model_validator
 from sar_data import CATALOG, OBSERVATIONS, dataset_or_404
+from forest_forecast_data import ARTIFACTS as FOREST_ARTIFACTS
+from subsidence_forecast_data import get_subsidence_forecast
 
 router = APIRouter(prefix="/api/datasets", tags=["Exploratory forecasts"])
 
@@ -64,15 +66,18 @@ def adapt_forecasts(raw: bytes) -> dict:
     if len(raw) > 1_000_000:
         raise ValueError("Forecast export exceeds artifact size budget")
     export = json.loads(raw)
-    if set(export["regions"]) != {"BRA_PORTO_VELHO", "VNM_CAN_THO"}:
+    if set(export["regions"]) != {k for k,v in CATALOG.items() if v.kind == "water"}:
         raise ValueError("Unexpected forecast datasets")
     artifacts = {}
     for dataset_id, item in export["regions"].items():
         data = ForecastExport.model_validate(item)
         meta = CATALOG[dataset_id]
-        if meta.kind != "water" or meta.bounds.model_dump() != item["location"]["bounds"]:
+        location = item.get("location")
+        if meta.bounds is None:
+            if location is not None: raise ValueError("Forecast invents study area coordinates")
+        elif not location or meta.kind != "water" or meta.bounds.model_dump() != location["bounds"]:
             # Floats exported independently may differ only at machine precision.
-            if meta.kind != "water" or any(abs(getattr(meta.bounds, k)-v) > 1e-8 for k, v in item["location"]["bounds"].items()):
+            if not location or meta.kind != "water" or any(abs(getattr(meta.bounds, k)-v) > 1e-8 for k, v in location["bounds"].items()):
                 raise ValueError("Forecast study area does not match observations")
         monthly = defaultdict(list)
         for row in OBSERVATIONS[dataset_id]:
@@ -104,11 +109,16 @@ def adapt_forecasts(raw: bytes) -> dict:
 
 
 ARTIFACTS = adapt_forecasts((Path(__file__).resolve().parent / "forecasts.json").read_bytes())
+ARTIFACTS.update(FOREST_ARTIFACTS)
 
 
 @router.get("/{dataset_id}/forecast")
-def get_forecast(dataset_id: str):
+def get_forecast(dataset_id: str, point_id: str | None = Query(default=None, max_length=80)):
     dataset_or_404(dataset_id)
+    if CATALOG[dataset_id].kind == "subsidence":
+        return get_subsidence_forecast(point_id, dataset_id)
+    if point_id is not None:
+        raise HTTPException(422, "This forecast does not accept a measurement point")
     return ARTIFACTS.get(dataset_id, {
         "status": "unavailable", "datasetId": dataset_id,
         "reason": "No forecast export was supplied for this dataset. Observations remain available in Analyze.",

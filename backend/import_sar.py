@@ -90,6 +90,8 @@ def make_dataset(path, sheets, kind, country):
             "sceneId": row.get("GEE Observation ID", row.get("Satellite Image ID")),
             "timestamp": timestamp, "sourceRow": index + 2}
         if forest:
+            if row.get("Average VH Backscatter (dB)"):
+                details["averageVhDb"] = number(row["Average VH Backscatter (dB)"])
             details.update(baselineImages=int(row["Baseline Image Count"]),
                 disturbancePercent=number(row["Disturbance of Monitored Forest (%)"]),
                 monitoredForestKm2=number(row["Monitored Forest Area (km²)"]),
@@ -135,6 +137,10 @@ def venice_dataset(path, sheets):
 
 
 def main():
+    import sys
+    if "--italy" in sys.argv or "--london" in sys.argv:
+        from import_finalized_sar import main as import_finalized
+        return import_finalized()
     parser = argparse.ArgumentParser(description=__doc__)
     for country in ("brazil", "vietnam", "venice"):
         parser.add_argument("--"+country, type=Path, required=True)

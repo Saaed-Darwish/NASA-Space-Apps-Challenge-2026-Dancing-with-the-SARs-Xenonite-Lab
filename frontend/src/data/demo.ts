@@ -86,9 +86,35 @@ export const regions: Region[] = [
     longitude: 12.33,
     altitude: 26000,
     description:
-      "Explore vertical displacement histories for eight selected EGMS points. The city marker is a locator; precise point positions await confirmation of the source coordinate reference system.",
+      "Explore Venice lagoon water observations and eight EGMS vertical-displacement histories. Switch data types to view each source study area or selected measurement point.",
     zoom_level: "city",
-    datasetIds: ["ITA_VENICE_VERTICAL"],
+    waterMonitoring: true,
+    datasetIds: ["ITA_VENICE", "ITA_VENICE_VERTICAL"],
+  },
+  {
+    id: "london",
+    name: "London",
+    country: "United Kingdom",
+    latitude: 51.51,
+    longitude: -0.08,
+    altitude: 80000,
+    description:
+      "Explore East London / Thames Barrier / Royal Docks water indicators, Epping Forest radar backscatter and eight London subsidence points. Point Metadata and Map Coordinates supply matching WGS84 subsidence locations and approximate area names. The workbook explicitly leaves the water and forest AOI centroids and boundaries unspecified.",
+    zoom_level: "regional",
+    waterMonitoring: true,
+    datasetIds: ["GBR_EAST_LONDON", "GBR_EPPING_FOREST", "GBR_LONDON_VERTICAL"],
+  },
+  {
+    id: "belluno",
+    name: "Belluno forest",
+    country: "Italy",
+    latitude: 46.21,
+    longitude: 12.135,
+    altitude: 65000,
+    description:
+      "Explore seasonal forest VH backscatter near Belluno. The source rectangle locates the study area, not forest loss. May–October samples and varying coverage remain visible.",
+    zoom_level: "regional",
+    datasetIds: ["ITA_BELLUNO_FOREST"],
   },
   {
     id: "rio-grande-do-sul",
@@ -166,17 +192,6 @@ export const regions: Region[] = [
     description:
       "Boreal forests meet the Rockies. Explore sourced stories about the 2023 fire season and the 2024 Jasper wildfire.",
     zoom_level: "regional",
-  },
-  {
-    id: "london",
-    name: "Thames basin",
-    country: "United Kingdom",
-    latitude: 51.5074,
-    longitude: -0.1278,
-    altitude: 35000,
-    description:
-      "Compare annual satellite views of London and the Thames. Explore riverside regeneration and the documented Wennington fire.",
-    zoom_level: "city",
   },
   {
     id: "sacramento",

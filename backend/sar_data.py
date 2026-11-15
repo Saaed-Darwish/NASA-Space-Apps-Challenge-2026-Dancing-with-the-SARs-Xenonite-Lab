@@ -42,9 +42,9 @@ class Dataset(BaseModel):
     name: str
     kind: Literal["water", "forest", "subsidence"]
     metric: str
-    unit: Literal["km²", "mm"]
+    unit: Literal["km²", "mm", "dB"]
     bounds: Bounds | None
-    geometryStatus: Literal["study_area_only", "crs_unconfirmed"]
+    geometryStatus: Literal["study_area_only", "crs_unconfirmed", "inferred_egms_grid", "source_coordinates", "area_coordinates_unavailable"]
     validationStatus: str
     note: str
     method: str
@@ -71,7 +71,7 @@ for dataset_id, meta in CATALOG.items():
         raise ValueError(f"Invalid SAR catalogue counts/dates for {dataset_id}")
     point_ids = {p["id"] for p in meta.points}
     if any((r.pointId is not None and r.pointId not in point_ids) or
-           (meta.kind != "subsidence" and r.value < 0) for r in records):
+           (meta.unit == "km²" and r.value < 0) for r in records):
         raise ValueError(f"Invalid SAR measurement for {dataset_id}")
     OBSERVATIONS[dataset_id] = records
 

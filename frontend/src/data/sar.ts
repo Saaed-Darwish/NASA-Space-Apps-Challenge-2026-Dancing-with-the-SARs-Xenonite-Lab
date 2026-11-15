@@ -13,7 +13,7 @@ export interface SarDataset {
   name: string;
   kind: "water" | "forest" | "subsidence";
   metric: string;
-  unit: "km²" | "mm";
+  unit: "km²" | "mm" | "dB";
   bounds: StudyBounds | null;
   geometryStatus: string;
   note: string;
@@ -39,6 +39,12 @@ export interface SarDataset {
   }[];
   points: {
     id: string;
+    name?: string;
+    areaLabel?: string;
+    latitude?: number;
+    longitude?: number;
+    locationStatus?: "inferred_egms_grid" | "source_coordinates";
+    gridSizeMeters?: number;
     velocity: number;
     rmse: number;
     easting: number;

@@ -1,7 +1,7 @@
 {
  "label": "Exploratory forecast of potential inundation indicator (km\u00b2)",
  "metric": "Potentially Flooded Area (km\u00b2)",
- "generated": "2026-11-14 23:57",
+ "generated": "2026-11-15 15:45",
  "caveat": "Radar-derived indicator, not validated flood extent, damage or risk to people. Ranges are 95% prediction intervals.",
  "regions": {
   "BRA_PORTO_VELHO": {
@@ -689,75 +689,75 @@
    "forecast": [
     {
      "month": "2026-12",
-     "mean": 23.267,
-     "lower": 20.347,
-     "upper": 26.188
+     "mean": 23.269,
+     "lower": 20.351,
+     "upper": 26.187
     },
     {
      "month": "2027-01",
      "mean": 24.065,
-     "lower": 22.843,
-     "upper": 25.286
+     "lower": 22.847,
+     "upper": 25.283
     },
     {
      "month": "2027-02",
-     "mean": 25.043,
-     "lower": 22.958,
-     "upper": 27.128
+     "mean": 25.046,
+     "lower": 22.957,
+     "upper": 27.134
     },
     {
      "month": "2027-03",
-     "mean": 24.718,
-     "lower": 23.182,
-     "upper": 26.254
+     "mean": 24.719,
+     "lower": 23.187,
+     "upper": 26.25
     },
     {
      "month": "2027-04",
-     "mean": 23.691,
-     "lower": 17.967,
-     "upper": 29.415
+     "mean": 23.694,
+     "lower": 17.975,
+     "upper": 29.413
     },
     {
      "month": "2027-05",
-     "mean": 24.427,
-     "lower": 21.168,
-     "upper": 27.686
+     "mean": 24.429,
+     "lower": 21.174,
+     "upper": 27.684
     },
     {
      "month": "2027-06",
-     "mean": 25.237,
-     "lower": 21.69,
-     "upper": 28.785
+     "mean": 25.239,
+     "lower": 21.692,
+     "upper": 28.787
     },
     {
      "month": "2027-07",
-     "mean": 25.251,
-     "lower": 22.384,
-     "upper": 28.118
+     "mean": 25.253,
+     "lower": 22.39,
+     "upper": 28.116
     },
     {
      "month": "2027-08",
-     "mean": 25.49,
-     "lower": 18.672,
-     "upper": 32.307
+     "mean": 25.489,
+     "lower": 18.668,
+     "upper": 32.31
     },
     {
      "month": "2027-09",
-     "mean": 24.226,
-     "lower": 20.007,
-     "upper": 28.446
+     "mean": 24.23,
+     "lower": 20.004,
+     "upper": 28.456
     },
     {
      "month": "2027-10",
      "mean": 23.467,
-     "lower": 21.197,
-     "upper": 25.738
+     "lower": 21.196,
+     "upper": 25.739
     },
     {
      "month": "2027-11",
      "mean": 23.211,
-     "lower": 16.305,
-     "upper": 30.118
+     "lower": 16.306,
+     "upper": 30.116
     }
    ],
    "events": [
@@ -831,6 +831,1647 @@
     "p_value": 0.031,
     "significant": true,
     "n_seasons": 8
+   },
+   "model": "ETS (Holt-Winters), damped trend, 12-month seasonality"
+  },
+  "GBR_EAST_LONDON": {
+   "location": null,
+   "history": [
+    {
+     "month": "2019-01",
+     "value": 0.182,
+     "z": 0.0,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2019-02",
+     "value": 0.134,
+     "z": -2.723,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2019-03",
+     "value": 0.143,
+     "z": -2.114,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2019-04",
+     "value": 0.194,
+     "z": 0.52,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2019-05",
+     "value": 0.328,
+     "z": 8.607,
+     "flagged": true,
+     "filled": false
+    },
+    {
+     "month": "2019-06",
+     "value": 0.149,
+     "z": -1.937,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2019-07",
+     "value": 0.29,
+     "z": 2.054,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2019-08",
+     "value": 0.158,
+     "z": -0.674,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2019-09",
+     "value": 0.266,
+     "z": 1.477,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2019-10",
+     "value": 0.146,
+     "z": -2.499,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2019-11",
+     "value": 0.201,
+     "z": 0.724,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2019-12",
+     "value": 0.128,
+     "z": -0.836,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2020-01",
+     "value": 0.188,
+     "z": 1.118,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2020-02",
+     "value": 0.071,
+     "z": -5.712,
+     "flagged": true,
+     "filled": false
+    },
+    {
+     "month": "2020-03",
+     "value": 0.165,
+     "z": -1.132,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2020-04",
+     "value": 0.223,
+     "z": 3.013,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2020-05",
+     "value": 0.194,
+     "z": 1.379,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2020-06",
+     "value": 0.163,
+     "z": -0.045,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2020-07",
+     "value": 0.169,
+     "z": 0.045,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2020-08",
+     "value": 0.271,
+     "z": 1.912,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2020-09",
+     "value": 0.192,
+     "z": -0.074,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2020-10",
+     "value": 0.156,
+     "z": -0.412,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2020-11",
+     "value": 0.113,
+     "z": -2.526,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2020-12",
+     "value": 0.086,
+     "z": -2.236,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2021-01",
+     "value": 0.115,
+     "z": -2.413,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2021-02",
+     "value": 0.158,
+     "z": 0.311,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2021-03",
+     "value": 0.124,
+     "z": -1.648,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2021-04",
+     "value": 0.215,
+     "z": 3.371,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2021-05",
+     "value": 0.156,
+     "z": -0.105,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2021-06",
+     "value": 0.145,
+     "z": -0.58,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2021-07",
+     "value": 0.091,
+     "z": -1.304,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2021-08",
+     "value": 0.212,
+     "z": 0.674,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2021-09",
+     "value": 0.18,
+     "z": 0.074,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2021-10",
+     "value": 0.182,
+     "z": 2.196,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2021-11",
+     "value": 0.191,
+     "z": 2.985,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2021-12",
+     "value": 0.137,
+     "z": 0.885,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2022-01",
+     "value": 0.132,
+     "z": 0.305,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2022-02",
+     "value": 0.127,
+     "z": 0.163,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2022-03",
+     "value": 0.122,
+     "z": 0.262,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2022-04",
+     "value": 0.117,
+     "z": -0.163,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2022-05",
+     "value": 0.111,
+     "z": -0.105,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2022-06",
+     "value": 0.106,
+     "z": 0.045,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2022-07",
+     "value": 0.101,
+     "z": -0.045,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2022-08",
+     "value": 0.096,
+     "z": -0.674,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2022-09",
+     "value": 0.091,
+     "z": -0.697,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2022-10",
+     "value": 0.086,
+     "z": -0.369,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2022-11",
+     "value": 0.081,
+     "z": -0.625,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2022-12",
+     "value": 0.076,
+     "z": 0.0,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2023-01",
+     "value": 0.081,
+     "z": -0.653,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2023-02",
+     "value": 0.087,
+     "z": -0.163,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2023-03",
+     "value": 0.092,
+     "z": 0.262,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2023-04",
+     "value": 0.098,
+     "z": -0.163,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2023-05",
+     "value": 0.103,
+     "z": -0.105,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2023-06",
+     "value": 0.108,
+     "z": 0.045,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2023-07",
+     "value": 0.114,
+     "z": -0.045,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2023-08",
+     "value": 0.119,
+     "z": -0.674,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2023-09",
+     "value": 0.125,
+     "z": -0.674,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2023-10",
+     "value": 0.13,
+     "z": 0.0,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2023-11",
+     "value": 0.136,
+     "z": 0.0,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2023-12",
+     "value": 0.141,
+     "z": 0.674,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2024-01",
+     "value": 0.147,
+     "z": 0.0,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2024-02",
+     "value": 0.152,
+     "z": 0.163,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2024-03",
+     "value": 0.158,
+     "z": 0.262,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2024-04",
+     "value": 0.163,
+     "z": -0.163,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2024-05",
+     "value": 0.169,
+     "z": -0.105,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2024-06",
+     "value": 0.174,
+     "z": 0.045,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2024-07",
+     "value": 0.179,
+     "z": -0.045,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2024-08",
+     "value": 0.185,
+     "z": -0.674,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2024-09",
+     "value": 0.19,
+     "z": -0.674,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2024-10",
+     "value": 0.196,
+     "z": 0.0,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2024-11",
+     "value": 0.201,
+     "z": 0.0,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2024-12",
+     "value": 0.207,
+     "z": 0.674,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2025-01",
+     "value": 0.212,
+     "z": 0.0,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2025-02",
+     "value": 0.218,
+     "z": 0.163,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2025-03",
+     "value": 0.223,
+     "z": 0.262,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2025-04",
+     "value": 0.229,
+     "z": 0.163,
+     "flagged": false,
+     "filled": true
+    },
+    {
+     "month": "2025-05",
+     "value": 0.234,
+     "z": 0.549,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2025-06",
+     "value": 0.236,
+     "z": 0.814,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2025-07",
+     "value": 0.321,
+     "z": 1.873,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2025-08",
+     "value": 0.314,
+     "z": 1.515,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2025-09",
+     "value": 0.274,
+     "z": 0.402,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2025-10",
+     "value": 0.212,
+     "z": 0.0,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2025-11",
+     "value": 0.189,
+     "z": -0.194,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2025-12",
+     "value": 0.165,
+     "z": -0.333,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2026-01",
+     "value": 0.159,
+     "z": -1.79,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2026-02",
+     "value": 0.083,
+     "z": -6.216,
+     "flagged": true,
+     "filled": false
+    },
+    {
+     "month": "2026-03",
+     "value": 0.18,
+     "z": -0.262,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2026-04",
+     "value": 0.1,
+     "z": -5.505,
+     "flagged": true,
+     "filled": false
+    },
+    {
+     "month": "2026-05",
+     "value": 0.193,
+     "z": 0.105,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2026-06",
+     "value": 0.146,
+     "z": -2.523,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2026-07",
+     "value": 0.282,
+     "z": 1.772,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2026-08",
+     "value": 0.261,
+     "z": 1.041,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2026-09",
+     "value": 0.266,
+     "z": 0.959,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2026-10",
+     "value": 0.261,
+     "z": 4.308,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2026-11",
+     "value": 0.237,
+     "z": 2.652,
+     "flagged": false,
+     "filled": false
+    }
+   ],
+   "forecast": [
+    {
+     "month": "2026-12",
+     "mean": 0.213,
+     "lower": 0.146,
+     "upper": 0.28
+    },
+    {
+     "month": "2027-01",
+     "mean": 0.229,
+     "lower": 0.189,
+     "upper": 0.269
+    },
+    {
+     "month": "2027-02",
+     "mean": 0.23,
+     "lower": 0.144,
+     "upper": 0.315
+    },
+    {
+     "month": "2027-03",
+     "mean": 0.226,
+     "lower": 0.188,
+     "upper": 0.264
+    },
+    {
+     "month": "2027-04",
+     "mean": 0.253,
+     "lower": 0.155,
+     "upper": 0.351
+    },
+    {
+     "month": "2027-05",
+     "mean": 0.242,
+     "lower": 0.223,
+     "upper": 0.261
+    },
+    {
+     "month": "2027-06",
+     "mean": 0.227,
+     "lower": 0.156,
+     "upper": 0.298
+    },
+    {
+     "month": "2027-07",
+     "mean": 0.266,
+     "lower": 0.078,
+     "upper": 0.454
+    },
+    {
+     "month": "2027-08",
+     "mean": 0.274,
+     "lower": 0.166,
+     "upper": 0.382
+    },
+    {
+     "month": "2027-09",
+     "mean": 0.269,
+     "lower": 0.189,
+     "upper": 0.349
+    },
+    {
+     "month": "2027-10",
+     "mean": 0.242,
+     "lower": 0.189,
+     "upper": 0.294
+    },
+    {
+     "month": "2027-11",
+     "mean": 0.238,
+     "lower": 0.179,
+     "upper": 0.298
+    }
+   ],
+   "events": [
+    {
+     "month": "2019-05",
+     "value": 0.328,
+     "z": 8.607,
+     "direction": "above normal"
+    },
+    {
+     "month": "2020-02",
+     "value": 0.071,
+     "z": -5.712,
+     "direction": "below normal"
+    },
+    {
+     "month": "2026-02",
+     "value": 0.083,
+     "z": -6.216,
+     "direction": "below normal"
+    },
+    {
+     "month": "2026-04",
+     "value": 0.1,
+     "z": -5.505,
+     "direction": "below normal"
+    }
+   ],
+   "backtest": {
+    "mae_model": 0.037,
+    "mae_seasonal_naive": 0.044,
+    "skill": 0.16
+   },
+   "seasonal_peaks": [
+    {
+     "year": 2019,
+     "peak": 0.328,
+     "month": 5
+    },
+    {
+     "year": 2020,
+     "peak": 0.271,
+     "month": 8
+    },
+    {
+     "year": 2021,
+     "peak": 0.215,
+     "month": 4
+    },
+    {
+     "year": 2022,
+     "peak": 0.132,
+     "month": 1
+    },
+    {
+     "year": 2023,
+     "peak": 0.141,
+     "month": 12
+    },
+    {
+     "year": 2024,
+     "peak": 0.207,
+     "month": 12
+    },
+    {
+     "year": 2025,
+     "peak": 0.321,
+     "month": 7
+    },
+    {
+     "year": 2026,
+     "peak": 0.282,
+     "month": 7
+    }
+   ],
+   "peak_trend": {
+    "slope_per_year": -0.002,
+    "ci95": [
+     -0.057,
+     0.038
+    ],
+    "kendall_tau": -0.071,
+    "p_value": 0.905,
+    "significant": false,
+    "n_seasons": 8
+   },
+   "model": "ETS (Holt-Winters), damped trend, 12-month seasonality"
+  },
+  "ITA_VENICE": {
+   "location": {
+    "country": "Italy",
+    "centre": {
+     "lat": 45.44,
+     "lon": 12.335
+    },
+    "bounds": {
+     "south": 45.41,
+     "west": 12.29,
+     "north": 45.47,
+     "east": 12.38
+    },
+    "note": "Study-area rectangle (WGS84); values are totals over this area, not a flood location"
+   },
+   "history": [
+    {
+     "month": "2019-01",
+     "value": 0.438,
+     "z": 0.1,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2019-02",
+     "value": 0.314,
+     "z": -0.381,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2019-03",
+     "value": 0.282,
+     "z": -0.188,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2019-04",
+     "value": 0.272,
+     "z": 0.107,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2019-05",
+     "value": 0.252,
+     "z": 0.419,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2019-06",
+     "value": 0.258,
+     "z": 0.436,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2019-07",
+     "value": 0.261,
+     "z": 0.766,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2019-08",
+     "value": 0.242,
+     "z": 0.521,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2019-09",
+     "value": 0.244,
+     "z": -0.786,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2019-10",
+     "value": 0.331,
+     "z": -0.657,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2019-11",
+     "value": 0.598,
+     "z": 0.473,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2019-12",
+     "value": 0.473,
+     "z": -0.607,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2020-01",
+     "value": 0.359,
+     "z": -1.281,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2020-02",
+     "value": 0.364,
+     "z": 0.329,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2020-03",
+     "value": 0.338,
+     "z": 1.116,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2020-04",
+     "value": 0.293,
+     "z": -0.703,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2020-05",
+     "value": 0.28,
+     "z": -0.387,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2020-06",
+     "value": 0.239,
+     "z": -1.315,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2020-07",
+     "value": 0.238,
+     "z": -1.192,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2020-08",
+     "value": 0.275,
+     "z": -0.137,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2020-09",
+     "value": 0.242,
+     "z": -1.153,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2020-10",
+     "value": 0.362,
+     "z": 0.603,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2020-11",
+     "value": 0.405,
+     "z": -0.896,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2020-12",
+     "value": 0.422,
+     "z": -0.897,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2021-01",
+     "value": 0.408,
+     "z": -0.147,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2021-02",
+     "value": 0.503,
+     "z": 3.321,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2021-03",
+     "value": 0.268,
+     "z": -0.156,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2021-04",
+     "value": 0.25,
+     "z": -0.107,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2021-05",
+     "value": 0.217,
+     "z": -0.181,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2021-06",
+     "value": 0.252,
+     "z": 0.631,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2021-07",
+     "value": 0.265,
+     "z": 1.215,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2021-08",
+     "value": 0.255,
+     "z": 1.315,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2021-09",
+     "value": 0.267,
+     "z": 0.287,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2021-10",
+     "value": 0.321,
+     "z": -0.319,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2021-11",
+     "value": 0.405,
+     "z": -0.876,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2021-12",
+     "value": 0.506,
+     "z": 0.0,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2022-01",
+     "value": 0.415,
+     "z": -0.1,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2022-02",
+     "value": 0.271,
+     "z": -0.968,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2022-03",
+     "value": 0.283,
+     "z": 0.156,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2022-04",
+     "value": 0.298,
+     "z": 0.829,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2022-05",
+     "value": 0.238,
+     "z": 0.307,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2022-06",
+     "value": 0.25,
+     "z": 0.506,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2022-07",
+     "value": 0.214,
+     "z": 0.178,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2022-08",
+     "value": 0.132,
+     "z": -1.954,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2022-09",
+     "value": 0.23,
+     "z": -0.287,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2022-10",
+     "value": 0.323,
+     "z": 0.319,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2022-11",
+     "value": 0.258,
+     "z": -1.857,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2022-12",
+     "value": 0.547,
+     "z": 0.674,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2023-01",
+     "value": 0.201,
+     "z": -3.067,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2023-02",
+     "value": 0.298,
+     "z": -0.118,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2023-03",
+     "value": 0.251,
+     "z": -0.372,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2023-04",
+     "value": 0.306,
+     "z": 1.775,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2023-05",
+     "value": 0.203,
+     "z": -0.314,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2023-06",
+     "value": 0.258,
+     "z": 0.77,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2023-07",
+     "value": 0.209,
+     "z": -0.178,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2023-08",
+     "value": 0.241,
+     "z": 0.227,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2023-09",
+     "value": 0.268,
+     "z": -0.365,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2023-10",
+     "value": 0.292,
+     "z": -1.757,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2023-11",
+     "value": 0.503,
+     "z": -0.079,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2023-12",
+     "value": 0.717,
+     "z": 2.38,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2024-01",
+     "value": 0.453,
+     "z": 0.542,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2024-02",
+     "value": 0.328,
+     "z": 0.118,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2024-03",
+     "value": 0.321,
+     "z": 0.658,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2024-04",
+     "value": 0.19,
+     "z": -2.524,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2024-05",
+     "value": 0.233,
+     "z": -1.251,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2024-06",
+     "value": 0.235,
+     "z": -1.01,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2024-07",
+     "value": 0.245,
+     "z": -0.593,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2024-08",
+     "value": 0.217,
+     "z": -0.084,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2024-09",
+     "value": 0.402,
+     "z": 3.892,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2024-10",
+     "value": 0.278,
+     "z": -1.757,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2024-11",
+     "value": 0.678,
+     "z": 1.213,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2024-12",
+     "value": 0.411,
+     "z": -1.14,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2025-01",
+     "value": 0.602,
+     "z": 2.663,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2025-02",
+     "value": 0.265,
+     "z": -1.212,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2025-03",
+     "value": 0.404,
+     "z": 2.674,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2025-04",
+     "value": 0.305,
+     "z": 0.397,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2025-05",
+     "value": 0.279,
+     "z": 0.181,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2025-06",
+     "value": 0.243,
+     "z": -0.718,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2025-07",
+     "value": 0.249,
+     "z": -0.38,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2025-08",
+     "value": 0.254,
+     "z": -0.132,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2025-09",
+     "value": 0.317,
+     "z": 0.319,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2025-10",
+     "value": 0.384,
+     "z": 0.527,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2025-11",
+     "value": 0.545,
+     "z": 0.079,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2025-12",
+     "value": 0.549,
+     "z": 0.264,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2026-01",
+     "value": 0.493,
+     "z": 0.807,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2026-02",
+     "value": 0.502,
+     "z": 2.89,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2026-03",
+     "value": 0.283,
+     "z": -0.674,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2026-04",
+     "value": 0.28,
+     "z": -0.167,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2026-05",
+     "value": 0.29,
+     "z": 1.022,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2026-06",
+     "value": 0.238,
+     "z": -0.436,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2026-07",
+     "value": 0.278,
+     "z": 0.756,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2026-08",
+     "value": 0.244,
+     "z": 0.084,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2026-09",
+     "value": 0.299,
+     "z": 0.319,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2026-10",
+     "value": 0.39,
+     "z": 0.847,
+     "flagged": false,
+     "filled": false
+    },
+    {
+     "month": "2026-11",
+     "value": 0.595,
+     "z": 0.398,
+     "flagged": false,
+     "filled": false
+    }
+   ],
+   "forecast": [
+    {
+     "month": "2026-12",
+     "mean": 0.556,
+     "lower": 0.345,
+     "upper": 0.768
+    },
+    {
+     "month": "2027-01",
+     "mean": 0.461,
+     "lower": 0.356,
+     "upper": 0.566
+    },
+    {
+     "month": "2027-02",
+     "mean": 0.396,
+     "lower": 0.249,
+     "upper": 0.542
+    },
+    {
+     "month": "2027-03",
+     "mean": 0.344,
+     "lower": 0.24,
+     "upper": 0.447
+    },
+    {
+     "month": "2027-04",
+     "mean": 0.314,
+     "lower": 0.207,
+     "upper": 0.421
+    },
+    {
+     "month": "2027-05",
+     "mean": 0.289,
+     "lower": 0.263,
+     "upper": 0.314
+    },
+    {
+     "month": "2027-06",
+     "mean": 0.286,
+     "lower": 0.222,
+     "upper": 0.35
+    },
+    {
+     "month": "2027-07",
+     "mean": 0.284,
+     "lower": 0.228,
+     "upper": 0.34
+    },
+    {
+     "month": "2027-08",
+     "mean": 0.271,
+     "lower": 0.166,
+     "upper": 0.376
+    },
+    {
+     "month": "2027-09",
+     "mean": 0.322,
+     "lower": 0.227,
+     "upper": 0.417
+    },
+    {
+     "month": "2027-10",
+     "mean": 0.373,
+     "lower": 0.324,
+     "upper": 0.422
+    },
+    {
+     "month": "2027-11",
+     "mean": 0.536,
+     "lower": 0.153,
+     "upper": 0.919
+    }
+   ],
+   "events": [],
+   "backtest": {
+    "mae_model": 0.039,
+    "mae_seasonal_naive": 0.063,
+    "skill": 0.38
+   },
+   "seasonal_peaks": [
+    {
+     "year": 2019,
+     "peak": 0.598,
+     "month": 11
+    },
+    {
+     "year": 2020,
+     "peak": 0.422,
+     "month": 12
+    },
+    {
+     "year": 2021,
+     "peak": 0.506,
+     "month": 12
+    },
+    {
+     "year": 2022,
+     "peak": 0.547,
+     "month": 12
+    },
+    {
+     "year": 2023,
+     "peak": 0.717,
+     "month": 12
+    },
+    {
+     "year": 2024,
+     "peak": 0.678,
+     "month": 11
+    },
+    {
+     "year": 2025,
+     "peak": 0.602,
+     "month": 1
+    }
+   ],
+   "peak_trend": {
+    "slope_per_year": 0.03,
+    "ci95": [
+     -0.046,
+     0.084
+    ],
+    "kendall_tau": 0.429,
+    "p_value": 0.239,
+    "significant": false,
+    "n_seasons": 7
    },
    "model": "ETS (Holt-Winters), damped trend, 12-month seasonality"
   },

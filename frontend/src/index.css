@@ -2259,3 +2259,22 @@ textarea:focus-visible {
 .forecast-panel .sar-details li {
   margin-block: 8px;
 }
+
+/* SAR type identity is shared by tabs, observations and forecasts. */
+[data-kind="water"] { --sar-color: #55d9ed; }
+[data-kind="forest"] { --sar-color: #ffad78; }
+[data-kind="subsidence"] { --sar-color: #f59bc8; }
+.data-type-picker { margin-block: 18px; }
+.data-type-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+.data-type-tabs button { flex: 1; min-height: 44px; padding: 9px 10px; border: 1px solid #ffffff24; border-radius: 8px; background: #ffffff04; color: #c4d4df; font: inherit; font-size: 12px; cursor: pointer; }
+.data-type-tabs button[aria-selected="true"] { color: var(--sar-color); border-color: var(--sar-color); background: color-mix(in srgb, var(--sar-color) 12%, transparent); }
+.data-type-tabs button:focus-visible { outline: 2px solid var(--sar-color); outline-offset: 3px; }
+.data-type-dot { display: inline-block; width: 7px; height: 7px; margin-right: 6px; border-radius: 50%; background: var(--sar-color); }
+.data-type-title { color: var(--sar-color); font-size: 12px; line-height: 1.6; }
+[data-kind] .sar-panel { border-color: color-mix(in srgb, var(--sar-color) 35%, transparent); }
+[data-kind] .sar-value, [data-kind] .sar-badge { color: var(--sar-color); }
+[data-kind] .sar-line, [data-kind] .forecast-line { stroke: var(--sar-color); }
+[data-kind] .sar-dot:not(.rejected), [data-kind] .forecast-dot, [data-kind] .forecast-band { fill: var(--sar-color); }
+[data-kind] input { accent-color: var(--sar-color); }
+.sar-map-readout.subsidence { border-color: #f59bc8; }
+.sar-map-readout.subsidence strong { color: #f59bc8; }

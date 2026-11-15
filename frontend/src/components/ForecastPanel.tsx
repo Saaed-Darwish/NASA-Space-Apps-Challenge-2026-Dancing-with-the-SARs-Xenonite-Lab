@@ -1,6 +1,11 @@
 ﻿import { useEffect, useMemo, useState } from "react";
 import type { Region } from "../types/region";
-import { sarDatasets } from "../data/sar";
+import type { SarDataset } from "../data/sar";
+import type { ReactNode } from "react";
+import DataTypeTabs from "./DataTypeTabs";
+import ForestForecastPanel from "./ForestForecastPanel";
+import SubsidenceForecastPanel from "./SubsidenceForecastPanel";
+import type { SarObservation } from "../data/sar";
 import {
   forecastPlot,
   loadForecast,
@@ -9,10 +14,15 @@ import {
 const numeric = (v: number) =>
   v.toLocaleString(undefined, { maximumFractionDigits: 2 });
 
-export default function ForecastPanel({ region }: { region: Region }) {
-  const dataset =
-    sarDatasets.find((d) => d.regionId === region.id && d.kind === "water") ??
-    sarDatasets.find((d) => d.regionId === region.id);
+function WaterForecastPanel({
+  region,
+  dataset,
+  children,
+}: {
+  region: Region;
+  dataset: SarDataset | null;
+  children?: ReactNode;
+}) {
   const [data, setData] = useState<ForecastResponse | null>(null);
   const [error, setError] = useState("");
   const [retry, setRetry] = useState(0);
@@ -53,6 +63,7 @@ export default function ForecastPanel({ region }: { region: Region }) {
     <section
       className="workspace-panel forecast-panel panel"
       aria-label="Water time-series forecast"
+      data-kind="water"
     >
       <div className="workspace-title">
         <div>
@@ -65,13 +76,14 @@ export default function ForecastPanel({ region }: { region: Region }) {
         {region.name}
         <span>{region.country}</span>
       </div>
+      {children}
       {!dataset && (
         <div className="forecast-empty" role="status">
           <h3>No forecast for this study area</h3>
           <p>
-            Monthly forecast exports are available for Madeira River and Can
-            Tho. Other regions need their own measured series and evaluated
-            model.
+            Forecasts are available for study areas with matching observation
+            series and supplied model exports. This region has no matching
+            dataset.
           </p>
         </div>
       )}
@@ -329,5 +341,52 @@ export default function ForecastPanel({ region }: { region: Region }) {
         forecast cannot locate future inundation within the study area.
       </p>
     </section>
+  );
+}
+
+export default function ForecastPanel({
+  region,
+  dataset,
+  datasets,
+  onSelectDataset,
+  onSelectObservation,
+  initialPointId,
+}: {
+  region: Region;
+  dataset: SarDataset | null;
+  datasets: SarDataset[];
+  onSelectDataset: (id: string) => void;
+  onSelectObservation?: (row: SarObservation | null) => void;
+  initialPointId?: string;
+}) {
+  const tabs = dataset ? (
+    <DataTypeTabs
+      datasets={datasets}
+      dataset={dataset}
+      onSelect={onSelectDataset}
+    />
+  ) : null;
+  if (dataset?.kind === "subsidence")
+    return (
+      <SubsidenceForecastPanel
+        key={dataset.id}
+        region={region}
+        dataset={dataset}
+        onSelectObservation={onSelectObservation}
+        initialPointId={initialPointId}
+      >
+        {tabs}
+      </SubsidenceForecastPanel>
+    );
+  if (dataset?.kind === "forest")
+    return (
+      <ForestForecastPanel key={dataset.id} region={region} dataset={dataset}>
+        {tabs}
+      </ForestForecastPanel>
+    );
+  return (
+    <WaterForecastPanel key={dataset?.id} region={region} dataset={dataset}>
+      {tabs}
+    </WaterForecastPanel>
   );
 }

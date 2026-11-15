@@ -351,7 +351,7 @@ export default function App() {
         }
         dataset={activeDataset}
         observation={
-          mode === "analyze" &&
+          (mode === "analyze" || (mode === "forecast" && activeDataset?.kind === "subsidence")) &&
           observation?.id.startsWith(`${activeDataset?.id}:`)
             ? observation
             : null
@@ -492,7 +492,7 @@ export default function App() {
           />
         )}
         {mode === "forecast" && selectedRegion && (
-          <ForecastPanel key={selectedRegion.id} region={selectedRegion} />
+          <ForecastPanel key={selectedRegion.id} region={selectedRegion} dataset={activeDataset} datasets={regionDatasets} onSelectDataset={selectDataset} onSelectObservation={setObservation} initialPointId={observation?.pointId ?? undefined} />
         )}
         {mode === "ai" && (
           <AssistantPanel

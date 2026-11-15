@@ -161,20 +161,46 @@ export default memo(function ObservationPanel({
       <p className="small muted">
         {dataset.observationCount.toLocaleString()} records ·{" "}
         {dataset.startDate} to {dataset.endDate}. {dataset.qualityPassedCount}{" "}
-        pass source quality checks; this does not establish classification
-        accuracy.
+        meet the dataset's quality/coverage policy; this does not establish
+        classification accuracy. See the method notes for the filters used.
       </p>
       {dataset.points.length > 0 && (
-        <label className="sar-field">
-          Measurement point
-          <select value={pointId} onChange={(e) => setPointId(e.target.value)}>
-            {dataset.points.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.id} · {numeric(p.velocity)} mm/year
-              </option>
-            ))}
-          </select>
-        </label>
+        <div>
+          <label className="sar-field">
+            Measurement point
+            <select
+              value={pointId}
+              onChange={(e) => setPointId(e.target.value)}
+            >
+              {dataset.points.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.name ?? p.id}
+                  {p.areaLabel ? ` · ${p.areaLabel}` : ""} ·{" "}
+                  {numeric(p.velocity)} mm/year
+                </option>
+              ))}
+            </select>
+          </label>
+          {point && (
+            <p className="small sar-hash">Original point ID: {point.id}</p>
+          )}
+          {point?.areaLabel && (
+            <p className="small muted">
+              Source area label: {point.areaLabel}. Area names are approximate;
+              the pin uses the supplied coordinates.
+            </p>
+          )}
+          {point?.latitude != null && point?.longitude != null && (
+            <p className="small muted">
+              Selected point is pinned on the map ·{" "}
+              {Math.abs(point.latitude).toFixed(5)}°
+              {point.latitude < 0 ? " S" : " N"},{" "}
+              {Math.abs(point.longitude).toFixed(5)}°{" "}
+              {point.longitude < 0 ? "W" : "E"}. Approximate 100 m EGMS grid
+              sample; coordinates follow the source EGMS grid reference.
+            </p>
+          )}
+        </div>
       )}
       {dataset.kind === "water" && (
         <WaterChangePanel
@@ -437,9 +463,15 @@ export default memo(function ObservationPanel({
         </>
       )}
       <p className="small sar-caveat">
-        {dataset.geometryStatus === "crs_unconfirmed"
-          ? "Precise point mapping awaits CRS confirmation. The city marker is an approximate locator."
-          : "Outline = study area, not an event boundary. Water layers, where available, use separate radar acquisitions and an experimental classification."}
+        {dataset.geometryStatus === "source_coordinates"
+          ? "Pin = selected 100 m grid sample using source-supplied WGS84 coordinates, not an individual building."
+          : dataset.geometryStatus === "area_coordinates_unavailable"
+            ? "Study-area boundaries were not supplied. Area aggregates are not assigned to measurement-point coordinates."
+            : dataset.geometryStatus === "inferred_egms_grid"
+              ? "Pin = selected 100 m grid sample, not an individual building. EPSG:3035 is inferred from the EGMS format and checked against the source point IDs."
+              : dataset.geometryStatus === "crs_unconfirmed"
+                ? "Precise point mapping awaits CRS confirmation. The city marker is an approximate locator."
+                : "Outline = study area, not an event boundary. Water layers, where available, use separate radar acquisitions and an experimental classification."}
       </p>
       <details className="sar-details">
         <summary>Method, validation &amp; source</summary>

@@ -352,7 +352,9 @@ export default function EarthGlobe({
           south,
         ]),
         width: 2,
-        material: Color.fromCssColorString("#55d9ed"),
+        material: Color.fromCssColorString(
+          dataset?.kind === "forest" ? "#ffad78" : "#55d9ed",
+        ),
         clampToGround: true,
       },
     });
@@ -376,7 +378,35 @@ export default function EarthGlobe({
         viewer.scene.requestRender();
       }
     };
-  }, [isViewerReady, studyArea]);
+  }, [isViewerReady, studyArea, dataset?.kind]);
+
+  const trackingPoint = dataset?.kind === "subsidence"
+    ? dataset.points.find(p => p.id === observation?.pointId)
+    : null;
+  useEffect(() => {
+    const viewer = viewerRef.current;
+    if (!viewer || !isViewerReady || !trackingPoint ||
+        !["inferred_egms_grid", "source_coordinates"].includes(trackingPoint.locationStatus ?? "") ||
+        !Number.isFinite(trackingPoint.latitude) || !Number.isFinite(trackingPoint.longitude)) return;
+    const marker = viewer.entities.add({
+      id: "sar-tracking-point",
+      position: Cartesian3.fromDegrees(trackingPoint.longitude!, trackingPoint.latitude!),
+      point: {
+        pixelSize: 8,
+        color: Color.fromCssColorString("#f59bc8"),
+        outlineColor: Color.WHITE,
+        outlineWidth: 1,
+        disableDepthTestDistance: Number.POSITIVE_INFINITY,
+      },
+    });
+    viewer.scene.requestRender();
+    return () => {
+      if (!viewer.isDestroyed()) {
+        viewer.entities.remove(marker);
+        viewer.scene.requestRender();
+      }
+    };
+  }, [isViewerReady, trackingPoint]);
 
   const waterComparison = waterLayer?.comparison;
   useEffect(() => {

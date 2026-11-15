@@ -1,3 +1,5 @@
+> Historical planning document. The implemented finalized release is described in [the finalized SAR guide](./finalized-sar-release.md).
+
 # SAR handoff review and integration plan
 
 Reviewed 2026-11-15. Order of inspection: `example_routes.py`, `water_change.py`, then notebook code/output and `forecasts.json`, followed by the Venice, Vietnam and Brazil workbooks. The review reads code and stored outputs; it does not execute the notebook, retrain models, or process raster data. The required scientific packages are not installed in the current backend environment, and no SAR GeoTIFFs were found under the backend directory.
@@ -8,7 +10,7 @@ Integrate read-only observation series, study-area boundaries and quality inform
 
 There are three different measurements: candidate inundation area in km², candidate forest disturbance in km²/% of monitored forest, and vertical ground displacement in mm/mm per year. They must have distinct labels, legends, sources and methods. None is interchangeable with the others or with damage/risk to people.
 
-## 1. What Omar's files do
+## 1. What the python files do
 
 ### Water-change processor
 

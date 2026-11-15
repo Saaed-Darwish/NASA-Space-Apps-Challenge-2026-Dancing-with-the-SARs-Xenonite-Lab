@@ -9,6 +9,7 @@ import type { Indicator, OverlaySettings, RegionalReading } from "../data/demo";
 import SourceLinks, { StoryTiming } from "./SourceLinks";
 import LayerPanel from "./LayerPanel";
 import ObservationPanel from "./ObservationPanel";
+import DataTypeTabs from "./DataTypeTabs";
 import type { SarDataset, SarObservation } from "../data/sar";
 import type { TimelineSelection } from "../data/observationTime";
 import type { WaterLayerSelection } from "../data/waterChanges";
@@ -73,6 +74,7 @@ export default function AnalysisPanel({
     <section
       className="workspace-panel analysis-panel panel"
       aria-label="Region analysis"
+      data-kind={dataset?.kind}
     >
       <div className="workspace-title">
         <div>
@@ -120,10 +122,17 @@ export default function AnalysisPanel({
             </button>
           </div>
           {dataset && (
+            <DataTypeTabs
+              datasets={datasets}
+              dataset={dataset}
+              onSelect={onSelectDataset}
+            />
+          )}
+          {dataset && (
             <ObservationPanel
               key={dataset.id}
               dataset={dataset}
-              datasets={datasets}
+              datasets={datasets.filter((d) => d.kind === dataset.kind)}
               basemapYear={Math.floor(time)}
               onSelectDataset={onSelectDataset}
               onSelectObservation={onSelectObservation}
