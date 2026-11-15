@@ -24,8 +24,12 @@ has four stories. Rio Grande do Sul and the Mekong Delta remain pending for thei
 own water data; Madeira River/Can Tho totals are never assigned to those wider areas.
 The Forecast tab serves Omar's exploratory monthly exports for Madeira River and
 Can Tho, with history, approximate ranges and explicit evaluation limitations.
-Classified event footprints still need georeferenced masks. See
-[the current integration guide](./docs/sar-observations.md).
+Six experimental spatial water-change layers are available from independently
+acquired public Sentinel-1 RTC imagery for Madeira River and Can Tho in 2024.
+Use Analyze → Spatial water change → View latest available comparison, or select
+a dated pair. Blue is candidate gain; amber is candidate loss. See
+[the water-change pipeline](./docs/water-change-pipeline.md) and
+[the observation integration guide](./docs/sar-observations.md).
 
 Globe markers use fixed ellipsoid anchors with horizon visibility checks. Camera
 zoom and panning update the focused study area without initiating another camera

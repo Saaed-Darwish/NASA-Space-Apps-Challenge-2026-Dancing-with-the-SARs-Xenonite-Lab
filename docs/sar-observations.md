@@ -57,6 +57,11 @@ not silently guessing column meanings. Run backend tests after regeneration:
 
 ## Map and Analyze behavior
 
+Spatial water comparisons from independently acquired public RTC imagery are now
+available for Madeira River and Can Tho. They are distinct from the workbook
+measurements described here; see [the processing pipeline](./water-change-pipeline.md)
+for actual image dates, controls, methods and limitations.
+
 - Selected water/forest datasets show their actual analysis rectangle as an outline with a study-area label. No blue footprint or synthetic water layer is substituted.
 - The dataset selector switches between Madeira River's water and forest series. Stable `porto-velho` / `BRA_PORTO_VELHO*` IDs preserve the handoff provenance. Binh Phuoc and Venice have independent curated regions; Porto Alegre's stories now belong to Rio Grande do Sul.
 - Acquisition controls choose real observations, including distinct same-date source rows. The chart uses elapsed date spacing and breaks connecting lines over gaps longer than 45 days. Missing acquisitions are never zero-filled or interpolated.
@@ -80,9 +85,9 @@ applies to annual repeated detections and threshold selection, not every scene.
 
 The Brazilian forest guide reports validation summaries, but its separate validation
 table was not supplied. That distinction is visible in the method note. Repeated
-acquisitions are retained and not summed. The example raster-upload app and notebook
-execution remain unconnected; their evaluation/security/georeferencing requirements
-are in [the handoff review](./sar-data-integration-plan.md).
+acquisitions are retained and not summed. The legacy raster-upload example is retired
+and notebook execution remains unconnected; the original review is retained in
+[the handoff review](./sar-data-integration-plan.md).
 
 ## Exploratory forecasts
 

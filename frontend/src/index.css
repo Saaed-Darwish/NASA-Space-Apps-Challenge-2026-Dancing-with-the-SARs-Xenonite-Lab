@@ -2187,6 +2187,47 @@ textarea:focus-visible {
   fill: #efb36d;
   fill-opacity: 0.18;
 }
+.water-change-controls {
+  margin-block: 16px;
+  padding: 14px;
+  border: 1px solid #55d9ed45;
+  border-radius: 10px;
+  background: #55d9ed08;
+}
+.water-change-controls .sar-quality {
+  margin-block: 12px;
+  gap: 8px;
+}
+.water-change-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.water-change-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.water-gain-swatch,
+.water-loss-swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 1px solid #ffffff66;
+  margin-right: 4px;
+  border-radius: 2px;
+  vertical-align: middle;
+}
+.water-gain-swatch {
+  background: #55d9ed;
+}
+.water-loss-swatch {
+  background: #ffb347;
+}
+.water-map-key {
+  line-height: 1.7;
+  color: #d6e9ed;
+}
 .forecast-line {
   fill: none;
   stroke: #efb36d;

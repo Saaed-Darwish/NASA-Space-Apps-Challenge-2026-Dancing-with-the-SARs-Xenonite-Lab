@@ -23,7 +23,7 @@ async def invoke(method="GET", path="/api/health", headers=(), chunks=(b"",), qu
         messages.append(message)
 
     await main.app({
-        "type": "http", "asgi": {"version": "3.0"}, "http_version": "1.1",
+        "type": "http", "asgi": {"version": "3.0", "spec_version": "2.4"}, "http_version": "1.1",
         "method": method, "scheme": "http", "path": path, "raw_path": path.encode(),
         "query_string": query_string.encode(), "headers": list(headers),
         "client": ("127.0.0.1", 12345), "server": ("localhost", 8000),
@@ -32,7 +32,8 @@ async def invoke(method="GET", path="/api/health", headers=(), chunks=(b"",), qu
     start = next(m for m in messages if m["type"] == "http.response.start")
     body = b"".join(m.get("body", b"") for m in messages if m["type"] == "http.response.body")
     headers = dict(start["headers"])
-    parsed = json.loads(body) if body and b"application/json" in headers.get(b"content-type", b"") else body.decode()
+    content_type = headers.get(b"content-type", b"")
+    parsed = json.loads(body) if body and b"application/json" in content_type else body if b"image/png" in content_type else body.decode()
     return start["status"], headers, parsed
 
 

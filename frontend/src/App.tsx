@@ -16,6 +16,7 @@ import ArticleSearch from "./components/ArticleSearch";
 import ForecastPanel from "./components/ForecastPanel";
 import { sarDatasets, type SarObservation } from "./data/sar";
 import { dateToTimelineTime } from "./data/observationTime";
+import type { WaterLayerSelection } from "./data/waterChanges";
 import { FIRST_YEAR, LAST_IMAGERY_YEAR } from "./data/imagery";
 import { storyMarkerOpacity } from "./data/storyTimeline";
 import type {
@@ -64,6 +65,18 @@ export default function App() {
   const [selectedStory, setSelectedStory] = useState<RegionStory | null>(null);
   const [datasetId, setDatasetId] = useState<string | null>(null);
   const [observation, setObservation] = useState<SarObservation | null>(null);
+  const [waterLayer, setWaterLayer] = useState<WaterLayerSelection | null>(
+    null,
+  );
+  const showComparisonDate = useCallback(
+    (date: string) => {
+      setSelectedStory(null);
+      const time = dateToTimelineTime(date, FIRST_YEAR, LAST_IMAGERY_YEAR);
+      if (time !== null)
+        timeline.setComparisonRange(FIRST_YEAR, LAST_IMAGERY_YEAR, time);
+    },
+    [timeline.setComparisonRange],
+  );
   const observationId = observation?.id;
   const selectObservation = useCallback(
     (row: SarObservation | null, syncTimeline = false) => {
@@ -330,6 +343,12 @@ export default function App() {
         onViewportFocus={focusVisibleRegion}
         onSearchAreaChange={setViewportArea}
         studyArea={activeDataset?.bounds ?? null}
+        waterLayer={
+          mode === "analyze" &&
+          waterLayer?.comparison.datasetId === activeDataset?.id
+            ? waterLayer
+            : null
+        }
         dataset={activeDataset}
         observation={
           mode === "analyze" &&
@@ -371,7 +390,11 @@ export default function App() {
               </button>
             ))}
         </nav>
-        <span className="demo-badge">REAL IMAGERY / DEMO ANALYSIS</span>
+        <span className="demo-badge">
+          {activeDataset
+            ? "OPTICAL BASEMAP / SAR DATA"
+            : "REAL IMAGERY / SOURCED STORIES"}
+        </span>
       </header>
 
       <button
@@ -464,6 +487,8 @@ export default function App() {
             onSelectObservation={selectObservation}
             timelineSelection={timeline.selection}
             onShowBasemap={showObservationBasemap}
+            onWaterLayer={setWaterLayer}
+            onCompareDate={showComparisonDate}
           />
         )}
         {mode === "forecast" && selectedRegion && (

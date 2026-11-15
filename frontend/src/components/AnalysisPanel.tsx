@@ -11,6 +11,7 @@ import LayerPanel from "./LayerPanel";
 import ObservationPanel from "./ObservationPanel";
 import type { SarDataset, SarObservation } from "../data/sar";
 import type { TimelineSelection } from "../data/observationTime";
+import type { WaterLayerSelection } from "../data/waterChanges";
 
 interface AnalysisPanelProps {
   region: Region | null;
@@ -39,6 +40,8 @@ interface AnalysisPanelProps {
   ) => void;
   timelineSelection: TimelineSelection | null;
   onShowBasemap: (year: number) => void;
+  onWaterLayer: (layer: WaterLayerSelection | null) => void;
+  onCompareDate: (date: string) => void;
 }
 
 export default function AnalysisPanel({
@@ -62,6 +65,8 @@ export default function AnalysisPanel({
   onSelectObservation,
   onShowBasemap,
   timelineSelection,
+  onWaterLayer,
+  onCompareDate,
 }: AnalysisPanelProps) {
   const candidates = region ? storiesForRegion(region.id) : [];
   return (
@@ -124,6 +129,8 @@ export default function AnalysisPanel({
               onSelectObservation={onSelectObservation}
               onShowBasemap={onShowBasemap}
               timelineSelection={timelineSelection}
+              onWaterLayer={onWaterLayer}
+              onCompareDate={onCompareDate}
             />
           )}
           {region.waterMonitoring && !dataset && (
