@@ -5,8 +5,11 @@ import {
   YEARS,
 } from "../data/imagery";
 import type useTimeline from "../hooks/useTimeline";
+import { timelineDate } from "../data/observationTime";
 
-type TimelineProps = ReturnType<typeof useTimeline>;
+type TimelineProps = ReturnType<typeof useTimeline> & {
+  linkedObservationDate?: string | null;
+};
 
 export default function Timeline({
   time,
@@ -18,10 +21,12 @@ export default function Timeline({
   changeStartYear,
   changeEndYear,
   setComparisonRange,
+  linkedObservationDate,
 }: TimelineProps) {
   const previousYear = Math.floor(time);
   const nextYear = Math.min(previousYear + 1, endYear);
   const blend = Math.round((time - previousYear) * 100);
+  const approximateDate = linkedObservationDate ?? timelineDate(time);
 
   return (
     <section className="timeline panel" aria-label="Year comparison timeline">
@@ -31,9 +36,10 @@ export default function Timeline({
             EARTH THROUGH TIME / SATELLITE ARCHIVE
           </span>
           <p>
+            <span>≈ {approximateDate} · </span>
             {blend > 0
-              ? `${previousYear} → ${nextYear} · ${blend}% blend`
-              : `${previousYear} observation`}
+              ? `${previousYear} → ${nextYear} · ${blend}% optical blend`
+              : `${previousYear} annual mosaic`}
           </p>
         </div>
         <div className="timeline-range">
@@ -91,7 +97,7 @@ export default function Timeline({
             step="0.01"
             value={time}
             onChange={(event) => seek(Number(event.target.value))}
-            aria-valuetext={`${previousYear}${blend ? ` blending into ${nextYear}` : ""}`}
+            aria-valuetext={`Approximately ${approximateDate}; ${previousYear} annual optical imagery${blend ? ` blending into ${nextYear}` : ""}`}
           />
           <div className="year-bookmarks">
             {YEARS.filter((year) => year >= startYear && year <= endYear).map(

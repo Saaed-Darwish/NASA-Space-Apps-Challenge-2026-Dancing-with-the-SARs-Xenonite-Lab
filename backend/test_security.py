@@ -9,7 +9,7 @@ from security import MAX_REQUEST_BYTES
 from test_assistant import request
 
 
-async def invoke(method="GET", path="/api/health", headers=(), chunks=(b"",)):
+async def invoke(method="GET", path="/api/health", headers=(), chunks=(b"",), query_string=""):
     messages = []
     remaining = list(chunks)
 
@@ -25,7 +25,7 @@ async def invoke(method="GET", path="/api/health", headers=(), chunks=(b"",)):
     await main.app({
         "type": "http", "asgi": {"version": "3.0"}, "http_version": "1.1",
         "method": method, "scheme": "http", "path": path, "raw_path": path.encode(),
-        "query_string": b"", "headers": list(headers),
+        "query_string": query_string.encode(), "headers": list(headers),
         "client": ("127.0.0.1", 12345), "server": ("localhost", 8000),
         "root_path": "",
     }, receive, send)
@@ -102,7 +102,7 @@ class SecurityTests(unittest.TestCase):
         status, _, regions = self.call(path="/api/regions")
         self.assertEqual(status, 200)
         self.assertEqual({r["id"] for r in regions}, {r["id"] for r in CATALOG["regions"]})
-        self.assertTrue(next(r for r in regions if r["id"] == "porto-alegre")["waterMonitoring"])
+        self.assertTrue(next(r for r in regions if r["id"] == "porto-velho")["waterMonitoring"])
 
     def test_inference_slot_is_released_after_failure(self):
         with patch("main.generate_answer", side_effect=RuntimeError("test")):

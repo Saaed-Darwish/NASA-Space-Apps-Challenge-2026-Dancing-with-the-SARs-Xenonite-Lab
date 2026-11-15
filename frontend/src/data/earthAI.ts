@@ -6,6 +6,8 @@ export interface EarthAIRequest {
   question: string;
   region_id: string;
   story_id?: string;
+  dataset_id?: string;
+  observation_id?: string;
   year: number;
   start_year: number;
   end_year: number;

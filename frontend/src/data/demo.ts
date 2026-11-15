@@ -41,17 +41,17 @@ export const indicators: Record<Indicator, IndicatorDefinition> = {
 };
 export const regions: Region[] = [
   {
-    id: "porto-alegre",
-    name: "Porto Alegre",
+    id: "porto-velho",
+    name: "Madeira River",
     country: "Brazil",
-    latitude: -30.0346,
-    longitude: -51.2177,
+    latitude: -8.8,
+    longitude: -63.925,
     altitude: 85000,
     description:
-      "Explore Porto Alegre and the Guaíba waterfront. Flood data is being processed by the backend team; measured flood extent is not available in this view yet.",
-    zoom_level: "city",
-    floodDataStatus: "processing",
+      "Explore the Madeira River study area with dated candidate-inundation and forest-disturbance observations. Outlines locate the analysis area, not affected pixels. Measurements are exploratory and quality flags remain visible.",
+    zoom_level: "regional",
     waterMonitoring: true,
+    datasetIds: ["BRA_PORTO_VELHO", "BRA_PORTO_VELHO_FOREST"],
   },
   {
     id: "rio-grande-do-sul",
@@ -74,10 +74,10 @@ export const regions: Region[] = [
     longitude: 105.7469,
     altitude: 65000,
     description:
-      "Explore Can Tho along the Hậu River. Flood data is being processed by the backend team; measured inundation and event dates are not connected yet.",
+      "Explore Can Tho along the Hậu River. Dated candidate-inundation observations and the analysis outline are available; annual satellite mosaics provide landscape context.",
     zoom_level: "city",
-    floodDataStatus: "processing",
     waterMonitoring: true,
+    datasetIds: ["VNM_CAN_THO"],
   },
   {
     id: "mekong-delta",
@@ -91,6 +91,30 @@ export const regions: Region[] = [
     zoom_level: "regional",
     floodDataStatus: "processing",
     waterMonitoring: true,
+  },
+  {
+    id: "binh-phuoc",
+    name: "Binh Phuoc forest",
+    country: "Vietnam",
+    latitude: 11.75,
+    longitude: 106.85,
+    altitude: 85000,
+    description:
+      "Inspect potential forest disturbance across the Binh Phuoc study rectangle. Quality-passing observations are shown by default; these are radar indicators, not confirmed deforestation.",
+    zoom_level: "regional",
+    datasetIds: ["VNM_BINH_PHUOC_FOREST"],
+  },
+  {
+    id: "venice",
+    name: "Venice",
+    country: "Italy",
+    latitude: 45.44,
+    longitude: 12.33,
+    altitude: 26000,
+    description:
+      "Explore vertical displacement histories for eight selected EGMS points. The city marker is a locator; precise point positions await confirmation of the source coordinate reference system.",
+    zoom_level: "city",
+    datasetIds: ["ITA_VENICE_VERTICAL"],
   },
   {
     id: "manchar",

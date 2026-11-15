@@ -8,6 +8,8 @@ from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 from assistant import CATALOG, ChatRequest, generate_answer
 from security import RequestGuard
+from sar_data import router as sar_router
+from forecast_data import router as forecast_router
 
 load_dotenv(Path(__file__).parent / ".env")
 allowed_origins = [origin.strip() for origin in os.getenv(
@@ -18,6 +20,8 @@ if not allowed_origins or "*" in allowed_origins or "null" in allowed_origins:
     raise ValueError("CORS_ORIGINS must contain explicit trusted browser origins")
 chat_slot = BoundedSemaphore(1)
 app = FastAPI(title="EarthPulse API", version="0.1.0")
+app.include_router(sar_router)
+app.include_router(forecast_router)
 
 app.add_middleware(
     CORSMiddleware,
@@ -54,6 +58,7 @@ class Region(BaseModel):
     zoom_level: str
     waterMonitoring: bool = False
     floodDataStatus: str | None = None
+    datasetIds: list[str] = Field(default_factory=list)
 
 
 REGIONS = [Region(**region) for region in CATALOG["regions"]]

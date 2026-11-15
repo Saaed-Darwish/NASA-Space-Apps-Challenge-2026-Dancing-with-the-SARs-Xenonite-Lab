@@ -7,6 +7,8 @@ import {
   Math as CesiumMath,
   Color,
   ConstantProperty,
+  EllipsoidalOccluder,
+  SceneTransforms,
   ScreenSpaceEventHandler,
   ScreenSpaceEventType,
   Viewer,
@@ -15,6 +17,8 @@ import {
 import "cesium/Build/Cesium/Widgets/widgets.css";
 import { indicators, type Indicator, type OverlaySettings } from "../data/demo";
 import { LAST_IMAGERY_YEAR } from "../data/imagery";
+import type { StudyBounds, SarDataset, SarObservation } from "../data/sar";
+import { visibleMapViewport } from "../globe/cameraFit";
 import {
   addRegionMarkers,
   focusCamera,
@@ -43,6 +47,10 @@ import {
 } from "../data/articleSearch";
 
 interface EarthGlobeProps {
+  dataset: SarDataset | null;
+  observation: SarObservation | null;
+  layoutKey: string;
+  studyArea: StudyBounds | null;
   articles: DiscoveredArticle[];
   selectedArticle: DiscoveredArticle | null;
   onSelectArticle: (article: DiscoveredArticle) => void;
@@ -62,6 +70,10 @@ interface EarthGlobeProps {
 }
 
 export default function EarthGlobe({
+  dataset,
+  observation,
+  layoutKey,
+  studyArea,
   articles,
   selectedArticle,
   onSelectArticle,
@@ -85,7 +97,7 @@ export default function EarthGlobe({
   }, [onSearchAreaChange]);
   const viewFocusRef = useRef(onViewportFocus);
   const focusedRegionRef = useRef(selectedRegion);
-  const handledFocusRequest = useRef<number | null>(null);
+  const handledFocusRequest = useRef<string | null>(null);
   const cameraFlight = useRef(false);
   const storyFocusRef = useRef(selectedStory);
   useEffect(() => {
@@ -105,6 +117,8 @@ export default function EarthGlobe({
   }, [articles, onSelectArticle]);
   const onSelectStoryRef = useRef(onSelectStory);
   const containerRef = useRef<HTMLDivElement>(null);
+  const readoutRef = useRef<HTMLDivElement>(null);
+  const [resizeVersion, setResizeVersion] = useState(0);
   const viewerRef = useRef<Viewer | null>(null);
   const imageryRef = useRef<HistoricalImagery | null>(null);
   const overlaysRef = useRef<OverlayCollection | null>(null);
@@ -147,8 +161,12 @@ export default function EarthGlobe({
     const removeVisibilityListener = trackMarkerVisibility(viewer);
     const updateViewport = () => {
       const canvas = viewer.scene.canvas;
+      const visible = visibleMapViewport(canvas);
       const center = viewer.camera.pickEllipsoid(
-        new Cartesian2(canvas.clientWidth / 2, canvas.clientHeight / 2),
+        new Cartesian2(
+          (visible.left + visible.right) / 2,
+          (visible.top + visible.bottom) / 2,
+        ),
         viewer.scene.globe.ellipsoid,
       );
       const location = center ? Cartographic.fromCartesian(center) : null;
@@ -288,6 +306,7 @@ export default function EarthGlobe({
       !isViewerReady ||
       !viewer ||
       !selectedRegion ||
+      !!selectedRegion.datasetIds?.length ||
       !selectedRegion.waterMonitoring ||
       selectedRegion.floodDataStatus === "processing"
     )
@@ -303,6 +322,103 @@ export default function EarthGlobe({
       if (overlaysRef.current === collection) overlaysRef.current = null;
     };
   }, [isViewerReady, selectedRegion]);
+
+  useEffect(() => {
+    const viewer = viewerRef.current;
+    if (!isViewerReady || !viewer || !studyArea) return;
+    const { west, south, east, north } = studyArea;
+    const boundary = viewer.entities.add({
+      id: "sar-study-area",
+      polyline: {
+        positions: Cartesian3.fromDegreesArray([
+          west,
+          south,
+          east,
+          south,
+          east,
+          north,
+          west,
+          north,
+          west,
+          south,
+        ]),
+        width: 2,
+        material: Color.fromCssColorString("#55d9ed"),
+        clampToGround: true,
+      },
+    });
+    const label = viewer.entities.add({
+      id: "sar-study-area-label",
+      position: Cartesian3.fromDegrees(west, south),
+      label: {
+        text: "Study Area",
+        font: "11px sans-serif",
+        fillColor: PIN_LABEL_TEXT,
+        showBackground: true,
+        backgroundColor: PIN_LABEL_BACKGROUND,
+        pixelOffset: new Cartesian2(0, 18),
+      },
+    });
+    viewer.scene.requestRender();
+    return () => {
+      if (!viewer.isDestroyed()) {
+        viewer.entities.remove(boundary);
+        viewer.entities.remove(label);
+        viewer.scene.requestRender();
+      }
+    };
+  }, [isViewerReady, studyArea]);
+
+  useEffect(() => {
+    const viewer = viewerRef.current;
+    const element = readoutRef.current;
+    if (!viewer || !isViewerReady || !element || !studyArea || !observation)
+      return;
+    const position = Cartesian3.fromDegrees(
+      (studyArea.west + studyArea.east) / 2,
+      studyArea.north,
+    );
+    const occluder = new EllipsoidalOccluder(
+      viewer.scene.globe.ellipsoid,
+      viewer.camera.positionWC,
+    );
+    const update = () => {
+      occluder.cameraPosition = viewer.camera.positionWC;
+      const p = occluder.isPointVisible(position)
+        ? SceneTransforms.worldToWindowCoordinates(viewer.scene, position)
+        : undefined;
+      const canvas = viewer.scene.canvas;
+      element.style.display =
+        p &&
+        p.x >= 0 &&
+        p.x <= canvas.clientWidth &&
+        p.y >= 0 &&
+        p.y <= canvas.clientHeight
+          ? ""
+          : "none";
+      if (p) {
+        element.style.left = `${p.x}px`;
+        element.style.top = `${p.y}px`;
+      }
+    };
+    const remove = viewer.scene.postRender.addEventListener(update);
+    update();
+    viewer.scene.requestRender();
+    return remove;
+  }, [isViewerReady, studyArea, observation]);
+
+  useEffect(() => {
+    let timer = 0;
+    const onResize = () => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => setResizeVersion((v) => v + 1), 250);
+    };
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+      window.clearTimeout(timer);
+    };
+  }, []);
 
   useEffect(() => {
     if (!isViewerReady) return;
@@ -346,8 +462,8 @@ export default function EarthGlobe({
     const viewer = viewerRef.current;
     if (isViewerReady && viewer) {
       // Viewport selection updates context only; explicit clicks/refocus move the camera.
-      if (handledFocusRequest.current === focusRequest) return;
-      handledFocusRequest.current = focusRequest;
+      const key = `${focusRequest}-${layoutKey}-${resizeVersion}`;
+      if (handledFocusRequest.current === key) return;
       const target = selectedArticle
         ? {
             id: selectedArticle.id,
@@ -367,9 +483,25 @@ export default function EarthGlobe({
               altitude: selectedStory.cameraAltitude,
             }
           : selectedRegion;
-      focusCamera(viewer, target, (moving) => {
-        cameraFlight.current = moving;
-      });
+      // Wait for dock transitions before measuring the available map rectangle.
+      cameraFlight.current = true;
+      let started = false;
+      const timer = window.setTimeout(() => {
+        started = true;
+        handledFocusRequest.current = key;
+        focusCamera(
+          viewer,
+          target,
+          (moving) => {
+            cameraFlight.current = moving;
+          },
+          !selectedStory && !selectedArticle ? studyArea : null,
+        );
+      }, 240);
+      return () => {
+        window.clearTimeout(timer);
+        if (!started) cameraFlight.current = false;
+      };
     }
   }, [
     selectedRegion,
@@ -377,6 +509,9 @@ export default function EarthGlobe({
     selectedArticle,
     isViewerReady,
     focusRequest,
+    studyArea,
+    layoutKey,
+    resizeVersion,
   ]);
 
   useEffect(() => {
@@ -423,7 +558,31 @@ export default function EarthGlobe({
 
   return (
     <>
-      <div ref={containerRef} className="absolute inset-0" />
+      <div ref={containerRef} className="absolute inset-0">
+        {studyArea &&
+          observation &&
+          dataset &&
+          !selectedStory &&
+          !selectedArticle && (
+            <div
+              ref={readoutRef}
+              className={`sar-map-readout ${dataset.kind}`}
+              aria-label="Selected SAR study-area observation"
+              style={{ display: "none" }}
+            >
+              <strong>
+                {observation.value.toLocaleString(undefined, {
+                  maximumFractionDigits: 2,
+                })}{" "}
+                {dataset.unit}
+              </strong>
+              <small>
+                {observation.date}
+                {!observation.qualityPass ? " · rejected" : ""}
+              </small>
+            </div>
+          )}
+      </div>
       <div className="imagery-status" role="status">
         <span className="status-dot" />
         <span>

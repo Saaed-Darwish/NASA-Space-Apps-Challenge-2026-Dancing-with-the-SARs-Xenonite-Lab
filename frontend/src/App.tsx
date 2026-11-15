@@ -14,6 +14,9 @@ import AnalysisPanel from "./components/AnalysisPanel";
 import AssistantPanel from "./components/AssistantPanel";
 import ArticleSearch from "./components/ArticleSearch";
 import ForecastPanel from "./components/ForecastPanel";
+import { sarDatasets, type SarObservation } from "./data/sar";
+import { dateToTimelineTime } from "./data/observationTime";
+import { FIRST_YEAR, LAST_IMAGERY_YEAR } from "./data/imagery";
 import { storyMarkerOpacity } from "./data/storyTimeline";
 import type {
   ArticleSearchArea,
@@ -38,6 +41,13 @@ const EMPTY_MESSAGES: AssistantMessage[] = [];
 
 export default function App() {
   const timeline = useTimeline();
+  const showObservationBasemap = useCallback(
+    (year: number) => {
+      timeline.setComparisonRange(FIRST_YEAR, LAST_IMAGERY_YEAR, year);
+      timeline.syncObservationTime(year);
+    },
+    [timeline.setComparisonRange, timeline.syncObservationTime],
+  );
   const [mode, setMode] = useState<WorkspaceMode>("analyze");
   const [leftCollapsed, setLeftCollapsed] = useState(false);
   const [rightCollapsed, setRightCollapsed] = useState(false);
@@ -52,6 +62,41 @@ export default function App() {
   }, []);
   const [selectedRegion, setSelectedRegion] = useState<Region | null>(null);
   const [selectedStory, setSelectedStory] = useState<RegionStory | null>(null);
+  const [datasetId, setDatasetId] = useState<string | null>(null);
+  const [observation, setObservation] = useState<SarObservation | null>(null);
+  const observationId = observation?.id;
+  const selectObservation = useCallback(
+    (row: SarObservation | null, syncTimeline = false) => {
+      setObservation(row);
+      if (!row || !syncTimeline) return;
+      timeline.pause();
+      const time = dateToTimelineTime(
+        row.date,
+        timeline.startYear,
+        timeline.endYear,
+      );
+      if (time !== null) timeline.syncObservationTime(time);
+    },
+    [
+      timeline.startYear,
+      timeline.endYear,
+      timeline.syncObservationTime,
+      timeline.pause,
+    ],
+  );
+  const regionDatasets = useMemo(
+    () => sarDatasets.filter((d) => d.regionId === selectedRegion?.id),
+    [selectedRegion?.id],
+  );
+  const activeDataset =
+    regionDatasets.find((d) => d.id === datasetId) ?? regionDatasets[0] ?? null;
+  const selectDataset = useCallback((id: string) => {
+    setDatasetId(id);
+    setObservation(null);
+  }, []);
+  useEffect(() => {
+    setObservation(null);
+  }, [activeDataset?.id]);
   const firstStoryPlayPending = useRef(false);
   const [articles, setArticles] = useState<DiscoveredArticle[]>([]);
   const [viewportArea, setViewportArea] = useState<ArticleSearchArea | null>(
@@ -117,23 +162,25 @@ export default function App() {
   }
 
   const selectRegion = useCallback((region: Region | null) => {
+    setObservation((previous) =>
+      region?.datasetIds?.some((id) => previous?.id.startsWith(`${id}:`))
+        ? previous
+        : null,
+    );
     setSelectedArticle(null);
     setSelectedRegion(region);
     setMode((previous) =>
-      previous === "forecast" && !region?.waterMonitoring
-        ? "analyze"
-        : previous,
+      !region && previous === "forecast" ? "analyze" : previous,
     );
     setSelectedStory(null);
     setFocusRequest((previous) => previous + 1);
   }, []);
 
   const focusVisibleRegion = useCallback((region: Region | null) => {
+    setObservation(null);
     setSelectedRegion(region);
     setMode((previous) =>
-      previous === "forecast" && !region?.waterMonitoring
-        ? "analyze"
-        : previous,
+      !region && previous === "forecast" ? "analyze" : previous,
     );
     setSelectedArticle(null);
     setSelectedStory(null);
@@ -210,6 +257,8 @@ export default function App() {
           year: observationYear,
           start_year: timeline.startYear,
           end_year: timeline.endYear,
+          dataset_id: activeDataset?.id,
+          observation_id: observationId ?? undefined,
           history: (conversations[key] ?? [])
             .filter((message) => !message.error)
             .slice(-8)
@@ -254,6 +303,8 @@ export default function App() {
       timeline.startYear,
       timeline.endYear,
       conversations,
+      activeDataset,
+      observationId,
     ],
   );
 
@@ -278,6 +329,15 @@ export default function App() {
         onSelectRegion={selectRegion}
         onViewportFocus={focusVisibleRegion}
         onSearchAreaChange={setViewportArea}
+        studyArea={activeDataset?.bounds ?? null}
+        dataset={activeDataset}
+        observation={
+          mode === "analyze" &&
+          observation?.id.startsWith(`${activeDataset?.id}:`)
+            ? observation
+            : null
+        }
+        layoutKey={`${leftCollapsed}-${rightCollapsed}-${mode}`}
         selectedStory={selectedStory}
         onSelectStory={selectStory}
         showStoryMarkers={showStoryMarkers}
@@ -293,9 +353,7 @@ export default function App() {
         </a>
         <nav className="workspace-nav" aria-label="Main navigation">
           {(["analyze", "forecast", "ai"] as WorkspaceMode[])
-            .filter(
-              (view) => view !== "forecast" || selectedRegion?.waterMonitoring,
-            )
+            .filter((view) => view !== "forecast" || !!selectedRegion)
             .map((view) => (
               <button
                 key={view}
@@ -400,10 +458,16 @@ export default function App() {
             overlaySettings={overlaySettings}
             onUpdateOverlay={updateOverlay}
             reading={regionalReading}
+            datasets={regionDatasets}
+            dataset={activeDataset}
+            onSelectDataset={selectDataset}
+            onSelectObservation={selectObservation}
+            timelineSelection={timeline.selection}
+            onShowBasemap={showObservationBasemap}
           />
         )}
-        {mode === "forecast" && selectedRegion?.waterMonitoring && (
-          <ForecastPanel region={selectedRegion} />
+        {mode === "forecast" && selectedRegion && (
+          <ForecastPanel key={selectedRegion.id} region={selectedRegion} />
         )}
         {mode === "ai" && (
           <AssistantPanel
@@ -420,6 +484,17 @@ export default function App() {
       </div>
       <Timeline
         {...timeline}
+        linkedObservationDate={
+          timeline.selection === null &&
+          observation &&
+          dateToTimelineTime(
+            observation.date,
+            timeline.startYear,
+            timeline.endYear,
+          ) !== null
+            ? observation.date
+            : null
+        }
         togglePlayback={() => {
           const restartFromStart =
             Boolean(selectedStory) &&

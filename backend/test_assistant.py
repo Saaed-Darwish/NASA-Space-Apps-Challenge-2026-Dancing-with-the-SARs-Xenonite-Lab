@@ -18,12 +18,12 @@ def request(**overrides):
 
 class AssistantTests(unittest.TestCase):
     def test_context_excludes_mock_measurements(self):
-        context, sources = build_context(request(region_id="porto-alegre"))
+        context, sources = build_context(request(region_id="rio-grande-do-sul"))
         self.assertEqual(context["water_data"]["status"], "processing")
         self.assertEqual(context["water_data"]["measurements"], [])
         self.assertEqual(context["forecast"]["predictions"], [])
         self.assertNotIn("readings", context)
-        self.assertEqual(len(context["stories"]), 2)
+        self.assertEqual(len(context["stories"]), 4)
         self.assertTrue(sources)
 
     def test_story_only_region(self):
@@ -32,7 +32,7 @@ class AssistantTests(unittest.TestCase):
 
     def test_foreign_story_rejected(self):
         with self.assertRaises(HTTPException) as raised:
-            build_context(request(region_id="porto-alegre", story_id="manchar-floods"))
+            build_context(request(region_id="rio-grande-do-sul", story_id="manchar-floods"))
         self.assertEqual(raised.exception.status_code, 422)
 
     def test_unknown_region_rejected(self):

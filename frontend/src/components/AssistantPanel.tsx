@@ -66,9 +66,11 @@ export default memo(function AssistantPanel({
       </div>
       <p className="demo-explanation">
         Answers use curated stories and available region data.{" "}
-        {region?.waterMonitoring
-          ? "Water measurements are still processing."
-          : "Water monitoring is not configured for this view."}{" "}
+        {region?.datasetIds?.length
+          ? "Source-traceable SAR observations are available; classifications remain exploratory."
+          : region?.waterMonitoring
+            ? "Water measurements are still processing."
+            : "Water monitoring is not configured for this view."}{" "}
         Check linked evidence before drawing conclusions.
       </p>
       <div

@@ -2,8 +2,8 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { regionForView } from "../src/globe/focus.ts";
 import { regions, indicators, readings } from "../src/data/demo.ts";
-const city = regions.find((region) => region.id === "porto-alegre");
-const state = regions.find((region) => region.id === "rio-grande-do-sul");
+const city = regions.find((region) => region.id === "can-tho");
+const state = regions.find((region) => region.id === "mekong-delta");
 
 test("global zoom has no focused region", () => {
   assert.equal(
@@ -19,7 +19,7 @@ test("zooming into a city focuses it without a click", () => {
 });
 test("focus persists between entry and exit zoom thresholds", () => {
   assert.equal(
-    regionForView(regions, city, city.latitude, city.longitude, 210_000)?.id,
+    regionForView(regions, city, city.latitude, city.longitude, 180_000)?.id,
     city.id,
   );
 });
@@ -58,12 +58,7 @@ test("invalid camera coordinates clear focus", () => {
 });
 test("only water is supported and processing regions have no fabricated readings", () => {
   assert.deepEqual(Object.keys(indicators), ["water"]);
-  for (const id of [
-    "porto-alegre",
-    "rio-grande-do-sul",
-    "can-tho",
-    "mekong-delta",
-  ]) {
+  for (const id of ["rio-grande-do-sul", "mekong-delta"]) {
     assert.equal(
       regions.find((region) => region.id === id)?.floodDataStatus,
       "processing",
@@ -72,11 +67,11 @@ test("only water is supported and processing regions have no fabricated readings
   }
 });
 
-test("water controls are limited to the four backend flood-data regions", () => {
+test("water monitoring covers only the configured water regions", () => {
   assert.deepEqual(
     regions
       .filter((region) => region.waterMonitoring)
       .map((region) => region.id),
-    ["porto-alegre", "rio-grande-do-sul", "can-tho", "mekong-delta"],
+    ["porto-velho", "rio-grande-do-sul", "can-tho", "mekong-delta"],
   );
 });

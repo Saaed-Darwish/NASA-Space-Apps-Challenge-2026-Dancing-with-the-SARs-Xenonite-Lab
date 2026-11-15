@@ -1962,3 +1962,259 @@ textarea:focus-visible {
     font-size: 9px;
   }
 }
+
+/* Source-traceable SAR observation controls. */
+.sar-panel {
+  margin: 22px 0;
+  padding-top: 18px;
+  border-top: 1px solid #ffffff24;
+}
+.sar-field {
+  display: grid;
+  gap: 7px;
+  margin: 14px 0;
+  font-size: 12px;
+  color: #c5d7d5;
+}
+.sar-field select {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 9px;
+  color: #edf3f1;
+  background: #10232c;
+  border: 1px solid #49616a;
+  border-radius: 6px;
+}
+.sar-field input[type="range"] {
+  width: 100%;
+  min-height: 36px;
+  accent-color: #55d9ed;
+}
+.sar-field select:focus-visible,
+.sar-quality input:focus-visible {
+  outline: 2px solid #9ae7d2;
+  outline-offset: 3px;
+}
+.sar-badge {
+  font-size: 9px;
+  color: #a5e9d5;
+}
+.sar-value {
+  margin-top: 18px;
+  font-size: 34px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: #b6eff6;
+}
+.sar-value span {
+  font-size: 16px;
+}
+.sar-chart {
+  margin-top: 18px;
+  width: 100%;
+}
+.sar-chart svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.sar-chart text {
+  fill: #b7cbce;
+  font: 10px sans-serif;
+}
+.sar-axis {
+  stroke: #54717a;
+  stroke-width: 1;
+}
+.sar-line {
+  fill: none;
+  stroke: #55d9ed;
+  stroke-width: 1.5;
+}
+.sar-dot {
+  fill: #8ce5ed;
+}
+.sar-dot.rejected {
+  fill: #ffad78;
+  stroke: #442718;
+  stroke-width: 1.5;
+}
+.sar-quality {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  font-size: 12px;
+}
+.sar-quality input {
+  width: 18px;
+  height: 18px;
+  accent-color: #55d9ed;
+}
+.sar-actions {
+  display: flex;
+  gap: 10px;
+}
+.sar-actions button,
+.sar-panel button:not(.text-button) {
+  min-height: 44px;
+  padding: 8px 12px;
+  background: #17313a;
+  border: 1px solid #48656c;
+  border-radius: 6px;
+}
+.sar-panel button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.sar-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 18px 0;
+}
+.sar-metrics dt {
+  font-size: 11px;
+  color: #adc3c7;
+}
+.sar-metrics dd {
+  margin: 5px 0 0;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+.sar-details {
+  margin-top: 16px;
+  border-top: 1px solid #ffffff1f;
+  padding-top: 12px;
+}
+.sar-details summary {
+  cursor: pointer;
+  font-size: 12px;
+  padding: 6px 0;
+  color: #b8e7e9;
+}
+.sar-details summary:focus-visible {
+  outline: 2px solid #9ae7d2;
+}
+.sar-details p,
+.sar-caveat {
+  line-height: 1.65;
+}
+.sar-caveat {
+  padding-left: 10px;
+  border-left: 2px solid #70bfc9;
+  color: #bbcfd2;
+}
+.sar-rejected {
+  color: #ffb88d;
+}
+.sar-table-scroll {
+  overflow: auto;
+  max-height: 260px;
+  margin: 14px 0;
+}
+.sar-table-scroll table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+  text-align: left;
+}
+.sar-table-scroll th,
+.sar-table-scroll td {
+  padding: 8px 6px;
+  border-bottom: 1px solid #ffffff24;
+  white-space: nowrap;
+}
+.sar-table-scroll caption {
+  padding-bottom: 10px;
+  white-space: normal;
+  text-align: left;
+  color: #b7cbce;
+}
+.sar-table-scroll small {
+  display: block;
+  color: #b7cbce;
+}
+.sar-hash {
+  overflow-wrap: anywhere;
+}
+
+.sar-map-readout {
+  position: absolute;
+  z-index: 4;
+  width: max-content;
+  min-width: 120px;
+  max-width: 210px;
+  padding: 5px 10px;
+  margin-top: -8px;
+  transform: translate(-50%, -100%);
+  border: 1px solid #55d9ed;
+  border-radius: 6px;
+  background: #0c1c2bef;
+  color: #e7f6fa;
+  box-shadow: 0 4px 18px #0006;
+  pointer-events: none;
+  display: grid;
+  gap: 1px;
+  font-size: 11px;
+  text-align: center;
+}
+.sar-map-readout strong {
+  font-size: 16px;
+  color: #8be5f5;
+}
+.sar-map-readout small {
+  color: #b6cbd3;
+  font-size: 10px;
+}
+.sar-map-readout.forest {
+  border-color: #e6b277;
+}
+.sar-map-readout.forest strong {
+  color: #efc495;
+}
+.forecast-caveat {
+  padding: 12px;
+  border-left: 3px solid #efb36d;
+  background: #efb36d12;
+  color: #efcfab;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.forecast-band {
+  fill: #efb36d;
+  fill-opacity: 0.18;
+}
+.forecast-line {
+  fill: none;
+  stroke: #efb36d;
+  stroke-width: 2;
+  stroke-dasharray: 6 4;
+}
+.forecast-dot {
+  fill: #efb36d;
+}
+.forecast-cutoff {
+  stroke: #b8bfc7;
+  stroke-dasharray: 3 4;
+  opacity: 0.65;
+}
+.forecast-imputed {
+  fill: #0f1c29;
+  stroke: #a4dfd3;
+  stroke-width: 1.8;
+}
+.forecast-special {
+  fill: #0f1c29;
+  stroke: #efcfab;
+  stroke-width: 1.8;
+}
+.forecast-legend {
+  line-height: 1.8;
+  color: #c6d4dc;
+}
+.forecast-panel .sar-details li {
+  margin-block: 8px;
+}
