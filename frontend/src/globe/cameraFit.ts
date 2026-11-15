@@ -27,18 +27,30 @@ export function studyAreaView(
     Math.max(width / safeWidth, height / safeHeight) * 1.25;
   const altitude =
     (metresPerPixel * viewport.height) / (2 * Math.tan(fovy / 2));
+  return pointView({ longitude, latitude, altitude }, viewport, fovy);
+}
+
+/** Put a point in the clear map area while preserving its requested zoom. */
+export function pointView(
+  point: { longitude: number; latitude: number; altitude: number },
+  viewport: MapViewport,
+  fovy: number,
+) {
+  const metresPerPixel =
+    (2 * point.altitude * Math.tan(fovy / 2)) / viewport.height;
+  const cosLat = Math.max(0.1, Math.cos((point.latitude * Math.PI) / 180));
   return {
     longitude:
-      longitude +
+      point.longitude +
       ((viewport.width / 2 - (viewport.left + viewport.right) / 2) *
         metresPerPixel) /
         (METRES_PER_DEGREE * cosLat),
     latitude:
-      latitude +
+      point.latitude +
       (((viewport.top + viewport.bottom) / 2 - viewport.height / 2) *
         metresPerPixel) /
         METRES_PER_DEGREE,
-    altitude,
+    altitude: point.altitude,
   };
 }
 
@@ -67,7 +79,34 @@ export function visibleMapViewport(canvas: HTMLCanvasElement): MapViewport {
       ?.getBoundingClientRect();
     top = Math.max(top, (status?.bottom ?? box.top + 110) - box.top + 30);
   }
-  // On compact screens the panels flow below the map, not over its sides.
+  if (!desktop && shell) {
+    // The canvas is fixed while these elements scroll with the document. Fit
+    // where the map will be visible at the top, even when selecting far below it.
+    const atPageTop = (selector: string) => {
+      const element = shell.querySelector(selector);
+      if (!element) return null;
+      const rect = element.getBoundingClientRect();
+      if (!rect.width || !rect.height) return null;
+      const scroll =
+        getComputedStyle(element).position === "fixed" ? 0 : window.scrollY;
+      return {
+        top: rect.top + scroll - box.top,
+        bottom: rect.bottom + scroll - box.top,
+      };
+    };
+    const header = atPageTop(".app-header");
+    const status = atPageTop(".imagery-status");
+    top = Math.max(20, (header?.bottom ?? 0) + 12, (status?.bottom ?? 0) + 16);
+    for (const selector of [
+      ".map-caption",
+      ".timeline",
+      ".left-dock",
+      ".right-dock",
+    ]) {
+      const element = atPageTop(selector);
+      if (element) bottom = Math.min(bottom, element.top - 20);
+    }
+  }
   return {
     left,
     right,

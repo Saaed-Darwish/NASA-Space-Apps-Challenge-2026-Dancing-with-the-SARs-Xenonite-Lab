@@ -13,7 +13,7 @@ import {
 import { indicators, type Indicator } from "../data/demo";
 import type { Region } from "../types/region";
 import { PIN_LABEL_BACKGROUND, PIN_LABEL_TEXT } from "./markerStyle";
-import { studyAreaView, visibleMapViewport } from "./cameraFit";
+import { pointView, studyAreaView, visibleMapViewport } from "./cameraFit";
 import type { StudyBounds } from "../data/sar";
 
 const GLOBAL_VIEW = {
@@ -51,7 +51,15 @@ export function focusCamera(
           visibleMapViewport(viewer.scene.canvas),
           frustum.fovy ?? Math.PI / 3,
         )
-      : (region ?? GLOBAL_VIEW);
+      : region &&
+          "fovy" in frustum &&
+          window.matchMedia("(max-width: 1000px)").matches
+        ? pointView(
+            region,
+            visibleMapViewport(viewer.scene.canvas),
+            frustum.fovy ?? Math.PI / 3,
+          )
+        : (region ?? GLOBAL_VIEW);
   viewer.camera.cancelFlight();
   onFlightState?.(true);
   viewer.camera.flyTo({
