@@ -1,3 +1,4 @@
+import { apiFetch } from "./backend.ts";
 import catalog from "./sarCatalog.json" with { type: "json" };
 import { isRecord } from "./validation.ts";
 
@@ -119,7 +120,7 @@ export async function loadObservations(
       offset: String(offset),
     });
     if (pointId) query.set("point_id", pointId);
-    const response = await fetch(
+    const response = await apiFetch(
       `/api/datasets/${encodeURIComponent(dataset.id)}/observations?${query}`,
       { signal },
     );

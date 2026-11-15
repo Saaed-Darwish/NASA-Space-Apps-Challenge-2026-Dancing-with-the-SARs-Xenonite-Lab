@@ -1,3 +1,4 @@
+import { backend } from "../data/backend";
 import type { GroundMotionSelection } from "../data/norilsk";
 import { configureCameraLimits } from "../globe/cameraLimits";
 import WaterChangeLegend from "./WaterChangeLegend";
@@ -482,9 +483,15 @@ export default function EarthGlobe({
       layer: ImageryLayer | null = null;
     setWaterError(null);
     const b = waterComparison.bounds;
-    SingleTileImageryProvider.fromUrl(waterComparison.imageUrl, {
-      rectangle: Rectangle.fromDegrees(b.west, b.south, b.east, b.north),
-    })
+    const controller = new AbortController();
+    backend
+      .ready(controller.signal)
+      .then(() => {
+        if (disposed) throw new DOMException("Overlay cancelled", "AbortError");
+        return SingleTileImageryProvider.fromUrl(waterComparison.imageUrl, {
+          rectangle: Rectangle.fromDegrees(b.west, b.south, b.east, b.north),
+        });
+      })
       .then((provider) => {
         if (disposed || viewer.isDestroyed()) return;
         layer = new ImageryLayer(provider, { alpha: waterOpacityRef.current });
@@ -500,6 +507,7 @@ export default function EarthGlobe({
       });
     return () => {
       disposed = true;
+      controller.abort();
       if (waterImageryRef.current === layer) waterImageryRef.current = null;
       if (layer && !viewer.isDestroyed()) {
         viewer.imageryLayers.remove(layer, true);

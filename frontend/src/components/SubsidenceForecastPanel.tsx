@@ -36,8 +36,7 @@ export default function SubsidenceForecastPanel({
   const [month, setMonth] = useState("");
   useEffect(() => {
     let disposed = false;
-    const controller = new AbortController(),
-      timer = window.setTimeout(() => controller.abort(), 15000);
+    const controller = new AbortController();
     setData(null);
     setError("");
     setMonth("");
@@ -56,12 +55,10 @@ export default function SubsidenceForecastPanel({
               ? e.message
               : "Subsidence forecast could not load.",
           );
-      })
-      .finally(() => window.clearTimeout(timer));
+      });
     return () => {
       disposed = true;
       controller.abort();
-      window.clearTimeout(timer);
       onSelectObservation?.(null);
     };
   }, [dataset, pointId, retry, onSelectObservation]);

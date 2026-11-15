@@ -65,7 +65,6 @@ export default memo(function ObservationPanel({
   }, [dataset.id, pointId, includeRejected]);
   useEffect(() => {
     const controller = new AbortController();
-    const timeout = window.setTimeout(() => controller.abort(), 15000);
     let disposed = false;
     setStatus("loading");
     setObservations([]);
@@ -88,12 +87,10 @@ export default memo(function ObservationPanel({
           );
           setStatus("error");
         }
-      })
-      .finally(() => window.clearTimeout(timeout));
+      });
     return () => {
       disposed = true;
       controller.abort();
-      window.clearTimeout(timeout);
     };
   }, [dataset, pointId, retry]);
   const visible = useMemo(

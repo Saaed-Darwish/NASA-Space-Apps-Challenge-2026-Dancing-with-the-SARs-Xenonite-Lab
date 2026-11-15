@@ -36,8 +36,7 @@ export default memo(function WaterChangePanel({
   const [opacity, setOpacity] = useState(70);
   useEffect(() => {
     let disposed = false;
-    const controller = new AbortController(),
-      timer = window.setTimeout(() => controller.abort(), 15000);
+    const controller = new AbortController();
     setStatus("loading");
     setComparisons([]);
     onLayer(null);
@@ -57,12 +56,10 @@ export default memo(function WaterChangePanel({
           );
           setStatus("error");
         }
-      })
-      .finally(() => window.clearTimeout(timer));
+      });
     return () => {
       disposed = true;
       controller.abort();
-      window.clearTimeout(timer);
     };
   }, [dataset, retry, onLayer]);
   const chosen = useMemo(

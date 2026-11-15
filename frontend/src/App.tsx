@@ -1,3 +1,4 @@
+import BackendStatus from "./components/BackendStatus";
 import type { GroundMotionSelection } from "./data/norilsk";
 import {
   useCallback,
@@ -381,6 +382,7 @@ export default function App() {
       className={`app-shell workspace-${mode}${leftCollapsed ? " left-collapsed" : ""}${rightCollapsed ? " right-collapsed" : ""}`}
       style={themeStyle}
     >
+      <BackendStatus />
       <EarthGlobe
         groundMotion={
           mode === "analyze" && selectedRegion?.id === "norilsk"

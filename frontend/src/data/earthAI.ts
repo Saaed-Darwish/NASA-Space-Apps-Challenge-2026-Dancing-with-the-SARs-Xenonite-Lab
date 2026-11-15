@@ -1,3 +1,4 @@
+import { apiFetch } from "./backend.ts";
 import type { AssistantMessage } from "./assistant";
 import type { StorySource } from "./stories";
 import { isRecord, safeExternalUrl } from "./validation.ts";
@@ -19,12 +20,15 @@ export async function askEarthAI(
 ): Promise<Omit<AssistantMessage, "id" | "role">> {
   let response: Response;
   try {
-    response = await fetch("/api/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(request),
-      signal: AbortSignal.timeout(130_000),
-    });
+    response = await apiFetch(
+      "/api/chat",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(request),
+      },
+      130_000,
+    );
   } catch {
     throw new Error(
       "Earth AI could not be reached. Check that the backend is running, then try again.",

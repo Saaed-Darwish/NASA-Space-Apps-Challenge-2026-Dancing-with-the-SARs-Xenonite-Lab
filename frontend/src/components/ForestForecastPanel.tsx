@@ -28,7 +28,6 @@ export default function ForestForecastPanel({
   useEffect(() => {
     const controller = new AbortController();
     let disposed = false;
-    const timer = window.setTimeout(() => controller.abort(), 15000);
     setData(null);
     setError("");
     setMonth("");
@@ -41,12 +40,10 @@ export default function ForestForecastPanel({
           setError(
             e instanceof Error ? e.message : "Forest forecast could not load.",
           );
-      })
-      .finally(() => window.clearTimeout(timer));
+      });
     return () => {
       disposed = true;
       controller.abort();
-      window.clearTimeout(timer);
     };
   }, [dataset, retry]);
   const forecast = data?.status === "available" ? data : null;

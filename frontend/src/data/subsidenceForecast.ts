@@ -1,3 +1,4 @@
+import { apiFetch } from "./backend.ts";
 import type { SarDataset, SarObservation } from "./sar.ts";
 import { parseObservations } from "./sar.ts";
 import { isRecord } from "./validation.ts";
@@ -148,7 +149,7 @@ export async function loadSubsidenceForecast(
   pointId: string,
   signal: AbortSignal,
 ) {
-  const response = await fetch(
+  const response = await apiFetch(
     `/api/datasets/${encodeURIComponent(dataset.id)}/forecast?point_id=${encodeURIComponent(pointId)}`,
     { signal },
   );

@@ -1,3 +1,4 @@
+import { apiFetch } from "./backend.ts";
 import type { SarDataset } from "./sar.ts";
 import { isRecord } from "./validation.ts";
 import type { ForecastMonth } from "./forecast.ts";
@@ -133,7 +134,7 @@ export async function loadForestForecast(
   dataset: SarDataset,
   signal: AbortSignal,
 ) {
-  const response = await fetch(
+  const response = await apiFetch(
     `/api/datasets/${encodeURIComponent(dataset.id)}/forecast`,
     { signal },
   );

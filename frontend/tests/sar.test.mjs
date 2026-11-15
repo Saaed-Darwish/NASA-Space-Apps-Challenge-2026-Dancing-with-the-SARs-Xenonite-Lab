@@ -8,16 +8,20 @@ import {
 } from "../src/data/sar.ts";
 
 test("a different workbook release is rejected before displaying its values", async (t) => {
-  t.mock.method(globalThis, "fetch", async () => ({
-    ok: true,
-    json: async () => ({
-      datasetId: sarDatasets[0].id,
-      total: 0,
-      nextOffset: null,
-      observations: [],
-      source: { sha256: "different-version" },
-    }),
-  }));
+  t.mock.method(globalThis, "fetch", async (url) =>
+    url === "/api/health"
+      ? new Response(JSON.stringify({ status: "healthy" }))
+      : {
+          ok: true,
+          json: async () => ({
+            datasetId: sarDatasets[0].id,
+            total: 0,
+            nextOffset: null,
+            observations: [],
+            source: { sha256: "different-version" },
+          }),
+        },
+  );
   await assert.rejects(
     loadObservations(sarDatasets[0], "", new AbortController().signal),
     /version has changed/,

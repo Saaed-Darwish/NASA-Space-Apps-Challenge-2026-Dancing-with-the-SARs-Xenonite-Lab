@@ -1,3 +1,4 @@
+import { apiFetch } from "./backend.ts";
 import type { SarDataset, StudyBounds } from "./sar.ts";
 import { isRecord } from "./validation.ts";
 
@@ -134,7 +135,7 @@ export async function loadWaterComparisons(
   dataset: SarDataset,
   signal: AbortSignal,
 ) {
-  const response = await fetch(
+  const response = await apiFetch(
     `/api/datasets/${encodeURIComponent(dataset.id)}/water-changes`,
     { signal },
   );

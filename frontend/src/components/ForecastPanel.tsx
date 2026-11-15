@@ -36,7 +36,6 @@ function WaterForecastPanel({
     if (!dataset) return;
     let disposed = false;
     const controller = new AbortController();
-    const timeout = window.setTimeout(() => controller.abort(), 15000);
     loadForecast(dataset, controller.signal)
       .then((value) => {
         if (!disposed) setData(value);
@@ -44,12 +43,10 @@ function WaterForecastPanel({
       .catch((e) => {
         if (!disposed)
           setError(e instanceof Error ? e.message : "Forecast could not load.");
-      })
-      .finally(() => window.clearTimeout(timeout));
+      });
     return () => {
       disposed = true;
       controller.abort();
-      window.clearTimeout(timeout);
     };
   }, [dataset, retry]);
   const forecast = data?.status === "available" ? data : null;
