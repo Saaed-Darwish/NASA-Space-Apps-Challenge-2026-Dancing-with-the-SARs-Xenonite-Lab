@@ -10,6 +10,4 @@ export interface Region {
   zoom_level: string;
   floodDataStatus?: "processing";
   waterMonitoring?: boolean;
-  /** IDs of read-only, source-traceable observation datasets for this exact area. */
-  datasetIds?: string[];
 }

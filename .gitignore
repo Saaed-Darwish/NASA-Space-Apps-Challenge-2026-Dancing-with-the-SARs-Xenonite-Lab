@@ -1,8 +1,6 @@
 node_modules/
 dist/
 .venv/
-.venv-raster/
-backend/data/rasters/
 __pycache__/
 *.py[cod]
 .env

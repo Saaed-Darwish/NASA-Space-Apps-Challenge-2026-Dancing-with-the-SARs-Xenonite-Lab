@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import type { TimelineSelection } from "../data/observationTime";
+import { useEffect, useState } from "react";
 
 import { FIRST_YEAR, LAST_IMAGERY_YEAR } from "../data/imagery";
 export { CURRENT_YEAR, FIRST_YEAR, YEARS } from "../data/imagery";
@@ -9,20 +8,8 @@ const MILLISECONDS_PER_YEAR = 4500;
 export default function useTimeline() {
   const [startYear, setStartYear] = useState(FIRST_YEAR);
   const [endYear, setEndYear] = useState(LAST_IMAGERY_YEAR);
-  const [cursor, setCursor] = useState({
-    time: LAST_IMAGERY_YEAR,
-    revision: 0,
-    origin: "observation",
-  });
-  const time = cursor.time;
-  const setTime = (next: number | ((previous: number) => number)) =>
-    setCursor((previous) => ({
-      time: typeof next === "function" ? next(previous.time) : next,
-      revision: previous.revision + 1,
-      origin: "timeline",
-    }));
+  const [time, setTime] = useState(LAST_IMAGERY_YEAR);
   const [isPlaying, setIsPlaying] = useState(false);
-  const pause = useCallback(() => setIsPlaying(false), []);
 
   useEffect(() => {
     if (!isPlaying) return;
@@ -50,33 +37,16 @@ export default function useTimeline() {
     if (time >= endYear) setIsPlaying(false);
   }, [time, endYear]);
 
-  const seek = useCallback(
-    (year: number) => {
-      setIsPlaying(false);
-      setTime(Math.max(startYear, Math.min(endYear, year)));
-    },
-    [startYear, endYear],
-  );
-
-  const syncObservationTime = useCallback((time: number) => {
+  function seek(year: number) {
     setIsPlaying(false);
-    setCursor((previous) => ({
-      time,
-      revision: previous.revision + 1,
-      origin: "observation",
-    }));
-  }, []);
-
-  const selection = useMemo<TimelineSelection | null>(
-    () =>
-      cursor.origin === "timeline"
-        ? { revision: cursor.revision, time, startYear, endYear }
-        : null,
-    [cursor.origin, cursor.revision, time, startYear, endYear],
-  );
+    setTime(Math.max(startYear, Math.min(endYear, year)));
+  }
 
   function togglePlayback(restartFromStart = false) {
-    if (!isPlaying && (restartFromStart || time >= endYear)) setTime(startYear);
+    if (!isPlaying) {
+      if (restartFromStart) setTime(startYear);
+      else if (time >= endYear) return;
+    }
     setIsPlaying((previous) => !previous);
   }
 
@@ -92,28 +62,22 @@ export default function useTimeline() {
     setTime((previous) => Math.min(previous, year));
   }
 
-  const setComparisonRange = useCallback(
-    (start: number, end: number, selectedYear = end) => {
-      const boundedStart = Math.max(
-        FIRST_YEAR,
-        Math.min(LAST_IMAGERY_YEAR - 1, start),
-      );
-      const boundedEnd = Math.max(
-        boundedStart + 1,
-        Math.min(LAST_IMAGERY_YEAR, end),
-      );
-      setIsPlaying(false);
-      setStartYear(boundedStart);
-      setEndYear(boundedEnd);
-      setTime(Math.max(boundedStart, Math.min(boundedEnd, selectedYear)));
-    },
-    [],
-  );
+  function setComparisonRange(start: number, end: number, selectedYear = end) {
+    const boundedStart = Math.max(
+      FIRST_YEAR,
+      Math.min(LAST_IMAGERY_YEAR - 1, start),
+    );
+    const boundedEnd = Math.max(
+      boundedStart + 1,
+      Math.min(LAST_IMAGERY_YEAR, end),
+    );
+    setIsPlaying(false);
+    setStartYear(boundedStart);
+    setEndYear(boundedEnd);
+    setTime(Math.max(boundedStart, Math.min(boundedEnd, selectedYear)));
+  }
 
   return {
-    pause,
-    selection,
-    syncObservationTime,
     setComparisonRange,
     time,
     startYear,

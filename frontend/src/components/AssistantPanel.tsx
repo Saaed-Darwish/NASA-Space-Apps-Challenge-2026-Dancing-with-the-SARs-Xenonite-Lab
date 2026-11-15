@@ -1,7 +1,7 @@
 import type { Region } from "../types/region";
 import type { AssistantMessage } from "../data/assistant";
 import SourceLinks from "./SourceLinks";
-import { memo, useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 
 interface AssistantPanelProps {
   region: Region | null;
@@ -20,7 +20,7 @@ const SUGGESTIONS = [
   "Explain flood data availability",
 ];
 
-export default memo(function AssistantPanel({
+export default function AssistantPanel({
   region,
   year,
   startYear,
@@ -66,11 +66,9 @@ export default memo(function AssistantPanel({
       </div>
       <p className="demo-explanation">
         Answers use curated stories and available region data.{" "}
-        {region?.datasetIds?.length
-          ? "Source-traceable SAR observations are available; classifications remain exploratory."
-          : region?.waterMonitoring
-            ? "Water measurements are still processing."
-            : "Water monitoring is not configured for this view."}{" "}
+        {region?.waterMonitoring
+          ? "Water measurements are still processing."
+          : "Water monitoring is not configured for this view."}{" "}
         Check linked evidence before drawing conclusions.
       </p>
       <div
@@ -160,4 +158,4 @@ export default memo(function AssistantPanel({
       </p>
     </section>
   );
-});
+}
