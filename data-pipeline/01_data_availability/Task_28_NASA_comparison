@@ -1,0 +1,88 @@
+// Dancing with the SARs | NASA GPM IMERG V07 monthly rainfall
+// Exports FOUR independent CSV files. Does not modify existing SAR data.
+// Dates: 2019-01 through last fully completed calendar month (or latest available data).
+// IMPORTANT: Example rectangular ROIs; replace with exact SAR study-area geometry
+// before treating these as spatially aligned with your existing flood analysis.
+
+var dataset = 'NASA/GPM_L3/IMERG_V07';
+var start = ee.Date('2019-01-01');
+var lastCompleteMonthStart = ee.Date(Date.now()).update({day: 1});
+var gpm = ee.ImageCollection(dataset).select('precipitation');
+
+// Approximate study regions, NOT verified to match the original SAR ROIs.
+var sites = [
+  {name: 'Brazil_Porto_Velho', country: 'Brazil', region: ee.Geometry.Rectangle([-64.1, -9.3, -63.5, -8.4])},
+  {name: 'Vietnam_Can_Tho', country: 'Vietnam', region: ee.Geometry.Rectangle([105.55, 9.9, 105.95, 10.2])},
+  {name: 'Italy_Venice', country: 'Italy', region: ee.Geometry.Rectangle([12.15, 45.3, 12.55, 45.6])},
+  {name: 'London', country: 'United Kingdom', region: ee.Geometry.Rectangle([-0.35, 51.35, 0.15, 51.65])}
+];
+
+var monthCount = lastCompleteMonthStart.difference(start, 'month').floor();
+var monthOffsets = ee.List.sequence(0, monthCount.subtract(1));
+
+sites.forEach(function(site) {
+  var monthly = ee.FeatureCollection(monthOffsets.map(function(offset) {
+    var monthStart = start.advance(ee.Number(offset), 'month');
+    var monthEnd = monthStart.advance(1, 'month');
+    var obs = gpm.filterBounds(site.region).filterDate(monthStart, monthEnd);
+    var count = obs.size();
+
+    // IMERG precipitation: mm/hr, half-hourly images -> mm per observation.
+    // Aggregate each image over the study area, then sum time steps.
+    // Null if no observations. Partial observation coverage is flagged.
+    var total = obs.map(function(img) {
+      return img.multiply(0.5);
+    }).sum();
+
+    var rainfall = ee.Algorithms.If(count.gt(0), total.reduceRegion({
+      reducer: ee.Reducer.mean(),
+      geometry: site.region,
+      scale: 11132,
+      maxPixels: 1e8
+    }).get('precipitation'), null);
+
+    var expected = monthEnd.difference(monthStart, 'hour').multiply(2);
+
+    return ee.Feature(null, {
+      country: site.country,
+      study_area: site.name,
+      year: monthStart.get('year'),
+      month: monthStart.get('month'),
+      month_start: monthStart.format('YYYY-MM-dd'),
+      rainfall_mm: rainfall,
+      observation_count: count,
+      expected_half_hour_observations: expected,
+      coverage_fraction: count.divide(expected),
+      source: 'NASA GPM IMERG V07',
+      gee_collection: dataset,
+      spatial_boundary_note: 'Approximate example ROI; not matched to SAR ROI'
+    });
+  }));
+
+  print(site.name + ' monthly rows', monthly.size());
+  print(site.name + ' sample', monthly.limit(3));
+
+  Map.addLayer(site.region, {color: 'yellow'}, site.name + ' ROI', false);
+
+  Export.table.toDrive({
+    collection: monthly,
+    description: 'NASA_GPM_' + site.name + '_Monthly_2019_2026',
+    fileFormat: 'CSV',
+    selectors: [
+      'country',
+      'study_area',
+      'year',
+      'month',
+      'month_start',
+      'rainfall_mm',
+      'observation_count',
+      'expected_half_hour_observations',
+      'coverage_fraction',
+      'source',
+      'gee_collection',
+      'spatial_boundary_note'
+    ]
+  });
+});
+
+Map.centerObject(sites[0].region, 7);
