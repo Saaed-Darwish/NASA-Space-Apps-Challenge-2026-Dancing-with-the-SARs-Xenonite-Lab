@@ -1,3 +1,7 @@
+import {
+  shouldFocusCamera,
+  type CameraFocusCommand,
+} from "../globe/cameraFocus";
 import { backend } from "../data/backend";
 import type { GroundMotionSelection } from "../data/norilsk";
 import { configureCameraLimits } from "../globe/cameraLimits";
@@ -109,7 +113,8 @@ export default function EarthGlobe({
   }, [onSearchAreaChange]);
   const viewFocusRef = useRef(onViewportFocus);
   const focusedRegionRef = useRef(selectedRegion);
-  const handledFocusRequest = useRef<string | null>(null);
+  const handledFocusRequest = useRef<CameraFocusCommand | null>(null);
+  const fittedCameraPosition = useRef<Cartesian3 | null>(null);
   const cameraFlight = useRef(false);
   const storyFocusRef = useRef(selectedStory);
   useEffect(() => {
@@ -196,6 +201,19 @@ export default function EarthGlobe({
           : null,
       );
       if (cameraFlight.current) return;
+      // flyTo's completion and moveEnd can arrive in different frames. A fitted
+      // view may exceed generic region altitude bounds on a short/narrow screen.
+      // Keep its selected region until the user actually moves the camera.
+      if (fittedCameraPosition.current) {
+        if (
+          Cartesian3.distance(
+            viewer.camera.positionWC,
+            fittedCameraPosition.current,
+          ) < 1
+        )
+          return;
+        fittedCameraPosition.current = null;
+      }
       const story = storyFocusRef.current;
       // A story may lie outside its region's camera center. Keep its context while
       // inspecting the story, then let normal zoom-out/pan focus rules take over.
@@ -627,8 +645,18 @@ export default function EarthGlobe({
       const areaKey = studyArea
         ? `${studyArea.west},${studyArea.south},${studyArea.east},${studyArea.north}`
         : "no-study-area";
-      const key = `${focusRequest}-${layoutKey}-${resizeVersion}-${areaKey}`;
-      if (handledFocusRequest.current === key) return;
+      const command: CameraFocusCommand = {
+        request: focusRequest,
+        layout: layoutKey,
+        resize: resizeVersion,
+        regionId: selectedRegion?.id ?? null,
+        areaKey,
+        hasTarget: Boolean(selectedRegion || selectedStory || selectedArticle),
+      };
+      if (!shouldFocusCamera(handledFocusRequest.current, command)) {
+        handledFocusRequest.current = command;
+        return;
+      }
       const target = selectedArticle
         ? {
             id: selectedArticle.id,
@@ -653,12 +681,15 @@ export default function EarthGlobe({
       let started = false;
       const timer = window.setTimeout(() => {
         started = true;
-        handledFocusRequest.current = key;
+        handledFocusRequest.current = command;
         focusCamera(
           viewer,
           target,
           (moving) => {
             cameraFlight.current = moving;
+            fittedCameraPosition.current = moving
+              ? null
+              : Cartesian3.clone(viewer.camera.positionWC);
           },
           !selectedStory && !selectedArticle ? studyArea : null,
         );
