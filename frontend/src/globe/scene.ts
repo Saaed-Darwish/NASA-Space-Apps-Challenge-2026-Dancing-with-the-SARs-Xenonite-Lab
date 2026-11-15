@@ -96,6 +96,7 @@ export function trackMarkerVisibility(viewer: Viewer) {
   return viewer.scene.preRender.addEventListener(() => {
     occluder.cameraPosition = viewer.camera.positionWC;
     for (const entity of viewer.entities.values) {
+      if (!entity.show) continue;
       const position = entity.position?.getValue(viewer.clock.currentTime);
       if (!position) continue;
       const visible = occluder.isPointVisible(position);

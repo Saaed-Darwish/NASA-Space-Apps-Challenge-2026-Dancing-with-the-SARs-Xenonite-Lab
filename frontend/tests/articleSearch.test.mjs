@@ -35,7 +35,7 @@ test("search outside curated regions uses map coordinates and preserves topic an
               pageid: 1,
               index: 1,
               title: "Nearby flood",
-              fullurl: "https://example.com/article",
+              fullurl: "https://en.wikipedia.org/wiki/Flood",
               coordinates: [{ lat: 48.86, lon: 2.36, globe: "earth" }],
             },
           },

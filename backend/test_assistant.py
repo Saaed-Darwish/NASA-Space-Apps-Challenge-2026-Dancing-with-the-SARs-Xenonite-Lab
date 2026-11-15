@@ -8,7 +8,7 @@ from urllib.error import HTTPError, URLError
 from fastapi import HTTPException
 from pydantic import ValidationError
 
-from assistant import ChatRequest, build_context, generate_answer
+from assistant import MAX_PROVIDER_BYTES, ChatRequest, build_context, generate_answer
 
 
 def request(**overrides):
@@ -73,6 +73,14 @@ class AssistantTests(unittest.TestCase):
             with self.assertRaises(HTTPException) as raised:
                 generate_answer(request())
         self.assertEqual(raised.exception.status_code, 502)
+
+    def test_oversized_provider_response_is_rejected(self):
+        for raw in (b"x" * (MAX_PROVIDER_BYTES + 1),
+                    json.dumps({"choices": [{"message": {"content": "x" * 12001}}]}).encode()):
+            with patch("assistant.urlopen", return_value=io.BytesIO(raw)):
+                with self.assertRaises(HTTPException) as raised:
+                    generate_answer(request())
+            self.assertEqual(raised.exception.status_code, 502)
 
 
     def test_history_budget_preserves_current_context(self):

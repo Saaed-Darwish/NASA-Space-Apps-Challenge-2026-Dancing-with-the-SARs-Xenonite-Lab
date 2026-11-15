@@ -1,4 +1,9 @@
-import { CURRENT_YEAR, FIRST_YEAR, LAST_IMAGERY_YEAR, YEARS } from "../data/imagery";
+import {
+  CURRENT_YEAR,
+  FIRST_YEAR,
+  LAST_IMAGERY_YEAR,
+  YEARS,
+} from "../data/imagery";
 import type useTimeline from "../hooks/useTimeline";
 
 type TimelineProps = ReturnType<typeof useTimeline>;
@@ -35,7 +40,9 @@ export default function Timeline({
           <button
             type="button"
             className="timeline-reset"
-            onClick={() => setComparisonRange(FIRST_YEAR, LAST_IMAGERY_YEAR, time)}
+            onClick={() =>
+              setComparisonRange(FIRST_YEAR, LAST_IMAGERY_YEAR, time)
+            }
             title={`Reset timeline to ${FIRST_YEAR}–${LAST_IMAGERY_YEAR}`}
             aria-label={`Reset timeline to ${FIRST_YEAR}–${LAST_IMAGERY_YEAR}`}
           >

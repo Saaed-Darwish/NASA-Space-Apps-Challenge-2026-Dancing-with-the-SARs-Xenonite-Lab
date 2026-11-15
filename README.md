@@ -35,7 +35,7 @@ Open two terminals at the project root.
 
 ```powershell
 python -m venv backend/.venv
-backend/.venv/Scripts/python -m pip install -r backend/requirements.txt
+backend/.venv/Scripts/python -m pip install -r backend/requirements.lock.txt
 backend/.venv/Scripts/python -m uvicorn main:app --app-dir backend --reload
 ```
 
@@ -83,7 +83,7 @@ npm run export:ai-context
 ```
 
 Restart the backend to load the updated catalogue. No embeddings or training step is needed.
-Chat history lives in browser memory until reload. This integration does not persist
+Chat history retains the latest 40 messages per region in browser memory until reload. This integration does not persist
 questions or answers on the backend. Local configuration sends inference requests
 to your own Ollama instance; source links are not automatically fetched by the model.
 
@@ -95,11 +95,25 @@ deployment, add authentication and per-user rate limits; the development backend
 allows one in-flight model request and rejects concurrent requests with HTTP 429.
 Model answers can still be wrong: citations identify supplied evidence, not automatic verification.
 
+The API rejects write requests from browser origins outside `CORS_ORIGINS`, requires
+JSON for chat, and caps request bodies at 160,000 bytes before parsing, including
+chunked requests. Configure explicit origins for your deployed frontend as well as
+local development; wildcard and `null` origins are rejected. Origin checks are not
+authentication: requests without an Origin header are still permitted. AI responses
+are size-limited, and frontend response adapters validate external links and fields.
+The region API and Earth AI use the same exported catalogue.
+
+Use [backend/requirements.lock.txt](./backend/requirements.lock.txt) for the audited,
+pinned Python environment. [backend/requirements.txt](./backend/requirements.txt)
+lists the direct runtime dependencies; regenerate the lock and repeat vulnerability
+checks when updating them. See [the readiness review](./docs/security-readiness.md)
+for verification results and the remaining deployment requirements.
+
 Backend checks:
 
 ```powershell
 cd backend
-.venv/Scripts/python -m unittest test_assistant -v
+.venv/Scripts/python -m unittest discover -v
 ```
 
 ## Production build
@@ -152,7 +166,7 @@ Land displacement (purple to amber), water extent change (tan to blue), and wild
 
 Smooth raster fields highlight simulated changes with transparent edges. Unchanged areas remain clear, and 2020 is the reference year. Patterns suggest ground movement, channel expansion, and wildfire scars; they do not trace measured terrain, actual water bodies, or burn boundaries. Snapshot values are synthetic estimates for the selected year, independent of the illustrative trend chart and color field. Wildfire area is distinct from the burn-severity index used for map colors.
 
-The timeline runs from 2020 to 2025, the latest verified year in the public archive. The current calendar year is shown separately; a 2026 mosaic is not substituted or invented. Click a year bookmark, scrub between years, or select a From/To playback range. Play advances at approximately 4.5 seconds per year and stops at the selected end year. With only a region selected, Play resumes from the current position and stays at the end once finished; scrub back to play again. After selecting a specific story, the first Play starts at the beginning of the comparison range. Subsequent plays resume from the current position, including after scrubbing; selecting a story again resets this first-play behavior. Pausing preserves the blend position, while selecting a year stops playback. Camera movement remains independent of playback.
+The timeline runs from 2020 to 2025, the latest verified year in the public archive. The current calendar year is shown separately; a 2026 mosaic is not substituted or invented. Click a year bookmark, scrub between years, or select a From/To playback range. Play advances at approximately 4.5 seconds per year and stops at the selected end year. Playing from the end restarts at the beginning of the selected range. With only a region selected, Play otherwise resumes from the current position. After selecting a specific story, the first Play starts at the beginning of the comparison range. Subsequent plays resume from the current position, including after scrubbing, unless already at the end; selecting a story again resets this first-play behavior. Pausing preserves the blend position, while selecting a year stops playback. Camera movement remains independent of playback.
 
 The globe now displays real [EOX Sentinel-2 cloudless annual mosaics](https://maps.eox.at/), streamed directly from the public WMTS service. Selecting 2020 uses the 2020 satellite tiles; selecting 2025 uses the 2025 tiles. These approximately 10-metre mosaics can reveal larger developments and land-use changes, but are composites rather than photos from one date, and cannot reliably resolve individual building modifications. Differences in season, atmosphere, and mosaic processing also affect their appearance; the app does not classify urban growth or measure it from these images.
 

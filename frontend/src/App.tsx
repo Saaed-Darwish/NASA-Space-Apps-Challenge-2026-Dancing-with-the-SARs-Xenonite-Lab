@@ -186,62 +186,76 @@ export default function App() {
     setFocusRequest((previous) => previous + 1);
   }
 
-  async function askQuestion(question: string) {
-    const text = question.trim().slice(0, 1000);
-    if (!text || !selectedRegion || pendingRequest.current) return;
-    pendingRequest.current = true;
-    setIsAsking(true);
-    const key = conversationKey;
-    const questionId = String(++messageSequence.current);
-    const answerId = String(++messageSequence.current);
-    setConversations((previous) => ({
-      ...previous,
-      [key]: [...(previous[key] ?? []), { id: questionId, role: "user", text }],
-    }));
-    try {
-      const answer = await askEarthAI({
-        question: text,
-        region_id: selectedRegion.id,
-        story_id: contextStory?.id,
-        year: observationYear,
-        start_year: timeline.startYear,
-        end_year: timeline.endYear,
-        history: (conversations[key] ?? [])
-          .filter((message) => !message.error)
-          .slice(-8)
-          .map((message) => ({
-            role: message.role,
-            content: message.text.slice(0, 4000),
-          })),
-      });
+  const askQuestion = useCallback(
+    async (question: string) => {
+      const text = question.trim().slice(0, 1000);
+      if (!text || !selectedRegion || pendingRequest.current) return;
+      pendingRequest.current = true;
+      setIsAsking(true);
+      const key = conversationKey;
+      const questionId = String(++messageSequence.current);
+      const answerId = String(++messageSequence.current);
       setConversations((previous) => ({
         ...previous,
         [key]: [
-          ...(previous[key] ?? []),
-          { id: answerId, role: "assistant", ...answer, observationYear },
+          ...(previous[key] ?? []).slice(-39),
+          { id: questionId, role: "user", text },
         ],
       }));
-    } catch (error) {
-      setConversations((previous) => ({
-        ...previous,
-        [key]: [
-          ...(previous[key] ?? []),
-          {
-            id: answerId,
-            role: "assistant",
-            error: true,
-            text:
-              error instanceof Error
-                ? error.message
-                : "Earth AI is unavailable. Please try again.",
-          },
-        ],
-      }));
-    } finally {
-      pendingRequest.current = false;
-      setIsAsking(false);
-    }
-  }
+      try {
+        const answer = await askEarthAI({
+          question: text,
+          region_id: selectedRegion.id,
+          story_id: contextStory?.id,
+          year: observationYear,
+          start_year: timeline.startYear,
+          end_year: timeline.endYear,
+          history: (conversations[key] ?? [])
+            .filter((message) => !message.error)
+            .slice(-8)
+            .map((message) => ({
+              role: message.role,
+              content: message.text.slice(0, 4000),
+            })),
+        });
+        setConversations((previous) => ({
+          ...previous,
+          [key]: [
+            ...(previous[key] ?? []).slice(-39),
+            { id: answerId, role: "assistant", ...answer, observationYear },
+          ],
+        }));
+      } catch (error) {
+        setConversations((previous) => ({
+          ...previous,
+          [key]: [
+            ...(previous[key] ?? []).slice(-39),
+            {
+              id: answerId,
+              role: "assistant",
+              error: true,
+              text:
+                error instanceof Error
+                  ? error.message
+                  : "Earth AI is unavailable. Please try again.",
+            },
+          ],
+        }));
+      } finally {
+        pendingRequest.current = false;
+        setIsAsking(false);
+      }
+    },
+    [
+      selectedRegion,
+      conversationKey,
+      contextStory,
+      observationYear,
+      timeline.startYear,
+      timeline.endYear,
+      conversations,
+    ],
+  );
 
   function openAssistant() {
     setRightCollapsed(false);

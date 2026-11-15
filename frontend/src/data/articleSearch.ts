@@ -1,4 +1,5 @@
 import type { Region } from "../types/region";
+import { isRecord, safeExternalUrl } from "./validation.ts";
 
 export type ArticleSearchArea = Pick<
   Region,
@@ -69,44 +70,60 @@ export async function searchRegionArticles(
   });
   if (!response.ok)
     throw new Error("Article search is unavailable. Please try again.");
-  const data = await response.json();
-  if (data.error)
+  const data: unknown = await response.json();
+  if (!isRecord(data) || data.error)
     throw new Error("The article provider could not complete this search.");
-  const pages = Object.values(data.query?.pages ?? {}) as Array<{
-    pageid: number;
-    index: number;
-    title: string;
-    extract?: string;
-    fullurl: string;
-    coordinates?: Array<{ lat: number; lon: number; globe: string }>;
-  }>;
+  const pages =
+    isRecord(data.query) && isRecord(data.query.pages)
+      ? Object.values(data.query.pages).filter(isRecord)
+      : [];
   return pages
-    .sort((a, b) => a.index - b.index)
-    .map((page) => {
+    .sort((a, b) => Number(a.index ?? 0) - Number(b.index ?? 0))
+    .slice(0, 8)
+    .flatMap((page): DiscoveredArticle[] => {
+      const url = safeExternalUrl(page.fullurl);
+      if (
+        !Number.isSafeInteger(page.pageid) ||
+        Number(page.pageid) <= 0 ||
+        typeof page.title !== "string" ||
+        !page.title.trim() ||
+        !url ||
+        new URL(url).hostname !== "en.wikipedia.org"
+      )
+        return [];
       // Related subjects can be far away; only map coordinates within 250 km.
-      const location = page.coordinates?.find((point) => {
-        const north = (point.lat - region.latitude) * 111.2;
-        const east =
-          (((point.lon - region.longitude + 540) % 360) - 180) *
-          111.2 *
-          Math.cos((region.latitude * Math.PI) / 180);
-        return (
-          point.globe === "earth" &&
-          Number.isFinite(point.lat) &&
-          Number.isFinite(point.lon) &&
-          Math.abs(point.lat) <= 90 &&
-          Math.abs(point.lon) <= 180 &&
-          Math.hypot(north, east) <= 250
-        );
-      });
-      return {
-        id: `${region.id}/${page.pageid}`,
-        regionId: region.id,
-        title: page.title,
-        summary: page.extract || "Open the article to read more.",
-        url: page.fullurl,
-        latitude: location?.lat,
-        longitude: location?.lon,
-      };
+      const location = (Array.isArray(page.coordinates) ? page.coordinates : [])
+        .filter(isRecord)
+        .find((point) => {
+          if (typeof point.lat !== "number" || typeof point.lon !== "number")
+            return false;
+          const north = (point.lat - region.latitude) * 111.2;
+          const east =
+            (((point.lon - region.longitude + 540) % 360) - 180) *
+            111.2 *
+            Math.cos((region.latitude * Math.PI) / 180);
+          return (
+            point.globe === "earth" &&
+            Number.isFinite(point.lat) &&
+            Number.isFinite(point.lon) &&
+            Math.abs(point.lat) <= 90 &&
+            Math.abs(point.lon) <= 180 &&
+            Math.hypot(north, east) <= 250
+          );
+        });
+      return [
+        {
+          id: `${region.id}/${page.pageid}`,
+          regionId: region.id,
+          title: page.title.slice(0, 300),
+          summary:
+            typeof page.extract === "string" && page.extract
+              ? page.extract.slice(0, 2000)
+              : "Open the article to read more.",
+          url,
+          latitude: location?.lat as number | undefined,
+          longitude: location?.lon as number | undefined,
+        },
+      ];
     });
 }

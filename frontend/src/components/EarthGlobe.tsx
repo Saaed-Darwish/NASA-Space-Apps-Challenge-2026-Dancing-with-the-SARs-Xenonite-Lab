@@ -96,6 +96,7 @@ export default function EarthGlobe({
     focusedRegionRef.current = selectedRegion;
   }, [onViewportFocus, selectedRegion]);
   const storyMarkersRef = useRef<Map<string, CesiumEntity>>(new Map());
+  const storyAlphaRef = useRef(new WeakMap<CesiumEntity, number>());
   const articlesRef = useRef(articles);
   const onSelectArticleRef = useRef(onSelectArticle);
   useEffect(() => {
@@ -392,6 +393,8 @@ export default function EarthGlobe({
       );
       if (!marker.show) continue;
       const alpha = storyMarkerOpacity(story, time);
+      if (storyAlphaRef.current.get(marker) === alpha) continue;
+      storyAlphaRef.current.set(marker, alpha);
       if (marker.billboard)
         marker.billboard.color = new ConstantProperty(
           Color.WHITE.withAlpha(alpha),
