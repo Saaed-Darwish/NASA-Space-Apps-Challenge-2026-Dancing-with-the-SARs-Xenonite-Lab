@@ -410,8 +410,18 @@ export default function App() {
         overlaySettings={overlaySettings}
       />
       <header className="app-header">
-        <a className="brand" href="./">
-          <span className="brand-mark">◉</span> Earth<span>Pulse</span>
+        <a className="brand" href="./" aria-label="EarthPulse home">
+          <img
+            className="brand-mark"
+            src="/earthpulse.svg"
+            width="36"
+            height="36"
+            alt=""
+            aria-hidden="true"
+          />
+          <span className="brand-name">
+            Earth<span>Pulse</span>
+          </span>
         </a>
         <nav className="workspace-nav" aria-label="Main navigation">
           {(["analyze", "forecast", "ai"] as WorkspaceMode[])
